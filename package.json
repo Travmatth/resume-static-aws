@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/Travmatth/resume-static-aws/issues"
   },
-  "homepage": "https://github.com/Travmatth/resume-static-aws#readme"
+  "homepage": "https://github.com/Travmatth/resume-static-aws#readme",
+  "dependencies": {
+    "mocha": "^3.1.2",
+    "selenium-webdriver": "^3.0.1"
+  }
 }
