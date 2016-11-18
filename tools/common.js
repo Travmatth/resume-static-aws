@@ -7,7 +7,11 @@ var paths = {
   publicPath: '/',
   entry: path.resolve(root, './src/index.js'),
   outputFolder: path.resolve(root, './dist'),
-  resolveExtensions: ['', '.js'],
 }
 
-exports.PATHS = paths
+module.exports = {
+  PATHS: paths,
+  pathTo: function() {
+  },
+  resolveExtensions: ['', '.js'],
+}
