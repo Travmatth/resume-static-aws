@@ -1,0 +1,7 @@
+extends ../common/layout
+
+block heading
+	script(src=htmlWebpackPlugin.files.chunks['wikiviewer/index'].entry)
+
+block content
+	h1 #{JSON.stringify(htmlWebpackPlugin)}
