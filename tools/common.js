@@ -11,7 +11,6 @@ var paths = {
 
 module.exports = {
   PATHS: paths,
-  pathTo: function() {
-  },
+  pathTo: function() {},
   resolveExtensions: ['', '.js'],
 }

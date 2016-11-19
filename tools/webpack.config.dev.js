@@ -29,9 +29,6 @@ module.exports = validate({
     // Write out stats file to build directory.
     new StatsWriterPlugin(),
     new HtmlWebpackPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development'),
-      '__DEV__': true
-    }),
+    // new webpack.DefinePlugin(),
   ],
 })
