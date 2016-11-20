@@ -6,10 +6,22 @@ export default validate({
   ...common.resolveExtensions,
 
   module: {
-    loaders: [...common.loaders]
+    loaders: [
+      ...common.loaders,
+      {
+        test: /\.scss$/, 
+        exclude: /node_modules/,
+        loader:  ExtractTextPlugin.extract({
+            fallbackLoader: "style-loader",
+            loader: "css-loader",
+        }),
+      }
+    ],
   },
 
-  plugins: [...common.plugins],
+  plugins: [
+    ...common.plugins,
+  ],
 
   output: {
     filename: '[name].[hash].js',

@@ -2,9 +2,9 @@ extends common/layout
 
 block heading
 	script(src=htmlWebpackPlugin.files.chunks['index'].entry)
-	
+	script(src=htmlWebpackPlugin.files.chunks['index'].entry)
+
 block content
-	h1 #{htmlWebpackPlugin.options.title}
 	a(href='/blog') blog
 	a(href='/calculator') calculator
 	a(href='/localweather') localweather

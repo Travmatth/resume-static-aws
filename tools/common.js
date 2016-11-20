@@ -1,4 +1,5 @@
 import webpack from 'webpack'
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import { StatsWriterPlugin } from "webpack-stats-plugin"
 
@@ -30,16 +31,56 @@ const common = {
 
   entries: {
     entry: {
-      'index': paths.entry,
-      'blog/index': paths.to('blog'),
-      'simon/index': paths.to('simon'),
-      'pomodoro/index': paths.to('pomodoro'),
-      'twitchtv/index': paths.to('twitchtv'),
-      'tictactoe/index': paths.to('tictactoe'),
-      'wikiviewer/index': paths.to('wikiviewer'),
-      'calculator/index': paths.to('calculator'),
-      'randomquote/index': paths.to('randomquote'),
-      'localweather/index': paths.to('localweather'),
+      'index': [
+        ...paths.entry,
+        path.resolve(root, 'src/index.scss'),
+      ],
+      // ...pages.map(page => ({ [`${page}/index`]: paths.to(page) }))
+      'blog/index': [
+        'babel-polyfill',
+        paths.to('blog'), 
+        path.resolve(root, 'src/blog/index.scss'),
+      ],
+      'simon/index': [
+        'babel-polyfill',
+        paths.to('simon'), 
+        path.resolve(root, 'src/simon/index.scss'),
+      ],
+      'pomodoro/index': [
+        'babel-polyfill',
+        paths.to('pomodoro'), 
+        path.resolve(root, 'src/pomodoro/index.scss'),
+      ],
+      'twitchtv/index': [
+        'babel-polyfill',
+        paths.to('twitchtv'), 
+        path.resolve(root, 'src/twitchtv/index.scss'),
+      ],
+      'tictactoe/index': [
+        'babel-polyfill',
+        paths.to('tictactoe'), 
+        path.resolve(root, 'src/tictactoe/index.scss'),
+      ],
+      'wikiviewer/index': [
+        'babel-polyfill',
+        paths.to('wikiviewer'), 
+        path.resolve(root, 'src/wikiviewer/index.scss'),
+      ],
+      'calculator/index': [
+        'babel-polyfill',
+        paths.to('calculator'), 
+        path.resolve(root, 'src/calculator/index.scss'),
+      ],
+      'randomquote/index': [
+        'babel-polyfill',
+        paths.to('randomquote'), 
+        path.resolve(root, 'src/randomquote/index.scss'),
+      ],
+      'localweather/index': [
+        'babel-polyfill',
+        paths.to('localweather'), 
+        path.resolve(root, 'src/localweather/index.scss'),
+      ],
     },
   },
 
