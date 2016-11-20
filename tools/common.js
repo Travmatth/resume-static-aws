@@ -1,5 +1,4 @@
 import webpack from 'webpack'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import { StatsWriterPlugin } from "webpack-stats-plugin"
 
@@ -127,6 +126,7 @@ const common = {
         filename: `${page}/index.html`,
       })
     }),
+
     // new webpack.DefinePlugin(),
   ]
 }

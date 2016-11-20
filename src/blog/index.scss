@@ -1,6 +1,7 @@
 body {
   background-color: blue;
-  & h1 {
+  display: flex;
+  .testing {
     background-color: red;
   }
 }

@@ -3,9 +3,10 @@ extends common/layout
 block heading
 	script(src=htmlWebpackPlugin.files.chunks['index'].entry)
 	script(src=htmlWebpackPlugin.files.chunks['index'].entry)
+	link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
 
 block content
-	a(href='/blog') blog
+	a(class='testing' href='/blog') blog
 	a(href='/calculator') calculator
 	a(href='/localweather') localweather
 	a(href='/pomodoro') pomodoro

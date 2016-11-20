@@ -10,32 +10,15 @@ export default validate({
     loaders: [
       ...common.loaders,
       {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract("style-loader", "css-loader")
-        // loader: ExtractTextPlugin.extract({
-        //   fallbackLoader: 'style-loader',
-        //   loader: 'css-loader?sourceMap!postcss-loader'
-        // })
-      },
-      {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader")
-        // loader: ExtractTextPlugin.extract({
-        //   fallbackLoader: 'style-loader',
-        //   loader: 'css-loader?sourceMap!postcss-loader!sass-loader'
-        // })
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader?sourceMap"),
       },
     ]
   },
 
   plugins: [
     ...common.plugins,
-    new ExtractTextPlugin("[name].css", {
-        // allChunks: true
-    }),
-    // require('postcss-smart-import')({ /* ...options */ }),
-    // require('precss')({ /* ...options */ }),
-    // require('autoprefixer')({ /* ...options */ })
+    new ExtractTextPlugin("[name].css", { }),
   ],
 
   output: {
