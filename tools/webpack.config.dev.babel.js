@@ -1,14 +1,11 @@
 import common from './common'
+import merge from 'webpack-merge'
 import validate from 'webpack-validator'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
-export default validate({
-  ...common.entries,
-  ...common.resolveExtensions,
-
+export default validate(merge(common, {
   module: {
     loaders: [
-      ...common.loaders,
       {
         test: /\.scss$/,
         loader: ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader?sourceMap"),
@@ -17,13 +14,14 @@ export default validate({
   },
 
   plugins: [
-    ...common.plugins,
     new ExtractTextPlugin("[name].css", { }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('development'),
+      '__DEV__': true
+    }),
   ],
 
   output: {
     filename: '[name].js',
-    path: common.PATHS.outputFolder,
-    publicPath: common.PATHS.publicPath, 
   },
-})
+}))
