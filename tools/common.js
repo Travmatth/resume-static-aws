@@ -1,3 +1,4 @@
+/* @flow */
 import webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import { StatsWriterPlugin } from "webpack-stats-plugin"
@@ -10,7 +11,7 @@ const paths = {
   publicPath: '/',
   entry: ['babel-polyfill', path.resolve(root, './src/index.js')],
   outputFolder: path.resolve(root, './dist'),
-  to: file => path.resolve(root, `./src/${file}/index.js`)
+  to: (file: string): string => path.resolve(root, `./src/${file}/index.js`)
 }
 
 const pages = [
