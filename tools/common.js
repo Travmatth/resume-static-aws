@@ -23,7 +23,7 @@ const pages = [
 const common: WebpackConfiguration = validate({
   output: {
     publicPath: '/',
-    path: path.resolve(root, 'src/dist'),
+    path: path.resolve(root, 'dist'),
   },
 
   entry: Object.assign({},
@@ -43,7 +43,7 @@ const common: WebpackConfiguration = validate({
   ),
 
   resolve: {
-    extensions: ['', '.js'],
+    extensions: ['', '.js', '.scss'],
   },
 
   module: {

@@ -9,7 +9,7 @@
     "build:prod": "rm -rf dist && NODE_ENV=production webpack -p --config tools/webpack.config.prod.babel.js --progress --display-chunks --display-reasons --display-error-details --bail",
     "build:dev": "rm -rf dist && NODE_ENV=development webpack -d --config tools/webpack.config.dev.babel.js --progress --display-chunks --display-reasons --display-error-details --bail",
     "start:prod": "rm -rf dist && NODE_ENV=production webpack-dev-server -p --config tools/webpack.config.prod.babel.js --display-chunks --display-reasons --display-error-details --hot --inline --content-base dist/ --color --bail",
-    "start": "rm -rf dist && NODE_ENV=development webpack-dev-server -d --config tools/webpack.config.dev.babel.js --hot --inline --content-base dist/ --color --bail",
+    "start": "rm -rf dist && NODE_ENV=development webpack-dev-server -d --config tools/webpack.config.dev.babel.js --host 0.0.0.0 --hot --inline --content-base dist/ --color --bail",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
