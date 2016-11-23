@@ -6,7 +6,7 @@ import autoprefixer from 'autoprefixer'
 import validate from 'webpack-validator'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
-export default validate(merge(common, {
+const config: WebpackConfiguration = validate(merge(common, {
   module: {
     loaders: [
       {
@@ -21,10 +21,10 @@ export default validate(merge(common, {
     new webpack.optimize.OccurrenceOrderPlugin(true),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-      '__DEV__': false
-    }),
+    // new webpack.DefinePlugin({
+    //   'process.env.NODE_ENV': JSON.stringify('production'),
+    //   '__DEV__': false
+    // }),
   ],
 
   postcss: [
@@ -37,3 +37,5 @@ export default validate(merge(common, {
     filename: '[name].[hash].js',
   },
 }))
+ 
+export default config

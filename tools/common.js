@@ -1,13 +1,14 @@
 /* @flow */
 'use strict';
 // import webpack from 'webpack'
+import validate from 'webpack-validator'
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { StatsWriterPlugin } from "webpack-stats-plugin";
 
 const root = process.cwd();
 const path = require('path');
 
-const pages: Array<string> = [
+const pages = [
   'blog',
   'calculator',
   'localweather',
@@ -19,7 +20,7 @@ const pages: Array<string> = [
   'wikiviewer',
 ]
 
-const common = {
+const common: WebpackConfiguration = validate({
   output: {
     publicPath: '/',
     path: path.resolve(root, 'src/dist'),
@@ -85,6 +86,6 @@ const common = {
       })
     }),
   ]
-}
+})
 
 export default common

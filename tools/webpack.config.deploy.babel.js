@@ -1,11 +1,11 @@
 /* @flow */
-import merge from 'webpack-merge'
 import validate from 'webpack-validator'
+import merge from 'webpack-merge'
 import S3Plugin from 'webpack-s3-plugin'
 import productionBuild from './webpack.config.prod.babel'
 import s3Opts from '../aws'
 
-export default validate(merge(productionBuild, {
+const config: WebpackConfiguration = validate(merge(productionBuild, {
   plugins: [
     new S3Plugin({
       s3Options: {
@@ -18,4 +18,6 @@ export default validate(merge(productionBuild, {
       }
     })
   ]
-}))
+})) 
+
+export default config

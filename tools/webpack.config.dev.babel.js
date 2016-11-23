@@ -5,7 +5,7 @@ import merge from 'webpack-merge'
 import validate from 'webpack-validator'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
-export default validate(merge(common, {
+const config: WebpackConfiguration = validate(merge(common, {
   module: {
     loaders: [
       {
@@ -27,3 +27,5 @@ export default validate(merge(common, {
     filename: '[name].js',
   },
 }))
+
+export default config 
