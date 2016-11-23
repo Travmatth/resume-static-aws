@@ -60,6 +60,11 @@ const common = {
         exclude: /node_modules/,
         loader: 'pug-loader' 
       },
+      { 
+        test: /\.json$/, 
+        exclude: /node_modules/,
+        loader: 'json-loader' 
+      },
     ],
   },
 
