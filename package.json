@@ -4,11 +4,12 @@
   "description": "A resume website",
   "main": "index.js",
   "scripts": {
+    "flow": "flow",
+    "deploy": "rm -rf dist && NODE_ENV=production webpack -p --config tools/webpack.config.deploy.babel.js",
     "build:prod": "rm -rf dist && NODE_ENV=production webpack -p --config tools/webpack.config.prod.babel.js --progress --display-chunks --display-reasons --display-error-details --bail",
     "build:dev": "rm -rf dist && NODE_ENV=development webpack -d --config tools/webpack.config.dev.babel.js --progress --display-chunks --display-reasons --display-error-details --bail",
     "start:prod": "rm -rf dist && NODE_ENV=production webpack-dev-server -p --config tools/webpack.config.prod.babel.js --display-chunks --display-reasons --display-error-details --hot --inline --content-base dist/ --color --bail",
     "start": "rm -rf dist && NODE_ENV=development webpack-dev-server -d --config tools/webpack.config.dev.babel.js --hot --inline --content-base dist/ --color --bail",
-    "flow": "flow",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -49,6 +50,7 @@
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2",
     "webpack-merge": "^0.17.0",
+    "webpack-s3-plugin": "^0.9.2",
     "webpack-stats-plugin": "^0.1.4",
     "webpack-validator": "^2.2.9"
   }

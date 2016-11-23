@@ -2,8 +2,8 @@
 import merge from 'webpack-merge'
 import validate from 'webpack-validator'
 import S3Plugin from 'webpack-s3-plugin'
-import productionBuild from 'webpack.config.prod.babel'
-import s3Opts from './aws.json'
+import productionBuild from './webpack.config.prod.babel'
+import s3Opts from '../aws'
 
 export default validate(merge(productionBuild, {
   plugins: [
