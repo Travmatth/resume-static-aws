@@ -1,12 +1,13 @@
 /* @flow */
-import webpack from 'webpack'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import { StatsWriterPlugin } from "webpack-stats-plugin"
+'use strict';
+// import webpack from 'webpack'
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import { StatsWriterPlugin } from "webpack-stats-plugin";
 
-const root = process.cwd()
-const path = require('path')
+const root = process.cwd();
+const path = require('path');
 
-const pages = [
+const pages: Array<string> = [
   'blog',
   'calculator',
   'localweather',

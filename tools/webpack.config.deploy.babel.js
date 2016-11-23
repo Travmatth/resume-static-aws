@@ -1,4 +1,6 @@
+/* @flow */
 import merge from 'webpack-merge'
+import validate from 'webpack-validator'
 import S3Plugin from 'webpack-s3-plugin'
 import productionBuild from 'webpack.config.prod.babel'
 
@@ -15,4 +17,4 @@ export default validate(merge(productionBuild, {
       }
     })
   ]
-})
+}))

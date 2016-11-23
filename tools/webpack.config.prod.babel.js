@@ -1,3 +1,4 @@
+/* @flow */
 import common from './common'
 import webpack from 'webpack'
 import merge from 'webpack-merge'

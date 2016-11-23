@@ -1,3 +1,5 @@
+/* @flow */
+import webpack from 'webpack'
 import common from './common'
 import merge from 'webpack-merge'
 import validate from 'webpack-validator'
