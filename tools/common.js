@@ -27,8 +27,10 @@ const common: WebpackConfiguration = validate({
   },
 
   entry: Object.assign({},
-    { 'vendor': 
-      'babel-polyfill', 
+    { 'vendor': [
+        'babel-polyfill',
+        'virtual-dom'
+      ]
     },
     { 'index': [
       path.resolve(root, './src/index.js'),

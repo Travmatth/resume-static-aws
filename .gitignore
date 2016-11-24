@@ -4,3 +4,4 @@ build
 npm-debug.log
 aws.json
 aws.js
+reports
