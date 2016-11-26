@@ -5,27 +5,7 @@ block heading
 	link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
 
 block content
-	nav.desktop
-		a(class='testing' href='/blog') blog
-		a(href='/calculator') calculator
-		a(href='/localweather') localweather
-		a(href='/pomodoro') pomodoro
-		a(href='/randomquote') randomquote
-		a(href='/simon') simon
-		a(href='/tictactoe') tictactoe
-		a(href='/twitchtv') twitchtv
-		a(href='/wikiviewer') wikiviewer
-
-	nav.mobile
-		div.nav-menu
-			a beginner
-			div menu
-		div.nav-menu
-			a intermediate
-			div menu
-		div.nav-menu
-			a advanced
-			div menu
+	include common/nav.pug
 
 	main
 		section#landing

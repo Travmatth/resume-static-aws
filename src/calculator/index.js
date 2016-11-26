@@ -1,2 +1,4 @@
 /* @flow */
-document.addEventListener('DOMContentLoaded', () =>  console.log('calculator.js'));
+document.addEventListener('DOMContentLoaded', () =>  {
+  console.log('calculator.js')
+});

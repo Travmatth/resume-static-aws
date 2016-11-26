@@ -5,4 +5,5 @@ block heading
 	link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
 
 block content
-	h1 #{JSON.stringify(htmlWebpackPlugin)}
+	include ../common/nav.pug
+	//h1 #{JSON.stringify(htmlWebpackPlugin)}
