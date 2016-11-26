@@ -21,10 +21,6 @@ const config: WebpackConfiguration = validate(merge(common, {
     new webpack.optimize.OccurrenceOrderPlugin(true),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin(),
-    // new webpack.DefinePlugin({
-    //   'process.env.NODE_ENV': JSON.stringify('production'),
-    //   '__DEV__': false
-    // }),
   ],
 
   postcss: [

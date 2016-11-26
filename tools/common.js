@@ -55,7 +55,6 @@ const common: WebpackConfiguration = validate({
         loader: 'babel', 
         exclude: /node_modules/,
         query: {
-          plugins: ['transform-runtime'],
         },
       },
       { 
