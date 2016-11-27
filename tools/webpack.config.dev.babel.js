@@ -4,6 +4,7 @@ import common from './common'
 import merge from 'webpack-merge'
 import validate from 'webpack-validator'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import FlowStatusWebpackPlugin from 'flow-status-webpack-plugin';
 
 const config: WebpackConfiguration = validate(merge(common, {
   module: {
@@ -15,7 +16,14 @@ const config: WebpackConfiguration = validate(merge(common, {
     ]
   },
 
+  devServer: {
+    stats: {
+      chunks: false,
+    }
+  },
+
   plugins: [
+    new FlowStatusWebpackPlugin(),
     new ExtractTextPlugin("[name].css", { }),
   ],
 

@@ -1,1 +1,73 @@
-@import '../common/_layout'
+@import '../common/_layout';
+
+section {
+  width: 100vw;
+  min-height: 90vh;
+  background-color: lightgray;
+  position: relative;
+  top: 10vh;
+
+
+  // keypad && window
+  & > * {
+    width: 60vw;
+    border: 1px solid black;
+    position: fixed;
+    left: 20vw;
+  }
+
+  & .window {
+    height: 7vh;
+    background-color: white;
+    top: 25vh;
+  }
+
+  & .keypad {
+    height: 50vh;
+    background-color: lightblue;
+    top: 32vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+
+    /* Keyboard */
+
+    & > * {
+      text-align: center;
+    }
+
+    // row one
+    & [data-key='delete'],
+    & [data-key='clear'] {
+      width: 50%;
+    }
+
+    // row two
+    & [data-key='7'],
+    & [data-key='8'],
+    & [data-key='9'],
+    & [data-key='/'],
+
+    // row three
+    & [data-key='4'],
+    & [data-key='5'],
+    & [data-key='6'],
+    & [data-key='x'],
+
+    // row four
+    & [data-key='1'],
+    & [data-key='2'],
+    & [data-key='3'],
+    & [data-key='-'],
+
+    // row five
+    & [data-key='.'],
+    & [data-key='0'],
+    & [data-key='='],
+    & [data-key='+'] {
+      display: inline-block;
+      width: 25%;
+    }
+  }
+}

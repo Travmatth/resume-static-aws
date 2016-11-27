@@ -53,36 +53,17 @@ nav {
   }
 }
 
-/* main body of page */
-main {
-  width: 100vw;
-
-  /* landing page of screen, full height & width */
-  & #landing {
-    height: 100vh;
-    background-color: lightgray;
-  }
-
-  /* intro page of screen, full height & width */
-  & #intro {
-    width: 100vw;
-    min-height: 100vh;
-    background-color: lightblue;
-
-    & h1 {
-      width: 100vw;
-      overflow-x: hidden;
-      overflow-y: visible;
-    }
-  }
-}
-
 /* Small screens ~ipad and under */
 @media screen and (min-width: $min-width) and (max-width: $small-screen) {
   nav.mobile {
     display: flex;
     visibility: visible;
     position: absolute;
+
+    & div {
+      width: fit-content;
+      padding: 0 2px;
+    }
 
     & .nav-menu:first-child {
       margin-left: 10vw;

@@ -29,7 +29,7 @@ const common: WebpackConfiguration = validate({
   entry: Object.assign({},
     { 'vendor': [
         'babel-polyfill',
-        'virtual-dom'
+        /*'virtual-dom'*/
       ]
     },
     { 'index': [
