@@ -23,7 +23,10 @@ const config: WebpackConfiguration = validate(merge(common, {
   },
 
   plugins: [
-    new FlowStatusWebpackPlugin(),
+    new FlowStatusWebpackPlugin({
+      onSuccess: stdout => console.log(stdout),
+      onError: stdout => console.log(stdout),
+    }),
     new ExtractTextPlugin("[name].css", { }),
   ],
 

@@ -1,3 +1,5 @@
+declare type glyph = string|number
+
 type Module = {
   loaders: Object[];
 };
