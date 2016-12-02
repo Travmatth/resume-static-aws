@@ -1,64 +1,79 @@
-/* Build BinaryTree w/ generics 
+/* BinaryTree
+ *
  * @flow
  */
-type method = { precedence: number, perform: Function }
 
-type Kind = number|method 
+import { operations } from '../calculator/operations'
 
 export class Node {
-  kind: Kind
-  left: Node
-  right: Node
+  /* Need to mark as covariant, i.e. read-only
+   * https://flowtype.org/blog/2016/10/04/Property-Variance.html
+   */  
+  +evaluate: () => number
+}
 
-  constructor(value: number|method) {
+export class Leaf extends Node {
+  value: number
+
+  constructor(value: number) {
+    super()
     this.value = value
   }
 
   evaluate(): number {
-    if (typeof this.value === 'number') return this.value
-    return this.value(this.left.evaluate(), this.right.evaluate())
+    return this.value
+  }
+}
+
+export class Branch extends Node {
+  compute: processTree
+  left: Node
+  right: Node
+  
+  constructor(compute: processTree, left: Node, right: Node) {
+    super()
+    this.compute = compute
+    this.left = left
+    this.right = right
+  }
+
+  evaluate(): number {
+    const left = this.left.evaluate()
+    const right = this.right.evaluate()
+    return this.compute(left, right)
   }
 }
 
 export default class BinaryTree<T,U> {
-  // evaluationFunctions: { [name: string]: Function }
-  root: ?Node
+  operators: Operations
 
-  constructor(ops) {
-    this.operators = ops
+  constructor() {
   }
 
-  createTreeFromPostfix(expr: glyph[]): void|Error {
-    /* 
-     * RPN -> BinaryTree
-     *
-     * The evaluation of the tree takes place by reading the postfix expression 
-     * one symbol at a time. If the symbol is an operand, one-node tree is 
-     * created and a pointer is pushed onto a stack. If the symbol is an 
-     * operator, the pointers are popped to two trees T1 and T2 from the stack 
-     * and a new tree whose root is the operator and whose left and right 
-     * children point to T2 and T1 respectively is formed . A pointer to this 
-     * new tree is then pushed to the Stack.[4]
-     *
-     * https://en.wikipedia.org/wiki/Binary_expression_tree#Construction_of_an_expression_tree
-     */
-     const stack: Array<Node> = []
-     expr.forEach(element => {
+  createTreeFromPostfix(expr: glyph[], operators): Node {
+    if (expr.length < 3) {
+      console.log('expr', expr)
+      return
+      // throw new Error('Postfix Expression must be three or more characters')
+    } 
+
+    const stack: Array<Node> = []
+
+    expr.forEach(element => {
+
       if (typeof element === 'number') {
-        stack.push(new Node(element))
+        const leaf = new Leaf(element)
+        stack.push(leaf)
       } else {
-        const node = new Node(this.operators[expr].perform)
-        node.left = stack.pop()
-        node.right  = stack.pop()
+        const right = stack.pop()
+        const left = stack.pop()
+        const action = operators[element].perform
+        const node = new Branch(action, left, right)
         stack.push(node)
       }
-     })
+    })
 
-     this.root = stack.pop()
-  }
-
-  evaluate(): number|Error {
-    if (root) return this.root.evaluate()
-    else throw new Error('No root found on binary tree')
+    const root = stack.pop()
+    return root
   }
 }

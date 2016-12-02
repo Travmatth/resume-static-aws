@@ -11,18 +11,20 @@
  * @flow
  */
 
-import operations from './operations'
 import BinaryTree from '../common/BinaryTree'
+import { operations, Operations } from './operations'
+
+type Char = '(' | ')' | 'x' | '/' | '+' | '-' | number
 
 export default class Expression {
-  type Char = '(' | ')' | 'x' | '/' | '+' | '-' | number
 
-  postfix: Array<glyph>
   infix: Array<glyph>
+  window: Array<glyph>
+  operators: Operations
 
   constructor() {
-    this.postfix = []
     this.infix = []
+    this.window = []
     this.operators = operations
   }
 
@@ -42,16 +44,14 @@ export default class Expression {
     }
   }
 
-  compute(): void|Error {
+  compute(): void {
+    let node
     const translation = this.translateFromInfix()
 
     if (translation) {
-      const answer = new BinaryTree()
-        .createTreeFromPostfix(translation, operations)
-        .evaluate()
-      this.infix = answer
-    }
-
+      node = new BinaryTree().createTreeFromPostfix(translation, operations)
+      this.infix = [node.evaluate()]
+    }  
   }
 
   /* updates postfix with the value user enters */
@@ -65,15 +65,15 @@ export default class Expression {
           // pushes ( to [], [number, string]
           // throws when pushing ( to [number]
           case '(': 
-            if (last && typeof last === 'number') 
+            if (last && typeof last === 'number')
               throw new Error('Illegal syntax')
             this.infix.push(char)
             return
 
           // pushes ) to [number]
           // throws when pushing ) to [], [number, string]
-          case ')': 
-            if (last || typeof last === 'string') 
+          case ')':
+            if (!last || typeof last === 'string')
               throw new Error('Illegal syntax')
             this.infix.push(char)
             return
@@ -81,8 +81,9 @@ export default class Expression {
           // pushes op to [number]
           // throws when pushing op to [], [string]
           default:
-            if (!last || (last && typeof last === 'string') 
+            if (!last || (last && typeof last === 'string')) {
               throw new Error('Illegal syntax')
+            }
             this.infix.push(char)
             return
         }
@@ -96,88 +97,72 @@ export default class Expression {
         } else {
           this.infix.push(char)
         }
+
         return
     }
   }
 
-  translateFromInfix(): void|Error {
-    type State = { stack: Array<glyph>, queue: Array<glyph> }
+  translateFromInfix(): Array<glyph> {
 
-    const peek: glyph[] => glyph = stack => stack[stack.length - 1]
     const stack: Array<glyph> = []
     const queue: Array<glyph> = []
+    const peek = stack => stack[stack.length - 1]
+    const ops = this.operators
+     
+    // While there are tokens to be read: Read a token
+    this.infix.map((token: glyph): void => {
 
-    const state: State = { stack, queue, }
+      //   If the token is a number: Add token to the result stack
+      if (typeof token === 'number')  queue.push(token) 
 
-    // Read a token.
-    this.infix.reduce((state: State, token: glyph): State => {
-      const { stack, queue } = state
 
-      // If the token is a number, then push it to the output queue.
-      if (typeof token === 'number') 
-        queue.push(token) 
-
-      // If the token is an operator, o1, then:
-      if (typeof token === 'string' && token !== ')') { 
-
-        // while there is an operator token o2, at the top of the operator stack and either
-          // token  is left-associative and its precedence is less than or equal to that of o2, or
-          // N/A: token  is right associative, and has precedence less than that of o2,
-        while(peek(stack) in this.operators && this.operators[token].precedence >= this.operators[peek(stack)].precedence) {
-
-            // pop o2 off the operator stack, onto the output queue;
+      //   If the token is an operator:
+      if (typeof token === 'string' && token in ops) {
+        let o2 = peek(stack)
+        // o2 = peek(stack);
+        // while operator token, o2, on top of the stack
+        while (o2 && typeof o2 === 'string' && o2 in ops && ( 
+          // and o1 is left-associative and its precedence is less than or equal to that of o2
+          (ops[token].associativity === "left" && (ops[token].precedence <= ops[o2].precedence) ) || 
+          // or o1 is right-associative and its precedence is less than that of o2
+          (ops[token].associativity === "right" && (ops[token].precedence < ops[o2].precedence)) 
+        )){
             queue.push(stack.pop())
+            o2 = peek(stack)
         }
 
-        // at the end of iteration push o1 onto the operator stack.
+        // a.5.2 push token onto the stack.
         stack.push(token)
       }
 
-      // If the token is a left parenthesis (i.e. "("), then push it onto the stack.
-      if (typeof token === 'string' && token === '(') 
-        stack.push(token)
+      // If the token is a left parenthesis: Push token onto operators stack
+      if (typeof token === 'string' && token === '(') stack.push(token)
 
-      // If the token is a right parenthesis (i.e. ")"):
+      // If the token is a right parenthesis:
       if (typeof token === 'string' && token === ')') {
+        // While the token at the top of the stack is not a left parenthesis:
+        while (stack.length > 0 && typeof peek(stack) === 'string' && peek(stack) !== '(') {
+          const temp = stack.pop()
+          // Pop token from operator stack and push it onto the result stack
+          queue.push(temp)
+        }
 
-        // Until the token at the top of the stack is a left parenthesis, pop this.operators off the stack onto the output queue.
-        let glyph, isGlyph, leftParenFound
-
-        do {
-          glyph = stack.pop()
-          leftParenFound = typeof glyph === 'string' && glyph === '(' 
-          if (!leftParenFound) 
-            queue.push(glyph)
-        } while (!leftParenFound)
-
-        // Pop the left parenthesis from the stack, but not onto the output queue.
-        if (typeof glyph === 'string' && glyph !== ')') 
-          stack.pop() 
-
-        // If the stack runs out without finding a left parenthesis, then there are mismatched parentheses.
-        if (typeof glyph === undefined) 
-          throw new Error('Mismatched Parentheses') 
+        // Pop the left parenthesis, but do not put it onto the result stack
+        if (stack.length > 0 && typeof peek(stack) === 'string' && peek(stack) === '(') {
+          stack.pop()
+        } else {
+          throw new Error('Unrecognized object in stack: ')
+        }
       }
+    })
 
-      return state
-    }, state)
-
-    // When there are no more tokens to read:
-    // While there are still operator tokens in the stack:
-    let remainingTokens = stack.length > 0
-
-    while (remainingTokens) {
-      const tok = stack.pop()
-
-      // If the operator token on the top of the stack is a parenthesis, then there are mismatched parentheses.
-      if (typeof tok === 'string' && (tok === '(' || tok === ')'))
-        throw new Error('Mismatched Parentheses') 
-
-      // Pop the operator onto the output queue.
-      queue.push(tok)
-      remainingTokens = stack.length
+    // While the operators stack is not empty:
+    //   Pop operator and push it onto the result stack
+    while (stack.length > 0) {
+      queue.push(stack.pop())
     }
 
-    this.postfix = queue
+    this.infix = queue
+    return queue
   }
 }

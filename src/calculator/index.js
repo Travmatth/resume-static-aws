@@ -32,8 +32,7 @@ function keyPress(val: Event): void {
 
     default:
       try {
-        const parsedKey = parseInt(key) ? parseInt(key) : key
-        expression.update(parsedKey) 
+        expression.update(parseFloat(key) ? parseFloat(key) : key) 
       } catch(error) {
         alert(error)
       }
@@ -56,7 +55,8 @@ document.addEventListener('DOMContentLoaded', () =>  {
   outputWindow = document.querySelector('div.window')
 
   document.querySelectorAll('[data-key]').forEach(el => {
-    el.addEventListener('onclick', keyPress, { passive: true })
-    el.addEventListener('touchstart', keyPress, { passive: true })
+    const opts = [keyPress, { passive: true }]
+    el.addEventListener('onclick', ...opts)
+    el.addEventListener('touchstart', ...opts)
   })
 });
