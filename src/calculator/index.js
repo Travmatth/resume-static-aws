@@ -1,5 +1,6 @@
 /* @flow */
 import Expression from './expression'
+import { Num, Str } from './CalcPrimitives'
 
 /* called when used selects a glyph */
 function keyPress(val: Event): void {
@@ -9,50 +10,51 @@ function keyPress(val: Event): void {
   switch (key) {
     case '=':
       try {
-        expression.compute() 
-        print()
+        expression.compute() ;
+        refresh();
       } catch (error) {
-        print('Error: Please check console for details')
-        console.log(error)
+        refresh('Error: Please check console for details');
+        console.log(error);
       }
 
       break
 
     case 'clear':
-      expression.clear()
-      print()
+      expression.clear();
+      refresh();
 
       break
 
     case 'delete':
-      expression.delete()
-      print()
+      expression.delete();
+      refresh();
 
       break
 
     default:
       try {
-        expression.update(parseFloat(key) ? parseFloat(key) : key) 
+        expression.update(parseFloat(key) ? new Num(key) : Str(key));
       } catch(error) {
-        alert(error)
+        alert(error);
       }
-      print()
 
+      refresh();
       break
   }
 }
 
-/* ON DOCUMENT LOAD */
-let outputWindow 
 const expression = new Expression()
 
-const print = (msg: ?string): void => {
+const refresh = (msg: ?string): void => {
   if (outputWindow) 
         outputWindow.textContent = msg ? msg : expression.getStatement();
 } 
 
+/* ON DOCUMENT LOAD */
+let outputWindow 
+
 document.addEventListener('DOMContentLoaded', () =>  {
-  outputWindow = document.querySelector('div.window')
+  outputWindow = document.querySelector('h2.window')
 
   document.querySelectorAll('[data-key]').forEach(el => {
     const opts = [keyPress, { passive: true }]

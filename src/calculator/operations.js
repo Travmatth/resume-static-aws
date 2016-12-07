@@ -21,7 +21,7 @@ export const operations: Object = {
     precedence: 2,
     associativity: 'left',
     perform: (a, b) => a - b
-  }, 
+  },
 
   '^': {
     precedence: 4,

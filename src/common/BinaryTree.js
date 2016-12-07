@@ -1,40 +1,46 @@
 /* BinaryTree
  *
+ * Notes:
+ * https://en.wikipedia.org/wiki/Binary_tree#Nodes_and_references
+ * https://en.wikipedia.org/wiki/Binary_expression_tree#Construction_of_an_expression_tree
+ * 
+ *
  * @flow
  */
 
 import { operations } from '../calculator/operations'
 
 export class Node {
-  /* Need to mark as covariant, i.e. read-only
+  /* Mark as covariant, i.e. read-only
+   * because evaluate called recursively, 
    * https://flowtype.org/blog/2016/10/04/Property-Variance.html
    */  
-  +evaluate: () => number
+  +evaluate: () => number;
 }
 
 export class Leaf extends Node {
-  value: number
+  value: number;
 
   constructor(value: number) {
-    super()
-    this.value = value
+    super();
+    this.value = value;
   }
 
   evaluate(): number {
-    return this.value
+    return this.value;
   }
 }
 
 export class Branch extends Node {
-  compute: processTree
-  left: Node
-  right: Node
+  compute: (a: number, b: number) => number;
+  left: Node;
+  right: Node;
   
-  constructor(compute: processTree, left: Node, right: Node) {
-    super()
-    this.compute = compute
-    this.left = left
-    this.right = right
+  constructor(compute: (a: number, b: number) => number, left: Node, right: Node) {
+    super();
+    this.compute = compute;
+    this.left = left;
+    this.right = right;
   }
 
   evaluate(): number {
@@ -45,15 +51,15 @@ export class Branch extends Node {
 }
 
 export default class BinaryTree<T,U> {
-  operators: Operations
+  operators: Object
 
   constructor() {
   }
 
-  createTreeFromPostfix(expr: glyph[], operators): Node {
+  createTreeFromPostfix(expr: glyph[], operators: Object): Node {
     if (expr.length < 3) {
       console.log('expr', expr)
-      return
+      return new Leaf(0)
       // throw new Error('Postfix Expression must be three or more characters')
     } 
 

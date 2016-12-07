@@ -41,7 +41,7 @@
     "chai": "^3.5.0",
     "css-loader": "^0.26.0",
     "extract-text-webpack-plugin": "^1.0.1",
-    "flow-bin": "^0.35.0",
+    "flow-bin": "^0.36.0",
     "flow-status-webpack-plugin": "^0.1.7",
     "html-webpack-plugin": "^2.24.1",
     "json-loader": "^0.5.4",

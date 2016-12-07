@@ -7,32 +7,38 @@ block heading
 block content
 	include ../common/nav.pug
 	section
-		div.window
+		h2.window
 		div.keypad
 			// row one
-			button(data-key='clear') clear
 			button(data-key='delete') delete
+			button(data-key='power') power
 
 			// row two
-			button(data-key='7') 7
-			button(data-key='8') 8
-			button(data-key='9') 9
+			button(data-key='(') (
+			button(data-key=')') )
+			button(data-key='+') ^
 			button(data-key='/') /
 
 			// row three
-			button(data-key='4') 4
-			button(data-key='5') 5
-			button(data-key='6') 6
+			button(data-key='7') 7
+			button(data-key='8') 8
+			button(data-key='9') 9
 			button(data-key='x') x
 
 			// row four
+			button(data-key='4') 4
+			button(data-key='5') 5
+			button(data-key='6') 6
+			button(data-key='+') +
+
+			// row five
 			button(data-key='1') 1
 			button(data-key='2') 2
 			button(data-key='3') 3
 			button(data-key='-') -
 
-			// row five
-			button(data-key='.')
+			// row six
+			button(data-key='.') .
 			button(data-key='0') 0
 			button(data-key='=') =
-			button(data-key='+') +
+			button(data-key='clear') c

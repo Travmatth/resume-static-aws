@@ -1,33 +1,25 @@
+import typeof {Num as int} from "../src/calculator/Num.js";
+
 /* /src/calculator/expression.js */
-declare type State = { stack: Array<glyph>, queue: Array<glyph> }
-
-/* /common/BinaryTree.js */
-declare type processTree = (a: number, b: number) => number
-
-/* /calculator/index.js */
-declare type operation = {
-  precedence: number
-  perform: (number, number) => number
+declare type num = {
+  kind: 'number',
+  value: int
 }
 
-declare type glyph = string|number
+declare type str = {
+  kind: 'string',
+  value: string
+}
 
-type Module = {
-  loaders: Object[];
-};
+declare type glyph = str | num
 
-type Output = {
-  filename: string;
-};
+/* /src/calculator/expression.js */
+declare type State = { 
+  stack: Array<glyph>; 
+  queue: Array<glyph>;
+}
 
-declare class WebpackConfiguration {
-  entry: Object | string[] | string;
-  output: Output;
-  module: Module;
-  postcss: ?Object[]; 
-  plugins: ?Object[];
-};
-
+/* /calculator/index.js */
 declare class NodeList<HTMLElement> {
   forEach(): void;
 }
@@ -43,3 +35,20 @@ declare class Target {
 declare class Event {
   target: Target;
 }
+
+/* Webpack */
+declare type Module = {
+  loaders: Object[];
+};
+
+declare type Output = {
+  filename: string;
+};
+
+declare class WebpackConfiguration {
+  entry: Object | string[] | string;
+  output: Output;
+  module: Module;
+  postcss: ?Object[]; 
+  plugins: ?Object[];
+};

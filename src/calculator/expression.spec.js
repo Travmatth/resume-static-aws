@@ -4,6 +4,7 @@ import { describe, it, beforeEach } from 'mocha'
 
 import Expression from './expression'
 import operations from './operations'
+import { Str, Num } from './CalcPrimitives'
 
 describe('Expression', () => {
   describe('translateFromInfix', () => {
@@ -14,86 +15,120 @@ describe('Expression', () => {
       infix = []
     });
 
-    it('should work', () => {
+    it('( 3 x 4 ) / 2 + ( 1  -  3 ) should translate', () => {
       const postfix = '3 4 2 x 1 5 - 2 3 ^ ^ / +' 
-      // expr.infix = ['(', 3, 'x', 4, ')', '/', 2, '+', '(', 1, ' - ', 3, ')']        
       expr.infix = [3, '+', 4, 'x', 2, '/', '(', 1, '-', 5, ')', '^', 2, '^', 3]        
       
-      expr.translateFromInfix()
-      expect(expr.getStatement()).to.equal(postfix)
+      const transformedExpr = expr.translateFromInfix()
+      expect(transformedExpr.map(tok => tok.value).join(' ')).to.equal(postfix)
     });
   });
 
-  describe('update', () => {
+  describe.only('update', () => {
     let expr
     beforeEach(() => {
       expr = new Expression(operations)
     });
 
     it('pushes numbers to []', () => {
-      expr.update(9)
+      expr.update(new Num(9))
       expect(expr.getStatement()).to.equal('9')
     });
 
     it('pushes ( to []', () => {
-      expr.update('(')
+      expr.update(Str('('))
       expect(expr.getStatement()).to.equal('(')
     });
 
     it('throws when pushing ) to []', () => {
-      expect( _ => expr.update(')')).to.throw(Error);
+      expect( _ => expr.update(Str(')'))).to.throw(Error);
     });
 
     it('appends numbers to [number]', () => {
-      expr.infix.push(3)
-      expr.update(9)
+      expr.update(new Num(3))
+      expr.update(new Num(9))
       expect(expr.getStatement()).to.equal('39')
     });
 
     it('throws when pushing ( to [number]', () => {
-      expr.infix.push(3)
-      expect( _ => expr.update('(')).to.throw(Error);
+      expr.update(new Num(3))
+      expect( _ => expr.update(Str('('))).to.throw(Error);
     });
 
     //DERSIRED BEHAVIOR
     // it('throws when pushing ) to [number]', () => {
-    //   expr.infix.push(3)
-    //   expect( _ => expr.update(')')).to.throw(Error);
+    //   expr.update(new Num(3))
+    //   expect( _ => expr.update(Str(')'))).to.throw(Error);
     // });
 
     it('pushes numbers to [number, string]', () => {
-      expr.infix.push(3)
-      expr.infix.push('+')
-      expr.update(9)
+      expr.update(new Num(3))
+      expr.update(Str('+'))
+      expr.update(new Num(9))
       expect(expr.getStatement()).to.equal('3 + 9')
     });
 
     it('pushes ( to [number, string]', () => {
-      expr.infix.push(3)
-      expr.infix.push('+')
-      expr.update('(')
+      expr.update(new Num(3))
+      expr.update(Str('+'))
+      expr.update(Str('('))
       expect(expr.getStatement()).to.equal('3 + (')
     });
 
     it('throws when pushing ) to [number, string]', () => {
-      expr.infix.push(3)
-      expr.infix.push('+')
-      expect( _ => expr.update(')')).to.throw(Error);
+      expr.update(new Num(3))
+      expr.update(Str('+'))
+      expect( _ => expr.update(Str(')'))).to.throw(Error);
     });
 
     it('throws when pushing string to []', () => {
-      expect( _ => expr.update('+')).to.throw(Error);
+      expect( _ => expr.update(Str('+')).)to.throw(Error);
     });
 
     it('throws when pushing string to [string]', () => {
-      expr.infix.push('+')
-      expect( _ => expr.update('+')).to.throw(Error);
+      expr.update(Str('+'))
+      expect( _ => expr.update(Str('+')).)to.throw(Error);
     });
 
     it('throws when pushing string to [number, string]', () => {
-      expr.infix.push(9)
-      expr.infix.push('+')
-      expect( _ => expr.update('+')).to.throw(Error);
+      expr.update(new Num(9))
+      expr.update(Str('+'))
+      expect( _ => expr.update(Str('+')).)to.throw(Error);
+    });
+
+    it('allows pushing op to ) ', () => {
+      expr.update(Str('('))
+      expr.update(new Num(9))
+      expr.update(Str('-'))
+      expr.update(new Num(3))
+      expr.update(Str(')'))
+      expr.update(Str('/'))
+      expr.update(new Num(3))
+      expect(expr.getStatement()).to.equal('( 9 - 3 ) / 3')
+    });
+
+    it('decimals can be entered', () => {
+      expr.update(new Num(9))
+      expr.update(Str('.'))
+      expr.update(new Num(3))
+      expr.update(new Num(3))
+      expect(expr.infix[0].value).to.equal(9.33)
+    });
+
+    it('decimals can be deleted', () => {
+      expr.update(new Num(9))
+      expr.update(Str('.'))
+      expr.update(new Num(3))
+      expr.update(new Num(3))
+      expr.clear()
+      expect(expr.getStatement()).to.equal('9.3')
+    });
+
+    it('decimal can be deleted', () => {
+      expr.update(new Num(9))
+      expr.update(Str('.'))
+      expr.clear()
+      expect(expr.getStatement()).to.equal('9')
     });
   });
 
@@ -105,51 +140,51 @@ describe('Expression', () => {
 
     it('1 + 1 should work', () => {
       // assert.equal(-1, [1,2,3].indexOf(4));
-      expr.infix.push(1)
-      expr.infix.push('+')
-      expr.infix.push(1)
+      expr.update(new Num(1))
+      expr.update(Str('+'))
+      expr.update(new Num(1))
       expr.compute()
       expect(expr.getStatement()).to.equal('2')
     });
 
     it('2 x 3 should work', () => {
       // assert.equal(-1, [1,2,3].indexOf(4));
-      expr.infix.push(2)
-      expr.infix.push('x')
-      expr.infix.push(3)
+      expr.update(new Num(2))
+      expr.update(Str('x'))
+      expr.update(new Num(3))
       expr.compute()
       expect(expr.getStatement()).to.equal('6')
     });
 
     it('4 / 2 should work', () => {
       // assert.equal(-1, [1,2,3].indexOf(4));
-      expr.infix.push(4)
-      expr.infix.push('/')
-      expr.infix.push(2)
+      expr.update(new Num(4))
+      expr.update(Str('/'))
+      expr.update(new Num(2)
       expr.compute()
       expect(expr.getStatement()).to.equal('2')
     });
 
     it('4 - 2 should work', () => {
       // assert.equal(-1, [1,2,3].indexOf(4));
-      expr.infix.push(4)
-      expr.infix.push('-')
-      expr.infix.push(2)
+      expr.update(new Num(4))
+      expr.update(Str('-'))
+      expr.update(new Num(2)
       expr.compute()
       expect(expr.getStatement()).to.equal('2')
     });
 
     it('6 / 3 x 4 - 6 + 5 should work', () => {
       // assert.equal(-1, [1,2,3].indexOf(4));
-      expr.infix.push(6)
-      expr.infix.push('/')
-      expr.infix.push(3)
-      expr.infix.push('x')
-      expr.infix.push(4)
-      expr.infix.push('-')
-      expr.infix.push(6)
-      expr.infix.push('+')
-      expr.infix.push(5)
+      expr.update(new Num(6))
+      expr.update(Str('/'))
+      expr.update(new Num(3))
+      expr.update(Str('x'))
+      expr.update(new Num(4))
+      expr.update(Str('-'))
+      expr.update(new Num(6))
+      expr.update(Str('+'))
+      expr.update(new Num(5))
       expr.compute()
       expect(expr.getStatement()).to.equal('7')
     });
