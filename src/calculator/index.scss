@@ -1,5 +1,7 @@
 @import '../common/_layout';
-$breakpoint-calculator: 500px;
+
+$breakpoint-mid: 500px;
+$breakpoint-small: 499px;
 
 section {
   width: 100vw;
@@ -9,6 +11,18 @@ section {
   top: 10vh;
 
   // keypad && window
+  .tip {
+    width: 100%;
+  }
+
+  .basic {
+    height: 100%;
+    align-content: space-around;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
   & > * {
     width: 60vw;
     border: 1px solid black;
@@ -24,53 +38,66 @@ section {
   }
 
   & .keypad {
-    height: 50vh;
-    background-color: lightblue;
-    top: 32vh;
     display: flex;
     justify-content: space-around;
-    align-items: center;
     flex-wrap: wrap;
+    align-items: center;
+    flex-direction: row;
+
+    top: 32vh;
+    height: 50vh;
+    background-color: lightblue;
 
     /* Keyboard */
-
     & > * {
       text-align: center;
     }
 
     // row one
     & [data-key='delete'],
-    & [data-key='power'] {
+    & .power {
       width: 50%;
       background-color: inherit;
       border: none;
     }
 
-    // row two
+    // row one - advanced
+    & [data-key='SIN'],
+    & [data-key='COS'],
+    & [data-key='TAN'],
+    & [data-key='LOG'],
+
+    // row two - advanced
+    & [data-key='E'],
+    & [data-key='PI'],
+    & [data-key='LN2'],
+    & [data-key='RAND'],
+
+    // row two - basic
     & [data-key='('],
     & [data-key=')'],
-    & [data-key='+'],
+    & [data-key='^'],
     & [data-key='/'],
 
-    // row three
+    // row three - basic
     & [data-key='7'],
     & [data-key='8'],
     & [data-key='9'],
-    & [data-key='x'],
+    & [data-key='*'],
 
-    // row four
+    // row four - basic
     & [data-key='4'],
     & [data-key='5'],
     & [data-key='6'],
     & [data-key='+'],
 
-    // row five
+    // row five - basic
     & [data-key='1'],
     & [data-key='2'],
     & [data-key='3'],
     & [data-key='-'],
 
-    // row six
+    // row six - basic
     & [data-key='.'],
     & [data-key='0'],
     & [data-key='='],
@@ -83,10 +110,44 @@ section {
   }
 }
 
-@media (min-width: $breakpoint-calculator) {
+@media (max-width: $breakpoint-small) {
+  .advanced {
+    display: none;
+    visibility: hidden;
+  }
+}
+
+@media (min-width: $breakpoint-mid) {
   .window, 
   .keypad {
-    width: 300px;
+    width: 80vw;
+    max-width: 550px;
     margin: 0 auto;
+  }
+
+  .tip {
+    display: none;
+    visibility: hidden;
+  }
+
+  .constants,
+  .functions {
+    display: inline-flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 50%;
+    justify-content: space-around;
+  }
+
+  .basic {
+    width: 70%;
+  }
+
+  .advanced {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 }

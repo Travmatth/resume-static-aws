@@ -11,13 +11,13 @@ const path = require('path');
 const pages = [
   'blog',
   'calculator',
-  'localweather',
-  'pomodoro',
-  'randomquote',
-  'simon',
-  'tictactoe',
-  'twitchtv',
-  'wikiviewer',
+  // 'localweather',
+  // 'pomodoro',
+  // 'randomquote',
+  // 'simon',
+  // 'tictactoe',
+  // 'twitchtv',
+  // 'wikiviewer',
 ]
 
 const common: WebpackConfiguration = validate({
@@ -45,7 +45,7 @@ const common: WebpackConfiguration = validate({
   ),
 
   resolve: {
-    extensions: ['', '.js', '.scss'],
+    extensions: ['', '.js', '.scss', '.pegjs'],
   },
 
   module: {
@@ -54,14 +54,17 @@ const common: WebpackConfiguration = validate({
         test: /\.js$/, 
         loader: 'babel', 
         exclude: /node_modules/,
-        query: {
-        },
       },
       { 
         test: /\.pug$/, 
         exclude: /node_modules/,
         loader: 'pug-loader' 
       },
+      {
+        test: /\.pegjs$/,
+        exclude: /node_modules/,
+        loader: 'pegjs-loader'
+      }
     ],
   },
 

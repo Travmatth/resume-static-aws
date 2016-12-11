@@ -9,36 +9,53 @@ block content
 	section
 		h2.window
 		div.keypad
-			// row one
-			button(data-key='delete') delete
-			button(data-key='power') power
+			div.advanced
+				// row one
+				div.functions
+					button(data-key='SIN') SIN
+					button(data-key='COS') COS
+					button(data-key='TAN') TAN
+					button(data-key='LOG') LOG
 
-			// row two
-			button(data-key='(') (
-			button(data-key=')') )
-			button(data-key='+') ^
-			button(data-key='/') /
+				// row two
+				div.constants
+					button(data-key='E') E
+					button(data-key='PI') PI
+					button(data-key='LN2') LN2
+					button(data-key='RAND') RAND
 
-			// row three
-			button(data-key='7') 7
-			button(data-key='8') 8
-			button(data-key='9') 9
-			button(data-key='x') x
+			div.basic
+				// row one
+				button(data-key='delete') delete
+				div 
 
-			// row four
-			button(data-key='4') 4
-			button(data-key='5') 5
-			button(data-key='6') 6
-			button(data-key='+') +
+				// row two
+				button(data-key='(') (
+				button(data-key=')') )
+				button(data-key='^') ^
+				button(data-key='/') /
 
-			// row five
-			button(data-key='1') 1
-			button(data-key='2') 2
-			button(data-key='3') 3
-			button(data-key='-') -
+				// row three
+				button(data-key='7') 7
+				button(data-key='8') 8
+				button(data-key='9') 9
+				button(data-key='*') *
 
-			// row six
-			button(data-key='.') .
-			button(data-key='0') 0
-			button(data-key='=') =
-			button(data-key='clear') c
+				// row four
+				button(data-key='4') 4
+				button(data-key='5') 5
+				button(data-key='6') 6
+				button(data-key='+') +
+
+				// row five
+				button(data-key='1') 1
+				button(data-key='2') 2
+				button(data-key='3') 3
+				button(data-key='-') -
+
+				// row six
+				button(data-key='.') .
+				button(data-key='0') 0
+				button(data-key='=') =
+				button(data-key='clear') c
+			div.tip Please rotate screen to landscape to see full layout

@@ -1,64 +1,50 @@
 /* @flow */
-import Expression from './expression'
-import { Num, Str } from './CalcPrimitives'
+import LogicUnit from './LogicUnit'
 
 /* called when used selects a glyph */
 function keyPress(val: Event): void {
-  // update the expression object
-  const key = val.target.dataset.key 
+  const { key } = val.target.dataset; 
 
   switch (key) {
     case '=':
-      try {
-        expression.compute() ;
-        refresh();
-      } catch (error) {
-        refresh('Error: Please check console for details');
-        console.log(error);
-      }
+      refresh(logic.compute())
 
       break
 
     case 'clear':
-      expression.clear();
+      logic.clear();
       refresh();
 
       break
 
     case 'delete':
-      expression.delete();
+      logic.delete();
       refresh();
 
       break
 
     default:
-      try {
-        expression.update(parseFloat(key) ? new Num(key) : Str(key));
-      } catch(error) {
-        alert(error);
-      }
-
+      logic.update(key);
       refresh();
+
       break
   }
-}
+};
 
-const expression = new Expression()
+let outputWindow 
+const logic = new LogicUnit();
 
 const refresh = (msg: ?string): void => {
   if (outputWindow) 
-        outputWindow.textContent = msg ? msg : expression.getStatement();
+        outputWindow.textContent = msg ? msg : logic.getExpression();
 } 
 
-/* ON DOCUMENT LOAD */
-let outputWindow 
-
 document.addEventListener('DOMContentLoaded', () =>  {
-  outputWindow = document.querySelector('h2.window')
+  outputWindow = document.querySelector('h2.window');
 
   document.querySelectorAll('[data-key]').forEach(el => {
     const opts = [keyPress, { passive: true }]
     el.addEventListener('onclick', ...opts)
     el.addEventListener('touchstart', ...opts)
-  })
+  });
 });

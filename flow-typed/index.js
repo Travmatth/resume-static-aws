@@ -1,25 +1,3 @@
-import typeof {Num as int} from "../src/calculator/Num.js";
-
-/* /src/calculator/expression.js */
-declare type num = {
-  kind: 'number',
-  value: int
-}
-
-declare type str = {
-  kind: 'string',
-  value: string
-}
-
-declare type glyph = str | num
-
-/* /src/calculator/expression.js */
-declare type State = { 
-  stack: Array<glyph>; 
-  queue: Array<glyph>;
-}
-
-/* /calculator/index.js */
 declare class NodeList<HTMLElement> {
   forEach(): void;
 }

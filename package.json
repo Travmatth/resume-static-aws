@@ -12,7 +12,8 @@
     "start:prod": "rm -rf dist && NODE_ENV=production webpack-dev-server -p --config tools/webpack.config.prod.babel.js --hot --inline --content-base dist/ --color --bail",
     "build:prod": "rm -rf dist && NODE_ENV=production webpack -p --config tools/webpack.config.prod.babel.js --bail --json > out.json",
     "build:dev": "rm -rf dist && NODE_ENV=development webpack -d --config tools/webpack.config.dev.babel.js --bail --json > out.json",
-    "deploy": "rm -rf dist && NODE_ENV=production webpack -p --config tools/webpack.config.deploy.babel.js"
+    "deploy": "rm -rf dist && NODE_ENV=production webpack -p --config tools/webpack.config.deploy.babel.js",
+    "build:parser": "pegjs src/calculator/arithmetic.pegjs"
   },
   "repository": {
     "type": "git",
@@ -47,6 +48,8 @@
     "json-loader": "^0.5.4",
     "mocha": "^3.1.2",
     "node-sass": "^3.13.0",
+    "pegjs": "^0.10.0",
+    "pegjs-loader": "^0.5.0",
     "postcss-loader": "^1.1.1",
     "pug": "^2.0.0-beta6",
     "pug-loader": "^2.3.0",
