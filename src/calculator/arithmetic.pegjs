@@ -51,7 +51,9 @@ Factor
   / Primary
   
 Primary 
-  = method:[a-zA-Z]+ '(' expr:Expression ')' { return functions[method.join('')](expr) }
+  = method:[a-zA-Z]+ '(' _ expr:Expression _ ')' { 
+    return functions[method.join('')](expr) 
+  }
   / Real
 
 Real "real"

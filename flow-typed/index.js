@@ -2,16 +2,8 @@ declare class NodeList<HTMLElement> {
   forEach(): void;
 }
 
-declare class Dataset {
-  key: string;
-}
-
-declare class Target {
-  dataset: Dataset;
-}
-
 declare class Event {
-  target: Target;
+  target: HTMLElement;
 }
 
 /* Webpack */

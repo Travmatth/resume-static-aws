@@ -179,7 +179,9 @@ function peg$parse(input, options) {
       peg$c17 = function(expr) { return expr; },
       peg$c18 = /^[a-zA-Z]/,
       peg$c19 = peg$classExpectation([["a", "z"], ["A", "Z"]], false, false),
-      peg$c20 = function(method, expr) { return functions[method.join('')](expr) },
+      peg$c20 = function(method, expr) { 
+          return functions[method.join('')](expr) 
+        },
       peg$c21 = peg$otherExpectation("real"),
       peg$c22 = /^[0-9]/,
       peg$c23 = peg$classExpectation([["0", "9"]], false, false),
@@ -643,7 +645,7 @@ function peg$parse(input, options) {
   }
 
   function peg$parsePrimary() {
-    var s0, s1, s2, s3, s4;
+    var s0, s1, s2, s3, s4, s5, s6;
 
     s0 = peg$currPos;
     s1 = [];
@@ -677,19 +679,31 @@ function peg$parse(input, options) {
         if (peg$silentFails === 0) { peg$fail(peg$c14); }
       }
       if (s2 !== peg$FAILED) {
-        s3 = peg$parseExpression();
+        s3 = peg$parse_();
         if (s3 !== peg$FAILED) {
-          if (input.charCodeAt(peg$currPos) === 41) {
-            s4 = peg$c15;
-            peg$currPos++;
-          } else {
-            s4 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c16); }
-          }
+          s4 = peg$parseExpression();
           if (s4 !== peg$FAILED) {
-            peg$savedPos = s0;
-            s1 = peg$c20(s1, s3);
-            s0 = s1;
+            s5 = peg$parse_();
+            if (s5 !== peg$FAILED) {
+              if (input.charCodeAt(peg$currPos) === 41) {
+                s6 = peg$c15;
+                peg$currPos++;
+              } else {
+                s6 = peg$FAILED;
+                if (peg$silentFails === 0) { peg$fail(peg$c16); }
+              }
+              if (s6 !== peg$FAILED) {
+                peg$savedPos = s0;
+                s1 = peg$c20(s1, s4);
+                s0 = s1;
+              } else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+              }
+            } else {
+              peg$currPos = s0;
+              s0 = peg$FAILED;
+            }
           } else {
             peg$currPos = s0;
             s0 = peg$FAILED;
@@ -873,7 +887,11 @@ function peg$parse(input, options) {
 
 
   	const functions = {
-      	INV: (val) => val * -1,
+      	INV: val => val * -1,
+        SIN: val => Math.sin(val),
+        COS: val => Math.cos(val),
+        TAN: val => Math.tan(val),
+        LOG: val => Math.log(val),
       }
 
 

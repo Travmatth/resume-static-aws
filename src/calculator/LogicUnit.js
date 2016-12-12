@@ -2,12 +2,17 @@
 
 import arithmetic from './Arithmetic'
 
+const constants = {
+  'E':'2.718',
+  'PI':'3.14',
+  'LN2':'0.693',
+}
+
 export default class LogicUnit {
   expression: Array<string>;
 
   constructor() {
     this.expression = [];
-    this.constants = new Set(['3.14', '2.718', '0.693'])
   }
 
   getExpression(): string {
@@ -36,7 +41,6 @@ export default class LogicUnit {
       const parsed = parseFloat(result).toFixed(5).replace(/\.?0+$/, '')
       this.expression = [parsed]
     } catch(thrown) {
-      console.error(thrown)
       return 'Error'
     }
   }
@@ -45,43 +49,35 @@ export default class LogicUnit {
   update(char: string): void {
     const last = this.expression[this.expression.length - 1]
 
-    if (this.expression.length === 0) this.expression.push(char)
-
-    else if (typeof parseFloat(char) === 'number') {
-      if (typeof parseFloat(last) === 'number') {
-        if (!this.constants.has(last)) {
-          console.log('here', last)
-          console.log('here', typeof char)
+    // If user entered number, determine if it should be appended to last
+    // number or should it be entered as a discrete number in expression
+    if (parseFloat(char) || char === '0') {
+      if (parseFloat(last)) {
+        if (this.expression.length === 0) {
+          this.expression.push(char)
+        } else {
           this.expression[this.expression.length - 1] = `${last}${char}`
-        } else this.expression.push(char)
+        }
       } else {
         this.expression.push(char)
       }
 
+    // If string is entered, it's either a function or constant
+    // Constants are added as a number, functions as a string
     } else {
       switch (char) {
         case '.': 
-          this.expression[-1] = `${last}.`
-          break
-
-        case 'E':
-          console.log('here', char);
-          this.expression.push('2.718')
-          break
-
-        case 'PI':
-          this.expression.push('3.14')
-          break
-
-        case 'LN2':
-          this.expression.push('0.693')
+          if (this.expression.length > 0) 
+            this.expression[this.expression.length - 1] = `${last}.`
           break
 
         case 'RAND':
           break
 
         default:
-          this.expression.push(char)
+          if (char in constants) this.expression.push(constants[char])
+          else if (char === ')') this.expression.push(char)
+          else this.expression.push(char + '(')
           break
       }
     }

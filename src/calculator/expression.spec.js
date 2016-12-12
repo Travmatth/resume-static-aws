@@ -87,12 +87,46 @@ describe('LogicUnit', () => {
       expect(expr.getExpression()).to.equal('1')
     });
 
-    it.only('symbols work', () => {
+    it('symbols can be entered', () => {
       const expected = ['2.718', '3.14', '0.693']
       expr.update('E')
       expr.update('PI')
       expr.update('LN2')
       expect(expr.expression).to.eql(expected)
+    })
+  });
+
+  describe.only('functions should work', () => {
+    it('SIN should compute correctly', () => {
+      expr.update('SIN')
+      expr.update('0')
+      expr.update(')')
+      expr.compute()
+      expect(expr.getExpression()).to.equal('0')
+    })
+
+    it('COS should compute correctly', () => {
+      expr.update('COS')
+      expr.update('0')
+      expr.update(')')
+      expr.compute()
+      expect(expr.getExpression()).to.equal('1')
+    })
+
+    it('TAN should compute correctly', () => {
+      expr.update('TAN')
+      expr.update('1')
+      expr.update(')')
+      expr.compute()
+      expect(expr.getExpression()).to.equal('1.55741')
+    })
+
+    it('LOG should compute correctly', () => {
+      expr.update('LOG')
+      expr.update('1')
+      expr.update(')')
+      expr.compute()
+      expect(expr.getExpression()).to.equal('0')
     })
   });
 });
