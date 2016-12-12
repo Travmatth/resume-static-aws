@@ -8,3 +8,4 @@ reports
 out.json
 flowcheck.txt
 flowcheck.txt
+yarn-error.log

@@ -60,6 +60,12 @@ section {
       background-color: inherit;
       border: none;
     }
+    
+    & .filler {
+      background-color: black; 
+      min-width: 10px;
+      width: 80%;
+    }
 
     // row one - advanced
     & [data-key='SIN'],
