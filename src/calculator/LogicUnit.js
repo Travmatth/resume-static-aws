@@ -2,11 +2,8 @@
 
 import arithmetic from './Arithmetic'
 
-const constants = {
-  'E':'2.718',
-  'PI':'3.14',
-  'LN2':'0.693',
-}
+const operators = new Set(['+', '-', '*', '/', '^'])
+const constants = {'E':'2.718', 'PI':'3.14', 'LN2':'0.693'}
 
 export default class LogicUnit {
   expression: Array<string>;
@@ -20,10 +17,12 @@ export default class LogicUnit {
   }
 
   clear(): void {
-    const last = this.expression[this.expression.length - 1] 
+    const len = this.expression.length - 1
+    const last = this.expression[len] 
+
     //If last string is number, truncate number
     if (last && last.length > 1)
-      this.expression[this.expression.length - 1] = this.expression[this.expression.length - 1].slice(0, -1)
+      this.expression[len] = this.expression[len].slice(0, -1)
 
     //If last string is number, truncate string
     else if (this.expression && this.expression.length > 1)
@@ -41,7 +40,8 @@ export default class LogicUnit {
       const parsed = parseFloat(result).toFixed(5).replace(/\.?0+$/, '')
       this.expression = [parsed]
     } catch(thrown) {
-      return 'Error'
+      console.error(thrown)
+      return thrown.message
     }
   }
 
@@ -75,9 +75,12 @@ export default class LogicUnit {
           break
 
         default:
-          if (char in constants) this.expression.push(constants[char])
-          else if (char === ')') this.expression.push(char)
-          else this.expression.push(char + '(')
+          if (char in constants) 
+            this.expression.push(constants[char])
+          else if (char === '(' || char === ')') 
+            this.expression.push(char)
+          else 
+            this.expression.push(!operators.has(char) ? char + '(' : char)
           break
       }
     }

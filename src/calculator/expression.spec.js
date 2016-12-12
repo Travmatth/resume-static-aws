@@ -4,7 +4,7 @@ import { describe, it, beforeEach } from 'mocha'
 
 import LogicUnit from './LogicUnit'
 
-describe('LogicUnit', () => {
+describe.only('LogicUnit', () => {
   let expr, infix
     
   beforeEach(() => {
@@ -96,7 +96,7 @@ describe('LogicUnit', () => {
     })
   });
 
-  describe.only('functions should work', () => {
+  describe('functions should work', () => {
     it('SIN should compute correctly', () => {
       expr.update('SIN')
       expr.update('0')

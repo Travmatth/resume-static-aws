@@ -10,8 +10,8 @@
     "start": "rm -rf dist && NODE_ENV=development webpack-dev-server -d --config tools/webpack.config.dev.babel.js --host 0.0.0.0 --hot --inline --content-base dist/ --color --bail --json",
     "stats": "webpack --progress --display-reasons --display-error-details ",
     "start:prod": "rm -rf dist && NODE_ENV=production webpack-dev-server -p --config tools/webpack.config.prod.babel.js --hot --inline --content-base dist/ --color --bail",
-    "build:prod": "rm -rf dist && NODE_ENV=production webpack -p --config tools/webpack.config.prod.babel.js --bail --json > out.json",
-    "build:dev": "rm -rf dist && NODE_ENV=development webpack -d --config tools/webpack.config.dev.babel.js --bail --json > out.json",
+    "build:prod": "rm -rf dist && NODE_ENV=production webpack -p --config tools/webpack.config.prod.babel.js --bail --json",
+    "build:dev": "rm -rf dist && NODE_ENV=development webpack -d --config tools/webpack.config.dev.babel.js --bail --json",
     "deploy": "rm -rf dist && NODE_ENV=production webpack -p --config tools/webpack.config.deploy.babel.js",
     "build:parser": "pegjs src/calculator/arithmetic.pegjs"
   },
