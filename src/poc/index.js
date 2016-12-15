@@ -1,23 +1,5 @@
 /* @flow */
-// import { serialize } from '../common/utils'
-
-/* Refactor
-String.prototype.serialize = function(params) {
-  const query = [];
-  let url = this;
-
-  if (params !== undefined) url += "?"
-
-  for (var property in params) {
-    if (params.hasOwnProperty(property)) {
-      query.push(encodeURIComponent(property) 
-        + "=" 
-        + encodeURIComponent(params[property]));
-    }
-  }
-  return url + query.join("&");
-}
- */
+import { serialize } from '../common/utils'
 
 let cells: ?NodeList<HTMLElement>
 const params: Object = { //API Params }
@@ -28,7 +10,9 @@ const content: string = '' //serialize(url, params)
 document.addEventListener('DOMContentLoaded', () =>  {
   cells = document.querySelectorAll('.cell')
 
-  fetchData()
+  setTimeout(() => {
+    fetchData()
+  }, 500);
 });
 
 
@@ -36,11 +20,9 @@ const fetchData = (): void => {
   // Fetch initial content after delay
   // Should I use JSONP + validation,
   // Or set up proxy on heroku?
-  setTimeout(() => {
-    fetch(content)
-      .then(parse)
-      .then(updateDOM)
-  }, 500);
+  fetch(content)
+    .then(parse)
+    .then(updateDOM)
 }
 
 const parse = (response: Response): Arrary<Object> => {
