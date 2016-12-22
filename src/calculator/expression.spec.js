@@ -4,7 +4,7 @@ import { describe, it, beforeEach } from 'mocha'
 
 import LogicUnit from './LogicUnit'
 
-describe.only('LogicUnit', () => {
+describe('LogicUnit', () => {
   let expr, infix
     
   beforeEach(() => {

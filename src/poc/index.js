@@ -1,4 +1,3 @@
-/* @flow */
 import { serialize } from '../common/utils'
 
 let cells: ?NodeList<HTMLElement>

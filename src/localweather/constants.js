@@ -1,3 +1,5 @@
+/* @flow */
+
 export const week = [
   'Sunday',
   'Monday',
@@ -23,7 +25,7 @@ export const month = [
  'December',
 ]
 
-export function appendSuffix(day) {
+export function appendSuffix(day: number) {
   return (
     day === 1 ? `${day}st` :
     day === 2 ? `${day}nd` :
@@ -33,20 +35,22 @@ export function appendSuffix(day) {
   )
 }
 
-export function dateString(time) {
+export function dateString(time: Date) {
   return `${week[time.getDay()]}, ` 
     + `${month[time.getMonth()]} ` 
     + `${appendSuffix(time.getDate())}`
 }
 
-export function parseTime({ date, ...rest }) {
-  const date = new Date(date * 1000)
+export function parseTime(time: Object) {
+  // const time = { date: number, ...rest: Object }
+  const { date, ...rest } = time
+  const duration = new Date(date * 1000)
 
-  const hours = date.getHours() % 12
-  const minutes = date.getMinutes()
+  const hours = duration.getHours() % 12
+  const minutes = duration.getMinutes()
   return { 
     ...rest, 
-    day: dateString(date), 
+    day: dateString(duration), 
     time: `${hours}:${minutes}0`, 
   }
 }

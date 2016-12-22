@@ -12,12 +12,12 @@ const pages = [
   'blog',
   'calculator',
   'localweather',
-  'pomodoro',
-  'randomquote',
-  'simon',
-  'tictactoe',
-  'twitchtv',
-  'wikiviewer',
+  // 'pomodoro',
+  // 'randomquote',
+  // 'simon',
+  // 'tictactoe',
+  // 'twitchtv',
+  // 'wikiviewer',
 ]
 
 const common: WebpackConfiguration = validate({

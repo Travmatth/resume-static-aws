@@ -22,3 +22,9 @@ declare class WebpackConfiguration {
   postcss: ?Object[]; 
   plugins: ?Object[];
 };
+
+declare class ResponseError extends Error {
+  response: Response;
+}
+
+declare var afterEach: Function;
