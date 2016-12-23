@@ -37,7 +37,7 @@ export type Temperatures = {|
   temp_kf: number;
 |}
 
-export type Weather = {|
+export type WeatherReport = {|
   id: number;
   main: string;
   description: string;
@@ -52,7 +52,7 @@ export type Wind = {|
 export type Forecast = {|
   dt: number;
   main: Temperatures;
-  weather: Array<Weather>;
+  weather: Array<WeatherReport>;
   clouds: Clouds;
   wind: Wind;
   rain: ?Measurement;
@@ -77,11 +77,29 @@ export type DailyForecast = {|
   temp: DailyTemperature
 |}
 
-// export type WeatherResponse = {|
-//   now: ;
-//   city: ;
-//   forecasts: forecasts.map(parseTime): ;
-// |}
+export type WeatherResponse = {|
+  now: Date;
+  city: string;
+  forecasts: Array<DailyForecast>;
+|}
+
+export type Daily= {|
+  icon: string;
+  rain: ?number;
+  snow: ?number;
+  description: string;
+  weather: string;
+  cloud: number;
+  day: string;
+  time: string;
+  temp: DailyTemperature
+|}
+
+export type Weather = {|
+  now: Date;
+  city: string;
+  forecasts: Array<Daily>;
+|}
 
 export type FiveDayForecast = {|
   city: City;   
@@ -89,12 +107,4 @@ export type FiveDayForecast = {|
   message: number;
   cnt: number;
   list: Array<Forecast>;
-|}
-
-export type RawJSON = {|
-  city: mixed;   
-  cod: mixed;
-  message: mixed;
-  cnt: mixed;
-  list: Array<mixed>;
 |}

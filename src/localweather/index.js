@@ -1,6 +1,9 @@
 /* @flow */
 import { serialize, ResponseError } from '../common/utils'
 import { parseTime } from './constants'
+import { 
+  DailyForecast, Weather, FiveDayForecast, Forecast, Daily
+} from './index.js.flow' 
 
 //Initiliazed in DOMContentLoaded
 let cells: ?NodeList<HTMLElement>
@@ -14,10 +17,9 @@ export const params = (lat: number, lon: number): Object => ({
   'APPID': 'c26ef1df98c449f37f8f199738ce74c7',
 })
 
-
 //MAIN
-export const main = () =>  {
-  // cells = document.querySelectorAll('.cell')
+export const main = (time: number = 500): void =>  {
+  cells = document.querySelectorAll('.cell')
 
   setTimeout(() => {
     navigator.geolocation.getCurrentPosition( location => {
@@ -33,11 +35,10 @@ export const main = () =>  {
       // Call API, parse response, generate data, update DOM
       // updateDOM(weather, cells)
       } catch(error) {
-        console.error('error')
-        console.error(error)
+        console.error('error', error)
       }
     })
-  }, 500);
+  }, time);
 }
 
 // document.addEventListener('DOMContentLoaded', main);
@@ -54,94 +55,79 @@ export const fetchWeather = async (url: string): any => {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    // body: JSON.stringify({ url })
   }
 
   
   return await fetch(url, opts)
     .then(checkResponse)
-    // .then(processJSON)
+    .then(processWeather)
+    // .then(updateDOM)
     .catch(err => { throw err })
 }
-
-//   .then(processWeather)
-//   .then(processTime)
-//   .then(stripDates)
-//   .then(updateDOM)
-//   .catch(processError) 
 
 // If error in process, update DOM appropriately
 export const checkResponse = async (response: Response): any => {
   if (response.status < 200 || response.status >= 400) { 
-    const err = new ResponseError('localweather fetch failed', response)
-    throw err  
+    throw new ResponseError('localweather fetch failed', response)
   }
 
-  return await (response.json(): any)
+  return await (response.json(): FiveDayForecast)
 }
 
-// export const processJSON = (json: any): FiveDayForecast => {
-//   return (json: FiveDayForecast)
-// }
+// export const processWeather = (data: FiveDayForecast): WeatherResponse  => ({
+export const processWeather = (data: FiveDayForecast): Weather => ({
+  city: data.city.name,
+  now: Date.now(),
+  forecasts: data.list
+    .map(processForecasts)
+    .map(parseTime)
+    .map(stripDateIfRedundant)
+})
 
-// export const processWeather = (data: fiveDayForecast): WeatherResponse  => ({
-//   forecasts: data.list.map(processForecasts),
-//   city: data.city.name,
-//   now: Date.now(),
-// })
+export const convertFahrenheitToCelsius = (temp: number) => (
+  Math.round(temp * 1.8 + 32)
+)
 
-// export const convertFahrenheitToCelsius = temp => Math.round(temp * 1.8 + 32)
+export const processForecasts = (outlook: Forecast): DailyForecast => ({
+  icon: `http://openweathermap.org/img/w/${outlook.weather[0].icon}.png`,
+  rain: outlook.rain && outlook.rain['3h'] || null,
+  snow: outlook.snow && outlook.snow['3h'] || null,
+  description: outlook.weather[0].description,
+  weather: outlook.weather[0].main,
+  cloud: outlook.clouds.all,
+  date: outlook.dt,
+  temp: {
+    celsius: convertFahrenheitToCelsius(outlook.main.temp),
+    farenheit: outlook.main.temp,
+  },
+});
 
-// export const processResponse = (data: fiveDayForecast): WeatherResponse  => ({
-// // export const processTime = ({ city, now, forecasts }) => ({
-// // export const processTime = (weather: WeatherResponse) => ({
-// //   now,
-// //   city,
-// //   forecasts: forecasts.map(parseTime),
-// // })
+export const stripDateIfRedundant = (
+  today: Daily, 
+  index: number, 
+  seq: Array<Daily>
+) => {
+  const { day, ...rest } = today
+  if (index > 0 && seq[index - 1].day === day) {
+    return { day: '', ...rest }
+  } else {
+    return { day, ...rest }
+  }
+} 
 
-// export const processForecasts = (outlook: Forecast): DailyForecast => ({
-//   icon: `http://openweathermap.org/img/w/${outlook.weather[0].icon}.png`,
-//   rain: outlook.rain && outlook.rain['3h'] || null,
-//   snow: outlook.snow && outlook.snow['3h'] || null,
-//   description: outlook.weather[0].description,
-//   weather: outlook.weather[0].main,
-//   cloud: outlook.clouds.all,
-//   date: outlook.dt,
-//   temp: {
-//     celsius: convertFahrenheitToCelsius(outlook.main.temp),
-//     farenheit: outlook.main.temp,
-//   },
-// })
+export const updateDOM = (results: Array<Object>): void => {
+  results.map(result => {
+    if (cells) cells.map(cell => {
+      //create cells using info from result
 
-// export const stripDateIfRedundant = (thisDay, index, array) => {
-//   const { day, ...rest } = thisDay
-//   if (index > 0 && array[index - 1].day === day) {
-//     return { day: '', ...rest }
-//   } else {
-//     return { day, ...rest }
-//   }
-// } 
+      //make visible
+      toggleVisibility(cell)
+    })
+  })
+}
 
-// export const stripDates = ({city, now, forecasts}) => ({ 
-//   now,
-//   city,
-//   forecasts: forecasts.map(stripDateIfRedundant)
-// }) 
-
-// export const updateDOM = (results: Array<Object>): void => {
-//   results.map(result => {
-//     if (cells) cells.map(cell => {
-//       //create cells using info from result
-
-//       //make visible
-//       toggleVisibility(cell)
-//     })
-//   })
-// }
-
-// export const toggleVisibility = (el: HTMLElement): void => {
-//   el.className.match(/hide/)
-//     ? el.className.replace(/hide/, 'show')
-//     : el.className.replace(/show/, 'hide')
-// }
+export const toggleVisibility = (el: HTMLElement): void => {
+  el.className.match(/hide/)
+    ? el.className.replace(/hide/, 'show')
+    : el.className.replace(/show/, 'hide')
+}

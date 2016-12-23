@@ -1,4 +1,7 @@
 /* @flow */
+import { 
+  Daily, DailyForecast,
+} from './index.js.flow' 
 
 export const week = [
   'Sunday',
@@ -25,7 +28,7 @@ export const month = [
  'December',
 ]
 
-export function appendSuffix(day: number) {
+export function appendSuffix(day: number): string {
   return (
     day === 1 ? `${day}st` :
     day === 2 ? `${day}nd` :
@@ -35,14 +38,13 @@ export function appendSuffix(day: number) {
   )
 }
 
-export function dateString(time: Date) {
+export function dateString(time: Date): string {
   return `${week[time.getDay()]}, ` 
     + `${month[time.getMonth()]} ` 
     + `${appendSuffix(time.getDate())}`
 }
 
-export function parseTime(time: Object) {
-  // const time = { date: number, ...rest: Object }
+export function parseTime(time: DailyForecast): Daily {
   const { date, ...rest } = time
   const duration = new Date(date * 1000)
 

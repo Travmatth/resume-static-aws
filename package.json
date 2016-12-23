@@ -49,6 +49,7 @@
     "flow-bin": "^0.36.0",
     "flow-status-webpack-plugin": "^0.1.7",
     "html-webpack-plugin": "^2.24.1",
+    "jsdom": "^9.9.1",
     "json-loader": "^0.5.4",
     "mocha": "^3.1.2",
     "node-sass": "^4.0.0",
