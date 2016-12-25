@@ -1,5 +1,547 @@
+import { Weather } from './index.js.flow'
+
 // curl -XPOST -H "Content-type: application/json" 'http://api.openweathermap.org/data/2.5/forecast?lat=40.712784&lon=-74.005941&units=imperial&APPID=c26ef1df98c449f37f8f199738ce74c7'
-export const data = {
+
+export const data: Weather = {
+  "city": "New York",
+  "now": 1482623395150,
+  "forecasts": [
+    {
+      "day": "Thursday, December 15th",
+      "icon": "http://openweathermap.org/img/w/01n.png",
+      "rain": 0,
+      "snow": 0.0025,
+      "description": "clear sky",
+      "weather": "Clear",
+      "cloud": 36,
+      "temp": {
+        "celsius": 84,
+        "farenheit": 28.74
+      },
+      "time": "1:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/13n.png",
+      "rain": 0,
+      "snow": 0.2075,
+      "description": "light snow",
+      "weather": "Snow",
+      "cloud": 20,
+      "temp": {
+        "celsius": 82,
+        "farenheit": 27.82
+      },
+      "time": "4:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/01n.png",
+      "rain": 0,
+      "snow": 0,
+      "description": "clear sky",
+      "weather": "Clear",
+      "cloud": 0,
+      "temp": {
+        "celsius": 75,
+        "farenheit": 24.08
+      },
+      "time": "7:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/02d.png",
+      "rain": 0,
+      "snow": 0,
+      "description": "few clouds",
+      "weather": "Clouds",
+      "cloud": 12,
+      "temp": {
+        "celsius": 76,
+        "farenheit": 24.48
+      },
+      "time": "10:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/02d.png",
+      "rain": 0,
+      "snow": 0,
+      "description": "few clouds",
+      "weather": "Clouds",
+      "cloud": 24,
+      "temp": {
+        "celsius": 77,
+        "farenheit": 24.8
+      },
+      "time": "1:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/01d.png",
+      "rain": 0,
+      "snow": 0.005,
+      "description": "clear sky",
+      "weather": "Clear",
+      "cloud": 36,
+      "temp": {
+        "celsius": 75,
+        "farenheit": 23.62
+      },
+      "time": "4:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/01n.png",
+      "rain": 0,
+      "snow": 0.0025,
+      "description": "clear sky",
+      "weather": "Clear",
+      "cloud": 44,
+      "temp": {
+        "celsius": 74,
+        "farenheit": 23.46
+      },
+      "time": "7:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/01n.png",
+      "rain": 0,
+      "snow": 0.0075,
+      "description": "clear sky",
+      "weather": "Clear",
+      "cloud": 48,
+      "temp": {
+        "celsius": 77,
+        "farenheit": 24.75
+      },
+      "time": "10:00"
+    },
+    {
+      "day": "Friday, December 16th",
+      "icon": "http://openweathermap.org/img/w/01n.png",
+      "rain": 0,
+      "snow": 0.0025,
+      "description": "clear sky",
+      "weather": "Clear",
+      "cloud": 56,
+      "temp": {
+        "celsius": 78,
+        "farenheit": 25.64
+      },
+      "time": "1:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/01n.png",
+      "rain": 0,
+      "snow": 0.0075,
+      "description": "clear sky",
+      "weather": "Clear",
+      "cloud": 64,
+      "temp": {
+        "celsius": 79,
+        "farenheit": 26.21
+      },
+      "time": "4:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/04n.png",
+      "rain": 0,
+      "snow": 0,
+      "description": "broken clouds",
+      "weather": "Clouds",
+      "cloud": 76,
+      "temp": {
+        "celsius": 79,
+        "farenheit": 26.33
+      },
+      "time": "7:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/02d.png",
+      "rain": 0,
+      "snow": 0,
+      "description": "clear sky",
+      "weather": "Clear",
+      "cloud": 8,
+      "temp": {
+        "celsius": 82,
+        "farenheit": 27.9
+      },
+      "time": "10:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/01d.png",
+      "rain": 0,
+      "snow": 0,
+      "description": "clear sky",
+      "weather": "Clear",
+      "cloud": 0,
+      "temp": {
+        "celsius": 86,
+        "farenheit": 30.07
+      },
+      "time": "1:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/02d.png",
+      "rain": 0,
+      "snow": 0,
+      "description": "few clouds",
+      "weather": "Clouds",
+      "cloud": 20,
+      "temp": {
+        "celsius": 85,
+        "farenheit": 29.2
+      },
+      "time": "4:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/02n.png",
+      "rain": 0,
+      "snow": 0,
+      "description": "clear sky",
+      "weather": "Clear",
+      "cloud": 8,
+      "temp": {
+        "celsius": 78,
+        "farenheit": 25.58
+      },
+      "time": "7:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/04n.png",
+      "rain": 0,
+      "snow": 0,
+      "description": "broken clouds",
+      "weather": "Clouds",
+      "cloud": 64,
+      "temp": {
+        "celsius": 79,
+        "farenheit": 26.36
+      },
+      "time": "10:00"
+    },
+    {
+      "day": "Saturday, December 17th",
+      "icon": "http://openweathermap.org/img/w/13n.png",
+      "rain": 0,
+      "snow": 0.2925,
+      "description": "light snow",
+      "weather": "Snow",
+      "cloud": 88,
+      "temp": {
+        "celsius": 80,
+        "farenheit": 26.71
+      },
+      "time": "1:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/13n.png",
+      "rain": 0,
+      "snow": 1.19,
+      "description": "light snow",
+      "weather": "Snow",
+      "cloud": 88,
+      "temp": {
+        "celsius": 81,
+        "farenheit": 27.38
+      },
+      "time": "4:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/13n.png",
+      "rain": 0,
+      "snow": 2.4525,
+      "description": "snow",
+      "weather": "Snow",
+      "cloud": 92,
+      "temp": {
+        "celsius": 84,
+        "farenheit": 29.02
+      },
+      "time": "7:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/10d.png",
+      "rain": 0.0075,
+      "snow": 5.3125,
+      "description": "light rain",
+      "weather": "Rain",
+      "cloud": 92,
+      "temp": {
+        "celsius": 92,
+        "farenheit": 33.08
+      },
+      "time": "10:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/10d.png",
+      "rain": 0.26,
+      "snow": 2.9725,
+      "description": "light rain",
+      "weather": "Rain",
+      "cloud": 100,
+      "temp": {
+        "celsius": 94,
+        "farenheit": 34.66
+      },
+      "time": "1:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/10d.png",
+      "rain": 1.21,
+      "snow": 0,
+      "description": "light rain",
+      "weather": "Rain",
+      "cloud": 92,
+      "temp": {
+        "celsius": 97,
+        "farenheit": 35.84
+      },
+      "time": "4:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/10n.png",
+      "rain": 1.63,
+      "snow": 0,
+      "description": "light rain",
+      "weather": "Rain",
+      "cloud": 92,
+      "temp": {
+        "celsius": 98,
+        "farenheit": 36.65
+      },
+      "time": "7:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/10n.png",
+      "rain": 0.57,
+      "snow": 0,
+      "description": "light rain",
+      "weather": "Rain",
+      "cloud": 100,
+      "temp": {
+        "celsius": 101,
+        "farenheit": 38.22
+      },
+      "time": "10:00"
+    },
+    {
+      "day": "Sunday, December 18th",
+      "icon": "http://openweathermap.org/img/w/10n.png",
+      "rain": 0.03,
+      "snow": 0,
+      "description": "light rain",
+      "weather": "Rain",
+      "cloud": 92,
+      "temp": {
+        "celsius": 110,
+        "farenheit": 43.09
+      },
+      "time": "1:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/10n.png",
+      "rain": 0.41,
+      "snow": 0,
+      "description": "light rain",
+      "weather": "Rain",
+      "cloud": 92,
+      "temp": {
+        "celsius": 119,
+        "farenheit": 48.14
+      },
+      "time": "4:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/10n.png",
+      "rain": 0.52,
+      "snow": 0,
+      "description": "light rain",
+      "weather": "Rain",
+      "cloud": 92,
+      "temp": {
+        "celsius": 127,
+        "farenheit": 52.94
+      },
+      "time": "7:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/10d.png",
+      "rain": 0.5625,
+      "snow": 0,
+      "description": "light rain",
+      "weather": "Rain",
+      "cloud": 92,
+      "temp": {
+        "celsius": 134,
+        "farenheit": 56.59
+      },
+      "time": "10:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/10d.png",
+      "rain": 2.5,
+      "snow": 0,
+      "description": "light rain",
+      "weather": "Rain",
+      "cloud": 64,
+      "temp": {
+        "celsius": 133,
+        "farenheit": 56.35
+      },
+      "time": "1:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/10d.png",
+      "rain": 2.4875,
+      "snow": 0,
+      "description": "light rain",
+      "weather": "Rain",
+      "cloud": 92,
+      "temp": {
+        "celsius": 122,
+        "farenheit": 50.01
+      },
+      "time": "4:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/10n.png",
+      "rain": 0.4625,
+      "snow": 0,
+      "description": "light rain",
+      "weather": "Rain",
+      "cloud": 92,
+      "temp": {
+        "celsius": 112,
+        "farenheit": 44.39
+      },
+      "time": "7:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/04n.png",
+      "rain": 0,
+      "snow": 0,
+      "description": "overcast clouds",
+      "weather": "Clouds",
+      "cloud": 92,
+      "temp": {
+        "celsius": 103,
+        "farenheit": 39.65
+      },
+      "time": "10:00"
+    },
+    {
+      "day": "Monday, December 19th",
+      "icon": "http://openweathermap.org/img/w/04n.png",
+      "rain": 0,
+      "snow": 0,
+      "description": "broken clouds",
+      "weather": "Clouds",
+      "cloud": 68,
+      "temp": {
+        "celsius": 94,
+        "farenheit": 34.63
+      },
+      "time": "1:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/01n.png",
+      "rain": 0,
+      "snow": 0,
+      "description": "clear sky",
+      "weather": "Clear",
+      "cloud": 0,
+      "temp": {
+        "celsius": 86,
+        "farenheit": 29.74
+      },
+      "time": "4:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/01n.png",
+      "rain": 0,
+      "snow": 0,
+      "description": "clear sky",
+      "weather": "Clear",
+      "cloud": 0,
+      "temp": {
+        "celsius": 81,
+        "farenheit": 27.43
+      },
+      "time": "7:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/01d.png",
+      "rain": 0,
+      "snow": 0,
+      "description": "clear sky",
+      "weather": "Clear",
+      "cloud": 0,
+      "temp": {
+        "celsius": 85,
+        "farenheit": 29.65
+      },
+      "time": "10:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/01d.png",
+      "rain": 0,
+      "snow": 0,
+      "description": "clear sky",
+      "weather": "Clear",
+      "cloud": 0,
+      "temp": {
+        "celsius": 88,
+        "farenheit": 31.2
+      },
+      "time": "1:00"
+    },
+    {
+      "day": "",
+      "icon": "http://openweathermap.org/img/w/02d.png",
+      "rain": 0,
+      "snow": 0,
+      "description": "few clouds",
+      "weather": "Clouds",
+      "cloud": 12,
+      "temp": {
+        "celsius": 87,
+        "farenheit": 30.38
+      },
+      "time": "4:00"
+    }
+  ]
+}
+
+export const response = {
   "city": {
     "id": 5128581,
     "name": "New York",

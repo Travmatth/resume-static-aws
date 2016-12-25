@@ -1,15 +1,17 @@
 /* @flow */
-import { serialize, ResponseError } from '../common/utils'
-import { parseTime } from './constants'
+
+//Types
 import { 
   DailyForecast, Weather, FiveDayForecast, Forecast, Daily
 } from './index.js.flow' 
+
+import { serialize, ResponseError } from '../common/utils'
+import { parseTime } from './constants'
 
 //Initiliazed in DOMContentLoaded
 let cells: ?NodeList<HTMLElement>
 
 // openweatherapi params
-export const endpoint = 'http://api.openweathermap.org/data/2.5/forecast' 
 export const params = (lat: number, lon: number): Object => ({
   'lat': lat,
   'lon': lon,
@@ -17,7 +19,9 @@ export const params = (lat: number, lon: number): Object => ({
   'APPID': 'c26ef1df98c449f37f8f199738ce74c7',
 })
 
-//MAIN
+export const endpoint = 'http://api.openweathermap.org/data/2.5/forecast' 
+
+/* MAIN */
 export const main = (time: number = 500): void =>  {
   cells = document.querySelectorAll('.cell')
 
@@ -43,8 +47,7 @@ export const main = (time: number = 500): void =>  {
 
 // document.addEventListener('DOMContentLoaded', main);
 
-export const fetchWeather = async (url: string): any => {
-// export const fetchWeather = async (): any => {
+export const fetchWeather = async (url: string): Weather => {
   // Fetch initial resource after delay
   // mixed content restrictions (can't request http on https page)
   // Should I use JSONP + validation,
@@ -61,12 +64,10 @@ export const fetchWeather = async (url: string): any => {
   return await fetch(url, opts)
     .then(checkResponse)
     .then(processWeather)
-    // .then(updateDOM)
     .catch(err => { throw err })
 }
 
-// If error in process, update DOM appropriately
-export const checkResponse = async (response: Response): any => {
+export const checkResponse = async (response: Response): FiveDayForecast => {
   if (response.status < 200 || response.status >= 400) { 
     throw new ResponseError('localweather fetch failed', response)
   }
@@ -74,7 +75,6 @@ export const checkResponse = async (response: Response): any => {
   return await (response.json(): FiveDayForecast)
 }
 
-// export const processWeather = (data: FiveDayForecast): WeatherResponse  => ({
 export const processWeather = (data: FiveDayForecast): Weather => ({
   city: data.city.name,
   now: Date.now(),
@@ -90,8 +90,8 @@ export const convertFahrenheitToCelsius = (temp: number) => (
 
 export const processForecasts = (outlook: Forecast): DailyForecast => ({
   icon: `http://openweathermap.org/img/w/${outlook.weather[0].icon}.png`,
-  rain: outlook.rain && outlook.rain['3h'] || null,
-  snow: outlook.snow && outlook.snow['3h'] || null,
+  rain: outlook.rain && outlook.rain['3h'] || 0,
+  snow: outlook.snow && outlook.snow['3h'] || 0,
   description: outlook.weather[0].description,
   weather: outlook.weather[0].main,
   cloud: outlook.clouds.all,
@@ -106,7 +106,7 @@ export const stripDateIfRedundant = (
   today: Daily, 
   index: number, 
   seq: Array<Daily>
-) => {
+): Daily => {
   const { day, ...rest } = today
   if (index > 0 && seq[index - 1].day === day) {
     return { day: '', ...rest }
@@ -117,7 +117,7 @@ export const stripDateIfRedundant = (
 
 export const updateDOM = (results: Array<Object>): void => {
   results.map(result => {
-    if (cells) cells.map(cell => {
+    if (cells) cells.forEach(cell => {
       //create cells using info from result
 
       //make visible

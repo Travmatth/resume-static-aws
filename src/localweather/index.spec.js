@@ -1,7 +1,7 @@
 /* @flow */
 import { expect, } from 'chai'
 import fetchMock from 'fetch-mock';
-import { data } from './mockdata.spec'
+import { response, data } from './mockdata.spec'
 import { describe, it, beforeEach } from 'mocha'
 import jsdom from 'jsdom'
 
@@ -33,11 +33,14 @@ describe.only('fetchWeather', () => {
   });
 
   it('fetchWeather can return parsed json', async () => {
-    fetchMock.post(url, data);
+    fetchMock.post(url, response);
 
     const json = await fetchWeather(serialize(endpoint, params(0, 0)))
-    console.log(json)
-    expect(json).to.eql(data)
+    const { now: date, ...rest } = json
+    const { now, ...object } = data
+    
+    expect(rest).to.eql(object)
+    expect(date).to.be.a.number
   });
 
   it('fetchWeather throws appropriately', async () => {
