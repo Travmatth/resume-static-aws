@@ -1,7 +1,7 @@
 /* @flow */
 import jsdom from 'jsdom-global/register'
-import { expect, } from 'chai'
 import fetchMock from 'fetch-mock';
+import { expect } from 'chai'
 import { response, data } from './mockdata.spec'
 import { describe, it, beforeEach } from 'mocha'
 import { serializeDocument } from 'jsdom'
