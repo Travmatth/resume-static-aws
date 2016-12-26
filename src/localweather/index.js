@@ -23,6 +23,7 @@ export const endpoint = 'http://api.openweathermap.org/data/2.5/forecast'
 /* MAIN */
 export const main = async (time: number = 500): void =>  {
   cells = document.querySelectorAll('.cell')
+  console.log(cells);
 
   setTimeout(() => {
     navigator.geolocation.getCurrentPosition( location => {
