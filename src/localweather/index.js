@@ -11,8 +11,7 @@ import { parseTime } from './constants'
 //Initiliazed in DOMContentLoaded
 let cells: ?NodeList<HTMLElement>
 
-// openweatherapi params
-export const params = (lat: number, lon: number): Object => ({
+export const openweatherApiParams = (lat: number, lon: number): Object => ({
   'lat': lat,
   'lon': lon,
   'units': 'imperial',
@@ -22,19 +21,21 @@ export const params = (lat: number, lon: number): Object => ({
 export const endpoint = 'http://api.openweathermap.org/data/2.5/forecast' 
 
 /* MAIN */
-export const main = (time: number = 500): void =>  {
+export const main = async (time: number = 500): void =>  {
   cells = document.querySelectorAll('.cell')
 
   setTimeout(() => {
     navigator.geolocation.getCurrentPosition( location => {
       const { latitude, longitude, } = location.coords 
       
-      // openweatherapi url (params encoded in url)
-      const resource: string = serialize(endpoint, params(latitude, longitude))
+      const resource: string = serialize(
+        endpoint, 
+        openweatherApiParams(latitude, longitude)
+      )
 
       // Call API, parse response
       try {
-        const weather: any = fetchWeather(resource)
+        const weather: any = await fetchWeather(resource)
 
       // Call API, parse response, generate data, update DOM
       // updateDOM(weather, cells)
@@ -45,7 +46,7 @@ export const main = (time: number = 500): void =>  {
   }, time);
 }
 
-// document.addEventListener('DOMContentLoaded', main);
+if (document !== undefined) document.addEventListener('DOMContentLoaded', main);
 
 export const fetchWeather = async (url: string): Weather => {
   // Fetch initial resource after delay
