@@ -1,9 +1,7 @@
 /* @flow */
 import jsdom from 'jsdom-global/register'
 import fetchMock from 'fetch-mock';
-import { expect } from 'chai'
 import { response, data } from './mockdata.spec'
-import { describe, it, beforeEach } from 'mocha'
 import { serializeDocument } from 'jsdom'
 
 //Model under test
@@ -17,8 +15,8 @@ const url = 'http://api.openweathermap.org/' +
   'units=imperial&' +
   'APPID=c26ef1df98c449f37f8f199738ce74c7'
 
-describe.only('fetchWeather', () => {
-  beforeEach(() => {
+.only('fetchWeather', () => {
+  (() => {
     if (typeof document !== 'undefined') return
 
     document = jsdom.jsdom( 
@@ -51,37 +49,37 @@ describe.only('fetchWeather', () => {
     fetchMock.restore(); 
   });
 
-  it('fetchWeather can return parsed json', async () => {
+  ('fetchWeather can return parsed json', async () => {
     fetchMock.post(url, response);
 
     const json = await fetchWeather(serialize(endpoint, openweatherApiParams (0, 0)))
     const { now: date, ...rest } = json
     const { now, ...object } = data
 
-    expect(rest).to.eql(object)
-    expect(date).to.be.a.number
+    (rest).to.eql(object)
+    (date).to.be.a.number
   });
 
-  it('fetchWeather throws appropriately', async () => {
+  ('fetchWeather throws appropriately', async () => {
     fetchMock.post(url, { status: 404, body: data });
 
     try {
       const call = async () => await fetchWeather(serialize(endpoint, params(0, 0)))
-      expect(call).to.throw()
+      (call).to.throw()
       // done() 
     } catch(err) {
       // done() 
     }
   });
 
-  it('main() obtains user coordinates and populates list elements', async () => {
+  ('main() obtains user coordinates and populates list elements', async () => {
     fetchMock.post(url, data);
 
     const time = 0
 
     //call function
     const t = await main(time)
-    expect(t).to.be.true
+    (t).to.be.true
     // console.log(window.querySelectorAll)
 
     // setTimeout(() => {
