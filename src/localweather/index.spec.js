@@ -8,6 +8,23 @@ import { serializeDocument } from 'jsdom'
 import { fetchWeather, openweatherApiParams , endpoint, main } from './index'
 import { serialize } from '../common/utils'
 
+// test.before([title], () => {})
+
+// test.after.always('after', () => {})
+
+// test.afterEach('afterEach', () => {})
+// test.beforeEach([title], () => {})
+
+// test(t => {
+    // regular test
+// });
+
+// macro.title = (providedTitle, input, expected) => `${providedTitle} ${input} === ${expected}`.trim();
+
+// test(macro, '2 + 2', 4);
+// test(macro, '2 * 3', 6);
+// test('providedTitle', macro, '3 * 3', 9);
+
 const url = 'http://api.openweathermap.org/' +
   'data/2.5/forecast?' +
   'lat=0&' + 
