@@ -27,7 +27,10 @@
   },
   "homepage": "https://github.com/Travmatth/resume-static-aws#readme",
   "ava": {
-    "require": "babel-register",
+    "require": [
+      "babel-core/register",
+      "babel-polyfill"
+    ],
     "babel": "inherit"
   },
   "dependencies": {

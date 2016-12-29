@@ -48,6 +48,26 @@ test.afterEach.always('after', t => {
 })
 /*******************************END SETUP**************************************/
 
+// CRASH NOTES 
+// 11/29/16: Stubbing out await keyword yields this err msg
+// $ ava --verbose **.spec.js 
+
+// /Users/Trav/Projects/resume-static-aws/src/localweather/index.js:39
+//   var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
+//                                ^
+
+// ReferenceError: regeneratorRuntime is not defined
+//     at /Users/Trav/Projects/resume-static-aws/src/localweather/index.js:24:14
+//     at Object.<anonymous> (/Users/Trav/Projects/resume-static-aws/src/localweather/index.js:24:14)
+//     ...
+//     at node.js:445:3
+
+// In production, I use ? to manage the transpilation of the regeneratorRuntime
+  // a polyfill on the webpack build module
+// In testing, this doesn't work because: 
+  // I need a polyfill
+// Theory: using a polyfill would solve the error
+ 
 test('fetchWeather can return parsed json', async t => {
   fetchMock.post(url, response);
 
