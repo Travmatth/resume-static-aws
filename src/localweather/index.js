@@ -20,7 +20,7 @@ export const openweatherApiParams = (lat: number, lon: number): Object => ({
 
 export const endpoint = 'http://api.openweathermap.org/data/2.5/forecast' 
 
-export const main = async (time: number = 500): void =>  {
+export const s = async (time: number = 500): void =>  {
   // cells = document.querySelectorAll('.cell'); 
   // console.log(cells);
 
@@ -40,7 +40,9 @@ export const main = async (time: number = 500): void =>  {
     // Call API, parse response
     try {
       // const weather: any = await fetchWeather(resource)
+      // console.log('weather', weather)
       const weather: any = 1
+      return await fetchWeather(resource)
 
     // Call API, parse response, generate data, update DOM
     // updateDOM(weather, cells)

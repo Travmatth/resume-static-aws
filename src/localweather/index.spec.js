@@ -90,7 +90,8 @@ test('main() obtains user coordinates and populates list elements', async t => {
   fetchMock.post(url, data);
 
   const time = 0
-  // const json = await main(time)
+  const json = await main(time)
+  console.log('json', json)
 
   // not sure what i'll be measuring yet
   t.pass()

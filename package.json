@@ -31,7 +31,9 @@
       "babel-core/register",
       "babel-polyfill"
     ],
-    "babel": "inherit"
+    "babel": {
+      "babelrc": true
+    }
   },
   "dependencies": {
     "babel-polyfill": "^6.16.0",
