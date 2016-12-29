@@ -25,27 +25,31 @@ export const main = async (time: number = 500): void =>  {
   // cells = document.querySelectorAll('.cell'); 
   // console.log(cells);
 
-  setTimeout(() => {
-    // navigator.geolocation.getCurrentPosition( location => {
-    [{ coords: { latitude: 0, longitude: 0 }}].map(location => {
-      const { latitude, longitude, } = location.coords 
-      
-      const resource: string = serialize(
-        endpoint, 
-        openweatherApiParams(latitude, longitude)
-      )
+  // Stubbed out
+  // setTimeout(() => {
+  // }, time);
 
-      // Call API, parse response
-      try {
-        const weather: any = await fetchWeather(resource)
+  // navigator.geolocation.getCurrentPosition( location => {
+  [{ coords: { latitude: 0, longitude: 0 }}].map(location => {
+    const { latitude, longitude, } = location.coords 
+    
+    const resource: string = serialize(
+      endpoint, 
+      openweatherApiParams(latitude, longitude)
+    )
 
-      // Call API, parse response, generate data, update DOM
-      // updateDOM(weather, cells)
-      } catch(error) {
-        console.error('error', error)
-      }
-    })
-  }, time);
+    // Call API, parse response
+    try {
+      // const weather: any = await fetchWeather(resource)
+      const weather: any = 1
+
+    // Call API, parse response, generate data, update DOM
+    // updateDOM(weather, cells)
+    } catch(error) {
+      console.error('error', error)
+    }
+  })
+
 }
 
 // if (document !== undefined) document.addEventListener('DOMContentLoaded', main);
