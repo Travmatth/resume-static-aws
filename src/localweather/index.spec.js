@@ -1,6 +1,6 @@
 /* @flow */
 import test from 'ava'
-import jsdom from 'jsdom-global/register'
+// import jsdom from 'jsdom-global/register'
 import fetchMock from 'fetch-mock';
 import { response, data } from './mockdata'
 // import { serializeDocument } from 'jsdom'
@@ -18,17 +18,17 @@ const url = 'http://api.openweathermap.org/' +
   'units=imperial&' +
   'APPID=c26ef1df98c449f37f8f199738ce74c7'
 
-jsdom.jsdom( 
-  '<!DOCTYPE html>' + 
-  '<html>' +
-    '<body>' +
-      '<li class="cell">' +
-      '</li>' +
-    '</body>' + 
-  '</html>'
-)
+// jsdom.jsdom( 
+//   '<!DOCTYPE html>' + 
+//   '<html>' +
+//     '<body>' +
+//       '<li class="cell">' +
+//       '</li>' +
+//     '</body>' + 
+//   '</html>'
+// )
 
-window = document.defaultView
+// window = document.defaultView
 // window.navigator = {
 //   geolocation: {
 //     getCurrentPosition: (success, error, options) => {
@@ -37,11 +37,11 @@ window = document.defaultView
 //   }
 // }; 
 
-Object.keys(window).forEach(key => {
-  if (!(key in global)) {
-    global[key] = window[key];
-  }
-});
+// Object.keys(window).forEach(key => {
+//   if (!(key in global)) {
+//     global[key] = window[key];
+//   }
+// });
 
 test.afterEach.always('after', t => {
   fetchMock.restore(); 
@@ -73,7 +73,7 @@ test('main() obtains user coordinates and populates list elements', async t => {
   fetchMock.post(url, data);
 
   const time = 0
-  const json = await main(time)
+  // const json = await main(time)
 
   // not sure what i'll be measuring yet
   t.pass()

@@ -48,7 +48,7 @@ export const main = async (time: number = 500): void =>  {
   }, time);
 }
 
-if (document !== undefined) document.addEventListener('DOMContentLoaded', main);
+// if (document !== undefined) document.addEventListener('DOMContentLoaded', main);
 
 export const fetchWeather = async (url: string): Weather => {
   // Fetch initial resource after delay
@@ -62,7 +62,6 @@ export const fetchWeather = async (url: string): Weather => {
       'Content-Type': 'application/json'
     },
   }
-
   
   return await fetch(url, opts)
     .then(checkResponse)
@@ -123,14 +122,15 @@ export const updateDOM = (results: Array<Object>): void => {
     if (cells) cells.forEach(cell => {
       //create cells using info from result
 
-      //make visible
-      toggleVisibility(cell)
+      // extract classname, make visible if applicable
+      // const { className } = cell
+      // toggleVisibility(className)
     })
   })
 }
 
-export const toggleVisibility = (el: HTMLElement): void => {
-  el.className.match(/hide/)
-    ? el.className.replace(/hide/, 'show')
-    : el.className.replace(/show/, 'hide')
+export const toggleVisibility = (css: string): void => {
+  css.match(/hide/)
+    ? css.replace(/hide/, 'show')
+    : css.replace(/show/, 'hide')
 }
