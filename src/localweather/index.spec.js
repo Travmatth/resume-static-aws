@@ -2,7 +2,7 @@
 import test from 'ava'
 import jsdom from 'jsdom-global/register'
 import fetchMock from 'fetch-mock';
-import { response, data } from './mockdata.spec'
+import { response, data } from './mockdata'
 // import { serializeDocument } from 'jsdom'
 import ResponseError from '../common/utils'
 
@@ -37,13 +37,13 @@ window.navigator = {
   }
 }; 
 
-Object.keys(window).forEach((key) => {
+Object.keys(window).forEach(key => {
   if (!(key in global)) {
     global[key] = window[key];
   }
 });
 
-test.after.always('after', () => {
+test.afterEach.always('after', t => {
   fetchMock.restore(); 
 })
 /*******************************END SETUP**************************************/
@@ -73,7 +73,7 @@ test('main() obtains user coordinates and populates list elements', async t => {
   fetchMock.post(url, data);
 
   const time = 0
-  const t = await main(time)
+  const json = await main(time)
 
   // not sure what i'll be measuring yet
   t.pass()

@@ -5,7 +5,7 @@ import LogicUnit from './LogicUnit'
 
 let expr, infix
 
-test.beforeEach('LogicUnit', () => {
+test.beforeEach('LogicUnit', t => {
   expr = new LogicUnit()
   infix = []
 });
