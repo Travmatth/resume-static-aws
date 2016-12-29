@@ -71,22 +71,19 @@ test.afterEach.always('after', t => {
 test('fetchWeather can return parsed json', async t => {
   fetchMock.post(url, response);
 
-  const url = serialize(endpoint, openweatherApiParams (0, 0))
   const json = await fetchWeather(url)
   const { now: date, ...rest } = json
   const { now, ...object } = data
 
   t.deepEqual(rest, object)
-  t.is(date, 'number')
+  t.is(typeof date, 'number')
 });
 
-test('fetchWeather throws appropriately', async t => {
+//I need to run .serial() to pass, why?
+test.serial('fetchWeather throws appropriately', async t => {
   fetchMock.post(url, { status: 404, body: data });
 
-  const url = serialize(endpoint, params(0, 0))
-  const error = await t.throws(fetchWeather(url))
-
-  t.is(error.response.url, url)
+  await t.throws(fetchWeather(url), ResponseError)
 });
 
 test('main() obtains user coordinates and populates list elements', async t => {
