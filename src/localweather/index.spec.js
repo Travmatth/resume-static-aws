@@ -29,13 +29,13 @@ jsdom.jsdom(
 )
 
 window = document.defaultView
-window.navigator = {
-  geolocation: {
-    getCurrentPosition: (success, error, options) => {
-      success({ coords: { latitude: 0,longitude: 0 } });
-    }
-  }
-}; 
+// window.navigator = {
+//   geolocation: {
+//     getCurrentPosition: (success, error, options) => {
+//       success({ coords: { latitude: 0,longitude: 0 } });
+//     }
+//   }
+// }; 
 
 Object.keys(window).forEach(key => {
   if (!(key in global)) {

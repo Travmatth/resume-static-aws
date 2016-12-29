@@ -22,11 +22,12 @@ export const endpoint = 'http://api.openweathermap.org/data/2.5/forecast'
 
 /* MAIN */
 export const main = async (time: number = 500): void =>  {
-  cells = document.querySelectorAll('.cell')
-  console.log(cells);
+  // cells = document.querySelectorAll('.cell'); 
+  // console.log(cells);
 
   setTimeout(() => {
-    navigator.geolocation.getCurrentPosition( location => {
+    // navigator.geolocation.getCurrentPosition( location => {
+    [{ coords: { latitude: 0, longitude: 0 }}].map(location => {
       const { latitude, longitude, } = location.coords 
       
       const resource: string = serialize(
