@@ -2,7 +2,7 @@
 
 //Types
 import { 
-  DailyForecast, Weather, FiveDayForecast, Forecast, Daily
+  DailyForecast, Weather, FiveDayForecast, Forecast, Daily, Coordinates
 } from './index.js.flow' 
 
 import { serialize, ResponseError } from '../common/utils'
@@ -20,40 +20,37 @@ export const openweatherApiParams = (lat: number, lon: number): Object => ({
 
 export const endpoint = 'http://api.openweathermap.org/data/2.5/forecast' 
 
-export const s = async (time: number = 500): void =>  {
-  // cells = document.querySelectorAll('.cell'); 
-  // console.log(cells);
+export const getWeather = async (location: Coordinates): void  => {
+  const { latitude, longitude, } = location.coords 
+  
+  const resource: string = serialize(
+    endpoint, 
+    openweatherApiParams(latitude, longitude)
+  )
 
-  // Stubbed out
-  // setTimeout(() => {
-  // }, time);
+  // Call API, parse response
+  try {
+    const weather: any = await fetchWeather(resource)
 
-  // navigator.geolocation.getCurrentPosition( location => {
-  [{ coords: { latitude: 0, longitude: 0 }}].map(location => {
-    const { latitude, longitude, } = location.coords 
-    
-    const resource: string = serialize(
-      endpoint, 
-      openweatherApiParams(latitude, longitude)
-    )
-
-    // Call API, parse response
-    try {
-      // const weather: any = await fetchWeather(resource)
-      // console.log('weather', weather)
-      const weather: any = 1
-      return await fetchWeather(resource)
-
-    // Call API, parse response, generate data, update DOM
-    // updateDOM(weather, cells)
-    } catch(error) {
-      console.error('error', error)
-    }
-  })
-
+  // Call API, parse response, generate data, update DOM
+  // updateDOM(weather, cells)
+  } catch(error) {
+    console.error('error', error)
+  }
 }
 
-// if (document !== undefined) document.addEventListener('DOMContentLoaded', main);
+export const main = async (cells: NodeList<HTMLElement>, time: number = 500): void =>  {
+  cells.forEach(el => console.log(el))
+
+  setTimeout(() => navigator.geolocation.getCurrentPosition(getWeather), time);
+}
+
+if (document !== undefined) {
+  const cells = document.querySelectorAll('.cell')
+  const listener = main.bind(undefined, cells)
+  document.addEventListener('DOMContentLoaded', listener);
+}
+
 
 export const fetchWeather = async (url: string): Weather => {
   // Fetch initial resource after delay

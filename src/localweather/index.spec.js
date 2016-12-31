@@ -1,6 +1,7 @@
 /* @flow */
+import jsdomGlobal from 'jsdom-global/register'
+import jsdom from 'jsdom'
 import test from 'ava'
-// import jsdom from 'jsdom-global/register'
 import fetchMock from 'fetch-mock';
 import { response, data } from './mockdata'
 // import { serializeDocument } from 'jsdom'
@@ -18,24 +19,23 @@ const url = 'http://api.openweathermap.org/' +
   'units=imperial&' +
   'APPID=c26ef1df98c449f37f8f199738ce74c7'
 
-// jsdom.jsdom( 
-//   '<!DOCTYPE html>' + 
-//   '<html>' +
-//     '<body>' +
-//       '<li class="cell">' +
-//       '</li>' +
-//     '</body>' + 
-//   '</html>'
-// )
+jsdom.jsdom( 
+  '<!DOCTYPE html>' + 
+  '<html>' +
+    '<body>' +
+      '<li class="cell"/>' +
+    '</body>' + 
+  '</html>'
+)
 
-// window = document.defaultView
-// window.navigator = {
-//   geolocation: {
-//     getCurrentPosition: (success, error, options) => {
-//       success({ coords: { latitude: 0,longitude: 0 } });
-//     }
-//   }
-// }; 
+window = document.defaultView
+navigator = {
+  geolocation: {
+    getCurrentPosition: (success, error, options) => {
+      success({ coords: { latitude: 0,longitude: 0 } });
+    }
+  }
+}; 
 
 // Object.keys(window).forEach(key => {
 //   if (!(key in global)) {
@@ -48,26 +48,6 @@ test.afterEach.always('after', t => {
 })
 /*******************************END SETUP**************************************/
 
-// CRASH NOTES 
-// 11/29/16: Stubbing out await keyword yields this err msg
-// $ ava --verbose **.spec.js 
-
-// /Users/Trav/Projects/resume-static-aws/src/localweather/index.js:39
-//   var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
-//                                ^
-
-// ReferenceError: regeneratorRuntime is not defined
-//     at /Users/Trav/Projects/resume-static-aws/src/localweather/index.js:24:14
-//     at Object.<anonymous> (/Users/Trav/Projects/resume-static-aws/src/localweather/index.js:24:14)
-//     ...
-//     at node.js:445:3
-
-// In production, I use ? to manage the transpilation of the regeneratorRuntime
-  // a polyfill on the webpack build module
-// In testing, this doesn't work because: 
-  // I need a polyfill
-// Theory: using a polyfill would solve the error
- 
 test('fetchWeather can return parsed json', async t => {
   fetchMock.post(url, response);
 
@@ -90,8 +70,17 @@ test('main() obtains user coordinates and populates list elements', async t => {
   fetchMock.post(url, data);
 
   const time = 0
-  const json = await main(time)
-  console.log('json', json)
+  // const nodes = document.createDocumentFragment()
+  // for (var i = 2; i >= 0; i--) {
+  //   nodes.appendChild(document.createElement('li'))
+  // }
+
+  // console.log(nodes.childNodes)
+  const nodes = {
+    forEach() {}
+  }
+
+  const json = await main(nodes, time)
 
   // not sure what i'll be measuring yet
   t.pass()

@@ -1,5 +1,10 @@
 /* Localweather Types */
 
+export type Coordinates = {|
+  longitude: number;
+  latitude: number;
+|}
+
 declare type Coords = {|
   lon: number;
   lat: number;
