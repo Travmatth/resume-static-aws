@@ -1,5 +1,12 @@
 /* Localweather Types */
 
+export type ApiParams = {|
+  'lat': number;
+  'lon': number;
+  'units': string;
+  'APPID': string;
+|}
+
 export type Coordinates = {|
   longitude: number;
   latitude: number;
