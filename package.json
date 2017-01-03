@@ -30,7 +30,7 @@
     "require": [
       "babel-core/register",
       "babel-polyfill",
-      "../src/common/browser-setup.js"
+      "./src/common/browser-setup.js"
     ],
     "babel": {
       "babelrc": true
