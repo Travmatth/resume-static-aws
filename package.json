@@ -61,8 +61,6 @@
     "flow-status-webpack-plugin": "^0.1.7",
     "html-webpack-plugin": "^2.24.1",
     "jquery": "^3.1.1",
-    "jsdom": "^9.9.1",
-    "jsdom-global": "^2.1.1",
     "json-loader": "^0.5.4",
     "node-sass": "^4.0.0",
     "pegjs": "^0.10.0",
