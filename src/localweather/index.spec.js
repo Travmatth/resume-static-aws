@@ -8,7 +8,13 @@ import { response, data } from './mockdata'
 import ResponseError from '../common/utils'
 
 //Model under test
-import { fetchWeather, openweatherApiParams , endpoint, main } from './index'
+import { 
+  fetchWeather, 
+  openweatherApiParams, 
+  endpoint, 
+  contentLoadedListener 
+} from './index'
+
 import { serialize } from '../common/utils'
 
 /***********************************SETUP**************************************/
@@ -66,7 +72,7 @@ test.serial('fetchWeather throws appropriately', async t => {
   await t.throws(fetchWeather(url), ResponseError)
 });
 
-test('main() obtains user coordinates and populates list elements', async t => {
+test('contentLoadedListener() obtains user coordinates and populates list elements', async t => {
   fetchMock.post(url, data);
 
   const time = 0
@@ -80,7 +86,7 @@ test('main() obtains user coordinates and populates list elements', async t => {
     forEach() {}
   }
 
-  const json = await main(nodes, time)
+  const json = await contentLoadedListener(nodes, time)
 
   // not sure what i'll be measuring yet
   t.pass()

@@ -91,7 +91,7 @@ export const fetchWeather = async (url: string): Weather => {
   return await fetch(url, opts)
     .then(checkResponse)
     .then(processWeather)
-    .catch(err => throw err)
+    .catch(error => { throw error })
 };
 
 /*
@@ -99,9 +99,9 @@ export const fetchWeather = async (url: string): Weather => {
 */
 
 
-export const updateDOM = (results: Array<Object>): void => {
+export const updateDOM = (results: Object[], nodes: Object[]): void => {
   results.map(result => {
-    if (cells) cells.forEach(cell => {
+    if (nodes) nodes.forEach(cell => {
       //Iter over the table data's containing the content
       cell.children.forEach(element => {
 
