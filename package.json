@@ -7,7 +7,7 @@
     "flow": "flow",
     "flow:status": "flow status",
     "DELETE": "mocha -r babel-polyfill --compilers js:babel-core/register --watch \"src/**/*.spec.js\"",
-    "test": "ava --verbose **/*.spec.js",
+    "test": "BABEL_ENV=ava ava --verbose **/*.spec.js",
     "start": "rm -rf dist && NODE_ENV=development webpack-dev-server -d --config tools/webpack.config.dev.babel.js --host 0.0.0.0 --hot --inline --content-base dist/ --color --bail",
     "stats": "webpack --progress --display-reasons --display-error-details ",
     "start:prod": "rm -rf dist && NODE_ENV=production webpack-dev-server -p --config tools/webpack.config.prod.babel.js --hot --inline --content-base dist/ --color --bail",
@@ -29,7 +29,8 @@
   "ava": {
     "require": [
       "babel-core/register",
-      "babel-polyfill"
+      "babel-polyfill",
+      "../src/common/browser-setup.js"
     ],
     "babel": {
       "babelrc": true
@@ -61,6 +62,7 @@
     "flow-status-webpack-plugin": "^0.1.7",
     "html-webpack-plugin": "^2.24.1",
     "jquery": "^3.1.1",
+    "jsdom": "^9.9.1",
     "json-loader": "^0.5.4",
     "node-sass": "^4.0.0",
     "pegjs": "^0.10.0",

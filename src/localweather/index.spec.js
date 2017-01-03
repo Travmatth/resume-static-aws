@@ -20,9 +20,6 @@ import { serialize } from '../common/utils'
   Setup
 */
 
-const browserFunctionality = ['window', 'document', 'navigator'];
-const config = { html: '<div id="one"></div>' }; 
-
 const url = 'http://api.openweathermap.org/' +
   'data/2.5/forecast?' +
   'lat=0&' + 
