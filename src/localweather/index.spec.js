@@ -28,7 +28,7 @@ const url = 'http://api.openweathermap.org/' +
   'APPID=c26ef1df98c449f37f8f199738ce74c7'
 
 test.before(() => {
-  console.log(document.getElementById('one'))
+  console.log(document.querySelectorAll('cell'))
 //   // tr.cell.hide
 //   // const table = 
 //   const node = document.createElement('tr')
