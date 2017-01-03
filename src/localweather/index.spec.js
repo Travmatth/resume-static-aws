@@ -3,6 +3,7 @@ import test from 'ava'
 import fetchMock from 'fetch-mock';
 import { response, data } from './mockdata'
 import ResponseError from '../common/utils'
+import browserEnv from 'browser-env';
 
 /*
   Model under test
@@ -20,12 +21,54 @@ import { serialize } from '../common/utils'
   Setup
 */
 
+const browserFunctionality = ['window', 'document', 'navigator'];
+const config = { html: '<div id="one"></div>' }; 
+browserEnv(browserFunctionality, config);
+
 const url = 'http://api.openweathermap.org/' +
   'data/2.5/forecast?' +
   'lat=0&' + 
   'lon=0&' + 
   'units=imperial&' +
   'APPID=c26ef1df98c449f37f8f199738ce74c7'
+
+test.before(() => {
+  console.log(document/*.getElementById('one')*/)
+//   // tr.cell.hide
+//   // const table = 
+//   const node = document.createElement('tr')
+//   // document.body.appendChild(node)
+//   node.classList.add('cell')
+//   node.classList.add('hide')
+
+//   // td.day
+//   const day = node.insertCell()
+//   day.classList.add('day')
+
+//   // td.time
+//   const time = node.insertCell()
+//   time.classList.add('time')
+
+//   // td.measurement
+//   const measurement = node.insertCell()
+//   measurement.classList.add('measurement')
+
+//   // td.icon 
+//   const icon = node.insertCell()
+//   icon.classList.add('icon')
+
+//   const img = document.createElement('img')
+//   img.classList.add('img')
+//   icon.appendChild(img)
+//   //Will check source in test
+//   //   img key={icon} src={`${icon}`}
+//   // img.src = 
+  
+//   //   td.weather
+//   const weather = document.createElement('div')
+//   weather.classList.add('weather')
+//   icon.appendChild(weather)
+})
 
 test.afterEach.always('after', t => {
   fetchMock.restore(); 
@@ -34,6 +77,11 @@ test.afterEach.always('after', t => {
 /*
   Test
 */
+
+test.only('browserEnv Test', t => {
+  console.log(document.body)
+  t.pass()
+});
 
 test('fetchWeather can return parsed json', async t => {
   fetchMock.post(url, response);
@@ -68,6 +116,7 @@ test('contentLoadedListener() obtains user coordinates and populates list elemen
   }
 
   const json = await contentLoadedListener(nodes, time)
+  console.log
 
   // not sure what i'll be measuring yet
   t.pass()

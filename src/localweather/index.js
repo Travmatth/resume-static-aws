@@ -45,16 +45,15 @@ export const contentLoadedListener = async (
   cells: NodeList<HTMLElement>, 
   time: number = 500
 ): void =>  {
-  cells.forEach(el => console.log(el));
   const launch = () => navigator.geolocation.getCurrentPosition(getWeather);
   setTimeout(launch, time);
 }
 
-if (document !== undefined) {
-  const cells = document.querySelectorAll('.cell');
-  const listener = contentLoadedListener.bind(undefined, cells);
-  document.addEventListener('DOMContentLoaded', listener);
-}
+// if (document !== undefined) {
+//   const cells = document.querySelectorAll('.cell');
+//   const listener = contentLoadedListener.bind(undefined, cells);
+//   document.addEventListener('DOMContentLoaded', listener);
+// }
 
 export const getWeather = async (location: Coordinates): void  => {
   const { latitude, longitude, } = location.coords; 
