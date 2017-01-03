@@ -3,7 +3,6 @@ import test from 'ava'
 import fetchMock from 'fetch-mock';
 import { response, data } from './mockdata'
 import ResponseError from '../common/utils'
-import browserEnv from 'browser-env';
 
 /*
   Model under test
@@ -23,7 +22,6 @@ import { serialize } from '../common/utils'
 
 const browserFunctionality = ['window', 'document', 'navigator'];
 const config = { html: '<div id="one"></div>' }; 
-browserEnv(browserFunctionality, config);
 
 const url = 'http://api.openweathermap.org/' +
   'data/2.5/forecast?' +
@@ -78,7 +76,7 @@ test.afterEach.always('after', t => {
   Test
 */
 
-test.only('browserEnv Test', t => {
+test.only('globals Test', t => {
   console.log(document.body)
   t.pass()
 });
