@@ -41,30 +41,26 @@ export const openweatherApiParams = (lat: number, lon: number): ApiParams => ({
   Start program
 */
 
-export const contentLoadedListener = async (
-  cells: NodeList<HTMLElement>, 
-  time: number = 500
-): void =>  {
-  const launch = () => navigator.geolocation.getCurrentPosition(getWeather);
-  setTimeout(launch, time);
+export const contentLoadedListener = async (time: number = 500): void =>  {
+
+  // const launch = () => navigator.geolocation.getCurrentPosition(getWeather);
+  navigator.geolocation.getCurrentPosition(getWeather);
+  // setTimeout(launch, time);
 }
 
-// if (document !== undefined) {
-//   const cells = document.querySelectorAll('.cell');
-//   const listener = contentLoadedListener.bind(undefined, cells);
-//   document.addEventListener('DOMContentLoaded', listener);
-// }
+if (document !== undefined)  document.addEventListener('DOMContentLoaded', contentLoadedListener);
 
 export const getWeather = async (location: Coordinates): void  => {
   const { latitude, longitude, } = location.coords; 
   
   const opts = openweatherApiParams(latitude, longitude);
   const resource: string = serialize(endpoint, opts);
+  // const cells = document.querySelectorAll('.cell');
 
   // Call API, parse response
   try {
     const weather: any = await fetchWeather(resource)
-    updateDOM(weather, cells)
+    updateDOM(weather/*, cells*/)
   } catch(error) {
     console.error('error', error)
   }
@@ -99,51 +95,53 @@ export const fetchWeather = async (url: string): Weather => {
 
 
 export const updateDOM = (results: Object[], nodes: Object[]): void => {
-  results.map(result => {
-    if (nodes) nodes.forEach(cell => {
-      //Iter over the table data's containing the content
-      cell.children.forEach(element => {
+  // const cells = document.querySelectorAll('.cell');
 
-        //create cells using info from result
-        // { weatherJson.forecasts.map((val, i) => {
-        //   const { icon, temp, day, time, weather, description, } = val
+  // results.forecasts.map(result => {
+  //   if (cells) cells.forEach(cell => {
+  //     //Iter over the table data's containing the content
+  //     cell.children.forEach(element => {
 
-        switch (element.className) {
-          case 'day': 
-            element.textContent = result.day
-            break
+  //       //create cells using info from result
+  //       // { weatherJson.forecasts.map((val, i) => {
+  //       //   const { icon, temp, day, time, weather, description, } = val
 
-          case 'time': 
-            element.textContent = result.time
-            break
+  //       switch (element.className) {
+  //         case 'day': 
+  //           element.textContent = result.day
+  //           break
 
-          case 'measurement': 
-            //   const measurement = active('CELSIUS') 
-            //     ? `${temp.celsius}°C`
-            //     : `${temp.farenheit}°F`
-            //     img key={icon} src={`${icon}`}
+  //         case 'time': 
+  //           element.textContent = result.time
+  //           break
+
+  //         case 'measurement': 
+  //           //   const measurement = active('CELSIUS') 
+  //           //     ? `${temp.celsius}°C`
+  //           //     : `${temp.farenheit}°F`
+  //           //     img key={icon} src={`${icon}`}
             
-            // element.textContent = result.measurement
-            element.textContent = ''
-            break
+  //           // element.textContent = result.measurement
+  //           element.textContent = ''
+  //           break
 
-          case 'icon': 
-            //Icon td contains both an img element & td.weather
-            break
+  //         case 'icon': 
+  //           //Icon td contains both an img element & td.weather
+  //           break
 
-          default: 
-            console.error('Unrecognized HTMLElement', element)
-            break
-        }
-      })
+  //         default: 
+  //           console.error('Unrecognized HTMLElement', element)
+  //           break
+  //       }
+  //     })
 
-      //Make visible
+  //     //Make visible
 
-      // extract classname, make visible if applicable
-      // const { className } = cell
-      // toggleVisibility(className)
-    });
-  });
+  //     // extract classname, make visible if applicable
+  //     // const { className } = cell
+  //     // toggleVisibility(className)
+  //   });
+  // });
 };
 
 /* 
@@ -155,7 +153,9 @@ export const checkResponse = async (response: Response): FiveDayForecast => {
     throw new ResponseError('localweather fetch failed', response)
   }
 
-  return await (response.json(): FiveDayForecast)
+  // return await (response.json(): FiveDayForecast)
+  const t = await (response.json(): FiveDayForecast)
+  return t
 };
 
 export const processWeather = (data: FiveDayForecast): Weather => ({

@@ -28,7 +28,6 @@ const url = 'http://api.openweathermap.org/' +
   'APPID=c26ef1df98c449f37f8f199738ce74c7'
 
 test.before(() => {
-  console.log(document.querySelectorAll('cell'))
 //   // tr.cell.hide
 //   // const table = 
 //   const node = document.createElement('tr')
@@ -73,8 +72,7 @@ test.afterEach.always('after', t => {
   Test
 */
 
-test.only('globals Test', t => {
-  console.log(document.body)
+test('globals Test', t => {
   t.pass()
 });
 
@@ -97,21 +95,9 @@ test.serial('fetchWeather throws appropriately', async t => {
 });
 
 test('contentLoadedListener() obtains user coordinates and populates list elements', async t => {
-  fetchMock.post(url, data);
+  fetchMock.post(url, response);
 
-  const time = 0
-  // const nodes = document.createDocumentFragment()
-  // for (var i = 2; i >= 0; i--) {
-  //   nodes.appendChild(document.createElement('li'))
-  // }
-
-  // console.log(nodes.childNodes)
-  const nodes = {
-    forEach() {}
-  }
-
-  const json = await contentLoadedListener(nodes, time)
-  console.log
+  const json = await contentLoadedListener(10)
 
   // not sure what i'll be measuring yet
   t.pass()

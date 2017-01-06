@@ -21,4 +21,12 @@ global.document = require('jsdom').jsdom(
 )
 
 global.window = document.defaultView
-global.navigator = window.navigator
+// global.navigator = window.navigator
+global.navigator = {
+  geolocation: {
+    getCurrentPosition: (success, error, options) => {
+      success({ coords: { latitude: 0,longitude: 0 } });
+    }
+  }
+}; 
+// global.navigator = window.navigator
