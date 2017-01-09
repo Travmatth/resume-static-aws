@@ -112,7 +112,7 @@ export const updateTableRows = (
   let forecast = results[index]
 
   while (node && forecast) {
-    /* Populate children cells from template: 
+    /* Populate children cells according to template: 
       tr.cell.hide
         td.day
         td.time
