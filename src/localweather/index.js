@@ -19,6 +19,7 @@ import {
 */
 
 import { serialize, ResponseError } from '../common/utils';
+import { OPEN_WEATHER_APPID, } from '../common/api_keys';
 import { parseTime } from './constants';
 
 /*
@@ -34,7 +35,7 @@ export const openweatherApiParams = (lat: number, lon: number): ApiParams => ({
   'lat': lat,
   'lon': lon,
   'units': 'imperial',
-  'APPID': 'c26ef1df98c449f37f8f199738ce74c7',
+  'APPID': OPEN_WEATHER_APPID,
 });
 
 /*
@@ -96,8 +97,9 @@ export const fetchWeather = async (url: string): Weather => {
 
 export const updateDOM = (results: Object[], nodes: Object[]): void => {
   // const cells = document.querySelectorAll('.cell');
+  // const { city, now, forecasts } = weather
 
-  // results.forecasts.map(result => {
+  // forecasts.map(result => {
   //   if (cells) cells.forEach(cell => {
   //     //Iter over the table data's containing the content
   //     cell.children.forEach(element => {

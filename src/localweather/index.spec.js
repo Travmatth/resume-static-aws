@@ -11,10 +11,12 @@ import {
   fetchWeather, 
   openweatherApiParams, 
   endpoint, 
-  contentLoadedListener 
+  contentLoadedListener, 
+  updateDOM,
 } from './index'
 
 import { serialize } from '../common/utils'
+import { OPEN_WEATHER_APPID, } from '../common/api_keys';
 
 /*
   Setup
@@ -25,7 +27,7 @@ const url = 'http://api.openweathermap.org/' +
   'lat=0&' + 
   'lon=0&' + 
   'units=imperial&' +
-  'APPID=c26ef1df98c449f37f8f199738ce74c7'
+  'APPID=' + OPEN_WEATHER_APPID
 
 test.before(() => {
 //   // tr.cell.hide
@@ -92,6 +94,12 @@ test.serial('fetchWeather throws appropriately', async t => {
   fetchMock.post(url, { status: 404, body: data });
 
   await t.throws(fetchWeather(url), ResponseError)
+});
+
+test('updateDOM() populates given DOM element w/ correct data', async t => {
+  const json = updateDOM()
+  // not sure what i'll be measuring yet
+  t.pass()
 });
 
 test('contentLoadedListener() obtains user coordinates and populates list elements', async t => {
