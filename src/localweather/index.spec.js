@@ -108,14 +108,14 @@ test('updateTableRows() populates given DOM element w/ correct data', async t =>
   const cell = cells.item(0)
   const dayElement = cell.children[0].textContent
   const timeElement = cell.children[1].textContent
-  const temperatureElement = cell.children[2].textContent
+  const temperatureElement = Number(cell.children[2].textContent)
   const imgElement = cell.children[3].children[0].src
-  const descriptionElement = cell.children[3].children[1].textContent
+  const descriptionElement = cell.children[4].textContent
 
   t.is(day, dayElement)
   t.is(time, timeElement)
   t.is(temp.celsius, temperatureElement)
-  t.is(img, imgElement)
+  t.is(icon, imgElement)
   t.is(description, descriptionElement)
 });
 
