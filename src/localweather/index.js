@@ -49,7 +49,8 @@ export const contentLoadedListener = async (time: number = 500): void =>  {
   // setTimeout(launch, time);
 }
 
-if (document !== undefined)  document.addEventListener('DOMContentLoaded', contentLoadedListener);
+if (document !== undefined)  
+  document.addEventListener('DOMContentLoaded', contentLoadedListener);
 
 export const getWeather = async (location: Coordinates): void  => {
   const { latitude, longitude, } = location.coords; 
@@ -61,7 +62,7 @@ export const getWeather = async (location: Coordinates): void  => {
   // Call API, parse response
   try {
     const weather: any = await fetchWeather(resource)
-    updateDOM(weather/*, cells*/)
+    // updateTableRows(weather/*, cells*/)
   } catch(error) {
     console.error('error', error)
   }
@@ -94,61 +95,59 @@ export const fetchWeather = async (url: string): Weather => {
   DOM Interaction
 */
 
+/**
+ * updateDOM fills in given table rows (each containing a dates weather info)
+ * with the supplied information
+ * @param  { NodeList<HTMLTableRowElement> } nodes the table row elements to be populated
+ * @param  { Array<Forecasts> } results the parsed weather forecasts
+ * @return { void } void
+ */
+export const updateTableRows = (
+  nodes: NodeList<HTMLTableRowElement>, 
+  results: Array<Forecast>, 
+  temperature: string
+): void => {
+  let index = 0
+  let node = nodes.item(index)
+  let forecast = results[index]
 
-export const updateDOM = (results: Object[], nodes: Object[]): void => {
-  // const cells = document.querySelectorAll('.cell');
-  // const { city, now, forecasts } = weather
+  while (node && forecast) {
+    console.log('node \n', node.children, '\nforecast \n', forecast);
+    /* Populate children cells from template: 
+      tr.cell.hide
+        td.day
+        td.time
+        td.measurement
+        td.icon 
+          img
+        td.weather
+    */
 
-  // forecasts.map(result => {
-  //   if (cells) cells.forEach(cell => {
-  //     //Iter over the table data's containing the content
-  //     cell.children.forEach(element => {
+    const { icon, temp, day, time, weather, description, } = forecast
 
-  //       //create cells using info from result
-  //       // { weatherJson.forecasts.map((val, i) => {
-  //       //   const { icon, temp, day, time, weather, description, } = val
+    node.cells[0].textContent = day
+    node.cells[1].textContent = time
+    node.cells[2].textContent = temperature === 'celsius'
+      ? temp.celsius
+      : temp.fahrenheit
+    node.cells[3].children[0].src = icon
+    node.cells[4].textContent = description
 
-  //       switch (element.className) {
-  //         case 'day': 
-  //           element.textContent = result.day
-  //           break
+    // Extract classname, make visible if applicable
+    node.className === 'hide'
+      ? node.className.replace(/hide/, 'show')
+      : node.className.replace(/show/, 'hide')
 
-  //         case 'time': 
-  //           element.textContent = result.time
-  //           break
-
-  //         case 'measurement': 
-  //           //   const measurement = active('CELSIUS') 
-  //           //     ? `${temp.celsius}°C`
-  //           //     : `${temp.farenheit}°F`
-  //           //     img key={icon} src={`${icon}`}
-            
-  //           // element.textContent = result.measurement
-  //           element.textContent = ''
-  //           break
-
-  //         case 'icon': 
-  //           //Icon td contains both an img element & td.weather
-  //           break
-
-  //         default: 
-  //           console.error('Unrecognized HTMLElement', element)
-  //           break
-  //       }
-  //     })
-
-  //     //Make visible
-
-  //     // extract classname, make visible if applicable
-  //     // const { className } = cell
-  //     // toggleVisibility(className)
-  //   });
-  // });
+    // Finally, point to next elem of source arrays 
+    index += 1
+    node = nodes.item(index)
+    forecast = results[index]
+  }
 };
 
 /* 
   Supporting Functions
-*/
+*/ 
 
 export const checkResponse = async (response: Response): FiveDayForecast => {
   if (response.status < 200 || response.status >= 400) { 
@@ -201,9 +200,3 @@ export const stripDateIfRedundant = (
     return { day, ...rest }
   }
 } 
-
-export const toggleVisibility = (css: string, toggled: boolean): void => {
-  toggled
-    ? css.replace(/hide/, 'show')
-    : css.replace(/show/, 'hide')
-}

@@ -12,8 +12,8 @@ global.document = require('jsdom').jsdom(
           '<td class="measurement"/>' +
           '<td class="icon">' + 
             '<img/>' + 
-            '<td class="weather"/>' +
           '</td>' +
+          '<td class="weather"/>' +
         '<tr>' +
       '</tbody>' +
     '</table>' +

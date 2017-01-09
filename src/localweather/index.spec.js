@@ -12,10 +12,10 @@ import {
   openweatherApiParams, 
   endpoint, 
   contentLoadedListener, 
-  updateDOM,
+  updateTableRows,
 } from './index'
 
-import { serialize } from '../common/utils'
+import { serialize, } from '../common/utils'
 import { OPEN_WEATHER_APPID, } from '../common/api_keys';
 
 /*
@@ -96,10 +96,27 @@ test.serial('fetchWeather throws appropriately', async t => {
   await t.throws(fetchWeather(url), ResponseError)
 });
 
-test('updateDOM() populates given DOM element w/ correct data', async t => {
-  const json = updateDOM()
-  // not sure what i'll be measuring yet
-  t.pass()
+test('updateTableRows() populates given DOM element w/ correct data', async t => {
+  const cells = document.querySelectorAll('.cell')
+  const forecasts = [data.forecasts[0]]
+
+  // Populate cells
+  updateTableRows(cells, forecasts, 'celsius')
+
+  const { icon, temp, day, time, weather, description, } = forecasts[0]
+
+  const cell = cells.item(0)
+  const dayElement = cell.children[0].textContent
+  const timeElement = cell.children[1].textContent
+  const temperatureElement = cell.children[2].textContent
+  const imgElement = cell.children[3].children[0].src
+  const descriptionElement = cell.children[3].children[1].textContent
+
+  t.is(day, dayElement)
+  t.is(time, timeElement)
+  t.is(temp.celsius, temperatureElement)
+  t.is(img, imgElement)
+  t.is(description, descriptionElement)
 });
 
 test('contentLoadedListener() obtains user coordinates and populates list elements', async t => {

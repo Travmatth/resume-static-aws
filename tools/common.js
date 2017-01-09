@@ -1,5 +1,6 @@
 /* @flow */
 'use strict';
+
 // import webpack from 'webpack'
 import validate from 'webpack-validator'
 import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -12,6 +13,7 @@ const pages = [
   'blog',
   'calculator',
   'localweather',
+  // Commented out for compilation perf during dev
   // 'pomodoro',
   // 'randomquote',
   // 'simon',
