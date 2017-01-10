@@ -126,13 +126,14 @@ export const updateTableRows = (
 
     const { icon, temp, day, time, weather, description, } = forecast
 
-    node.cells[0].textContent = day
-    node.cells[1].textContent = time
-    node.cells[2].textContent = temperature === 'celsius'
+    node.children[0].textContent = day
+    node.children[1].textContent = time
+    node.children[2].textContent = temperature === 'celsius'
       ? temp.celsius
       : temp.fahrenheit
-    node.cells[3].children[0].src = icon
-    node.cells[4].textContent = description
+    const imgElem: any = node.children[3].children[0]
+    imgElem.src = icon
+    node.children[4].textContent = description
 
     // Extract classname, make visible if applicable
     node.className === 'hide'

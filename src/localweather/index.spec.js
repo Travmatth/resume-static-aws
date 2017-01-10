@@ -1,4 +1,5 @@
 /* @flow */
+
 import test from 'ava'
 import fetchMock from 'fetch-mock';
 import { response, data } from './mockdata'
@@ -7,6 +8,7 @@ import { ResponseError } from '../common/utils'
 /*
   Model under test
 */
+
 import { 
   fetchWeather, 
   openweatherApiParams, 
@@ -29,42 +31,7 @@ const url = 'http://api.openweathermap.org/' +
   'units=imperial&' +
   'APPID=' + OPEN_WEATHER_APPID
 
-test.before(() => {
-//   // tr.cell.hide
-//   // const table = 
-//   const node = document.createElement('tr')
-//   // document.body.appendChild(node)
-//   node.classList.add('cell')
-//   node.classList.add('hide')
-
-//   // td.day
-//   const day = node.insertCell()
-//   day.classList.add('day')
-
-//   // td.time
-//   const time = node.insertCell()
-//   time.classList.add('time')
-
-//   // td.measurement
-//   const measurement = node.insertCell()
-//   measurement.classList.add('measurement')
-
-//   // td.icon 
-//   const icon = node.insertCell()
-//   icon.classList.add('icon')
-
-//   const img = document.createElement('img')
-//   img.classList.add('img')
-//   icon.appendChild(img)
-//   //Will check source in test
-//   //   img key={icon} src={`${icon}`}
-//   // img.src = 
-  
-//   //   td.weather
-//   const weather = document.createElement('div')
-//   weather.classList.add('weather')
-//   icon.appendChild(weather)
-})
+test.before(() => {})
 
 test.afterEach.always('after', t => {
   fetchMock.restore(); 
@@ -73,10 +40,6 @@ test.afterEach.always('after', t => {
 /*
   Test
 */
-
-test('globals Test', t => {
-  t.pass()
-});
 
 test('fetchWeather can return parsed json', async t => {
   fetchMock.post(url, response);
@@ -109,7 +72,7 @@ test('updateTableRows() populates given DOM element w/ correct data', async t =>
   const dayElement = cell.children[0].textContent
   const timeElement = cell.children[1].textContent
   const temperatureElement = Number(cell.children[2].textContent)
-  const imgElement = cell.children[3].children[0].src
+  const imgElement = (cell.children[3].children[0]: any).src
   const descriptionElement = cell.children[4].textContent
 
   t.is(day, dayElement)

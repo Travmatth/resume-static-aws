@@ -1,5 +1,6 @@
-declare class NodeList<HTMLElement> {
+declare class NodeList<T> {
   forEach(): void;
+  item(): T;
 }
 
 declare class Event {
