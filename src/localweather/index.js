@@ -42,17 +42,19 @@ export const openweatherApiParams = (lat: number, lon: number): ApiParams => ({
   Start program
 */
 
-export const contentLoadedListener = async (time: number = 500): void =>  {
+export const contentLoadedListener = async (time: number = 500) =>  {
 
   // const launch = () => navigator.geolocation.getCurrentPosition(getWeather);
   navigator.geolocation.getCurrentPosition(getWeather);
   // setTimeout(launch, time);
 }
 
-if (document !== undefined)  
+if (document !== undefined) {
+  // $FlowIgnore: addEventListener throws type err, signature doesn't allow async 
   document.addEventListener('DOMContentLoaded', contentLoadedListener);
+}  
 
-export const getWeather = async (location: Coordinates): void  => {
+export const getWeather = async (location: Coordinates) => {
   const { latitude, longitude, } = location.coords; 
   
   const opts = openweatherApiParams(latitude, longitude);

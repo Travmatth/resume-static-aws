@@ -2,7 +2,7 @@
 import test from 'ava'
 import fetchMock from 'fetch-mock';
 import { response, data } from './mockdata'
-import ResponseError from '../common/utils'
+import { ResponseError } from '../common/utils'
 
 /*
   Model under test
