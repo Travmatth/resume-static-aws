@@ -90,12 +90,12 @@ declare type DailyForecast = {|
 |}
 
 declare type WeatherResponse = {|
-  now: Date;
+  now: number;
   city: string;
   forecasts: Array<DailyForecast>;
 |}
 
-declare type Daily= {|
+declare type Daily= {
   icon: string;
   rain: ?number;
   snow: ?number;
@@ -105,10 +105,10 @@ declare type Daily= {|
   day: string;
   time: string;
   temp: DailyTemperature
-|}
+}
 
 declare type Weather = {|
-  now: Date;
+  now: number;
   city: string;
   forecasts: Array<Daily>;
 |}

@@ -1,7 +1,4 @@
 /* @flow */
-// import { 
-//   Daily, DailyForecast,
-// } from './index.js.flow' 
 
 export const week = [
   'Sunday',
@@ -44,15 +41,6 @@ export function dateString(time: Date): string {
     + `${appendSuffix(time.getDate())}`
 }
 
-export function parseTime(time: DailyForecast): Daily {
-  const { date, ...rest } = time
-  const duration = new Date(date * 1000)
-
-  const hours = duration.getHours() % 12
-  const minutes = duration.getMinutes()
-  return { 
-    ...rest, 
-    day: dateString(duration), 
-    time: `${hours}:${minutes}0`, 
-  }
-}
+export const convertFahrenheitToCelsius = (temp: number) => (
+  Math.round(temp * 1.8 + 32)
+);

@@ -1,18 +1,17 @@
-/* 
-  @flow 
-*/
-
-/*
-  Types
-*/
-
+/* @flow */
 /*
   Libraries
 */
 
-import { serialize, ResponseError } from '../common/utils';
+import { 
+  week, 
+  dateString, 
+  month, 
+  appendSuffix, 
+  convertFahrenheitToCelsius, 
+} from './constants';
 import { OPEN_WEATHER_APPID, } from '../common/api_keys';
-import { parseTime } from './constants';
+import { serialize, ResponseError } from '../common/utils';
 
 /*
   Constants
@@ -39,17 +38,6 @@ export const openweatherApiParams = (lat: number, lon: number): ApiParams => ({
   Start program
 */
 
-export const contentLoadedListener = async (time: number = 500) =>  {
-  // const launch = () => navigator.geolocation.getCurrentPosition(getWeather);
-  navigator.geolocation.getCurrentPosition(getWeather);
-  // setTimeout(launch, time);
-}
-
-if (document !== undefined) {
-  // $FlowIgnore: addEventListener throws type err, signature doesn't allow async 
-  document.addEventListener('DOMContentLoaded', contentLoadedListener);
-}  
-
 export const getWeather = async (location: Coordinates) => {
   const { latitude, longitude, } = location.coords; 
   
@@ -63,18 +51,29 @@ export const getWeather = async (location: Coordinates) => {
     const weather: any = await fetchWeather(resource)
 
     header.textContent =  weather.city
-    updateTableRows(cells, header, weather, tempScale())
+    updateTableRows(cells, weather, tempScale())
   } catch(error) {
     console.error('error', error)
   }
 };
+
+export const contentLoadedListener = async (time: number = 500) =>  {
+  // const launch = () => navigator.geolocation.getCurrentPosition(getWeather);
+  navigator.geolocation.getCurrentPosition(getWeather);
+  // setTimeout(launch, time);
+}
+
+if (document !== undefined) {
+  // $FlowIgnore: addEventListener throws type err, signature doesn't allow async 
+  document.addEventListener('DOMContentLoaded', contentLoadedListener);
+}  
 
 /*
   Network call
 */
 
 export const fetchWeather = async (url: string): Weather => {
-  /* Fetch initial resource after delay
+  /* Fetch initial resource after delay, direct fetching leads to:
 
      Fetch API cannot load 
        http://api.openweathermap.org/data/2.5/forecast?
@@ -86,13 +85,18 @@ export const fetchWeather = async (url: string): Weather => {
      Request header field content-type is not allowed 
      by Access-Control-Allow-Headers in preflight response.
 
-     "The server (that the POST request is sent to) needs to include the Access-Control-Allow-Headers header (etc) in its response." 
-     i.e., since the server doesn't allow CORS, we're out of luck
-     http://stackoverflow.com/questions/25727306/request-header-field-access-control-allow-headers-is-not-allowed-by-access-contr
+     "The server (that the POST request is sent to) needs to include the 
+       Access-Control-Allow-Headers header (etc) in its response." 
 
-     Should I use JSONP + validation,
+     i.e., since the server doesn't allow CORS, we're out of luck
+     http://stackoverflow.com/
+     questions/25727306/
+     request-header-field-access-control-allow-headers-is-not-allowed-by-access-contr
+
+     Should I use JSONP + validation, will this work?
      Or set up proxy on heroku?
   */
+
   const opts = {
     method: 'POST',
     headers: {
@@ -120,7 +124,7 @@ export const fetchWeather = async (url: string): Weather => {
  */
 export const updateTableRows = (
   nodes: NodeList<HTMLTableRowElement>, 
-  results: Array<Forecast>, 
+  results: Array<Object>, 
   temperature: string
 ): void => {
   let index = 0
@@ -148,7 +152,6 @@ export const updateTableRows = (
     imgElem.src = icon
     node.children[4].textContent = description
 
-    // Extract classname, make visible if applicable
     if (node.className === 'hide') node.className.replace(/hide/, 'show')
 
     // Finally, point to next element in source arrays 
@@ -162,12 +165,12 @@ export const updateTableRows = (
   Supporting Functions
 */ 
 
-export const checkResponse = async (response: Response): FiveDayForecast => {
+export const checkResponse = async (response: Response): Promise<*> => {
   if (response.status < 200 || response.status >= 400) { 
     throw new ResponseError('localweather fetch failed', response)
   }
 
-  return await (response.json(): FiveDayForecast)
+  return await response.json()
 };
 
 export const processWeather = (data: FiveDayForecast): Weather => ({
@@ -178,10 +181,6 @@ export const processWeather = (data: FiveDayForecast): Weather => ({
     .map(parseTime)
     .map(stripDateIfRedundant)
 });
-
-export const convertFahrenheitToCelsius = (temp: number) => (
-  Math.round(temp * 1.8 + 32)
-);
 
 export const processForecasts = (outlook: Forecast): DailyForecast => ({
   icon: `http://openweathermap.org/img/w/${outlook.weather[0].icon}.png`,
@@ -196,6 +195,20 @@ export const processForecasts = (outlook: Forecast): DailyForecast => ({
     farenheit: outlook.main.temp,
   },
 });
+
+export const parseTime = (time: DailyForecast): Daily => {
+  const { date, ...rest } = time
+  const duration = new Date(date * 1000)
+
+  const hours = duration.getHours() % 12
+  const minutes = duration.getMinutes()
+
+  return { 
+    ...rest, 
+    day: dateString(duration), 
+    time: `${hours}:${minutes}0`, 
+  }
+}
 
 export const stripDateIfRedundant = (
   today: Daily, 
