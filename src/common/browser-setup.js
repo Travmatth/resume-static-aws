@@ -4,6 +4,9 @@ require('babel-register')({
 
 global.document = require('jsdom').jsdom(
   '<body>' +
+    '<h1 class="heading"/>' +
+    '<button class="celsius"/>' +
+    '<button class="fahrenheit"/>' +
     '<table>' +
       '<tbody>' +
         '<tr class="cell hide">' +
