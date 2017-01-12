@@ -5,7 +5,12 @@ block heading
 	link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
 
 block content
-	h1 Title
+	div
+		h1.heading
+		div.control-bar
+			input.celsius (type="radio") Celsius
+			input.fahrenheit (type="radio") Fahrenheit
+
 	table
 		thead
 			tr

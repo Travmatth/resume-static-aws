@@ -1,4 +1,6 @@
-/* @flow */
+/* 
+  @flow 
+*/
 
 /*
   Types
@@ -26,9 +28,14 @@ import { parseTime } from './constants';
   Constants
 */
 
-//Initiliazed in DOMContentLoaded
+// Initiliazed in DOMContentLoaded
 let cells: ?NodeList<HTMLElement>;
 
+// determine user preference in which temp scale temperature is displayed in
+const tempBtn = document.querySelector('.celsius') 
+const tempScale = () => tempBtn.checked === true ? 'celsius' : 'fahrenheit'
+
+// api call params
 export const endpoint = 'http://api.openweathermap.org/data/2.5/forecast';
 
 export const openweatherApiParams = (lat: number, lon: number): ApiParams => ({
@@ -43,7 +50,6 @@ export const openweatherApiParams = (lat: number, lon: number): ApiParams => ({
 */
 
 export const contentLoadedListener = async (time: number = 500) =>  {
-
   // const launch = () => navigator.geolocation.getCurrentPosition(getWeather);
   navigator.geolocation.getCurrentPosition(getWeather);
   // setTimeout(launch, time);
@@ -59,12 +65,15 @@ export const getWeather = async (location: Coordinates) => {
   
   const opts = openweatherApiParams(latitude, longitude);
   const resource: string = serialize(endpoint, opts);
-  // const cells = document.querySelectorAll('.cell');
+  const cells = document.querySelectorAll('.cell');
+  const header = document.querySelector('.heading')
 
-  // Call API, parse response
+  // Call API, update dom
   try {
     const weather: any = await fetchWeather(resource)
-    // updateTableRows(weather/*, cells*/)
+
+    header.textContent =  weather.city
+    updateTableRows(cells, header, weather, tempScale())
   } catch(error) {
     console.error('error', error)
   }
@@ -98,7 +107,7 @@ export const fetchWeather = async (url: string): Weather => {
 */
 
 /**
- * updateDOM fills in given table rows (each containing a dates weather info)
+ * updateTableRows fills in given table rows (each containing a dates weather info)
  * with the supplied information
  * @param  { NodeList<HTMLTableRowElement> } nodes the table row elements to be populated
  * @param  { Array<Forecasts> } results the parsed weather forecasts
@@ -123,7 +132,6 @@ export const updateTableRows = (
           img
         td.weather
     */
-
     const { icon, temp, day, time, weather, description, } = forecast
 
     node.children[0].textContent = day
@@ -136,11 +144,9 @@ export const updateTableRows = (
     node.children[4].textContent = description
 
     // Extract classname, make visible if applicable
-    node.className === 'hide'
-      ? node.className.replace(/hide/, 'show')
-      : node.className.replace(/show/, 'hide')
+    if (node.className === 'hide') node.className.replace(/hide/, 'show')
 
-    // Finally, point to next elem of source arrays 
+    // Finally, point to next element in source arrays 
     index += 1
     node = nodes.item(index)
     forecast = results[index]
@@ -156,9 +162,7 @@ export const checkResponse = async (response: Response): FiveDayForecast => {
     throw new ResponseError('localweather fetch failed', response)
   }
 
-  // return await (response.json(): FiveDayForecast)
-  const t = await (response.json(): FiveDayForecast)
-  return t
+  return await (response.json(): FiveDayForecast)
 };
 
 export const processWeather = (data: FiveDayForecast): Weather => ({
@@ -196,9 +200,6 @@ export const stripDateIfRedundant = (
   const { day, ...rest } = today
   const dateRedundant = index > 0 && seq[index - 1].day === day 
 
-  if (dateRedundant) {
-    return { day: '', ...rest }
-  } else {
-    return { day, ...rest }
-  }
+  if (dateRedundant) return { day: '', ...rest }
+  return { day, ...rest }
 } 
