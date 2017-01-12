@@ -1,4 +1,18 @@
 /* @flow */
+
+/*
+  Types
+*/
+
+import {
+  ApiParams,
+  Daily,
+  DailyForecast, 
+  Weather,
+  FiveDayForecast,
+  Forecast, 
+ } from './index.js.flow'
+
 /*
   Libraries
 */
@@ -22,7 +36,11 @@ let cells: ?NodeList<HTMLElement>;
 
 // determine user preference in which temp scale temperature is displayed in
 const tempBtn = document.querySelector('.celsius') 
-const tempScale = () => tempBtn.checked === true ? 'celsius' : 'fahrenheit'
+const tempScale = () => (
+  tempBtn instanceof HTMLInputElement 
+    ? tempBtn.checked === true ? 'celsius' : 'fahrenheit'
+    : 'fahrenheit'
+)
 
 // api call params
 export const endpoint = 'http://api.openweathermap.org/data/2.5/forecast';
@@ -38,7 +56,7 @@ export const openweatherApiParams = (lat: number, lon: number): ApiParams => ({
   Start program
 */
 
-export const getWeather = async (location: Coordinates) => {
+export const getWeather = async (location: Position) => {
   const { latitude, longitude, } = location.coords; 
   
   const opts = openweatherApiParams(latitude, longitude);
@@ -123,7 +141,7 @@ export const fetchWeather = async (url: string): Weather => {
  * @return { void } void
  */
 export const updateTableRows = (
-  nodes: NodeList<HTMLTableRowElement>, 
+  nodes: NodeList<HTMLElement>, 
   results: Array<Object>, 
   temperature: string
 ): void => {
@@ -165,12 +183,12 @@ export const updateTableRows = (
   Supporting Functions
 */ 
 
-export const checkResponse = async (response: Response): Promise<*> => {
+export const checkResponse = async (response: Response): FiveDayForecast => {
   if (response.status < 200 || response.status >= 400) { 
     throw new ResponseError('localweather fetch failed', response)
   }
 
-  return await response.json()
+  return await (response.json(): FiveDayForecast)
 };
 
 export const processWeather = (data: FiveDayForecast): Weather => ({

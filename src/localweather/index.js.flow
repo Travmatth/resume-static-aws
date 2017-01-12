@@ -1,20 +1,11 @@
+
 /* Localweather Types */
 
-declare type ApiParams = {|
+export type ApiParams = {|
   'lat': number;
   'lon': number;
   'units': string;
   'APPID': string;
-|}
-
-declare type Coordinates = {|
-  longitude: number;
-  latitude: number;
-|}
-
-declare type Coords = {|
-  lon: number;
-  lat: number;
 |}
 
 declare type Sys = {|
@@ -95,7 +86,7 @@ declare type WeatherResponse = {|
   forecasts: Array<DailyForecast>;
 |}
 
-declare type Daily= {
+export type Daily= {
   icon: string;
   rain: ?number;
   snow: ?number;
@@ -107,13 +98,13 @@ declare type Daily= {
   temp: DailyTemperature
 }
 
-declare type Weather = {|
+export type Weather = {|
   now: number;
   city: string;
   forecasts: Array<Daily>;
 |}
 
-declare type FiveDayForecast = {|
+export type FiveDayForecast = {|
   city: City;   
   cod: string;
   message: number;

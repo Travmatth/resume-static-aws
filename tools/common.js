@@ -2,6 +2,7 @@
 'use strict';
 
 // import webpack from 'webpack'
+import webpack from 'webpack'
 import validate from 'webpack-validator'
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { StatsWriterPlugin } from "webpack-stats-plugin";
@@ -71,6 +72,7 @@ const common: WebpackConfiguration = validate({
   },
 
   plugins: [
+    new webpack.IgnorePlugin(/\.flow$/),
     // Write out stats file to build directory.
     new StatsWriterPlugin(),
     // generate index page
