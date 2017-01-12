@@ -1,13 +1,13 @@
 /* Localweather Types */
 
-export type ApiParams = {|
+declare type ApiParams = {|
   'lat': number;
   'lon': number;
   'units': string;
   'APPID': string;
 |}
 
-export type Coordinates = {|
+declare type Coordinates = {|
   longitude: number;
   latitude: number;
 |}
@@ -29,7 +29,7 @@ declare type Clouds = {|
   all: number 
 |}
 
-export type City = {|
+declare type City = {|
   population: number;
   id: number;
   coord: Coords;
@@ -38,7 +38,7 @@ export type City = {|
   sys: Sys; 
 |}
 
-export type Temperatures = {|
+declare type Temperatures = {|
   temp: number;
   temp_min: number;
   temp_max: number;
@@ -49,19 +49,19 @@ export type Temperatures = {|
   temp_kf: number;
 |}
 
-export type WeatherReport = {|
+declare type WeatherReport = {|
   id: number;
   main: string;
   description: string;
   icon: string;
 |} 
 
-export type Wind = {|
+declare type Wind = {|
   speed: number;
   deg: number;
 |}
 
-export type Forecast = {|
+declare type Forecast = {|
   dt: number;
   main: Temperatures;
   weather: Array<WeatherReport>;
@@ -73,12 +73,12 @@ export type Forecast = {|
   dt_txt: string;
 |}
 
-export type DailyTemperature = {
+declare type DailyTemperature = {
   celsius: number;
   farenheit: number;
 }
 
-export type DailyForecast = {|
+declare type DailyForecast = {|
   icon: string;
   rain: ?number;
   snow: ?number;
@@ -89,13 +89,13 @@ export type DailyForecast = {|
   temp: DailyTemperature
 |}
 
-export type WeatherResponse = {|
+declare type WeatherResponse = {|
   now: Date;
   city: string;
   forecasts: Array<DailyForecast>;
 |}
 
-export type Daily= {|
+declare type Daily= {|
   icon: string;
   rain: ?number;
   snow: ?number;
@@ -107,13 +107,13 @@ export type Daily= {|
   temp: DailyTemperature
 |}
 
-export type Weather = {|
+declare type Weather = {|
   now: Date;
   city: string;
   forecasts: Array<Daily>;
 |}
 
-export type FiveDayForecast = {|
+declare type FiveDayForecast = {|
   city: City;   
   cod: string;
   message: number;

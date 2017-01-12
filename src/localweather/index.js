@@ -6,16 +6,6 @@
   Types
 */
 
-import { 
-  DailyForecast, 
-  Weather, 
-  FiveDayForecast, 
-  Forecast, 
-  Daily, 
-  Coordinates, 
-  ApiParams,
-} from './index.js.flow';
-
 /*
   Libraries
 */
@@ -84,10 +74,25 @@ export const getWeather = async (location: Coordinates) => {
 */
 
 export const fetchWeather = async (url: string): Weather => {
-  // Fetch initial resource after delay
-  // mixed content restrictions (can't request http on https page)
-  // Should I use JSONP + validation,
-  // Or set up proxy on heroku?
+  /* Fetch initial resource after delay
+
+     Fetch API cannot load 
+       http://api.openweathermap.org/data/2.5/forecast?
+       lat=40.247796099999995&
+       lon=-75.64445769999999&
+       units=imperial&
+       APPID=c26ef1df98c449f37f8f199738ce74c7. 
+
+     Request header field content-type is not allowed 
+     by Access-Control-Allow-Headers in preflight response.
+
+     "The server (that the POST request is sent to) needs to include the Access-Control-Allow-Headers header (etc) in its response." 
+     i.e., since the server doesn't allow CORS, we're out of luck
+     http://stackoverflow.com/questions/25727306/request-header-field-access-control-allow-headers-is-not-allowed-by-access-contr
+
+     Should I use JSONP + validation,
+     Or set up proxy on heroku?
+  */
   const opts = {
     method: 'POST',
     headers: {

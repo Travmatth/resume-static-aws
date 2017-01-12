@@ -1,7 +1,7 @@
 /* @flow */
-import { 
-  Daily, DailyForecast,
-} from './index.js.flow' 
+// import { 
+//   Daily, DailyForecast,
+// } from './index.js.flow' 
 
 export const week = [
   'Sunday',
