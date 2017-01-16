@@ -82,7 +82,7 @@ export const contentLoadedListener = async (time: number = 500) =>  {
 }
 
 if (document !== undefined) {
-  // $FlowIgnore: addEventListener throws type err, signature doesn't allow async 
+  // $FlowIgnore: addEventListener throws err, signature doesn't allow async 
   document.addEventListener('DOMContentLoaded', contentLoadedListener);
 }  
 
