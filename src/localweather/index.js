@@ -27,6 +27,9 @@ import {
 import { OPEN_WEATHER_APPID, } from '../common/api_keys';
 import { serialize, ResponseError } from '../common/utils';
 
+// Mocking fetch during dev
+import * as MOCK from './mockdata'
+
 /*
   Constants
 */
@@ -123,7 +126,13 @@ export const fetchWeather = async (url: string): Weather => {
     }
   }
   
-  return await fetch(url, opts)
+  // Stubbing out fetch during dev
+  const data = [JSON.stringify(MOCK.response)]
+  const blob = new Blob(data, { type: 'application/json' });
+  const stub = new Response(blob)
+
+  return await Promise.resolve(stub)
+  // return await fetch(url, opts)
     .then(checkResponse)
     .then(processWeather)
     .catch(error => { throw error })
@@ -184,6 +193,7 @@ export const updateTableRows = (
 */ 
 
 export const checkResponse = async (response: Response): FiveDayForecast => {
+  console.log('response', response)
   if (response.status < 200 || response.status >= 400) { 
     throw new ResponseError('localweather fetch failed', response)
   }
