@@ -52,7 +52,7 @@ declare type Wind = {|
   deg: number;
 |}
 
-declare type Forecast = {|
+export type Forecast = {|
   dt: number;
   main: Temperatures;
   weather: Array<WeatherReport>;
@@ -66,10 +66,10 @@ declare type Forecast = {|
 
 declare type DailyTemperature = {
   celsius: number;
-  farenheit: number;
+  fahrenheit: number;
 }
 
-declare type DailyForecast = {|
+export type DailyForecast = {|
   icon: string;
   rain: ?number;
   snow: ?number;
@@ -77,7 +77,7 @@ declare type DailyForecast = {|
   weather: string;
   cloud: number;
   date: number;
-  temp: DailyTemperature
+  temp: DailyTemperature;
 |}
 
 declare type WeatherResponse = {|
@@ -95,7 +95,7 @@ export type Daily= {
   cloud: number;
   day: string;
   time: string;
-  temp: DailyTemperature
+  temp: DailyTemperature;
 }
 
 export type Weather = {|

@@ -73,7 +73,7 @@ const common: WebpackConfiguration = validate({
 
   plugins: [
     // Ignore flow files in local directories
-    new webpack.IgnorePlugin(/\.flow$/),
+    // new webpack.IgnorePlugin(/\.flow$/),
     // Write out stats file to build directory.
     new StatsWriterPlugin(),
     // generate index page

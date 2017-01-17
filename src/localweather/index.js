@@ -1,17 +1,6 @@
-/* @flow */
-
-/*
-  Types
+/* 
+  @flow 
 */
-
-import {
-  ApiParams,
-  Daily,
-  DailyForecast, 
-  Weather,
-  FiveDayForecast,
-  Forecast, 
- } from './index.js.flow'
 
 /*
   Libraries
@@ -40,7 +29,7 @@ let cells: ?NodeList<HTMLElement>;
 // determine user preference in which temp scale temperature is displayed in
 const tempBtn = document.querySelector('.celsius') 
 const tempScale = () => (
-  tempBtn instanceof HTMLInputElement 
+  tempBtn instanceof window.HTMLInputElement 
     ? tempBtn.checked === true ? 'celsius' : 'fahrenheit'
     : 'fahrenheit'
 )
@@ -48,7 +37,7 @@ const tempScale = () => (
 // api call params
 export const endpoint = 'http://api.openweathermap.org/data/2.5/forecast';
 
-export const openweatherApiParams = (lat: number, lon: number): ApiParams => ({
+export const openweatherApiParams = (lat: number, lon: number) => ({
   'lat': lat,
   'lon': lon,
   'units': 'imperial',
@@ -69,10 +58,10 @@ export const getWeather = async (location: Position) => {
 
   // Call API, update dom
   try {
-    const weather: any = await fetchWeather(resource)
-
-    header.textContent =  weather.city
-    updateTableRows(cells, weather, tempScale())
+    const weather: Weather = await fetchWeather(resource)
+    const { forecasts, city, } = weather
+    header.textContent =  city
+    updateTableRows(cells, forecasts, tempScale())
   } catch(error) {
     console.error('error', error)
   }
@@ -93,7 +82,7 @@ if (document !== undefined) {
   Network call
 */
 
-export const fetchWeather = async (url: string): Weather => {
+export const fetchWeather = async (url: string): Promise<Weather> => {
   /* Fetch initial resource after delay, direct fetching leads to:
 
      Fetch API cannot load 
@@ -151,7 +140,7 @@ export const fetchWeather = async (url: string): Weather => {
  */
 export const updateTableRows = (
   nodes: NodeList<HTMLElement>, 
-  results: Array<Object>, 
+  results: Array<Daily>, 
   temperature: string
 ): void => {
   let index = 0
@@ -173,8 +162,8 @@ export const updateTableRows = (
     node.children[0].textContent = day
     node.children[1].textContent = time
     node.children[2].textContent = temperature === 'celsius'
-      ? temp.celsius
-      : temp.fahrenheit
+      ? `${temp.celsius}`
+      : `${temp.fahrenheit}`
     const imgElem: any = node.children[3].children[0]
     imgElem.src = icon
     node.children[4].textContent = description
@@ -192,13 +181,12 @@ export const updateTableRows = (
   Supporting Functions
 */ 
 
-export const checkResponse = async (response: Response): FiveDayForecast => {
-  console.log('response', response)
+export const checkResponse = async (response: Response): Promise<FiveDayForecast> => {
   if (response.status < 200 || response.status >= 400) { 
     throw new ResponseError('localweather fetch failed', response)
   }
 
-  return await (response.json(): FiveDayForecast)
+  return await (response.json(): Promise<FiveDayForecast>)
 };
 
 export const processWeather = (data: FiveDayForecast): Weather => ({
@@ -220,7 +208,7 @@ export const processForecasts = (outlook: Forecast): DailyForecast => ({
   date: outlook.dt,
   temp: {
     celsius: convertFahrenheitToCelsius(outlook.main.temp),
-    farenheit: outlook.main.temp,
+    fahrenheit: outlook.main.temp,
   },
 });
 

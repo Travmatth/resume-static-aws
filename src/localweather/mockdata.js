@@ -1,5 +1,3 @@
-import { Weather } from './index.js.flow'
-
 // curl -XPOST -H "Content-type: application/json" 'http://api.openweathermap.org/data/2.5/forecast?lat=40.712784&lon=-74.005941&units=imperial&APPID=c26ef1df98c449f37f8f199738ce74c7'
 
 export const data: Weather = {
