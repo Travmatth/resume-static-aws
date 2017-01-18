@@ -88,7 +88,7 @@ declare type WeatherResponse = {|
   forecasts: Array<DailyForecast>;
 |}
 
-export type Daily= {
+export type Daily = {
   icon: string;
   rain: ?number;
   snow: ?number;

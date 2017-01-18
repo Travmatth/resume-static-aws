@@ -5,14 +5,13 @@
 */
 
 import { 
-  week, 
-  month, 
+  serialize, 
   dateString, 
   appendSuffix, 
+  ResponseError,
   convertFahrenheitToCelsius, 
-} from './constants';
+} from '../common/utils';
 import { OPEN_WEATHER_APPID, } from '../common/api_keys';
-import { serialize, ResponseError } from '../common/utils';
 
 // Mocking fetch during dev
 import * as MOCK from './mockdata'
