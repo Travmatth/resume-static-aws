@@ -69,16 +69,18 @@ declare type DailyTemperature = {
   fahrenheit: number;
 }
 
-export type DailyForecast = {|
+export type DailyForecast = {
   icon: string;
   rain: ?number;
   snow: ?number;
   description: string;
   weather: string;
   cloud: number;
-  date: number;
+  day: string;
+  time: string;
+  // date: number;
   temp: DailyTemperature;
-|}
+}
 
 declare type WeatherResponse = {|
   now: number;

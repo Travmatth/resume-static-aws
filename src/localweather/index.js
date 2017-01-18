@@ -209,7 +209,7 @@ export const processForecasts = (outlook: Forecast): DailyForecast => ({
   ...parseTime(outlook.dt)
 });
 
-export const parseTime = (time: number): Daily => {
+export const parseTime = (time: number): { day: string, time: string } => {
   const duration = new Date(time * 1000)
   const hours = duration.getHours() % 12
   const minutes = duration.getMinutes()

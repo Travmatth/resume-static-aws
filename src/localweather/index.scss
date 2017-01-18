@@ -1,3 +1,103 @@
-.testing {
-  display: block;
+$table-col: #D0D0D0;
+$table-head: #787878;
+$primary-background: #F8F8F8;
+
+body {
+  background-color: $primary-background;
+ }
+
+table {
+  z-index: 1;
+  text-align: center;
+  border-collapse: collapse;
+  padding: 0 3px 0 3px;
 }
+
+td {
+  padding: 0 10px 0 10px;
+}
+
+thead {
+  background-color: $table-head;
+}
+
+tr {
+  background-color: $table-col;
+
+  &:nth-child(odd) {
+    background-color: #E0E0E0;
+  }
+}
+
+tbody {
+  border-width: 2px 0 2px 0;
+}
+
+// .lw.nav {
+//   top: 0;
+//   left: 0;
+//   position: fixed;
+// }
+
+// .heading {
+//   float: left;
+//   display: inline;
+//   position: fixed;
+//   top: -31px;
+//   right: 0;
+// }
+
+// .spacer {
+//   background-color: white;
+// }
+
+// .toggle-button {
+//   // float: left;
+// }
+
+// .depressed {
+//   border-style: solid;
+//   border-top-width: 0;
+//   border-bottom-width: 0;
+//   background-color: lightgray;
+// }
+
+// .background {
+//   width: 100%;
+//   height: 90vh;
+//   display: flex;
+//   align-items: center;
+//   align-content: center;
+//   justify-content: center;
+// }
+
+// .weather {
+//   // transform: translateY(40%);
+//   position: absolute;
+//   top: -20%;
+
+//   &.weather-enter {
+//     opacity: 0.01;
+//     // transform: translateY(-75%);
+//     top: 0%;
+
+//     &.weather-enter-active {
+//       opacity: 1;
+//       transition: opacity 2s ease-in;
+//       transition: top /* transform */ 2s ease-in;
+//       top: 0%;
+//       // transform: translateY(25%);
+//     }
+//   }
+
+//   &.weather-leave {
+//     width: 0vh;
+//     height: 0vh;
+//     opacity: 1;
+
+//     &.weather-leave-active {
+//       opacity: 0;
+//       transition: opacity 0 ease-in;
+//     }
+//   }
+// }
