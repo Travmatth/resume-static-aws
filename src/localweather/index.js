@@ -1,6 +1,4 @@
-/* 
-  @flow 
-*/
+/* @flow */
 
 /*
   Libraries
@@ -8,8 +6,8 @@
 
 import { 
   week, 
-  dateString, 
   month, 
+  dateString, 
   appendSuffix, 
   convertFahrenheitToCelsius, 
 } from './constants';
@@ -28,7 +26,7 @@ let cells: ?NodeList<HTMLElement>;
 
 // determine user preference in which temp scale temperature is displayed in
 const tempBtn = document.querySelector('.celsius') 
-const tempScale = () => (
+const getTempScale = () => (
   tempBtn instanceof window.HTMLInputElement 
     ? tempBtn.checked === true ? 'celsius' : 'fahrenheit'
     : 'fahrenheit'
@@ -50,18 +48,18 @@ export const openweatherApiParams = (lat: number, lon: number) => ({
 
 export const getWeather = async (location: Position) => {
   const { latitude, longitude, } = location.coords; 
-  
-  const opts = openweatherApiParams(latitude, longitude);
-  const resource: string = serialize(endpoint, opts);
+  const options = openweatherApiParams(latitude, longitude);
+  const resource: string = serialize(endpoint, options);
+
   const cells = document.querySelectorAll('.cell');
-  const header = document.querySelector('.heading')
+  const header = document.querySelector('.heading');
 
   // Call API, update dom
   try {
     const weather: Weather = await fetchWeather(resource)
     const { forecasts, city, } = weather
     header.textContent =  city
-    updateTableRows(cells, forecasts, tempScale())
+    updateTableRows(cells, forecasts, getTempScale())
   } catch(error) {
     console.error('error', error)
   }
