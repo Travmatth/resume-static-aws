@@ -113,7 +113,7 @@ export const fetchWeather = async (url: string): Promise<Weather> => {
     }
   }
   
-  // Stubbing out fetch during dev
+  // Stubbing out fetch while designing layout
   const data = [JSON.stringify(MOCK.response)]
   const blob = new Blob(data, { type: 'application/json' });
   const stub = new Response(blob)
@@ -192,7 +192,6 @@ export const processWeather = (data: FiveDayForecast): Weather => ({
   now: Date.now(),
   forecasts: data.list
     .map(processForecasts)
-    .map(parseTime)
     .map(stripDateIfRedundant)
 });
 
@@ -203,25 +202,19 @@ export const processForecasts = (outlook: Forecast): DailyForecast => ({
   description: outlook.weather[0].description,
   weather: outlook.weather[0].main,
   cloud: outlook.clouds.all,
-  date: outlook.dt,
   temp: {
     celsius: convertFahrenheitToCelsius(outlook.main.temp),
     fahrenheit: outlook.main.temp,
   },
+  ...parseTime(outlook.dt)
 });
 
-export const parseTime = (time: DailyForecast): Daily => {
-  const { date, ...rest } = time
-  const duration = new Date(date * 1000)
-
+export const parseTime = (time: number): Daily => {
+  const duration = new Date(time * 1000)
   const hours = duration.getHours() % 12
   const minutes = duration.getMinutes()
 
-  return { 
-    ...rest, 
-    day: dateString(duration), 
-    time: `${hours}:${minutes}0`, 
-  }
+  return { day: dateString(duration), time: `${hours}:${minutes}0`, }
 }
 
 export const stripDateIfRedundant = (

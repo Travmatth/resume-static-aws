@@ -14,7 +14,7 @@ export const data: Weather = {
       "cloud": 36,
       "temp": {
         "celsius": 84,
-        "farenheit": 28.74
+        "fahrenheit": 28.74
       },
       "time": "1:00"
     },
@@ -28,7 +28,7 @@ export const data: Weather = {
       "cloud": 20,
       "temp": {
         "celsius": 82,
-        "farenheit": 27.82
+        "fahrenheit": 27.82
       },
       "time": "4:00"
     },
@@ -42,7 +42,7 @@ export const data: Weather = {
       "cloud": 0,
       "temp": {
         "celsius": 75,
-        "farenheit": 24.08
+        "fahrenheit": 24.08
       },
       "time": "7:00"
     },
@@ -56,7 +56,7 @@ export const data: Weather = {
       "cloud": 12,
       "temp": {
         "celsius": 76,
-        "farenheit": 24.48
+        "fahrenheit": 24.48
       },
       "time": "10:00"
     },
@@ -70,7 +70,7 @@ export const data: Weather = {
       "cloud": 24,
       "temp": {
         "celsius": 77,
-        "farenheit": 24.8
+        "fahrenheit": 24.8
       },
       "time": "1:00"
     },
@@ -84,7 +84,7 @@ export const data: Weather = {
       "cloud": 36,
       "temp": {
         "celsius": 75,
-        "farenheit": 23.62
+        "fahrenheit": 23.62
       },
       "time": "4:00"
     },
@@ -98,7 +98,7 @@ export const data: Weather = {
       "cloud": 44,
       "temp": {
         "celsius": 74,
-        "farenheit": 23.46
+        "fahrenheit": 23.46
       },
       "time": "7:00"
     },
@@ -112,7 +112,7 @@ export const data: Weather = {
       "cloud": 48,
       "temp": {
         "celsius": 77,
-        "farenheit": 24.75
+        "fahrenheit": 24.75
       },
       "time": "10:00"
     },
@@ -126,7 +126,7 @@ export const data: Weather = {
       "cloud": 56,
       "temp": {
         "celsius": 78,
-        "farenheit": 25.64
+        "fahrenheit": 25.64
       },
       "time": "1:00"
     },
@@ -140,7 +140,7 @@ export const data: Weather = {
       "cloud": 64,
       "temp": {
         "celsius": 79,
-        "farenheit": 26.21
+        "fahrenheit": 26.21
       },
       "time": "4:00"
     },
@@ -154,7 +154,7 @@ export const data: Weather = {
       "cloud": 76,
       "temp": {
         "celsius": 79,
-        "farenheit": 26.33
+        "fahrenheit": 26.33
       },
       "time": "7:00"
     },
@@ -168,7 +168,7 @@ export const data: Weather = {
       "cloud": 8,
       "temp": {
         "celsius": 82,
-        "farenheit": 27.9
+        "fahrenheit": 27.9
       },
       "time": "10:00"
     },
@@ -182,7 +182,7 @@ export const data: Weather = {
       "cloud": 0,
       "temp": {
         "celsius": 86,
-        "farenheit": 30.07
+        "fahrenheit": 30.07
       },
       "time": "1:00"
     },
@@ -196,7 +196,7 @@ export const data: Weather = {
       "cloud": 20,
       "temp": {
         "celsius": 85,
-        "farenheit": 29.2
+        "fahrenheit": 29.2
       },
       "time": "4:00"
     },
@@ -210,7 +210,7 @@ export const data: Weather = {
       "cloud": 8,
       "temp": {
         "celsius": 78,
-        "farenheit": 25.58
+        "fahrenheit": 25.58
       },
       "time": "7:00"
     },
@@ -224,7 +224,7 @@ export const data: Weather = {
       "cloud": 64,
       "temp": {
         "celsius": 79,
-        "farenheit": 26.36
+        "fahrenheit": 26.36
       },
       "time": "10:00"
     },
@@ -238,7 +238,7 @@ export const data: Weather = {
       "cloud": 88,
       "temp": {
         "celsius": 80,
-        "farenheit": 26.71
+        "fahrenheit": 26.71
       },
       "time": "1:00"
     },
@@ -252,7 +252,7 @@ export const data: Weather = {
       "cloud": 88,
       "temp": {
         "celsius": 81,
-        "farenheit": 27.38
+        "fahrenheit": 27.38
       },
       "time": "4:00"
     },
@@ -266,7 +266,7 @@ export const data: Weather = {
       "cloud": 92,
       "temp": {
         "celsius": 84,
-        "farenheit": 29.02
+        "fahrenheit": 29.02
       },
       "time": "7:00"
     },
@@ -280,7 +280,7 @@ export const data: Weather = {
       "cloud": 92,
       "temp": {
         "celsius": 92,
-        "farenheit": 33.08
+        "fahrenheit": 33.08
       },
       "time": "10:00"
     },
@@ -294,7 +294,7 @@ export const data: Weather = {
       "cloud": 100,
       "temp": {
         "celsius": 94,
-        "farenheit": 34.66
+        "fahrenheit": 34.66
       },
       "time": "1:00"
     },
@@ -308,7 +308,7 @@ export const data: Weather = {
       "cloud": 92,
       "temp": {
         "celsius": 97,
-        "farenheit": 35.84
+        "fahrenheit": 35.84
       },
       "time": "4:00"
     },
@@ -322,7 +322,7 @@ export const data: Weather = {
       "cloud": 92,
       "temp": {
         "celsius": 98,
-        "farenheit": 36.65
+        "fahrenheit": 36.65
       },
       "time": "7:00"
     },
@@ -336,7 +336,7 @@ export const data: Weather = {
       "cloud": 100,
       "temp": {
         "celsius": 101,
-        "farenheit": 38.22
+        "fahrenheit": 38.22
       },
       "time": "10:00"
     },
@@ -350,7 +350,7 @@ export const data: Weather = {
       "cloud": 92,
       "temp": {
         "celsius": 110,
-        "farenheit": 43.09
+        "fahrenheit": 43.09
       },
       "time": "1:00"
     },
@@ -364,7 +364,7 @@ export const data: Weather = {
       "cloud": 92,
       "temp": {
         "celsius": 119,
-        "farenheit": 48.14
+        "fahrenheit": 48.14
       },
       "time": "4:00"
     },
@@ -378,7 +378,7 @@ export const data: Weather = {
       "cloud": 92,
       "temp": {
         "celsius": 127,
-        "farenheit": 52.94
+        "fahrenheit": 52.94
       },
       "time": "7:00"
     },
@@ -392,7 +392,7 @@ export const data: Weather = {
       "cloud": 92,
       "temp": {
         "celsius": 134,
-        "farenheit": 56.59
+        "fahrenheit": 56.59
       },
       "time": "10:00"
     },
@@ -406,7 +406,7 @@ export const data: Weather = {
       "cloud": 64,
       "temp": {
         "celsius": 133,
-        "farenheit": 56.35
+        "fahrenheit": 56.35
       },
       "time": "1:00"
     },
@@ -420,7 +420,7 @@ export const data: Weather = {
       "cloud": 92,
       "temp": {
         "celsius": 122,
-        "farenheit": 50.01
+        "fahrenheit": 50.01
       },
       "time": "4:00"
     },
@@ -434,7 +434,7 @@ export const data: Weather = {
       "cloud": 92,
       "temp": {
         "celsius": 112,
-        "farenheit": 44.39
+        "fahrenheit": 44.39
       },
       "time": "7:00"
     },
@@ -448,7 +448,7 @@ export const data: Weather = {
       "cloud": 92,
       "temp": {
         "celsius": 103,
-        "farenheit": 39.65
+        "fahrenheit": 39.65
       },
       "time": "10:00"
     },
@@ -462,7 +462,7 @@ export const data: Weather = {
       "cloud": 68,
       "temp": {
         "celsius": 94,
-        "farenheit": 34.63
+        "fahrenheit": 34.63
       },
       "time": "1:00"
     },
@@ -476,7 +476,7 @@ export const data: Weather = {
       "cloud": 0,
       "temp": {
         "celsius": 86,
-        "farenheit": 29.74
+        "fahrenheit": 29.74
       },
       "time": "4:00"
     },
@@ -490,7 +490,7 @@ export const data: Weather = {
       "cloud": 0,
       "temp": {
         "celsius": 81,
-        "farenheit": 27.43
+        "fahrenheit": 27.43
       },
       "time": "7:00"
     },
@@ -504,7 +504,7 @@ export const data: Weather = {
       "cloud": 0,
       "temp": {
         "celsius": 85,
-        "farenheit": 29.65
+        "fahrenheit": 29.65
       },
       "time": "10:00"
     },
@@ -518,7 +518,7 @@ export const data: Weather = {
       "cloud": 0,
       "temp": {
         "celsius": 88,
-        "farenheit": 31.2
+        "fahrenheit": 31.2
       },
       "time": "1:00"
     },
@@ -532,7 +532,7 @@ export const data: Weather = {
       "cloud": 12,
       "temp": {
         "celsius": 87,
-        "farenheit": 30.38
+        "fahrenheit": 30.38
       },
       "time": "4:00"
     }
