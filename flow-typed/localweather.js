@@ -64,7 +64,7 @@ export type Forecast = {|
   dt_txt: string;
 |}
 
-declare type DailyTemperature = {
+export type DailyTemperature = {
   celsius: number;
   fahrenheit: number;
 }

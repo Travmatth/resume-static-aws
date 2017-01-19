@@ -21,7 +21,10 @@ import * as MOCK from './mockdata'
 */
 
 // Initiliazed in DOMContentLoaded
+let temperatures: ?Array<DailyTemperature>;
+let header: ?HTMLElement;
 let cells: ?NodeList<HTMLElement>;
+let tempToggles: ?NodeList<HTMLInputElement>;
 
 // determine user preference in which temp scale temperature is displayed in
 const tempBtn = document.querySelector('.celsius') 
@@ -33,7 +36,6 @@ const getTempScale = () => (
 
 // api call params
 export const endpoint = 'http://api.openweathermap.org/data/2.5/forecast';
-
 export const openweatherApiParams = (lat: number, lon: number) => ({
   'lat': lat,
   'lon': lon,
@@ -47,30 +49,38 @@ export const openweatherApiParams = (lat: number, lon: number) => ({
 
 export const getWeather = async (location: Position) => {
   const { latitude, longitude, } = location.coords; 
-  const options = openweatherApiParams(latitude, longitude);
-  const resource: string = serialize(endpoint, options);
+  const params = openweatherApiParams(latitude, longitude);
+  const resource: string = serialize(endpoint, params);
 
-  const cells = document.querySelectorAll('.cell');
-  const header = document.querySelector('.heading');
+  // I'd rather instantiate these in contentLoadedListener,
+  // but getCurrentPosition() callback can't be bound to pre-pass args
+  cells = document.querySelectorAll('.cell');
+  header = document.querySelector('.heading');
 
   // Call API, update dom
   try {
     const weather: Weather = await fetchWeather(resource)
     const { forecasts, city, } = weather
-    header.textContent =  city
-    updateTableRows(cells, forecasts, getTempScale())
+    temperatures = forecasts.map(elem => elem.temp)
+    if (header) header.textContent =  city
+    if (cells) updateTableRows(cells, forecasts, getTempScale())
   } catch(error) {
     console.error('error', error)
   }
 };
 
-export const contentLoadedListener = async (time: number = 500) =>  {
-  // const launch = () => navigator.geolocation.getCurrentPosition(getWeather);
+export const contentLoadedListener = async () =>  {
   navigator.geolocation.getCurrentPosition(getWeather);
-  // setTimeout(launch, time);
 }
 
 if (document !== undefined) {
+  tempToggles = ((document.querySelectorAll('input'): any): NodeList<HTMLInputElement>)
+
+  if (tempToggles) tempToggles.forEach(elem => {
+    elem.addEventListener('click', toggleTempChange)
+    elem.addEventListener('touchstart', toggleTempChange)
+  })
+
   // $FlowIgnore: addEventListener throws err, signature doesn't allow async 
   document.addEventListener('DOMContentLoaded', contentLoadedListener);
 }  
@@ -171,6 +181,25 @@ export const updateTableRows = (
     index += 1
     node = nodes.item(index)
     forecast = results[index]
+  }
+};
+
+export const toggleTempChange = () => {
+  let index = 0
+  const nodes = document.querySelectorAll('.measurement')
+  let node = nodes.item(index)
+  let temp: DailyForecast
+  if (temperatures) temp = temperatures[index]
+
+  while (node && temp) {
+    node.textContent = getTempScale() === 'celsius'
+      ? `${temp.celsius}`
+      : `${temp.fahrenheit}`
+
+    // Finally, point to next element in source arrays 
+    index += 1
+    node = nodes.item(index)
+    temp = results[index]
   }
 };
 

@@ -6,13 +6,14 @@ block heading
 
 block content
 	include ../common/nav.pug
+
 	section
 		div
 			h1.heading
 			div.control-bar
-				input.celsius(type="radio") 
+				input.celsius(name="temp", type="radio") 
 				|Celsius
-				input.fahrenheit(type="radio", checked="true") 
+				input.fahrenheit(name="temp", type="radio", checked="true") 
 				|Fahrenheit
 
 		table

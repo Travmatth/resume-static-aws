@@ -1,3 +1,5 @@
+@import '../common/_layout';
+
 $table-col: #D0D0D0;
 $table-head: #787878;
 $primary-background: #F8F8F8;
@@ -5,6 +7,20 @@ $primary-background: #F8F8F8;
 body {
   background-color: $primary-background;
  }
+
+section {
+  width: 60vw;
+  margin: 0 auto;
+}
+
+.heading {
+  display: inline;
+}
+
+.control-bar {
+  display: inline;
+  float: right;
+}
 
 table {
   z-index: 1;
