@@ -1,5 +1,15 @@
 /* @flow */
 
+import type { 
+  ApiParams,
+  Forecast,
+  DailyTemperature,
+  DailyForecast,
+  Daily,
+  Weather,
+  FiveDayForecast,
+} from './localweather.types'
+
 /*
   Libraries
 */
