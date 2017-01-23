@@ -10,11 +10,13 @@ import { ResponseError } from '../common/utils'
 */
 
 import { 
+  getWeather, 
   fetchWeather, 
   openweatherApiParams, 
   endpoint, 
   contentLoadedListener, 
   updateTableRows,
+  toggleTempChange,
 } from './index'
 
 import { serialize, } from '../common/utils'
@@ -89,4 +91,13 @@ test('contentLoadedListener() obtains user coordinates and populates list elemen
 
   // not sure what i'll be measuring yet
   t.pass()
+});
+
+test('toggleTempChange should switch temperature scale', async t => {
+  const nodes = document.querySelectorAll('.measurement');
+
+  t.is(nodes.item(0).textContent, '84');
+  const json = await getWeather({ coords: { latitude: 0,longitude: 0 } })
+  toggleTempChange('fffff')
+  t.is(nodes.item(0).textContent, '28.74');
 });

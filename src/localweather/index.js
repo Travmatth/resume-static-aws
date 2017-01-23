@@ -36,14 +36,6 @@ let header: ?HTMLElement;
 let cells: ?NodeList<HTMLElement>;
 let tempToggles: ?NodeList<HTMLInputElement>;
 
-// determine user preference in which temp scale temperature is displayed in
-const tempBtn = document.querySelector('.celsius') 
-const getTempScale = () => (
-  tempBtn instanceof window.HTMLInputElement 
-    ? tempBtn.checked === true ? 'celsius' : 'fahrenheit'
-    : 'fahrenheit'
-)
-
 // api call params
 export const endpoint = 'http://api.openweathermap.org/data/2.5/forecast';
 export const openweatherApiParams = (lat: number, lon: number) => ({
@@ -73,27 +65,28 @@ export const getWeather = async (location: Position) => {
     const { forecasts, city, } = weather
     temperatures = forecasts.map(elem => elem.temp)
     if (header) header.textContent =  city
-    if (cells) updateTableRows(cells, forecasts, getTempScale())
+    if (cells) updateTableRows(cells, forecasts, 'fahrenheit')
   } catch(error) {
     console.error('error', error)
   }
 };
 
 export const contentLoadedListener = async () =>  {
+  tempToggles = ((document.querySelectorAll('input'): any): NodeList<HTMLInputElement>)
+
+
+  // $FlowIgnore: addEventListener throws err, signature doesn't allow $SymbolIterator?(check)
+  if (tempToggles) [...tempToggles].forEach(elem => {
+    elem.addEventListener('click', toggleTempChange)
+    elem.addEventListener('touchstart', toggleTempChange)
+  });
+
   navigator.geolocation.getCurrentPosition(getWeather);
 }
 
 if (document !== undefined) {
-  tempToggles = ((document.querySelectorAll('input'): any): NodeList<HTMLInputElement>)
-
-  if (tempToggles) tempToggles.forEach(elem => {
-    elem.addEventListener('click', toggleTempChange)
-    elem.addEventListener('touchstart', toggleTempChange)
-  })
-
-  // $FlowIgnore: addEventListener throws err, signature doesn't allow async 
   document.addEventListener('DOMContentLoaded', contentLoadedListener);
-}  
+};
 
 /*
   Network call
@@ -160,6 +153,7 @@ export const updateTableRows = (
   results: Array<Daily>, 
   temperature: string
 ): void => {
+
   let index = 0
   let node = nodes.item(index)
   let forecast = results[index]
@@ -185,32 +179,41 @@ export const updateTableRows = (
     imgElem.src = icon
     node.children[4].textContent = description
 
-    if (node.className === 'hide') node.className.replace(/hide/, 'show')
+    if (node.className === 'hide') node.className.replace(/hide/, 'show');
 
     // Finally, point to next element in source arrays 
-    index += 1
-    node = nodes.item(index)
-    forecast = results[index]
-  }
+    index += 1;
+    node = nodes.item(index);
+    forecast = results[index];
+  };
 };
 
 export const toggleTempChange = () => {
   let index = 0
+
   const nodes = document.querySelectorAll('.measurement')
   let node = nodes.item(index)
-  let temp: DailyForecast
+  let temp 
   if (temperatures) temp = temperatures[index]
 
   while (node && temp) {
-    node.textContent = getTempScale() === 'celsius'
+    node.textContent = tempScale() === 'celsius'
       ? `${temp.celsius}`
       : `${temp.fahrenheit}`
 
     // Finally, point to next element in source arrays 
     index += 1
     node = nodes.item(index)
-    temp = results[index]
+    if (temperatures) temp = temperatures[index]
+    else { break }
   }
+};
+
+// determine user preference in which temp scale temperature is displayed in
+const tempScale = () => { 
+  return ((document.querySelector('.celsius'): any): HTMLInputElement).checked === true 
+  ? 'celsius' 
+  : 'fahrenheit'
 };
 
 /* 

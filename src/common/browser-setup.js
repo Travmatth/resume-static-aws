@@ -5,8 +5,8 @@ require('babel-register')({
 global.document = require('jsdom').jsdom(
   '<body>' +
     '<h1 class="heading"/>' +
-    '<button class="celsius"/>' +
-    '<button class="fahrenheit"/>' +
+    '<input class="celsius" name="temp" type="radio" />' +
+    '<input class="fahrenheit" name="temp" type="radio" checked="true"/>' +
     '<table>' +
       '<tbody>' +
         '<tr class="cell hide">' +
@@ -24,7 +24,7 @@ global.document = require('jsdom').jsdom(
 )
 
 global.window = document.defaultView
-// global.navigator = window.navigator
+
 global.navigator = {
   geolocation: {
     getCurrentPosition: (success, error, options) => {
@@ -32,4 +32,8 @@ global.navigator = {
     }
   }
 }; 
-// global.navigator = window.navigator
+
+global.temperatures = [{
+  celsius: 0,
+  fahrenheit: 1,
+}];
