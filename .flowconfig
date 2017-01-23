@@ -7,4 +7,5 @@
 flow-typed
 
 [options]
+traces=2
 suppress_comment=\\(.\\|\n\\)*\\$FlowIgnore
