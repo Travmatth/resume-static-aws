@@ -40,6 +40,10 @@ import { User } from './twitchtv.types';
 const fetchUserProfile = (user: string): Promise<User> => {
   /* Needs to understand the various failures that can happen during fetch
    * and how to return a normalized obj w/ null where applicable
+   * 3 states:
+   * user nonexistent, 404 response
+   * user offline, null stream
+   * user online, stream object
    */
 };
 
