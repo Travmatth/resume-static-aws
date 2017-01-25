@@ -97,7 +97,7 @@ test('toggleTempChange should switch temperature scale', async t => {
   const nodes = document.querySelectorAll('.measurement');
 
   t.is(nodes.item(0).textContent, '84');
-  const json = await getWeather({ coords: { latitude: 0,longitude: 0 } })
+  const json = await getWeather(((({ coords: { latitude: 0,longitude: 0 } }): any): Position))
   toggleTempChange('fffff')
   t.is(nodes.item(0).textContent, '28.74');
 });

@@ -85,12 +85,22 @@ test('6 / 3 * (4 - 6) + 5 should work', t => {
 });
 
 //FUNCTIONS
-test('symbols can be entered', t => {
-  const expected = ['2.718', '3.14', '0.693']
+test('E symbol can be entered', async t => {
+  const expected = ['2.718']
   expr.update('E')
+  t.is(expr.expression[0], expected[0])
+});
+
+test('PI symbol can be entered', async t => {
+  const expected = ['3.14']
   expr.update('PI')
+  t.is(expr.expression[0], expected[0])
+})
+
+test('LN2 symbol can be entered', async t => {
+  const expected = ['0.693']
   expr.update('LN2')
-  (expr.expression).to.eql(expected)
+  t.is(expr.expression[0], expected[0])
 })
 
 test('SIN should compute correctly', t => {
