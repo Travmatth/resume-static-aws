@@ -1387,7 +1387,7 @@ const offlineUserCall = {
   }
 }
 
-const onlineUserCall ={
+const onlineUserCall = {
   "_links": {
     "channel": "https://api.twitch.tv/kraken/channels/test_channel",
     "self": "https://api.twitch.tv/kraken/streams/test_channel"
