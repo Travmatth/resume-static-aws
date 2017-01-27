@@ -1,6 +1,6 @@
 // GET /streams
 // curl -H 'Accept: application/vnd.twitchtv.v3+json' \ 
-//      -H 'Client-ID: 1x3iaq53qa6v0r3d2iernmlkcjkjmt' \
+//      -H 'Client-ID: ${TWITCH_TV_API_KEY}' \
 //      -X GET https://api.twitch.tv/kraken/streams
 
 const allStreamsCall = {
@@ -1368,10 +1368,15 @@ const allStreamsCall = {
 
 // GET /streams/:channel/
 // curl -H 'Accept: application/vnd.twitchtv.v3+json' \
-//      -X GET https://api.twitch.tv/kraken/streams/test_channel
+//      -X GET https://api.twitch.tv/kraken/channel/asdf8ps
+const nonExistentUserChannel = {
+  "error": "Not Found", 
+  "status":404, 
+  "message":""
+}
 
 //Nonexistent users will give a 404 response
-const nonexistentUserCall ={
+const nonexistentUserStreamCall ={
   "stream": null,
   "_links": {
     "self": "https://api.twitch.tv/kraken/streams/brunofin",
@@ -1379,7 +1384,7 @@ const nonexistentUserCall ={
   }
 } 
 
-const offlineUserCall = {
+const offlineUserStreamCall = {
   "stream": null,
   "_links": {
     "self": "https://api.twitch.tv/kraken/streams/test_channel",
@@ -1387,7 +1392,7 @@ const offlineUserCall = {
   }
 }
 
-const onlineUserCall = {
+const onlineUserStreamCall = {
   "_links": {
     "channel": "https://api.twitch.tv/kraken/channels/test_channel",
     "self": "https://api.twitch.tv/kraken/streams/test_channel"

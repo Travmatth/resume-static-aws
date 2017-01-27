@@ -1,15 +1,16 @@
 /* @flow */
 
-import { 
-  serialize, 
-  // dateString, 
-  // appendSuffix, 
-  ResponseError,
-} from '../common/utils';
-import { TWITCH_TV_API_KEY, } from '../common/api_keys';
-import { User } from './twitchtv.types';
-import { users, streamsUrl, channelUrl } from './constants';
+import type { 
+  OptionalChannel,
+  Stream, 
+  AllStreams, 
+  Channel, 
+  NullChannel 
+} from './twitchtv.types';
 
+import { TWITCH_TV_API_KEY, } from '../common/api_keys';
+import { users, streamsUrl, channelUrl, EmptyStream, } from './constants';
+import { serialize, ResponseError, } from '../common/utils';
 /* Objective: Build a CodePen.io app that is functionally similar to this: 
  * https://codepen.io/FreeCodeCamp/full/Myvqmo/.
  * 
@@ -33,30 +34,35 @@ import { users, streamsUrl, channelUrl } from './constants';
 const headers = new Headers({ 
   'Accept': 'application/vnd.twitchtv.v3+json',
   'Client-ID': TWITCH_TV_API_KEY,
-})
+});
 
-const options = { headers, method: 'GET', mode: 'cors', }
+const options = { headers, method: 'GET', mode: 'cors', };
 
 /* Network calls
  */
 
-const userVerificationFetch = (user: string): userChallegeResponse => {
+const channelVerification = (user: string): OptionalChannel => {
   const endpoint = channelUrl + user
 
   return fetch(new Request(endpoint, options))
     .then(/*#TODO: write res process logic */)
 };
 
-const handleNullStream = async (res: Response): User => {
+const handleNullStream = async (res: Response): Stream => {
   //If stream is null this could either be due to:
   //a nonexistent user || an offline user
   //additional call to channel route is needed
   const user = '' //#TODO: Scaffolding
-  const userState = await userVerificationFetch(user)
+  const userState = await channelVerification(user)
 
-  userState.hasOwnProperty('status') && userState.status == 404
-    ? return convertToNonExistentUser(response)
-    : return convertToOfflineUser(response)
+  switch (typeof userState.status) {
+    case 'number':
+      return convertToNonExistentStream(response)
+    case 'string':
+      return convertToOfflineStream(response)
+    default:
+      console.error('Unrecognized GET /channel/:channel response', userState)
+  };
 };
 
 /**
@@ -65,7 +71,7 @@ const handleNullStream = async (res: Response): User => {
  * @param  {[type]} response: Response      [description]
  * @return {[type]}           [description]
  */
-export const classifyResponse = (response: Response): User => {
+export const classifyResponse = (response: Response): Stream => {
   /* Needs to understand the various failures that can happen during fetch
    * and how to return a normalized obj(s) w/ null where applicable
    * 4 states:
@@ -76,10 +82,10 @@ export const classifyResponse = (response: Response): User => {
    */
 
   if (response.hasOwnProperty('streams')) {
-    return convertToUserArray(response)
+    return convertToStreamArray(response)
   } else {
     response.stream
-      ? return convertToUser(response)
+      ? return convertToStream(response)
       : return handleNullStream(response)
   }
  };
@@ -88,7 +94,7 @@ export const classifyResponse = (response: Response): User => {
  * fetchUserProfile calls twitchtv api, returns normalized user object
  * @type {Function}
  */
-const fetchUserProfile = (user: string): Promise<User> => {
+const fetchUserProfile = (user: string): Promise<Stream> => {
   const endpoint = streamsUrl + user
 
   return fetch(new Request(endpoint, options))
@@ -99,8 +105,9 @@ const fetchUserProfile = (user: string): Promise<User> => {
  * fetchAllProfiles returns an array of promised normalized user objects
  * @type {Function}
  */
-const fetchAllProfiles = (users: Array<string>): Promise<Array<User>> => {
-  return Promise.all(...users.map(fetchUserProfile))
+const fetchAllProfiles = (users: Array<string>): Promise<Array<Stream>> => {
+  return Promise
+    .all(...users.map(fetchUserProfile))
     .then(agglomerate)
 };
 
@@ -115,7 +122,7 @@ document.addEventListener('DOMContentLoaded', contentLoadedListener);
 
 /* Helper Functions
  */
-const agglomerate<T> = (userResponses: T): Array<User>  => {
+const agglomerate = (userResponses: PossiblyNestedStreams): Array<Stream>  => {
   const accumulator = (curr, all) => {
     switch (typeof curr) {
       case 'Array':
@@ -125,10 +132,10 @@ const agglomerate<T> = (userResponses: T): Array<User>  => {
     }
   }
 
-  return (userResponses.reduce(accumulator, []): any): Array<User>)
+  return (userResponses.reduce(accumulator, []): any): Array<Stream>)
 };
 
-const convertToUser = (res: Response): User => ();
-const convertToUserArray = (res: Response): Array<User> => ();
-const convertToNonExistentUser = (res: Response): User => ();
-const convertToOfflineUser = (res: Response): User => ();
+const convertToStream = (res: Response): Stream => ();
+const convertToStreamArray = (res: Response): Array<Stream> => ();
+const convertToNonExistentStream = (res: Response): Stream => ();
+const convertToOfflineStream = (res: Response): Stream => ();
