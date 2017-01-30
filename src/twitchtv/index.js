@@ -56,16 +56,17 @@ const verifyUser = (user: string): Promise<boolean> => {
 const handleNullStream = async (body: UserStream): Stream => {
   // If stream is null this could either be due to:
   // a nonexistent user || an offline user
-  // additional call to channel route is needed to determine 
+  // additional call to channel route is needed to determine which case 
 
+  let msg
   const user = extractUserName(body)
-  const validUser = await verifyUser(user);
 
-  if (validUser) {
-    return convertToOfflineStream(body, user)
-  } else {
-    return convertToNonExistentStream(body, user)
-  };
+  if (await verifyUser(user)) 
+    msg = `ERROR:${user} is offline` 
+  else 
+    msg = `ERROR:${user} is not a streamer`
+
+  return Object.assign({}, emptyStream, { _id: msg }); 
 };
 
 /**
@@ -101,23 +102,21 @@ export const classifyResponse = (response: Response): PossiblyNestedStreams => {
  };
 
 /**
- * fetchUserProfile calls twitchtv api, returns normalized user object
- * @type {Function}
- */
-const fetchUserProfile = (user: string): PossiblyNestedStreams => {
-  const endpoint = streamsUrl + user
-
-  return fetch(new Request(endpoint, options))
-    .then(classifyResponse)
-};
-
-/**
  * fetchAllProfiles returns an array of promised normalized user objects
  * @type {Function}
  */
 const fetchAllProfiles = (users: Array<string>): Promise<Array<Stream>> => {
+
+   // call twitchtv api, return normalized user object
+  const fetches = [...users.map((user: string): PossiblyNestedStreams => {
+    const endpoint = streamsUrl + user
+
+    return fetch(new Request(endpoint, options))
+      .then(classifyResponse)
+  })] 
+
   return Promise
-    .all(...users.map(fetchUserProfile))
+    .all(fetches)
     .then(agglomerate)
 };
 
@@ -144,16 +143,4 @@ const agglomerate = (userResponses: PossiblyNestedStreams[]): Stream[]  => {
 
 const extractUserName = (user: UserStream): string => (
   user['_links']['self'].split('/').slice(-1)[0]
-);
-
-const convertToNonExistentStream = (user: string): Stream => (
-  Object.assign({}, emptyStream, { 
-    _id: `ERROR:${user} is not a streamer`,
-  }) 
-);
-
-const convertToOfflineStream = (user: string): Stream => (
-  Object.assign({}, emptyStream, { 
-    _id: `ERROR:${user} is offline`,
-  }) 
 );
