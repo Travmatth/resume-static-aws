@@ -53,17 +53,18 @@ const verifyUser = (user: string): Promise<boolean> => {
     })
 };
 
-const handleNullStream = async (res: Response): Stream => {
+const handleNullStream = async (body: UserStream): Stream => {
   // If stream is null this could either be due to:
   // a nonexistent user || an offline user
   // additional call to channel route is needed to determine 
-  const user = extractUserName(res.url)
+
+  const user = extractUserName(body)
   const validUser = await verifyUser(user);
 
   if (validUser) {
-    return convertToOfflineStream((response: UserStream), user) //returns Stream 
+    return convertToOfflineStream(body, user)
   } else {
-    return convertToNonExistentStream((response: UserStream), user) //returns Stream 
+    return convertToNonExistentStream(body, user)
   };
 };
 
@@ -84,7 +85,7 @@ export const classifyResponse = (response: Response): PossiblyNestedStreams => {
    */
 
   if (response.status >= 400) { 
-    console.log(`Invalid response to GET stream request ${response}`)
+    console.log('Invalid response to GET stream request', response)
     return null
   };
 
@@ -95,7 +96,7 @@ export const classifyResponse = (response: Response): PossiblyNestedStreams => {
   } else if ((body: Stream).stream) {
     return body
   } else {
-    return handleNullStream(response)
+    return handleNullStream((body: UserStream))
   };
  };
 
@@ -103,7 +104,7 @@ export const classifyResponse = (response: Response): PossiblyNestedStreams => {
  * fetchUserProfile calls twitchtv api, returns normalized user object
  * @type {Function}
  */
-const fetchUserProfile = (user: string): Promise<PossiblyNestedStreams> => {
+const fetchUserProfile = (user: string): PossiblyNestedStreams => {
   const endpoint = streamsUrl + user
 
   return fetch(new Request(endpoint, options))
@@ -120,7 +121,7 @@ const fetchAllProfiles = (users: Array<string>): Promise<Array<Stream>> => {
     .then(agglomerate)
 };
 
-const contentLoadedListener = async (): void => {
+const contentLoadedListener = async () => {
   const profiles = await fetchAllProfiles(twitchUser)
 };
 
@@ -131,18 +132,11 @@ document.addEventListener('DOMContentLoaded', contentLoadedListener);
 
 /* Helper Functions
  */
-const agglomerate = (
-  userResponses: Array<PossiblyNestedStreams>
-): Array<Stream>  => {
+const agglomerate = (userResponses: PossiblyNestedStreams[]): Stream[]  => {
   const accumulator = (curr, all) => {
-    switch (typeof curr) {
-      case 'Array':
-        return all.concat(curr)
-      case 'Object':
-        all.push(curr)
-      default:
-        break
-    }
+    if (Array.isArray(curr)) return all.concat(curr)
+    else if (typeof curr === 'object') return all.push(curr)
+    else return all
   }
 
   return ((userResponses.reduce(accumulator, []): any): Array<Stream>)
@@ -152,18 +146,14 @@ const extractUserName = (user: UserStream): string => (
   user['_links']['self'].split('/').slice(-1)[0]
 );
 
-const convertToNonExistentStream = (user: UserStream): Stream => (
+const convertToNonExistentStream = (user: string): Stream => (
   Object.assign({}, emptyStream, { 
-    _id: `
-      Error: ${extractUserName(user)} is not a streamer
-    `,
+    _id: `ERROR:${user} is not a streamer`,
   }) 
 );
 
-const convertToOfflineStream = (res: UserStream): Stream => (
+const convertToOfflineStream = (user: string): Stream => (
   Object.assign({}, emptyStream, { 
-    _id: `
-      Error: ${extractUserName(user)} is offline
-    `,
+    _id: `ERROR:${user} is offline`,
   }) 
 );
