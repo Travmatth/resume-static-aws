@@ -10,7 +10,7 @@ import type {
 
 import { TWITCH_TV_API_KEY, } from '../common/api_keys';
 import { twitchUser, streamsUrl, channelUrl, emptyStream, } from './constants';
-import { serialize, ResponseError, } from '../common/utils';
+import { serialize, } from '../common/utils';
 
 /* Objective: Build a CodePen.io app that is functionally similar to this: 
  * https://codepen.io/FreeCodeCamp/full/Myvqmo/.
@@ -57,7 +57,6 @@ const handleNullStream = async (body: UserStream): Stream => {
   // If stream is null this could either be due to:
   // a nonexistent user || an offline user
   // additional call to channel route is needed to determine which case 
-
   let msg
   const user = extractUserName(body)
 
@@ -79,10 +78,10 @@ export const classifyResponse = (response: Response): PossiblyNestedStreams => {
   /* Needs to understand the various failures that can happen during fetch
    * and how to return a normalized obj(s) w/ null where applicable
    * 4 states:
-   * user nonexistent, null stream
-   * user offline, null stream
+   * user nonexistent, null stream (these two will have same response shape)
+   * user offline, null stream (these two will have same response shape)
    * user online, stream object
-   * streams object
+   * stream(s) object
    */
 
   if (response.status >= 400) { 
@@ -105,9 +104,8 @@ export const classifyResponse = (response: Response): PossiblyNestedStreams => {
  * fetchAllProfiles returns an array of promised normalized user objects
  * @type {Function}
  */
-const fetchAllProfiles = (users: Array<string>): Promise<Array<Stream>> => {
-
-   // call twitchtv api, return normalized user object
+const fetchAllProfiles = (users: string[]): Promise<Stream[]> => {
+   // call TwitchTV api, return normalized user object
   const fetches = [...users.map((user: string): PossiblyNestedStreams => {
     const endpoint = streamsUrl + user
 
@@ -138,7 +136,7 @@ const agglomerate = (userResponses: PossiblyNestedStreams[]): Stream[]  => {
     else return all
   }
 
-  return ((userResponses.reduce(accumulator, []): any): Array<Stream>)
+  return ((userResponses.reduce(accumulator, []): any): Stream[])
 };
 
 const extractUserName = (user: UserStream): string => (
