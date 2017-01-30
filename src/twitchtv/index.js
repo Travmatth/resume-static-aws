@@ -1,16 +1,17 @@
 /* @flow */
 
 import type { 
-  OptionalChannel,
+  UserStream, 
   Stream, 
   AllStreams, 
-  Channel, 
-  NullChannel 
+  UndeterminedStreamType,  
+  PossiblyNestedStreams,
 } from './twitchtv.types';
 
 import { TWITCH_TV_API_KEY, } from '../common/api_keys';
-import { users, streamsUrl, channelUrl, EmptyStream, } from './constants';
+import { twitchUser, streamsUrl, channelUrl, emptyStream, } from './constants';
 import { serialize, ResponseError, } from '../common/utils';
+
 /* Objective: Build a CodePen.io app that is functionally similar to this: 
  * https://codepen.io/FreeCodeCamp/full/Myvqmo/.
  * 
@@ -41,27 +42,28 @@ const options = { headers, method: 'GET', mode: 'cors', };
 /* Network calls
  */
 
-const channelVerification = (user: string): OptionalChannel => {
+const verifyUser = (user: string): Promise<boolean> => {
   const endpoint = channelUrl + user
 
   return fetch(new Request(endpoint, options))
-    .then(/*#TODO: write res process logic */)
+    .then((response: Response): boolean => {
+      if (response.status >= 400 || response.json().hasOwnProperty('error')) 
+        return false
+      return true
+    })
 };
 
 const handleNullStream = async (res: Response): Stream => {
-  //If stream is null this could either be due to:
-  //a nonexistent user || an offline user
-  //additional call to channel route is needed
-  const user = '' //#TODO: Scaffolding
-  const userState = await channelVerification(user)
+  // If stream is null this could either be due to:
+  // a nonexistent user || an offline user
+  // additional call to channel route is needed to determine 
+  const user = extractUserName(res.url)
+  const validUser = await verifyUser(user);
 
-  switch (typeof userState.status) {
-    case 'number':
-      return convertToNonExistentStream(response)
-    case 'string':
-      return convertToOfflineStream(response)
-    default:
-      console.error('Unrecognized GET /channel/:channel response', userState)
+  if (validUser) {
+    return convertToOfflineStream((response: UserStream), user) //returns Stream 
+  } else {
+    return convertToNonExistentStream((response: UserStream), user) //returns Stream 
   };
 };
 
@@ -71,7 +73,7 @@ const handleNullStream = async (res: Response): Stream => {
  * @param  {[type]} response: Response      [description]
  * @return {[type]}           [description]
  */
-export const classifyResponse = (response: Response): Stream => {
+export const classifyResponse = (response: Response): PossiblyNestedStreams => {
   /* Needs to understand the various failures that can happen during fetch
    * and how to return a normalized obj(s) w/ null where applicable
    * 4 states:
@@ -81,20 +83,27 @@ export const classifyResponse = (response: Response): Stream => {
    * streams object
    */
 
-  if (response.hasOwnProperty('streams')) {
-    return convertToStreamArray(response)
+  if (response.status >= 400) { 
+    console.log(`Invalid response to GET stream request ${response}`)
+    return null
+  };
+
+  const body = ((response.json(): any): UndeterminedStreamType); 
+
+  if (body.hasOwnProperty('streams')) {
+    return (body: AllStreams)
+  } else if ((body: Stream).stream) {
+    return body
   } else {
-    response.stream
-      ? return convertToStream(response)
-      : return handleNullStream(response)
-  }
+    return handleNullStream(response)
+  };
  };
 
 /**
  * fetchUserProfile calls twitchtv api, returns normalized user object
  * @type {Function}
  */
-const fetchUserProfile = (user: string): Promise<Stream> => {
+const fetchUserProfile = (user: string): Promise<PossiblyNestedStreams> => {
   const endpoint = streamsUrl + user
 
   return fetch(new Request(endpoint, options))
@@ -112,7 +121,7 @@ const fetchAllProfiles = (users: Array<string>): Promise<Array<Stream>> => {
 };
 
 const contentLoadedListener = async (): void => {
-  const profiles = await fetchAllProfiles(user)
+  const profiles = await fetchAllProfiles(twitchUser)
 };
 
 /* Start
@@ -122,20 +131,39 @@ document.addEventListener('DOMContentLoaded', contentLoadedListener);
 
 /* Helper Functions
  */
-const agglomerate = (userResponses: PossiblyNestedStreams): Array<Stream>  => {
+const agglomerate = (
+  userResponses: Array<PossiblyNestedStreams>
+): Array<Stream>  => {
   const accumulator = (curr, all) => {
     switch (typeof curr) {
       case 'Array':
         return all.concat(curr)
-      default:
+      case 'Object':
         all.push(curr)
+      default:
+        break
     }
   }
 
-  return (userResponses.reduce(accumulator, []): any): Array<Stream>)
+  return ((userResponses.reduce(accumulator, []): any): Array<Stream>)
 };
 
-const convertToStream = (res: Response): Stream => ();
-const convertToStreamArray = (res: Response): Array<Stream> => ();
-const convertToNonExistentStream = (res: Response): Stream => ();
-const convertToOfflineStream = (res: Response): Stream => ();
+const extractUserName = (user: UserStream): string => (
+  user['_links']['self'].split('/').slice(-1)[0]
+);
+
+const convertToNonExistentStream = (user: UserStream): Stream => (
+  Object.assign({}, emptyStream, { 
+    _id: `
+      Error: ${extractUserName(user)} is not a streamer
+    `,
+  }) 
+);
+
+const convertToOfflineStream = (res: UserStream): Stream => (
+  Object.assign({}, emptyStream, { 
+    _id: `
+      Error: ${extractUserName(user)} is offline
+    `,
+  }) 
+);

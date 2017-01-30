@@ -1,4 +1,5 @@
 /* @Flow */
+import type { Stream, } from './twitchtv.types'
 
 export const streamsUrl = 'https://api.twitch.tv/kraken/streams/'
 
@@ -18,7 +19,7 @@ export const users = [
   'ESL_SC2',
 ]
 
-export const EmptyStream = {
+export const emptyStream: Stream = {
   'game': '',
   'viewers': 0,
   'average_fps': 0,

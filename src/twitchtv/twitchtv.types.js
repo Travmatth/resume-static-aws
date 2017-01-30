@@ -76,5 +76,29 @@ export type AllStreams = {
   "streams": Array<Stream>;
 };
 
+export type UndeterminedStreamType = Stream
+  | AllStreams;
+
 export type PossiblyNestedStreams = Stream
   | Array<Stream>
+  | Null
+
+declare type Link = {
+  self: string;
+  channel: string;
+};
+
+export type UserStream = {
+  "stream": ?Stream;
+  "_links": Link;
+}; 
+
+export type NonExistentUserChannel = {
+  "error": string;
+  "status": number; 
+  "message": string;
+};
+
+export type MaybeUser = UserStream|null
+
+export type OfflineOrNonExistentUserStream = {}
