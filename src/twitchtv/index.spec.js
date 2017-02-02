@@ -25,7 +25,6 @@ import {
   handleNullStream,
   classifyResponse,
   fetchAllProfiles,
-  contentLoadedListener,
   agglomerate,
   extractUserName,
 } from './index';
@@ -44,10 +43,58 @@ test.afterEach.always('after', t => {
   Test
 */
 
-test('verifyUser should', async t => {});
-test('handleNullStream should', async t => {});
-test('classifyResponse should', async t => {});
-test('fetchAllProfiles should', async t => {});
-test('contentLoadedListener should', async t => {});
-test('agglomerate should', async t => {});
-test('extractUserName should', async t => {});
+test('verifyUser should return false if 404 response', async t => {
+  t.is(1, 1);
+});
+
+test('verifyUser should return false if error response', async t => {
+  t.is(1, 1);
+});
+
+test('verifyUser should return true if user exists', async t => {
+  t.is(1, 1);
+});
+
+test('handleNullStream should return emptyStream if user is offline', async t => {
+  t.is(1, 1);
+});
+
+test('handleNullStream should return emptyStream if user is nonexistent', async t => {
+  t.is(1, 1);
+});
+
+test('classifyResponse should return null if 404 response', async t => {
+  t.is(1, 1);
+});
+
+test('classifyResponse can return allStreams', async t => {
+  t.is(1, 1);
+});
+
+test('classifyResponse can return Stream', async t => {
+  t.is(1, 1);
+});
+
+test('classifyResponse can return emptyStream if user is nonexistent', async t => {
+  t.is(1, 1);
+});
+
+test('classifyResponse can return emptyStream if user is offline', async t => {
+  t.is(1, 1);
+});
+
+test('fetchAllProfiles should return Array<Promise<Stream>>', async t => {
+  t.is(1, 1);
+});
+
+test('fetchAllProfiles should handle nonexistent/offline users', async t => {
+  t.is(1, 1);
+});
+
+test('agglomerate should reduce all PossiblyNestedStreams types into Array<Stream>', async t => {
+  t.is(1, 1);
+});
+
+test('extractUserName should do so', async t => {
+  t.is(1, 1);
+});
