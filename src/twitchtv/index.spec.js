@@ -6,23 +6,36 @@ import { response, data } from './mockdata'
 import { ResponseError } from '../common/utils'
 
 /*
-  Model under test
+  Models under test
 */
 
-import { 
-} from './index'
+import type { 
+  UserStream, 
+  Stream, 
+  AllStreams, 
+  UndeterminedStreamType,  
+  PossiblyNestedStreams,
+} from './twitchtv.types';
+import { TWITCH_TV_API_KEY, } from '../common/api_keys';
+import { twitchUser, streamsUrl, channelUrl, emptyStream, } from './constants';
+import { serialize, } from '../common/utils';
 
-import { serialize, } from '../common/utils'
-import { } from '../common/api_keys';
+import { 
+  verifyUser,
+  handleNullStream,
+  classifyResponse,
+  fetchAllProfiles,
+  contentLoadedListener,
+  agglomerate,
+  extractUserName,
+} from './index';
+import { serialize, } from '../common/utils';
 
 /*
   Setup
 */
 
-const url = ''
-
-test.before(() => {
-})
+test.before(() => {})
 
 test.afterEach.always('after', t => {
   fetchMock.restore(); 
@@ -32,5 +45,10 @@ test.afterEach.always('after', t => {
   Test
 */
 
-test('', async t => {
-});
+test('verifyUser should', async t => {});
+test('handleNullStream should', async t => {});
+test('classifyResponse should', async t => {});
+test('fetchAllProfiles should', async t => {});
+test('contentLoadedListener should', async t => {});
+test('agglomerate should', async t => {});
+test('extractUserName should', async t => {});

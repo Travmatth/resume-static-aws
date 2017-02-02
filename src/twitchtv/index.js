@@ -131,9 +131,12 @@ document.addEventListener('DOMContentLoaded', contentLoadedListener);
  */
 const agglomerate = (userResponses: PossiblyNestedStreams[]): Stream[]  => {
   const accumulator = (curr, all) => {
-    if (Array.isArray(curr)) return all.concat(curr)
-    else if (typeof curr === 'object') return all.push(curr)
-    else return all
+    if (Array.isArray(curr)) 
+      return all.concat(curr)
+    else if (typeof curr === 'object') 
+      return all.push(curr)
+    else 
+      return all
   }
 
   return ((userResponses.reduce(accumulator, []): any): Stream[])
