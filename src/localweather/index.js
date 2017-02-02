@@ -126,12 +126,12 @@ export const fetchWeather = async (url: string): Promise<Weather> => {
   }
   
   // Stubbing out fetch while designing layout
-  const data = [JSON.stringify(MOCK.response)]
-  const blob = new Blob(data, { type: 'application/json' });
-  const stub = new Response(blob)
+  // const data = [JSON.stringify(MOCK.response)]
+  // const blob = new Blob(data, { type: 'application/json' });
+  // const stub = new Response(blob)
 
-  return await Promise.resolve(stub)
-  // return await fetch(url, opts)
+  // return await Promise.resolve(stub)
+  return await fetch(url, opts)
     .then(checkResponse)
     .then(processWeather)
     .catch(error => { throw error })

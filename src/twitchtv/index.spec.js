@@ -29,7 +29,6 @@ import {
   agglomerate,
   extractUserName,
 } from './index';
-import { serialize, } from '../common/utils';
 
 /*
   Setup

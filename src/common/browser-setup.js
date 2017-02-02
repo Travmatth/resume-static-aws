@@ -2,6 +2,9 @@ require('babel-register')({
   env: 'ava'
 })
 
+const Headers = require('node-fetch').Headers;
+
+global.Headers = Headers
 global.document = require('jsdom').jsdom(
   '<body>' +
     '<h1 class="heading"/>' +
