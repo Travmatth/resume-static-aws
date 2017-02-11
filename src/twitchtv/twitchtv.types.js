@@ -23,7 +23,7 @@ declare type StreamLink = {
 };
 
 
-export type NullChannel = {
+export type NullUser = {
   "error": string; 
   "status": number;
   "message": string;

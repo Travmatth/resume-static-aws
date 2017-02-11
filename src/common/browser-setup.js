@@ -1,10 +1,11 @@
-require('babel-register')({
-  env: 'ava'
-})
+require('babel-register')({ env: 'ava' })
 
-const Headers = require('node-fetch').Headers;
+import { Headers, Request, Response } from 'node-fetch';
 
 global.Headers = Headers
+global.Response  = Response 
+global.Request = Request
+
 global.document = require('jsdom').jsdom(
   '<body>' +
     '<h1 class="heading"/>' +
@@ -36,7 +37,6 @@ global.navigator = {
   }
 }; 
 
-global.temperatures = [{
-  celsius: 0,
-  fahrenheit: 1,
-}];
+global.temperatures = [
+  { celsius: 0,  fahrenheit: 1, }
+];

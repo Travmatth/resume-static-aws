@@ -1,9 +1,18 @@
 /* @flow */
 
-import test from 'ava'
+import test from 'ava';
+import jsdom from 'jsdom';
 import fetchMock from 'fetch-mock';
-import { response, data } from './mockdata'
-import { ResponseError } from '../common/utils'
+import { 
+  validUser,
+  nonexistentUser,
+  allStreamsCall, 
+  onlineUserChannel, 
+  onlineUserStreamCall,
+  nonexistentOrOfflineUserStream,
+} from './mockdata';
+import { ResponseError } from '../common/utils';
+import pify from 'pify';
 
 /*
   Models under test
@@ -17,7 +26,14 @@ import type {
   PossiblyNestedStreams,
 } from './twitchtv.types';
 import { TWITCH_TV_API_KEY, } from '../common/api_keys';
-import { twitchUser, streamsUrl, channelUrl, emptyStream, } from './constants';
+import { 
+  twitchUser, 
+  userUrl, 
+  users, 
+  streamsUrl, 
+  emptyStream, 
+  createEmptyStream, 
+} from './constants';
 import { serialize, } from '../common/utils';
 
 import { 
@@ -33,8 +49,6 @@ import {
   Setup
 */
 
-test.before(() => {})
-
 test.afterEach.always('after', t => {
   fetchMock.restore(); 
 })
@@ -43,58 +57,183 @@ test.afterEach.always('after', t => {
   Test
 */
 
+test('createEmptyStream should do so', async t => {
+  const user = "fasdf"
+
+  t.deepEqual(createEmptyStream(true, user), Object.assign({}, emptyStream, {
+    _id: `ERROR:${user} is offline`
+  }));
+
+  t.deepEqual(createEmptyStream(false, user), Object.assign({}, emptyStream, {
+    _id: `ERROR:${user} is not a streamer`
+  }));
+});
+
 test('verifyUser should return false if 404 response', async t => {
-  t.is(1, 1);
+  const user = "fasdf"
+  fetchMock.get(userUrl + user, { status: 404, body: {} });
+
+  t.false(await verifyUser(user));
 });
 
 test('verifyUser should return false if error response', async t => {
-  t.is(1, 1);
+  const user = "fasdf"
+  fetchMock.get(userUrl + user, { body: nonexistentUser(user) });
+
+  t.false(await verifyUser(user));
 });
 
 test('verifyUser should return true if user exists', async t => {
-  t.is(1, 1);
+  const user = "RobotCaleb"
+  fetchMock.get(userUrl + user, { body: onlineUserChannel(user) });
+
+  const exists = await verifyUser(user)
+  t.true(exists);
 });
 
 test('handleNullStream should return emptyStream if user is offline', async t => {
-  t.is(1, 1);
+  const user = "test_channel"
+  fetchMock.get(userUrl + user, { body: onlineUserChannel(user) });
+
+  const stream = await handleNullStream(nonexistentOrOfflineUserStream(user))
+  t.is(stream._id, `ERROR:${user} is offline`);
 });
 
 test('handleNullStream should return emptyStream if user is nonexistent', async t => {
-  t.is(1, 1);
+  const user = 'brunofin'
+  const url = userUrl + user
+  const body = nonexistentUser(user)
+  fetchMock.get(url, { body });
+
+  const stream = await handleNullStream(nonexistentOrOfflineUserStream(user))
+  t.is(stream._id, `ERROR:${user} is not a streamer`);
 });
 
 test('classifyResponse should return null if 404 response', async t => {
-  t.is(1, 1);
+  t.is(await classifyResponse({ status: 404 }), null);
 });
 
 test('classifyResponse can return allStreams', async t => {
-  t.is(1, 1);
+  // const user = "brunofin"
+  const response = {
+    json() {
+      return allStreamsCall
+    },
+    status: 200
+  }
+
+  t.is(await classifyResponse(response), allStreamsCall.streams);
 });
 
 test('classifyResponse can return Stream', async t => {
-  t.is(1, 1);
+  const user = 'freecodecamp'
+  const onlineUser = onlineUserStreamCall(user) 
+  const response = {
+    json() {
+      return onlineUser
+    },
+    status: 200
+  }
+
+  t.is(await classifyResponse(response), onlineUser);
 });
 
 test('classifyResponse can return emptyStream if user is nonexistent', async t => {
-  t.is(1, 1);
+  const user = 'brunofin'
+  fetchMock.get(userUrl + user, { 
+    status: 404, 
+    body: nonexistentUser(user) 
+  });
+
+  const response = {
+    json() {
+      return nonexistentOrOfflineUserStream(user) 
+    },
+    status: 200
+  }
+
+  t.deepEqual(await classifyResponse(response), Object.assign(
+    {}, 
+    emptyStream,
+    { _id: `ERROR:${user} is not a streamer`}
+  ));
 });
 
 test('classifyResponse can return emptyStream if user is offline', async t => {
-  t.is(1, 1);
+  const user = 'OgamingSC2'
+  fetchMock.get(userUrl + user, {
+    status: 404, 
+    body: validUser(user) 
+  });
+
+  const response = {
+    json() {
+      return nonexistentOrOfflineUserStream(user)
+    },
+    status: 200
+  }
+
+  t.deepEqual(await classifyResponse(response), Object.assign(
+    {},
+    emptyStream,
+    { _id: `ERROR:${user} is not a streamer` }
+  ));
 });
 
 test('fetchAllProfiles should return Array<Promise<Stream>>', async t => {
-  t.is(1, 1);
-});
+  const onlineStreams = ['freecodecamp','noobs2ninjas','RobotCaleb','OgamingSC2']
+  const offlineStreams = ['comster404','cretetion','storbeck','habathcx',]
+  const nonexistentStreams = ['brunofin','ESL_SC2',]
 
-test('fetchAllProfiles should handle nonexistent/offline users', async t => {
-  t.is(1, 1);
+  //all streamers requires only 1 api call, to fetch all streams
+  fetchMock.get(streamsUrl, allStreamsCall)
+  const allStreamers = allStreamsCall["streams"] 
+
+  //online streamers require only 1 api call, to fetch their stream
+  let onlineStreamers = [] 
+  onlineStreams.map(user => {
+    fetchMock.get(streamsUrl + user, { body: onlineUserStreamCall(user) })
+    onlineStreamers.push(onlineUserStreamCall(user))
+  })
+
+  //offline streamers require 2 api calls, to fetch their stream & valid user
+  let offlineStreamers = [] 
+  offlineStreams.map(user => {
+    const res = nonexistentOrOfflineUserStream(user)
+    fetchMock.get(streamsUrl + user, { body: res })
+    fetchMock.get(userUrl + user, { body: validUser(user) })
+    offlineStreamers.push(createEmptyStream(true, user))
+  })
+
+  //offline streamers require 2 api calls
+  let nonexistentStreamers = [] 
+  nonexistentStreams.map(user => {
+    const res = nonexistentOrOfflineUserStream(user)
+    fetchMock.get(streamsUrl + user, { body: res }) // fetch stream 
+    fetchMock.get(userUrl + user, { body: nonexistentUser(user) }) // nonexistent user
+    nonexistentStreamers.push(createEmptyStream(false, user))
+  })
+
+  const allProfiles = [
+    ...allStreamers, 
+    ...onlineStreamers, 
+    ...offlineStreamers, 
+    ...nonexistentStreamers,
+  ]
+
+  const f = await fetchAllProfiles(users)
+  t.deepEqual(f, allProfiles);
 });
 
 test('agglomerate should reduce all PossiblyNestedStreams types into Array<Stream>', async t => {
-  t.is(1, 1);
+  const pre = [allStreamsCall.streams, onlineUserStreamCall('kraken'), null]
+  const post = [...allStreamsCall.streams, onlineUserStreamCall('kraken')]
+
+  t.deepEqual(agglomerate(pre), post);
 });
 
 test('extractUserName should do so', async t => {
-  t.is(1, 1);
+  const name = '187gmhouh'
+
+  t.is(name, extractUserName(nonexistentOrOfflineUserStream(name)))
 });

@@ -1,84 +1,90 @@
+import type { NullUser } from 'twitchtv.types'; 
+
+// curl -H 'Accept: application/vnd.twitchtv.v3+json' \
+//      -H 'Client-ID: ${TWITCH_TV_API_KEY}' \
+//      -X GET https://api.twitch.tv/kraken/users/${user}
+export const nonexistentUser: NullUser = (user) => ({
+  "error":"Not Found",
+  "status":404,
+  "message": `User "${user}" was not found`
+});
+
+// curl -H 'Accept: application/vnd.twitchtv.v3+json' \
+//      -H 'Client-ID: ${TWITCH_TV_API_KEY}' \
+//      -X GET https://api.twitch.tv/kraken/users/${user}
+export const validUser = (user) => ({
+  "display_name": `${user}`,
+  "_id": 71852806,
+  "name": `${user}`,
+  "type": "user",
+  "bio": null,
+  "created_at": "2014-09-24T15:06:58Z",
+  "updated_at": "2017-02-09T20:00:39Z",
+  "logo": `https://static-cdn.jtvnw.net/jtv_user_pictures/${user}-profile_image-9021dccf9399929e-300x300.jpeg`,
+  "_links": {
+    "self": `https://api.twitch.tv/kraken/users/${user}`
+  }
+});
+
 // GET /channel/:channel/
 // curl -H 'Accept: application/vnd.twitchtv.v3+json' \
 //      -H 'Client-ID: ${TWITCH_TV_API_KEY}' \
-//      -X GET https://api.twitch.tv/kraken/channel/asdf8ps
-const onlineUserChannel = {
+//      -X GET https://api.twitch.tv/kraken/channel/${user}
+export const onlineUserChannel = (user) => ({
   "mature": false,
   "status": "test status",
   "broadcaster_language": "en",
-  "display_name": "test_channel",
+  "display_name": `${user}`,
   "game": "Gaming Talk Shows",
   "delay": null,
   "language": "en",
   "_id": 12345,
-  "name": "test_channel",
+  "name": `${user}`,
   "created_at": "2007-05-22T10:39:54Z",
   "updated_at": "2015-02-12T04:15:49Z",
-  "logo": "http://static-cdn.jtvnw.net/jtv_user_pictures/test_channel-profile_image-94a42b3a13c31c02-300x300.jpeg",
-  "banner": "http://static-cdn.jtvnw.net/jtv_user_pictures/test_channel-channel_header_image-08dd874c17f39837-640x125.png",
-  "video_banner": "http://static-cdn.jtvnw.net/jtv_user_pictures/test_channel-channel_offline_image-b314c834d210dc1a-640x360.png",
+  "logo": `http://static-cdn.jtvnw.net/jtv_user_pictures/${user}-profile_image-94a42b3a13c31c02-300x300.jpeg`,
+  "banner": `http://static-cdn.jtvnw.net/jtv_user_pictures/${user}-channel_header_image-08dd874c17f39837-640x125.png`,
+  "video_banner": `http://static-cdn.jtvnw.net/jtv_user_pictures/${user}-channel_offline_image-b314c834d210dc1a-640x360.png`,
   "background": null,
-  "profile_banner": "http://static-cdn.jtvnw.net/jtv_user_pictures/test_channel-profile_banner-6936c61353e4aeed-480.png",
+  "profile_banner": `http://static-cdn.jtvnw.net/jtv_user_pictures/${user}-profile_banner-6936c61353e4aeed-480.png`,
   "profile_banner_background_color": "null",
   "partner": true,
-  "url": "http://www.twitch.tv/test_channel",
+  "url": `http://www.twitch.tv/${user}`,
   "views": 49144894,
   "followers": 215780,
   "_links": {
-    "self": "https://api.twitch.tv/kraken/channels/test_channel",
-    "follows": "https://api.twitch.tv/kraken/channels/test_channel/follows",
-    "commercial": "https://api.twitch.tv/kraken/channels/test_channel/commercial",
-    "stream_key": "https://api.twitch.tv/kraken/channels/test_channel/stream_key",
-    "chat": "https://api.twitch.tv/kraken/chat/test_channel",
-    "subscriptions": "https://api.twitch.tv/kraken/channels/test_channel/subscriptions",
-    "editors": "https://api.twitch.tv/kraken/channels/test_channel/editors",
-    "teams": "https://api.twitch.tv/kraken/channels/test_channel/teams",
-    "videos": "https://api.twitch.tv/kraken/channels/test_channel/videos"
+    "self": `https://api.twitch.tv/kraken/channels/${user}`,
+    "follows": `https://api.twitch.tv/kraken/channels/${user}/follows`,
+    "commercial": `https://api.twitch.tv/kraken/channels/${user}/commercial`,
+    "stream_key": `https://api.twitch.tv/kraken/channels/${user}/stream_key`,
+    "chat": `https://api.twitch.tv/kraken/chat/${user}`,
+    "subscriptions": `https://api.twitch.tv/kraken/channels/${user}/subscriptions`,
+    "editors": `https://api.twitch.tv/kraken/channels/${user}/editors`,
+    "teams": `https://api.twitch.tv/kraken/channels/${user}/teams`,
+    "videos": `https://api.twitch.tv/kraken/channels/${user}/video`,
   }
-};
-
-// GET /streams/:channel/
-// curl -H 'Accept: application/vnd.twitchtv.v3+json' \
-//      -H 'Client-ID: ${TWITCH_TV_API_KEY}' \
-//      -X GET https://api.twitch.tv/kraken/channel/asdf8ps
-const nonExistentUserChannel = {
-  "error": "Not Found", 
-  "status":404, 
-  "message":""
-}
+});
 
 // GET /streams/:channel
 // curl -H 'Accept: application/vnd.twitchtv.v3+json' \ 
 //      -H 'Client-ID: ${TWITCH_TV_API_KEY}' \
 //      -X GET https://api.twitch.tv/kraken/streams/${:channel}
-const nonexistentUserStreamCall: Stream = {
+export const nonexistentOrOfflineUserStream = (user) => ({
   "stream": null,
   "_links": {
-    "self": "https://api.twitch.tv/kraken/streams/brunofin",
-    "channel": "https://api.twitch.tv/kraken/channels/brunofin"
+    "self": `https://api.twitch.tv/kraken/streams/${user}`,
+    "channel": `https://api.twitch.tv/kraken/channels/${user}`
   }
-} 
+});
 
 // GET /streams/:channel
 // curl -H 'Accept: application/vnd.twitchtv.v3+json' \ 
 //      -H 'Client-ID: ${TWITCH_TV_API_KEY}' \
 //      -X GET https://api.twitch.tv/kraken/streams/${:channel}
-const offlineUserStreamCall = {
-  "stream": null,
+export const onlineUserStreamCall = (user) => ({
   "_links": {
-    "self": "https://api.twitch.tv/kraken/streams/test_channel",
-    "channel": "https://api.twitch.tv/kraken/channels/test_channel"
-  }
-}
-
-// GET /streams/:channel
-// curl -H 'Accept: application/vnd.twitchtv.v3+json' \ 
-//      -H 'Client-ID: ${TWITCH_TV_API_KEY}' \
-//      -X GET https://api.twitch.tv/kraken/streams/${:channel}
-const onlineUserStreamCall = {
-  "_links": {
-    "channel": "https://api.twitch.tv/kraken/channels/test_channel",
-    "self": "https://api.twitch.tv/kraken/streams/test_channel"
+    "channel": `https://api.twitch.tv/kraken/channels/${user}`,
+    "self": `https://api.twitch.tv/kraken/streams/${user}`,
   },
   "stream": {
     "game": "StarCraft II: Heart of the Swarm",
@@ -93,55 +99,54 @@ const onlineUserStreamCall = {
       "mature": false,
       "status": "test status",
       "broadcaster_language": "en",
-      "display_name": "test_channel",
+      "display_name": `${user}`,
       "game": "StarCraft II: Heart of the Swarm",
       "delay": null,
       "language": "en",
       "_id": 12345,
-      "name": "test_channel",
+      "name": `${user}`,
       "created_at": "2007-05-22T10:39:54Z",
       "updated_at": "2015-02-12T04:15:49Z",
-      "logo": "http://static-cdn.jtvnw.net/jtv_user_pictures/test_channel-profile_image-94a42b3a13c31c02-300x300.jpeg",
-      "banner": "http://static-cdn.jtvnw.net/jtv_user_pictures/test_channel-channel_header_image-08dd874c17f39837-640x125.png",
-      "video_banner": "http://static-cdn.jtvnw.net/jtv_user_pictures/test_channel-channel_offline_image-b314c834d210dc1a-640x360.png",
+      "logo": `http://static-cdn.jtvnw.net/jtv_user_pictures/${user}-profile_image-94a42b3a13c31c02-300x300.jpeg`,
+      "banner": `http://static-cdn.jtvnw.net/jtv_user_pictures/${user}-channel_header_image-08dd874c17f39837-640x125.png`,
+      "video_banner": `http://static-cdn.jtvnw.net/jtv_user_pictures/${user}-channel_offline_image-b314c834d210dc1a-640x360.png`,
       "background": null,
-      "profile_banner": "http://static-cdn.jtvnw.net/jtv_user_pictures/test_channel-profile_banner-6936c61353e4aeed-480.png",
+      "profile_banner": `http://static-cdn.jtvnw.net/jtv_user_pictures/${user}-profile_banner-6936c61353e4aeed-480.png`,
       "profile_banner_background_color": "null",
       "partner": true,
-      "url": "http://www.twitch.tv/test_channel",
+      "url": `http://www.twitch.tv/${user}`,
       "views": 49144894,
       "followers": 215780,
       "_links": {
-        "self": "https://api.twitch.tv/kraken/channels/test_channel",
-        "follows": "https://api.twitch.tv/kraken/channels/test_channel/follows",
-        "commercial": "https://api.twitch.tv/kraken/channels/test_channel/commercial",
-        "stream_key": "https://api.twitch.tv/kraken/channels/test_channel/stream_key",
-        "chat": "https://api.twitch.tv/kraken/chat/test_channel",
-        "features": "https://api.twitch.tv/kraken/channels/test_channel/features",
-        "subscriptions": "https://api.twitch.tv/kraken/channels/test_channel/subscriptions",
-        "editors": "https://api.twitch.tv/kraken/channels/test_channel/editors",
-        "teams": "https://api.twitch.tv/kraken/channels/test_channel/teams",
-        "videos": "https://api.twitch.tv/kraken/channels/test_channel/videos"
+        "self": `https://api.twitch.tv/kraken/channels/${user}`,
+        "follows": `https://api.twitch.tv/kraken/channels/${user}/follows`,
+        "commercial": `https://api.twitch.tv/kraken/channels/${user}/commercial`,
+        "stream_key": `https://api.twitch.tv/kraken/channels/${user}/stream_key`,
+        "chat": `https://api.twitch.tv/kraken/chat/${user}`,
+        "features": `https://api.twitch.tv/kraken/channels/${user}/features`,
+        "subscriptions": `https://api.twitch.tv/kraken/channels/${user}/subscriptions`,
+        "editors": `https://api.twitch.tv/kraken/channels/${user}/editors`,
+        "teams": `https://api.twitch.tv/kraken/channels/${user}/teams`,
+        "videos": `https://api.twitch.tv/kraken/channels/${user}/video`,
       }
     },
     "preview": {
-      "small": "http://static-cdn.jtvnw.net/previews-ttv/live_user_test_channel-80x45.jpg",
-      "medium": "http://static-cdn.jtvnw.net/previews-ttv/live_user_test_channel-320x180.jpg",
-      "large": "http://static-cdn.jtvnw.net/previews-ttv/live_user_test_channel-640x360.jpg",
-      "template": "http://static-cdn.jtvnw.net/previews-ttv/live_user_test_channel-{width}x{height}.jpg"
+      "small": `http://static-cdn.jtvnw.net/previews-ttv/live_user_${user}-80x45.jpg`,
+      "medium": `http://static-cdn.jtvnw.net/previews-ttv/live_user_${user}-320x180.jpg`,
+      "large": `http://static-cdn.jtvnw.net/previews-ttv/live_user_${user}-640x360.jpg`,
+      "template": `http://static-cdn.jtvnw.net/previews-ttv/live_user_${user}-{width}x{height}.jp`,
     },
     "_links": {
-      "self": "https://api.twitch.tv/kraken/streams/test_channel"
+      "self": `https://api.twitch.tv/kraken/streams/${user}`,
     }
   }
-} 
+})
 
 // GET /streams
 // curl -H 'Accept: application/vnd.twitchtv.v3+json' \ 
 //      -H 'Client-ID: ${TWITCH_TV_API_KEY}' \
 //      -X GET https://api.twitch.tv/kraken/streams
-
-const allStreamsCall = {
+export const allStreamsCall = {
   "_total": 21361,
   "streams": [
     {
