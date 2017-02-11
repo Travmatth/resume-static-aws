@@ -54,7 +54,8 @@ export type Channel = {
   "_links": ChannelLink;  
 };
 
-export type OptionalChannel = Channel
+export type OptionalChannel 
+  = Channel
   | NullChannel
 
 export type Stream = {
@@ -99,6 +100,8 @@ export type NonExistentUserChannel = {
   "message": string;
 };
 
-export type MaybeUser = UserStream|null
+export type MaybeUser 
+  = UserStream
+  |null
 
 export type OfflineOrNonExistentUserStream = {}

@@ -3,7 +3,7 @@ import type { Stream, } from './twitchtv.types'
 
 export const streamsUrl = 'https://api.twitch.tv/kraken/streams/'
 
-export const channelUrl = ' https://api.twitch.tv/kraken/channels/'
+export const userUrl = 'https://api.twitch.tv/kraken/users/'
 
 export const users = [ 
   '', /* call current streamers api */ 
@@ -18,6 +18,14 @@ export const users = [
   'brunofin',
   'ESL_SC2',
 ]
+
+export const createEmptyStream = (reason: boolean, user: string) => (
+  Object.assign({}, emptyStream, { 
+      _id: reason === true 
+        ? `ERROR:${user} is offline`
+        : `ERROR:${user} is not a streamer`
+  })
+);
 
 export const emptyStream: Stream = {
   'game': '',

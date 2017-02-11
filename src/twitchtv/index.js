@@ -9,7 +9,13 @@ import type {
 } from './twitchtv.types';
 
 import { TWITCH_TV_API_KEY, } from '../common/api_keys';
-import { twitchUser, streamsUrl, channelUrl, emptyStream, } from './constants';
+import { 
+  twitchUser, 
+  streamsUrl, 
+  userUrl, 
+  emptyStream, 
+  createEmptyStream, 
+} from './constants';
 import { serialize, } from '../common/utils';
 
 /* Objective: Build a CodePen.io app that is functionally similar to this: 
@@ -42,18 +48,19 @@ const options = { headers, method: 'GET', mode: 'cors', };
 /* Network calls
  */
 
-const verifyUser = (user: string): Promise<boolean> => {
-  const endpoint = channelUrl + user
+export const verifyUser = async (user: string): Promise<boolean> => {
+  const endpoint = userUrl + user
 
   return fetch(new Request(endpoint, options))
-    .then((response: Response): boolean => {
-      if (response.status >= 400 || response.json().hasOwnProperty('error')) 
+    .then(async (response: Response): boolean => {
+      const res = await response.json()
+      if (response.status >= 400 || res.hasOwnProperty('error')) 
         return false
       return true
     })
 };
 
-const handleNullStream = async (body: UserStream): Stream => {
+export const handleNullStream = async (body: UserStream): Stream => {
   // If stream is null this could either be due to:
   // a nonexistent user || an offline user
   // additional call to channel route is needed to determine which case 
@@ -61,11 +68,9 @@ const handleNullStream = async (body: UserStream): Stream => {
   const user = extractUserName(body)
 
   if (await verifyUser(user)) 
-    msg = `ERROR:${user} is offline` 
+    return createEmptyStream(true, user)
   else 
-    msg = `ERROR:${user} is not a streamer`
-
-  return Object.assign({}, emptyStream, { _id: msg }); 
+    return createEmptyStream(false, user)
 };
 
 /**
@@ -74,7 +79,7 @@ const handleNullStream = async (body: UserStream): Stream => {
  * @param  {[type]} response: Response      [description]
  * @return {[type]}           [description]
  */
-export const classifyResponse = (response: Response): PossiblyNestedStreams => {
+export const classifyResponse = async (response: Response): PossiblyNestedStreams => {
   /* Needs to understand the various failures that can happen during fetch
    * and how to return a normalized obj(s) w/ null where applicable
    * 4 states:
@@ -85,14 +90,14 @@ export const classifyResponse = (response: Response): PossiblyNestedStreams => {
    */
 
   if (response.status >= 400) { 
-    console.log('Invalid response to GET stream request', response)
+    console.error('Invalid response to GET stream request', response)
     return null
   };
 
-  const body = ((response.json(): any): UndeterminedStreamType); 
+  const body = ((await response.json(): any): UndeterminedStreamType); 
 
   if (body.hasOwnProperty('streams')) {
-    return (body: AllStreams)
+    return (body.streams: AllStreams)
   } else if ((body: Stream).stream) {
     return body
   } else {
@@ -104,17 +109,17 @@ export const classifyResponse = (response: Response): PossiblyNestedStreams => {
  * fetchAllProfiles returns an array of promised normalized user objects
  * @type {Function}
  */
-const fetchAllProfiles = (users: string[]): Promise<Stream[]> => {
-   // call TwitchTV api, return normalized user object
-  const fetches = [...users.map((user: string): PossiblyNestedStreams => {
+export const fetchAllProfiles = (users: string[]): Promise<Stream[]> => {
+  // call TwitchTV api, return normalized user object
+  const task = (user: string): PossiblyNestedStreams => {
     const endpoint = streamsUrl + user
 
     return fetch(new Request(endpoint, options))
       .then(classifyResponse)
-  })] 
+  }
 
   return Promise
-    .all(fetches)
+    .all([...users.map(task)])
     .then(agglomerate)
 };
 
@@ -129,19 +134,19 @@ document.addEventListener('DOMContentLoaded', contentLoadedListener);
 
 /* Helper Functions
  */
-const agglomerate = (userResponses: PossiblyNestedStreams[]): Stream[]  => {
-  const accumulator = (curr, all) => {
-    if (Array.isArray(curr)) 
-      return all.concat(curr)
-    else if (typeof curr === 'object') 
-      return all.push(curr)
-    else 
-      return all
-  }
-
-  return ((userResponses.reduce(accumulator, []): any): Stream[])
+export const agglomerate = (userResponses: PossiblyNestedStreams[])  => {
+  return ((userResponses.reduce((result, current) => {
+    if (current === null) {
+      return result
+    } else if (Array.isArray(current)) {
+      return result.concat(current)
+    } else {
+      result.push(current)
+      return result
+    }
+  }, []): any): Stream[])
 };
 
-const extractUserName = (user: UserStream): string => (
-  user['_links']['self'].split('/').slice(-1)[0]
-);
+export const extractUserName = (user: UserStream): string => {
+  return user['_links']['self'].split('/').slice(-1)[0]
+}
