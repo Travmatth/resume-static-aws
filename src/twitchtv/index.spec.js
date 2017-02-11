@@ -12,7 +12,6 @@ import {
   nonexistentOrOfflineUserStream,
 } from './mockdata';
 import { ResponseError } from '../common/utils';
-import pify from 'pify';
 
 /*
   Models under test
