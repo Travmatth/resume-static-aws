@@ -6,8 +6,7 @@ import ExtendableError from 'extendable-error-class';
 export function serialize(url: string, params: Object) {
   const query = [];
 
-  if (params !== undefined) 
-    url += "?"
+  if (params !== undefined) url += "?"
 
   for (var property in params) {
     if (params.hasOwnProperty(property)) {

@@ -1,55 +1,66 @@
 /* @flow */
-import { serialize } from '../common/utils' 
+import type { Wiki } from './wikiviewer.types'
+import { serialize, ResponseError, } from '../common/utils' 
+import { endpoints, params, } from './wikiview.constants' 
 
 document.addEventListener('DOMContentLoaded', () =>  {
   console.log('wikiviewer.js')
 
-  const randomButton = document//.queryNode(className="random-button") 
-  const searchButton = document//.queryNode(className="random-button") 
-  const searchInput = document//.queryNode('input')
-
-  searchInput.value = searchText
-  searchInput.onChange = this.type
-  searchInput.onKeyPress = this.enter
-  searchButton.addEventListener('onclick', search) = document//.queryNode(className="random-button") 
+  const wikiViewer = new WikiViewer(document) 
 });
 
 export class WikiViewer {
-  constructor() {
-    this.state = []
+  doc: Document;
+  searchInput: HTMLInputElement;
+  randomButton: HTMLButtonElement;
+  searchButton: HTMLButtonElement;
+
+  constructor(doc: Document) {
+    this.doc = doc
+    this.state = {
+      // Would this work?
+      // get query() { return this.searchText.join(''); }
+      query: [],
+    }
+
+    this.randomButton = ((this.doc): any): HTMLInputElement) 
+    this.searchButton = ((this.doc): any): HTMLButtonElement) 
+    this.searchInput = ((this.doc): any): HTMLButtonElement)
+
+    searchInput.onChange = this.type
+    searchInput.onKeyPress = this.enter
+    searchButton.addEventListener('onclick', this.search) 
   }
 
-  handleEvent(event: Event) {}
+  handleEvent(event: Event) {
+  }
 
-  search() {
-    const { searchText } = this.state
-    if (!searchText) return;
+  search(event: Event) {
+    const { query } = this.state
+    if (!query.length === 0) return;
 
-    const component = this
-    params['gsrsearch'] = searchText
-
+    params['gsrsearch'] = query.join('')
     return fetch(serialize(endpoint, params))
       .then(checkHeaders)
       .then(processWikis)
       .then(updateDOM)
   }
 
-  updateSearchText() {}
-
   randomSearch() => {
     window.location = "https://en.wikipedia.org/wiki/Special:Random";
   }
 
-  enter(e) {
-    if (e.key === 'Enter') this.search()
+  enter(event: Event) {
+    if (event.key === 'Enter')
+      this.search()
   }
 
-  type(e) {
+  type(event: Event) {
     // this.setState({ searchText: e.target.value }) 
   }
 
   updateDOM({ searchText, searchResults, }) {
-    const domNodes = document.querySelectorAll('')
+    const domNodes = this.doc.querySelectorAll('')
 
     if (searchResults && domNodes) {
       Object.values(searchResults).map(wiki => {
@@ -74,17 +85,14 @@ export class WikiViewer {
     }
   }
 
-  checkHeaders(response) {
-    if (response.status >= 400) { 
-      const error = new Error(`Invalid server response: ${status}`)
-      error.response = response
-      throw error
-    }
-    return response.json()
+  checkHeaders(response: Response) {
+    if (response.status >= 400)
+      throw new ResponseError('WikiViewer fetch failed', response)
+    return ((response.json(): any) Promise<Wiki>)
   }
 
-  processWikis(json) {
-    Object.values(json.query.pages).map(wiki => ({
+  processWikis(json: Wiki) {
+    return Object.values(json.query.pages).map(wiki => ({
       page: wiki.pageid,
       title: wiki.title,
       extract: wiki.extract,
