@@ -213,15 +213,12 @@ test('fetchAllProfiles should return Array<Promise<Stream>>', async t => {
     nonexistentStreamers.push(createEmptyStream(false, user))
   })
 
-  const allProfiles = [
+  t.deepEqual(await fetchAllProfiles(users), [
     ...allStreamers, 
     ...onlineStreamers, 
     ...offlineStreamers, 
     ...nonexistentStreamers,
-  ]
-
-  const f = await fetchAllProfiles(users)
-  t.deepEqual(f, allProfiles);
+  ]);
 });
 
 test('agglomerate should reduce all PossiblyNestedStreams types into Array<Stream>', async t => {
