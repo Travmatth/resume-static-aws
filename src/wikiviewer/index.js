@@ -1,69 +1,47 @@
 /* @flow */
-import type { Wiki } from './wikiviewer.types'
+import type { WikiSearchResult, WikiPage, WikiInit, } from './wikiviewer.types'
 import { serialize, ResponseError, } from '../common/utils' 
 import { endpoints, params, } from './wikiview.constants' 
 
 document.addEventListener('DOMContentLoaded', () =>  {
-  console.log('wikiviewer.js')
+  const searchButton = ((document): any): HTMLButtonElement) 
+  const randomButton = ((document): any): HTMLInputElement) 
+  const searchInput = ((document): any): HTMLButtonElement)
+  const nodes = ((document): any): HTMLCollection<HTMLElement>)
 
-  const wikiViewer = new WikiViewer(document) 
+  const wikiViewer = new WikiViewer( 
+    searchButton, 
+    randomButton, 
+    searchInput, 
+    nodes
+  )
+
+  searchInput.onChange = wikiViewer.type
+  searchInput.onKeyPress = wikiViewer.enter
+  searchButton.addEventListener('onclick', wikiViewer.search) 
 });
 
 export class WikiViewer {
-  doc: Document;
   searchInput: HTMLInputElement;
   randomButton: HTMLButtonElement;
   searchButton: HTMLButtonElement;
 
-  constructor(doc: Document) {
-    this.doc = doc
-    this.state = {
-      // Would this work?
-      // get query() { return this.searchText.join(''); }
-      query: [],
-    }
-
-    this.randomButton = ((this.doc): any): HTMLInputElement) 
-    this.searchButton = ((this.doc): any): HTMLButtonElement) 
-    this.searchInput = ((this.doc): any): HTMLButtonElement)
-
-    searchInput.onChange = this.type
-    searchInput.onKeyPress = this.enter
-    searchButton.addEventListener('onclick', this.search) 
+  constructor(
+    searchButton: HTMLButtonElement,
+    randomButton: HTMLInputElement,
+    searchInput: HTMLButtonElement,
+    nodes: HTMLCollection<HTMLElement>,
+  ) {
+    this.query = [];
+    this.searchButton = searchButton;
+    this.randomButton = randomButton;
+    this.searchInput = searchInput;
+    this.nodes = nodes;
   }
 
-  handleEvent(event: Event) {
-  }
-
-  search(event: Event) {
-    const { query } = this.state
-    if (!query.length === 0) return;
-
-    params['gsrsearch'] = query.join('')
-    return fetch(serialize(endpoint, params))
-      .then(checkHeaders)
-      .then(processWikis)
-      .then(updateDOM)
-  }
-
-  randomSearch() => {
-    window.location = "https://en.wikipedia.org/wiki/Special:Random";
-  }
-
-  enter(event: Event) {
-    if (event.key === 'Enter')
-      this.search()
-  }
-
-  type(event: Event) {
-    // this.setState({ searchText: e.target.value }) 
-  }
-
-  updateDOM({ searchText, searchResults, }) {
-    const domNodes = this.doc.querySelectorAll('')
-
-    if (searchResults && domNodes) {
-      Object.values(searchResults).map(wiki => {
+  updateDOM(searchResults: Array<WikiPage>) {
+    if (searchResults && this.nodes) {
+      Object.values(searchResults).map(wikiPage => {
           // <li key={wiki.page} className="wiki">
           //   <div>
           //      <h2 className="squish">{ wiki.title }  </h2>
@@ -75,27 +53,51 @@ export class WikiViewer {
           //   </div>
           //   <p>{ wiki.extract.replace(/may refer to:/, 'disambiguation') }</p>
           // </li>
-          const wikiNode.textContent =  wiki.page
+          const wikiNode.textContent =  wikiPage.page
+          const url = `https://en.wikipedia.org/?curid=${wiki.page}`
+
           wikiNode.child[0].textContent = 
           wikiNode.child[0].child[0].textContent = wiki.title 
-          wikiNode.child[0].child[1].href = `https://en.wikipedia.org/?curid=${wiki.page}` 
+          (wikiNode.child[0].child[1]: HTMLAnchorElement).href = url
           wikiNode.child[1].textContent = wiki.extract.replace(/may refer to:/, 'disambiguation') 
         )
       })
     }
   }
 
+  search(event: Event) {
+    const { query } = this
+    if (!query.length === 0) return;
+
+    params['gsrsearch'] = query.join('')
+    return fetch(serialize(endpoint, params))
+      .then(checkHeaders)
+      .then(processWikis)
+      .then(updateDOM)
+  }
+
+  randomSearch() {
+    window.location = "https://en.wikipedia.org/wiki/Special:Random";
+  }
+
+  enter(event: Event) {
+    if (event.key === 'Enter')
+      this.search()
+  }
+
+  type(event: Event) {
+    this.query.push(e.target.value)
+  }
+
+
   checkHeaders(response: Response) {
     if (response.status >= 400)
       throw new ResponseError('WikiViewer fetch failed', response)
-    return ((response.json(): any) Promise<Wiki>)
+    return ((response.json(): any) Promise<WikiSearchResult>)
   }
 
-  processWikis(json: Wiki) {
-    return Object.values(json.query.pages).map(wiki => ({
-      page: wiki.pageid,
-      title: wiki.title,
-      extract: wiki.extract,
-    }))
+  processWikis({ query: { pages } }: WikiSearchResult) {
+    const { limits, ...wikis } = pages
+    return [...wikis]
   }
 }
