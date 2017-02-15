@@ -73,7 +73,7 @@ export class WikiViewer {
     return fetch(serialize(endpoint, params))
       .then(checkHeaders)
       .then(processWikis)
-      .then(updateDOM)
+      .catch(err => null)
   }
 
   randomSearch() {
@@ -82,13 +82,16 @@ export class WikiViewer {
 
   enter(event: Event) {
     if (event.key === 'Enter')
-      this.search()
+      try {
+        const wikis = await this.search()
+        this.updateDOM(wikis)
+      } catch (error) {
+      }
   }
 
   type(event: Event) {
     this.query.push(e.target.value)
   }
-
 
   checkHeaders(response: Response) {
     if (response.status >= 400)
