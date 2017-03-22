@@ -3,28 +3,26 @@ import type { WikiSearchResult, WikiPage, WikiInit, } from './wikiviewer.types'
 import { serialize, ResponseError, } from '../common/utils' 
 import { endpoints, params, } from './wikiview.constants' 
 
-document.addEventListener('DOMContentLoaded', () =>  {
-  const searchButton = ((document): any): HTMLButtonElement) 
-  const randomButton = ((document): any): HTMLInputElement) 
-  const searchInput = ((document): any): HTMLButtonElement)
-  const nodes = ((document): any): HTMLCollection<HTMLElement>)
+if (process.env.NODE_ENV !== 'ava') {
+  document.addEventListener('DOMContentLoaded', () =>  {
+    const searchButton = ((document): any): HTMLButtonElement) 
+    const randomButton = ((document): any): HTMLInputElement) 
+    const searchInput = ((document): any): HTMLButtonElement)
+    const nodes = ((document): any): HTMLCollection<HTMLElement>)
 
-  const wikiViewer = new WikiViewer( 
-    searchButton, 
-    randomButton, 
-    searchInput, 
-    nodes
-  )
+    const wikiView = new WikiViewer(searchButton, randomButton, searchInput, nodes)
 
-  searchInput.onChange = wikiViewer.type
-  searchInput.onKeyPress = wikiViewer.enter
-  searchButton.addEventListener('onclick', wikiViewer.search) 
-});
+    searchInput.onChange = wikiView.type
+    searchInput.onKeyPress = wikiView.enter
+    searchButton.addEventListener('onclick', wikiView.search) 
+  });
+}
 
 export class WikiViewer {
   searchInput: HTMLInputElement;
   randomButton: HTMLButtonElement;
   searchButton: HTMLButtonElement;
+  nodes: HTMLCollection<HTMLElement>;
 
   constructor(
     searchButton: HTMLButtonElement,
@@ -39,28 +37,16 @@ export class WikiViewer {
     this.nodes = nodes;
   }
 
-  updateDOM(searchResults: Array<WikiPage>) {
-    if (searchResults && this.nodes) {
-      Object.values(searchResults).map(wikiPage => {
-          // <li key={wiki.page} className="wiki">
-          //   <div>
-          //      <h2 className="squish">{ wiki.title }  </h2>
-          //      <a 
-          //        className="squish"  
-          //        href={`https://en.wikipedia.org/?curid=${wiki.page}`}> 
-          //        Open in Wikipedia
-          //      </a>
-          //   </div>
-          //   <p>{ wiki.extract.replace(/may refer to:/, 'disambiguation') }</p>
-          // </li>
-          const wikiNode.textContent =  wikiPage.page
-          const url = `https://en.wikipedia.org/?curid=${wiki.page}`
+  updateDOM(searchResults: ?Array<WikiPage>) {
+    if (searchResults) {
+      for (var i = 0; i < this.nodes.length; i++) {
+        const url = `https://en.wikipedia.org/?curid=${searchResults[i].pageid}`
 
-          wikiNode.child[0].textContent = 
-          wikiNode.child[0].child[0].textContent = wiki.title 
-          (wikiNode.child[0].child[1]: HTMLAnchorElement).href = url
-          wikiNode.child[1].textContent = wiki.extract.replace(/may refer to:/, 'disambiguation') 
-        )
+        this.nodes[i].child[0].child[0].textContent = searchResults[i].title 
+        (this.nodes[i].child[0].child[1]: HTMLAnchorElement).href = url
+        this.nodes[i].child[1].textContent = searchResults[i]
+          .extract
+          .replace(/may refer to:/, 'disambiguation') 
       })
     }
   }
@@ -72,8 +58,8 @@ export class WikiViewer {
     params['gsrsearch'] = query.join('')
     return fetch(serialize(endpoint, params))
       .then(checkHeaders)
-      .then(processWikis)
       .catch(err => null)
+      .then(processWikis)
   }
 
   randomSearch() {
@@ -81,12 +67,11 @@ export class WikiViewer {
   }
 
   enter(event: Event) {
-    if (event.key === 'Enter')
-      try {
-        const wikis = await this.search()
-        this.updateDOM(wikis)
-      } catch (error) {
-      }
+    if (event.key === 'Enter' && wikis) {
+      this.updateDOM(await this.search());
+    } else if (event.key === 'Backspace' && wikis.length > 0) {
+      this.query = this.query.slice(0, -1);
+    }
   }
 
   type(event: Event) {
@@ -101,6 +86,6 @@ export class WikiViewer {
 
   processWikis({ query: { pages } }: WikiSearchResult) {
     const { limits, ...wikis } = pages
-    return [...wikis]
+    return Object.keys(wikis)
   }
 }
