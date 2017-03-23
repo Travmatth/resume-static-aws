@@ -1,13 +1,17 @@
 /* @flow */
 
-import type { State, Phase } from './pomodoro.types';
+import type { Timer } from './pomodoro.types';
 import { parseTimeToText, padleft, scale } from '../common/utils';
+
+const State = { STOPPED: 'STOPPED', RUNNING: 'RUNNING' };
+const Phase = { work: 'work', rest: 'rest' };
 
 export default class Pomodoro {
   timer: Timer;
-  state: State;
-  phase: Phase;
+  state: $Keys<typeof State>;
+  phase: $Keys<typeof Phase>;
   clock: ?number;
+  calculate: (number) => number;
 
   constructor(work: number, rest: number) {
     this.state = State.STOPPED;
@@ -18,7 +22,7 @@ export default class Pomodoro {
   // returns functions that will inc|dec rest|work states on press
   stepper(direction: string, counter: string) {
     const i = direction === 'inc' ? 1 : -1;
-    return () => {
+    return (e: Event) => {
       counter === 'work'
         ? (this.timer.work = Math.min(this.timer.work + i, 0))
         : (this.timer.rest = Math.min(this.timer.rest + i, 0));
@@ -29,8 +33,8 @@ export default class Pomodoro {
     return (current: number) => current - anchor;
   }
 
-  stopTimer(display: HTMLElement, endtime: number) {
-    clearInterval(this.clock);
+  stopTimer(display: HTMLElement) {
+    if (this.clock) clearInterval(this.clock);
   }
 
   startTimer(display: HTMLElement, starttime: number) {
@@ -47,7 +51,7 @@ export default class Pomodoro {
       } else {
         // If time is out, set final display, clear timer, shift phase
         display.textContent = parseTimeToText(max);
-        clearInterval(self.clock);
+        if (self.clock) clearInterval(self.clock);
         self.phase = self.phase === Phase.work ? Phase.rest : Phase.work;
       }
     };
@@ -57,7 +61,7 @@ export default class Pomodoro {
 
   // returns func triggered by press on start/stop timer, adjust timer display
   toggle(display: HTMLElement) {
-    return () => {
+    return (e: Event) => {
       if (this.state === State.STOPPED)
         this.startTimer(display, Date.now(), this.phase);
       if (this.state === State.RUNNING) this.stopTimer(display);
@@ -66,6 +70,8 @@ export default class Pomodoro {
 
   // returns func triggered by press on reset timer, adjusts timer display
   reset(display: HTMLElement) {
-    display.textContent = '0:0.00';
+    return (e: Event) => {
+      display.textContent = '0:0.00';
+    };
   }
 }
