@@ -1,11 +1,12 @@
 /* @flow */
 
 import test from 'ava';
-import WikiViewer from './index';
+import { WikiViewer } from './index';
 import { jsdom } from 'jsdom';
 import fetchMock from 'fetch-mock';
 import { ResponseError } from '../common/utils';
 import { response, data } from './wikiviewer.mockdata';
+import { endpoint } from './wikiviewer.constants';
 
 let wikiViewer, searchButton, randomButton, searchInput;
 
@@ -21,8 +22,8 @@ const nodes = ((jsdom(
 
 test.beforeEach(() => {
   searchButton = ((document.createElement('button'): any): HTMLButtonElement);
-  randomButton = ((document.createElement('input'): any): HTMLInputElement);
-  searchInput = ((document.createElement('button'): any): HTMLButtonElement);
+  randomButton = ((document.createElement('button'): any): HTMLButtonElement);
+  searchInput = ((document.createElement('input'): any): HTMLInputElement);
 
   wikiViewer = new WikiViewer(searchButton, randomButton, searchInput, nodes);
 });
@@ -34,21 +35,21 @@ test.afterEach.always('after', t => fetchMock.restore());
 */
 
 test("search should properly form url's", async t => {
-  fetchMock.post(url, response);
+  fetchMock.post(endpoint, response);
 });
 
 test('search should return null on incorrect response', async t => {
-  fetchMock.post(url, response);
+  fetchMock.post(endpoint, response);
 });
 
 test("search should fetch and process wiki's", async t => {
-  fetchMock.post(url, response);
+  fetchMock.post(endpoint, response);
 });
 
 test('randomSearch should change window location', async t => {});
 
 test("enter should fetch wiki's and update dom", async t => {
-  fetchMock.post(url, response);
+  fetchMock.post(endpoint, response);
 });
 
 test('type should update state of wikiviewer with text', async t => {});
