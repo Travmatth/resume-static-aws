@@ -6,3 +6,16 @@ block heading
 
 block content
 	h1 #{JSON.stringify(htmlWebpackPlugin)}
+	div.view
+	div.center-panel
+		div.gadget
+			div.rest 1
+				button#rest-dec -
+				button#rest-inc +
+			div.work 1
+				button#work-dec -
+				button#work-inc +
+			div.timer
+				div#time 0.0.00
+				button#timer-button Start
+				button#reset-button Reset
