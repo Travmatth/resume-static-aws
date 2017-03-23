@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { 
+import type {
   ApiParams,
   Forecast,
   DailyTemperature,
@@ -8,23 +8,23 @@ import type {
   Daily,
   Weather,
   FiveDayForecast,
-} from './localweather.types'
+} from './localweather.types';
 
 /*
   Libraries
 */
 
-import { 
-  serialize, 
-  dateString, 
-  appendSuffix, 
+import {
+  serialize,
+  dateString,
+  appendSuffix,
   ResponseError,
-  convertFahrenheitToCelsius, 
+  convertFahrenheitToCelsius,
 } from '../common/utils';
-import { OPEN_WEATHER_APPID, } from '../common/api_keys';
+import { OPEN_WEATHER_APPID } from '../common/api_keys';
 
 // Mocking fetch during dev
-import * as MOCK from './mockdata'
+import * as MOCK from './mockdata';
 
 /*
   Constants
@@ -39,10 +39,10 @@ let tempToggles: ?NodeList<HTMLInputElement>;
 // api call params
 export const endpoint = 'http://api.openweathermap.org/data/2.5/forecast';
 export const openweatherApiParams = (lat: number, lon: number) => ({
-  'lat': lat,
-  'lon': lon,
-  'units': 'imperial',
-  'APPID': OPEN_WEATHER_APPID,
+  lat: lat,
+  lon: lon,
+  units: 'imperial',
+  APPID: OPEN_WEATHER_APPID,
 });
 
 /*
@@ -50,7 +50,7 @@ export const openweatherApiParams = (lat: number, lon: number) => ({
 */
 
 export const getWeather = async (location: Position) => {
-  const { latitude, longitude, } = location.coords; 
+  const { latitude, longitude } = location.coords;
   const params = openweatherApiParams(latitude, longitude);
   const resource: string = serialize(endpoint, params);
 
@@ -61,32 +61,33 @@ export const getWeather = async (location: Position) => {
 
   // Call API, update dom
   try {
-    const weather: Weather = await fetchWeather(resource)
-    const { forecasts, city, } = weather
-    temperatures = forecasts.map(elem => elem.temp)
-    if (header) header.textContent =  city
-    if (cells) updateTableRows(cells, forecasts, 'fahrenheit')
-  } catch(error) {
-    console.error('error', error)
+    const weather: Weather = await fetchWeather(resource);
+    const { forecasts, city } = weather;
+    temperatures = forecasts.map(elem => elem.temp);
+    if (header) header.textContent = city;
+    if (cells) updateTableRows(cells, forecasts, 'fahrenheit');
+  } catch (error) {
+    console.error('error', error);
   }
 };
 
-export const contentLoadedListener = async () =>  {
-  tempToggles = ((document.querySelectorAll('input'): any): NodeList<HTMLInputElement>)
-
-
-  // $FlowIgnore: addEventListener throws err, signature doesn't allow $SymbolIterator?(check)
-  if (tempToggles) [...tempToggles].forEach(elem => {
-    elem.addEventListener('click', toggleTempChange)
-    elem.addEventListener('touchstart', toggleTempChange)
-  });
+export const contentLoadedListener = async () => {
+  tempToggles = ((document.querySelectorAll(
+    'input',
+  ): any): NodeList<HTMLInputElement>);
+  // $FlowIgnore: addEventListener throws err, sig doesn't allow $SymbolIterator
+  if (tempToggles)
+    [...tempToggles].forEach(elem => {
+      elem.addEventListener('click', toggleTempChange);
+      elem.addEventListener('touchstart', toggleTempChange);
+    });
 
   navigator.geolocation.getCurrentPosition(getWeather);
-}
+};
 
 if (document !== undefined) {
   document.addEventListener('DOMContentLoaded', contentLoadedListener);
-};
+}
 
 /*
   Network call
@@ -120,11 +121,11 @@ export const fetchWeather = async (url: string): Promise<Weather> => {
   const opts = {
     method: 'POST',
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
-  }
-  
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  };
+
   // Stubbing out fetch while designing layout
   // const data = [JSON.stringify(MOCK.response)]
   // const blob = new Blob(data, { type: 'application/json' });
@@ -134,7 +135,9 @@ export const fetchWeather = async (url: string): Promise<Weather> => {
   return await fetch(url, opts)
     .then(checkResponse)
     .then(processWeather)
-    .catch(error => { throw error })
+    .catch(error => {
+      throw error;
+    });
 };
 
 /*
@@ -149,14 +152,13 @@ export const fetchWeather = async (url: string): Promise<Weather> => {
  * @return { void } void
  */
 export const updateTableRows = (
-  nodes: NodeList<HTMLElement>, 
-  results: Array<Daily>, 
-  temperature: string
+  nodes: NodeList<HTMLElement>,
+  results: Array<Daily>,
+  temperature: string,
 ): void => {
-
-  let index = 0
-  let node = nodes.item(index)
-  let forecast = results[index]
+  let index = 0;
+  let node = nodes.item(index);
+  let forecast = results[index];
 
   while (node && forecast) {
     /* Populate children cells according to template: 
@@ -168,78 +170,83 @@ export const updateTableRows = (
           img
         td.weather
     */
-    const { icon, temp, day, time, weather, description, } = forecast
+    const { icon, temp, day, time, weather, description } = forecast;
 
-    node.children[0].textContent = day
-    node.children[1].textContent = time
+    node.children[0].textContent = day;
+    node.children[1].textContent = time;
     node.children[2].textContent = temperature === 'celsius'
       ? `${temp.celsius}`
-      : `${temp.fahrenheit}`
-    const imgElem: any = node.children[3].children[0]
-    imgElem.src = icon
-    node.children[4].textContent = description
+      : `${temp.fahrenheit}`;
+    const imgElem: any = node.children[3].children[0];
+    imgElem.src = icon;
+    node.children[4].textContent = description;
 
     if (node.className === 'hide') node.className.replace(/hide/, 'show');
 
-    // Finally, point to next element in source arrays 
+    // Finally, point to next element in source arrays
     index += 1;
     node = nodes.item(index);
     forecast = results[index];
-  };
+  }
 };
 
 export const toggleTempChange = () => {
-  let index = 0
+  let index = 0;
 
-  const nodes = document.querySelectorAll('.measurement')
-  let node = nodes.item(index)
-  let temp 
-  if (temperatures) temp = temperatures[index]
+  const nodes = document.querySelectorAll('.measurement');
+  let node = nodes.item(index);
+  let temp;
+  if (temperatures) temp = temperatures[index];
 
   while (node && temp) {
     node.textContent = tempScale() === 'celsius'
       ? `${temp.celsius}`
-      : `${temp.fahrenheit}`
+      : `${temp.fahrenheit}`;
 
-    // Finally, point to next element in source arrays 
-    index += 1
-    node = nodes.item(index)
-    if (temperatures) temp = temperatures[index]
-    else { break }
+    // Finally, point to next element in source arrays
+    index += 1;
+    node = nodes.item(index);
+    if (temperatures)
+      temp = temperatures[index];
+    else {
+      break;
+    }
   }
 };
 
 // determine user preference in which temp scale temperature is displayed in
-const tempScale = () => { 
-  return ((document.querySelector('.celsius'): any): HTMLInputElement).checked === true 
-  ? 'celsius' 
-  : 'fahrenheit'
+const tempScale = () => {
+  return ((document.querySelector(
+    '.celsius',
+  ): any): HTMLInputElement).checked === true
+    ? 'celsius'
+    : 'fahrenheit';
 };
 
 /* 
   Supporting Functions
-*/ 
+*/
 
-export const checkResponse = async (response: Response): Promise<FiveDayForecast> => {
-  if (response.status < 200 || response.status >= 400) { 
-    throw new ResponseError('localweather fetch failed', response)
+export const checkResponse = async (
+  response: Response,
+): Promise<FiveDayForecast> => {
+  if (response.status < 200 || response.status >= 400) {
+    throw new ResponseError('localweather fetch failed', response);
   }
 
-  return await (response.json(): Promise<FiveDayForecast>)
+  return await (response.json(): Promise<FiveDayForecast>);
 };
 
 export const processWeather = (data: FiveDayForecast): Weather => ({
   city: data.city.name,
   now: Date.now(),
-  forecasts: data.list
-    .map(processForecasts)
-    .map(stripDateIfRedundant)
+  forecasts: data.list.map(processForecasts).map(stripDateIfRedundant),
 });
 
 export const processForecasts = (outlook: Forecast): DailyForecast => ({
   icon: `http://openweathermap.org/img/w/${outlook.weather[0].icon}.png`,
-  rain: outlook.rain && outlook.rain['3h'] || 0,
-  snow: outlook.snow && outlook.snow['3h'] || 0,
+  rain: (outlook.rain && outlook.rain['3h']) || 0,
+  snow: (outlook.snow && outlook.snow['3h']) || 0,
   description: outlook.weather[0].description,
   weather: outlook.weather[0].main,
   cloud: outlook.clouds.all,
@@ -247,25 +254,25 @@ export const processForecasts = (outlook: Forecast): DailyForecast => ({
     celsius: convertFahrenheitToCelsius(outlook.main.temp),
     fahrenheit: outlook.main.temp,
   },
-  ...parseTime(outlook.dt)
+  ...parseTime(outlook.dt),
 });
 
 export const parseTime = (time: number): { day: string, time: string } => {
-  const duration = new Date(time * 1000)
-  const hours = duration.getHours() % 12
-  const minutes = duration.getMinutes()
+  const duration = new Date(time * 1000);
+  const hours = duration.getHours() % 12;
+  const minutes = duration.getMinutes();
 
-  return { day: dateString(duration), time: `${hours}:${minutes}0`, }
-}
+  return { day: dateString(duration), time: `${hours}:${minutes}0` };
+};
 
 export const stripDateIfRedundant = (
-  today: Daily, 
-  index: number, 
-  seq: Array<Daily>
+  today: Daily,
+  index: number,
+  seq: Array<Daily>,
 ): Daily => {
-  const { day, ...rest } = today
-  const dateRedundant = index > 0 && seq[index - 1].day === day 
+  const { day, ...rest } = today;
+  const dateRedundant = index > 0 && seq[index - 1].day === day;
 
-  if (dateRedundant) return { day: '', ...rest }
-  return { day, ...rest }
-} 
+  if (dateRedundant) return { day: '', ...rest };
+  return { day, ...rest };
+};

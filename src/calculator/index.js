@@ -1,49 +1,49 @@
 /* @flow */
-import LogicUnit from './LogicUnit'
+import LogicUnit from './LogicUnit';
 
-let outputWindow 
+let outputWindow;
 const logic = new LogicUnit();
 
-document.addEventListener('DOMContentLoaded', () =>  {
+document.addEventListener('DOMContentLoaded', () => {
   outputWindow = document.querySelector('h2.window');
 
   document.querySelectorAll('[data-key]').forEach(el => {
-    el.addEventListener('click', keyPress)
-    el.addEventListener('touchstart', keyPress, { passive: true })
+    el.addEventListener('click', keyPress);
+    el.addEventListener('touchstart', keyPress, { passive: true });
   });
 });
 
 const refresh = (msg: ?string): void => {
-  if (outputWindow) 
-        outputWindow.textContent = msg ? msg : logic.getExpression();
-} 
+  if (outputWindow)
+    outputWindow.textContent = msg ? msg : logic.getExpression();
+};
 
 /* called when used selects a glyph */
 function keyPress(val: Event): void {
-  const { key } = val.target.dataset; 
+  const { key } = val.target.dataset;
 
   switch (key) {
     case '=':
-      refresh(logic.compute())
+      refresh(logic.compute());
 
-      break
+      break;
 
     case 'clear':
       logic.clear();
       refresh();
 
-      break
+      break;
 
     case 'delete':
       logic.delete();
       refresh();
 
-      break
+      break;
 
     default:
       logic.update(key);
       refresh();
 
-      break
+      break;
   }
-};
+}
