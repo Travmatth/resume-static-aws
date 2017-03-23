@@ -1,13 +1,13 @@
 /* @flow */
 import type { WikiSearchResult, WikiPage, WikiInit } from './wikiviewer.types';
 import { serialize, ResponseError } from '../common/utils';
-import { endpoints, params } from './wikiview.constants';
+import { endpoints, params } from './wikiviewer.constants';
 
 if (process.env.NODE_ENV !== 'ava') {
   document.addEventListener('DOMContentLoaded', () => {
     const searchButton = ((document: any): HTMLButtonElement);
-    const randomButton = ((document: any): HTMLInputElement);
-    const searchInput = ((document: any): HTMLButtonElement);
+    const randomButton = ((document: any): HTMLButtonElement);
+    const searchInput = ((document: any): HTMLInputElement);
     const nodes = ((document: any): HTMLCollection<HTMLElement>);
     const wikiView = new WikiViewer(
       searchButton,
@@ -16,8 +16,8 @@ if (process.env.NODE_ENV !== 'ava') {
       nodes,
     );
 
-    searchInput.onChange = wikiView.type;
-    searchInput.onKeyPress = wikiView.enter;
+    searchInput.onchange = wikiView.type;
+    searchInput.onkeypress = wikiView.enter;
     searchButton.addEventListener('onclick', wikiView.search);
   });
 }
@@ -30,8 +30,8 @@ export class WikiViewer {
 
   constructor(
     searchButton: HTMLButtonElement,
-    randomButton: HTMLInputElement,
-    searchInput: HTMLButtonElement,
+    randomButton: HTMLButtonElement,
+    searchInput: HTMLInputElement,
     nodes: HTMLCollection<HTMLElement>,
   ) {
     this.query = [];
