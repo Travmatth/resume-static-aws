@@ -75,11 +75,11 @@ export const contentLoadedListener = async () => {
   tempToggles = ((document.querySelectorAll(
     'input',
   ): any): NodeList<HTMLInputElement>);
-  // $FlowIgnore: addEventListener throws err, sig doesn't allow $SymbolIterator
   if (tempToggles)
-    [...tempToggles].forEach(elem => {
+    tempToggles.forEach(elem => {
+      // for (let node of tempToggles) {
       elem.addEventListener('click', toggleTempChange);
-      elem.addEventListener('touchstart', toggleTempChange);
+      // }
     });
 
   navigator.geolocation.getCurrentPosition(getWeather);

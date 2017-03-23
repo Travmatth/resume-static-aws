@@ -22,11 +22,8 @@ export default class Pomodoro {
   // returns functions that will inc|dec rest|work states on press
   stepper(direction: string, counter: string) {
     const step = direction === 'inc' ? 1 : -1;
-    return (e: Event) => {
-      counter === 'work'
-        ? (this.timer.work = Math.min(this.timer.work + step, 0))
-        : (this.timer.rest = Math.min(this.timer.rest + step, 0));
-    };
+    return (e: Event) =>
+      this.timer[counter] = Math.max(this.timer[counter] + step, 0);
   }
 
   measure(anchor: number) {
@@ -45,7 +42,7 @@ export default class Pomodoro {
       const max = self.timer[self.phase];
       const elapsed = self.calculate(Date.now());
 
-      if (elapsed <= max) {
+      if (elapsed < max) {
         // If time has not run out yet, set displayed time
         display.textContent = parseTimeToText(elapsed);
       } else {

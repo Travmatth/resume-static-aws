@@ -53,7 +53,7 @@ export const verifyUser = async (user: string): Promise<boolean> => {
 
   return fetch(
     new Request(endpoint, options),
-  ).then(async (response: Response): boolean => {
+  ).then(async (response: Response) => {
     const res = await response.json();
     if (response.status >= 400 || res.hasOwnProperty('error')) return false;
     return true;
