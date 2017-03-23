@@ -66,6 +66,6 @@ export default class Pomodoro {
 
   // returns func triggered by press on reset timer, adjusts timer display
   reset(display: HTMLElement) {
-    display.textContent = '0:0:00';
+    display.textContent = '0:0.00';
   }
 }
