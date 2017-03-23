@@ -3,14 +3,14 @@ import { week, month } from './constants';
 import ExtendableError from 'extendable-error-class';
 
 //insert npm joke here
-export const padLeft = (number, columns) => {
+export const padLeft = (number: string, columns: number) => {
   while (number.length < columns) {
     number = `0${number}`;
   }
   return number;
 };
 
-export const parseTimeToText = elapsedTime => {
+export const parseTimeToText = (elapsedTime: number) => {
   const time = new Date(elapsedTime);
   const minutes = padLeft(time.getMinutes().toString(), 2);
   const seconds = padLeft(time.getSeconds().toString(), 2);
@@ -21,7 +21,7 @@ export const parseTimeToText = elapsedTime => {
 const SEC_IN_MINUTES = 60;
 const kSEC_IN_SECONDS = 1000;
 
-export const scale = val => val * kSEC_IN_SECONDS * SEC_IN_MINUTES;
+export const scale = (val: number) => val * kSEC_IN_SECONDS * SEC_IN_MINUTES;
 
 export function serialize(url: string, params: Object) {
   const query = [];

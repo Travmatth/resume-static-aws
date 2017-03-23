@@ -1,7 +1,7 @@
 /* @flow */
 
 import type { Timer } from './pomodoro.types';
-import { parseTimeToText, padleft, scale } from '../common/utils';
+import { parseTimeToText, scale } from '../common/utils';
 
 const State = { STOPPED: 'STOPPED', RUNNING: 'RUNNING' };
 const Phase = { work: 'work', rest: 'rest' };
