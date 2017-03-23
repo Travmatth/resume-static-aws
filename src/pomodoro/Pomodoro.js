@@ -21,11 +21,11 @@ export default class Pomodoro {
 
   // returns functions that will inc|dec rest|work states on press
   stepper(direction: string, counter: string) {
-    const i = direction === 'inc' ? 1 : -1;
+    const step = direction === 'inc' ? 1 : -1;
     return (e: Event) => {
       counter === 'work'
-        ? (this.timer.work = Math.min(this.timer.work + i, 0))
-        : (this.timer.rest = Math.min(this.timer.rest + i, 0));
+        ? (this.timer.work = Math.min(this.timer.work + step, 0))
+        : (this.timer.rest = Math.min(this.timer.rest + step, 0));
     };
   }
 

@@ -20,9 +20,7 @@ export function bindToListeners() {
   decWorkBtn = ((document.getElementById('work-dec'): any): HTMLButtonElement);
   incRestBtn = ((document.getElementById('rest-inc'): any): HTMLButtonElement);
   decRestBtn = ((document.getElementById('rest-dec'): any): HTMLButtonElement);
-  timerBtn = ((document.getElementById(
-    'timer-button',
-  ): any): HTMLButtonElement);
+  timerBtn = ((document.getElementById('timer-btn'): any): HTMLButtonElement);
 
   incWorkBtn.addEventListener('click', pom.stepper('inc', 'work'));
   decWorkBtn.addEventListener('click', pom.stepper('dec', 'work'));
