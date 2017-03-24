@@ -16,27 +16,16 @@ export default class WikiViewer {
     this.query = [];
   }
 
-  updateDOM(
-    searchResults: Searches,
-    headings: Headings,
-    paragraphs: Paragraphs,
-  ) {
-    if (searchResults) {
+  updateDOM(searches: Searches, headings: Headings, paragraphs: Paragraphs) {
+    if (searches) {
       let node, result, imgNode;
-      for (var i = 0; i < this.nodes.length; i++) {
-        node = this.nodes[i];
-        result = searchResults[i];
-        //$FlowIgnore: Not sure how to access idiomatically
-        imgNode = (node.child[0].child[1]: HTMLAnchorElement);
+      for (var i = 0; i < this.headings.length; i++) {
+        wiki = searches[i];
+        const page = `https://en.wikipedia.org/?curid=${wiki.pageid}`;
 
-        imgNode.href = `https://en.wikipedia.org/?curid=${result.pageid}`;
-        //$FlowIgnore: Not sure how to access idiomatically
-        node.child[0].child[0].textContent = result.title;
-        //$FlowIgnore: Not sure how to access idiomatically
-        node.child[1].textContent = result.extract.replace(
-          /may refer to:/,
-          'disambiguation',
-        );
+        headings[i].child[1].href = page;
+        headings[i].child[0].textContent = wiki.title;
+        paragraphs[i] = wiki.extract.replace(/may refer to:/, 'disambiguation');
       }
     }
   }
@@ -81,7 +70,7 @@ export default class WikiViewer {
     };
   }
 
-  type(event: Event) {
+  typeHandler(event: Event) {
     this.query.push(((event.target: any): HTMLInputElement).value);
   }
 }

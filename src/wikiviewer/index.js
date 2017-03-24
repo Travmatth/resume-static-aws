@@ -25,7 +25,7 @@ export const register = () => {
   const searchHandler = wikiView.searchHandler(headings, paragraphs);
 
   searchText.onkeypress = wikiView.keypressHandler(headings, paragraphs);
-  searchText.onchange = wikiView.type;
+  searchText.onchange = wikiView.typeHandler;
   search.addEventListener('click', searchHandler);
   random.addEventListener('click', wikiView.randomHandler(window));
 };
