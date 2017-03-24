@@ -71,14 +71,14 @@ export default class WikiViewer {
   }
 
   typeHandler(event: Event) {
-    this.query.push(((event.target: any): HTMLInputElement).value);
+    this.query.push(((event.target: mixed): HTMLInputElement).value);
   }
 }
 
 export function checkHeaders(response: Response) {
   if (response.status >= 400)
     throw new ResponseError('WikiViewer fetch failed', response);
-  return ((response.json(): any): Promise<WikiSearchResult>);
+  return ((response.json(): mixed): Promise<WikiSearchResult>);
 }
 
 export function processWikis({ query: { pages } }: WikiSearchResult) {
