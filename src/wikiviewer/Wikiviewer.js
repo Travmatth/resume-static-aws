@@ -1,3 +1,7 @@
+import { endpoint, params } from './wikiviewer.constants';
+import type { WikiSearchResult, WikiPage, WikiInit } from './wikiviewer.types';
+import { serialize, ResponseError } from '../common/utils';
+
 export default class WikiViewer {
   query: Array<string>;
   searchInput: HTMLInputElement;
@@ -5,20 +9,15 @@ export default class WikiViewer {
   searchButton: HTMLButtonElement;
   nodes: HTMLCollection<HTMLElement>;
 
-  constructor(
-    searchButton: HTMLButtonElement,
-    randomButton: HTMLButtonElement,
-    searchInput: HTMLInputElement,
-    nodes: HTMLCollection<HTMLElement>,
-  ) {
+  constructor() {
     this.query = [];
-    this.searchButton = searchButton;
-    this.randomButton = randomButton;
-    this.searchInput = searchInput;
-    this.nodes = nodes;
   }
 
-  updateDOM(searchResults: ?Array<WikiPage>) {
+  updateDOM(
+    searchResults: ?Array<WikiPage>,
+    headings: HTMLCollection<HTMLElement>,
+    paragraphs: HTMLCollection<HTMLParagraphElement>,
+  ) {
     if (searchResults) {
       let node, result, imgNode;
       for (var i = 0; i < this.nodes.length; i++) {
@@ -39,41 +38,67 @@ export default class WikiViewer {
     }
   }
 
-  search() {
+  search(
+    headings: HTMLCollection<HTMLElement>,
+    paragraphs: HTMLCollection<HTMLParagraphElement>,
+  ) {
     const { query } = this;
     if (!query.length === 0) return;
 
     params['gsrsearch'] = query.join('');
     return fetch(serialize(endpoint, params))
-      .then(this.checkHeaders)
-      .then(this.processWikis)
+      .then(checkHeaders)
+      .then(processWikis)
       .catch(err => null);
   }
 
-  randomSearch() {
-    window.location = 'https://en.wikipedia.org/wiki/Special:Random';
+  randomHandler(win: Window) {
+    return () => {
+      winw.location = 'https://en.wikipedia.org/wiki/Special:Random';
+    };
   }
 
-  async enter(event: Event) {
-    if (event.key === 'Enter') {
-      this.updateDOM(await this.search());
-    } else if (event.key === 'Backspace' && this.query.length > 0) {
-      this.query = this.query.slice(0, -1);
-    }
+  searchHandler(
+    headings: HTMLCollection<HTMLElement>,
+    paragraphs: HTMLCollection<HTMLParagraphElement>,
+  ) {
+    return () => {
+      this.refreshResults(headings, paragraphs);
+    };
+  }
+
+  async refreshResults(
+    headings: HTMLCollection<HTMLElement>,
+    paragraphs: HTMLCollection<HTMLParagraphElement>,
+  ) {
+    this.updateDOM(await this.search(), headings, paragraphs);
+  }
+
+  keypressHandler(
+    headings: HTMLCollection<HTMLElement>,
+    paragraphs: HTMLCollection<HTMLParagraphElement>,
+  ) {
+    return async (event: Event) => {
+      if (event.key === 'Enter') {
+        this.refreshResults(headings, paragraphs);
+      } else if (event.key === 'Backspace' && this.query.length > 0) {
+        this.query = this.query.slice(0, -1);
+      }
+    };
   }
 
   type(event: Event) {
     this.query.push(((event.target: any): HTMLInputElement).value);
   }
+}
 
-  checkHeaders(response: Response) {
-    if (response.status >= 400)
-      throw new ResponseError('WikiViewer fetch failed', response);
-    return ((response.json(): any): Promise<WikiSearchResult>);
-  }
+export function checkHeaders(response: Response) {
+  if (response.status >= 400)
+    throw new ResponseError('WikiViewer fetch failed', response);
+  return ((response.json(): any): Promise<WikiSearchResult>);
+}
 
-  processWikis({ query: { pages } }: WikiSearchResult) {
-    const { limits, ...wikis } = pages;
-    return Object.keys(wikis);
-  }
+export function processWikis({ query: { pages } }: WikiSearchResult) {
+  const { limits, ...wikis } = pages;
+  return Object.keys(wikis);
 }

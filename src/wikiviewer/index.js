@@ -1,24 +1,33 @@
 /* @flow */
-import type { WikiSearchResult, WikiPage, WikiInit } from './wikiviewer.types';
-import { serialize, ResponseError } from '../common/utils';
-import { endpoint, params } from './wikiviewer.constants';
 import Wikiviewer from './Wikiviewer';
 
 export const register = () => {
-  const searchButton = ((document: any): HTMLButtonElement);
-  const randomButton = ((document: any): HTMLButtonElement);
-  const searchInput = ((document: any): HTMLInputElement);
-  const nodes = ((document: any): HTMLCollection<HTMLElement>);
-  const wikiView = new WikiViewer(
-    searchButton,
-    randomButton,
-    searchInput,
-    nodes,
-  );
+  const wikiView = new WikiViewer();
 
-  searchInput.onchange = wikiView.type;
-  searchInput.onkeypress = wikiView.enter;
-  searchButton.addEventListener('onclick', wikiView.search);
+  const search = ((document.getElementById(
+    'search-btn',
+  ): any): HTMLButtonElement);
+  const random = ((document.getElementById(
+    'random-btn',
+  ): any): HTMLButtonElement);
+  const searchText = ((document.getElementById(
+    'search-txt',
+  ): any): HTMLInputElement);
+
+  // Each Result has it's own heading
+  const headings = ((document.getElementsByTagName(
+    'h2',
+  ): any): HTMLCollection<HTMLElement>);
+  // Each Result has it's own paragraph
+  const paragraphs = ((document.getElementsByTagName(
+    'p',
+  ): any): HTMLCollection<HTMLParagraphElement>);
+  const searchHandler = wikiView.searchHandler(headings, paragraphs);
+
+  searchText.onkeypress = wikiView.keypressHandler(headings, paragraphs);
+  searchText.onchange = wikiView.type;
+  search.addEventListener('click', searchHandler);
+  random.addEventListener('click', wikiView.randomHandler(window));
 };
 
 if (process.env.NODE_ENV !== 'ava') {
