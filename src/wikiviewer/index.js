@@ -1,5 +1,5 @@
 /* @flow */
-import Wikiviewer from './Wikiviewer';
+import WikiViewer from './Wikiviewer';
 
 export const register = () => {
   const wikiView = new WikiViewer();

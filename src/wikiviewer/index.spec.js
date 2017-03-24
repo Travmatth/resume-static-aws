@@ -1,7 +1,7 @@
 /* @flow */
 
 import test from 'ava';
-import { WikiViewer } from './index';
+import WikiViewer from './Wikiviewer';
 import { jsdom } from 'jsdom';
 import fetchMock from 'fetch-mock';
 import { ResponseError } from '../common/utils';

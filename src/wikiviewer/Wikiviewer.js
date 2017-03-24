@@ -57,7 +57,7 @@ export default class WikiViewer {
   }
 
   async refreshResults(headings: Headings, paragraphs: Paragraphs) {
-    this.updateDOM(await this.search(), Headings, paragraphs);
+    this.updateDOM(await this.search(), headings, paragraphs);
   }
 
   keypressHandler(headings: Headings, paragraphs: Paragraphs) {
