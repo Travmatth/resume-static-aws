@@ -4,8 +4,8 @@
  * createGrid creates an array of cell objects
  * @return {[Cell]} List of cell Maps; {x, y, player}
  */
-import type { GameGrid, WinningBoard } from '../tictactoe.types';
-import { Player } from '../tictactoe.types';
+import type { GameGrid, WinningBoard } from './tictactoe.types';
+import { Player } from './tictactoe.types';
 
 export function createGrid() {
   const grid = [];

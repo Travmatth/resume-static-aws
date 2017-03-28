@@ -8,7 +8,7 @@ import {
   playerHasWonDiagonal,
   serialize,
 } from './GameBoard';
-import type { GameGrid, GameState, ScoreCard } from '../tictactoe.types';
+import type { GameGrid, GameState, ScoreCard } from './tictactoe.types';
 
 export const Player = { X: 'X', O: 'O' };
 export const genScoreCard = (): ScoreCard => ({ X: 0, Y: 0 });
