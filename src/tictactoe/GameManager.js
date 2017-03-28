@@ -1,3 +1,5 @@
+/* @flow */
+
 const makeAction = (data: Data): Action => {};
 
 export const playerAction = (
@@ -59,7 +61,7 @@ export const restartGameHandler = (game: Game) =>
 // if player is second turn
 //  should reset grid and perform first move
 export const startGameHandler = (game, updateBoard) =>
-  e => {
+  (e: Event) => {
     if (this.state.player === Player.O) {
       setTimeout(
         () => {

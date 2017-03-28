@@ -1,12 +1,14 @@
+/* @flow */
+
 import {
   move,
-  clone,
+  copy,
   createGrid,
   playerHasWon,
   playerHasWonDiagonal,
   serialize,
-} from './Grid';
-import type { Player, GameGrid } from './tictactoe.types';
+} from './GameBoard';
+import type { GameGrid, GameState, ScoreCard } from './tictactoe.types';
 
 export const Player = { X: 'X', O: 'O' };
 export const genScoreCard = (): ScoreCard => ({ X: 0, Y: 0 });
@@ -28,7 +30,7 @@ export default class Game {
   }
 
   // restart the game grid
-  restart(grid) {
+  restart(grid: Array<GameGrid>) {
     this.update({
       player: 'X',
       delay: 100,
@@ -52,17 +54,17 @@ export default class Game {
     return serialize(this.state.grid);
   }
 
-  update(newState) {
-    this.state = Object.assign({}, this.state, newState);
+  update(newState: any) {
+    this.state = Object.assign({}, this.state, (newState: GameState));
   }
 
   // MARK_WINNER update scorecard
-  markWinner(winner) {
+  markWinner(winner: $Keys<typeof Player>) {
     this.state.score[winner] += 1;
   }
 
   // GLYPH_CHOSEN choose player (X or O)
-  chooseSide(desiredSide: $Keys<Player>) {
+  chooseSide(desiredSide: $Keys<typeof Player>) {
     this.update({
       player: desiredSide,
       newGame: false,
@@ -70,7 +72,7 @@ export default class Game {
   }
 
   // ROLL_BACK return game to last state, stopping at original
-  rollback(grid): Array<Grid> {
+  rollback(grid: Array<GameGrid>): Array<GameGrid> {
     const { history } = this.state;
     if (history.length > 0) {
       this.update({
@@ -83,20 +85,18 @@ export default class Game {
   }
 
   // TAKE_TURN update game board, return current state
-  takeTurn(turn) {
+  takeTurn(turn: $Keys<typeof Player>) {
     // Only move if player has control of board
     if (!(this.state.player === this.state.turn)) return;
 
-    const { turn } = action.payload;
-
-    const empty = this.state.grid.filter(cell => cell.player === null);
+    const remaining = this.state.grid.filter(cell => cell.player === null);
 
     // if spaces available, store history, make move
-    if (empty.length > 0) {
+    if (remaining.length > 0) {
       const current = this.state.grid;
 
       this.update({
-        history: this.state.history.push(clone(current)),
+        history: this.state.history.push(copy(current)),
         grid: move(this.state.grid, turn),
       });
 
@@ -104,16 +104,16 @@ export default class Game {
       // update score
       let hasWon = false;
 
-      if (playerHasWon(turn.player, this.state.grid)) {
+      if (playerHasWon(turn, this.state.grid)) {
         hasWon = true;
-        this.state.score[turn.player] += 1;
+        this.state.score[turn] += 1;
       }
 
       // set rest of state
       this.update({
         input: !this.state.input,
         turn: turn === 'X' ? 'O' : 'X',
-        finished: emptySquares.size <= 1 || hasWon,
+        finished: remaining.length <= 1 || hasWon,
       });
 
       //Finished turn at this point
@@ -141,11 +141,11 @@ export default class Game {
 
     this.update({
       newGame: false,
-      history: history.push(clone(grid)),
+      history: history.push(copy(grid)),
       input: !this.state.input,
     });
 
-    const empty = clone(grid).filter(cell => cell.player === null).length;
+    const empty = copy(grid).filter(cell => cell.player === null).length;
 
     // don't make move if game board is full
     if (empty <= 1 || finished) {
@@ -154,14 +154,15 @@ export default class Game {
     }
 
     // choose next move
-    const next = clone(grid).filter(cell => cell.player === null).slice(0, 1);
+    const next = copy(grid).filter(cell => cell.player === null).slice(0, 1);
+
     const nextGrid = move(grid, { ...next, player: turn });
     this.update({ grid: nextGrid });
 
     let hasWon = false;
     if (playerHasWon(turn, this.state.grid)) {
       hasWon = true;
-      this.state.score[turn] += score + 1;
+      this.state.score[turn] += 1;
     }
 
     // set rest of state
