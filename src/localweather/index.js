@@ -77,9 +77,7 @@ export const contentLoadedListener = async () => {
   ): any): NodeList<HTMLInputElement>);
   if (tempToggles)
     tempToggles.forEach(elem => {
-      // for (let node of tempToggles) {
       elem.addEventListener('click', toggleTempChange);
-      // }
     });
 
   navigator.geolocation.getCurrentPosition(getWeather);
