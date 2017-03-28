@@ -1,4 +1,4 @@
-export const Player = { X: 'X', O: 'O' };
+export const Side = { X: 'X', O: 'O' };
 export type ScoreCard = {| X: number, O: number |};
 export type GameGrid = {|
   x: number,
@@ -6,6 +6,15 @@ export type GameGrid = {|
   player: ?$Keys<typeof Player>,
 |};
 export type WinningBoard = Array<Array<boolean>>;
+export type Update = (grid: Array<string>) => void;
+export type Coordinates = {
+  x: string,
+  y: string,
+};
+
+declare class HTMLGameSquare extends HTMLButtonElement {
+  dataset: Coordinates,
+}
 
 export type GameState = {
   history: Array<GameGrid>,

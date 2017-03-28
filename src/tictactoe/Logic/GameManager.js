@@ -1,18 +1,32 @@
 /* @flow */
+import type { Update } from '../tictactoe.types';
 
-const makeAction = (data: Data): Action => {};
+//Actions will control the move of the player; accepts a
+//HTMLElement and
+const makeAction = (
+  elem: HTMLGameSquare,
+  player: $Keys<typeof Side>,
+): GameGrid => {
+  const { dataset: { x, y } } = elem;
+  return ({
+    x: parseInt(x),
+    y: parseInt(y),
+    player,
+  }: GameGrid);
+};
 
 export const playerAction = (
   game: Game,
   square: mixed,
-  updateBoard,
-): ?Board => {
+  updateBoard: Update,
+) => {
   if (!game.canMove()) return;
   const delay = 500; //ms
 
   setTimeout(
     () => {
-      const postPlayer = game.playerAction(makeAction(square));
+      const turn = game.player();
+      const postPlayer = game.takeTurn(makeAction(square, turn));
       updateBoard(postPlayer);
 
       setTimeout(
@@ -34,7 +48,7 @@ export const extractGlyph = (elem: HTMLElement): string => {
 // resetGame is responsible for resetting the game
 // if the player is first turn, should only reset game
 // if player is second turn, should reset grid and perform first move
-export const resetGameHandler = (game: Game, updateBoard): ?Board =>
+export const resetGameHandler = (game: Game, updateBoard: Update) =>
   (e: Event) => {
     const glyph = extractGlyph(e.target);
     const postReset = game.resetGrid();
@@ -60,7 +74,7 @@ export const restartGameHandler = (game: Game) =>
 //  should only reset game
 // if player is second turn
 //  should reset grid and perform first move
-export const startGameHandler = (game, updateBoard) =>
+export const startGameHandler = (game: Game, updateBoard: Update) =>
   (e: Event) => {
     if (this.state.player === Player.O) {
       setTimeout(
@@ -73,7 +87,7 @@ export const startGameHandler = (game, updateBoard) =>
     }
   };
 
-export const rollbackHandler = (game: Game, callback: () => void) =>
+export const rollbackHandler = (game: Game, callback: Update) =>
   (e: Event) => {
     const previous = game.rollback();
     callback(rollback /*, game */);

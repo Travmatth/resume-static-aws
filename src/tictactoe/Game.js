@@ -9,8 +9,8 @@ import {
   serialize,
 } from './GameBoard';
 import type { GameGrid, GameState, ScoreCard } from '../tictactoe.types';
+import { Side } from '../tictactoe.types';
 
-export const Player = { X: 'X', O: 'O' };
 export const genScoreCard = (): ScoreCard => ({ X: 0, Y: 0 });
 
 export default class Game {
@@ -19,14 +19,23 @@ export default class Game {
   constructor() {
     this.state = ({
       history: [],
-      turn: Player.X,
+      turn: Side.X,
       delay: 100,
-      player: Player.X,
+      player: Side.X,
       newGame: true,
       finished: false,
       grid: createGrid(),
       score: genScoreCard(),
     }: GameState);
+  }
+
+  canMove(): boolean {
+    const { player, turn } = this.state;
+    return player === turn;
+  }
+
+  player() {
+    return this.state.player;
   }
 
   // restart the game grid
@@ -46,7 +55,7 @@ export default class Game {
   reset() {
     this.update({
       history: [],
-      turn: Player.X,
+      turn: Side.X,
       finished: false,
       grid: createGrid(),
     });
@@ -72,7 +81,7 @@ export default class Game {
   }
 
   // ROLL_BACK return game to last state, stopping at original
-  rollback(grid: Array<GameGrid>): Array<GameGrid> {
+  rollback(grid: Array<GameGrid>) {
     const { history } = this.state;
     if (history.length > 0) {
       this.update({
@@ -85,7 +94,7 @@ export default class Game {
   }
 
   // TAKE_TURN update game board, return current state
-  takeTurn(turn: $Keys<typeof Player>) {
+  takeTurn(turn: GameGrid) {
     // Only move if player has control of board
     if (!(this.state.player === this.state.turn)) return;
 
@@ -167,7 +176,7 @@ export default class Game {
 
     // set rest of state
     this.update({
-      turn: turn === Player.X ? Player.O : Player.X,
+      turn: turn === Side.X ? Side.O : Side.X,
       finished: empty <= 1 || hasWon,
     });
 
