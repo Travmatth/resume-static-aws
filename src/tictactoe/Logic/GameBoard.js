@@ -4,8 +4,8 @@
  * createGrid creates an array of cell objects
  * @return {[Cell]} List of cell Maps; {x, y, player}
  */
-import type { GameGrid, WinningBoard } from './tictactoe.types';
-import { Player } from './tictactoe.types';
+import type { GameGrid, WinningBoard } from '../tictactoe.types';
+import { Side } from '../tictactoe.types';
 
 export function createGrid() {
   const grid = [];
@@ -46,7 +46,7 @@ export const serialize = (grid: Array<GameGrid>) =>
  * @return {bool}          [whether player has a winning Row]
  */
 export function playerHasWonRow(
-  player: $Keys<typeof Player>,
+  player: $Keys<typeof Side>,
   grid: Array<GameGrid>,
 ) {
   let hasWon = false;
@@ -71,7 +71,7 @@ export function playerHasWonRow(
  * @return {bool}        [whether player has a winning column]
  */
 export function playerHasWonColumn(
-  player: $Keys<typeof Player>,
+  player: $Keys<typeof Side>,
   grid: Array<GameGrid>,
 ) {
   let hasWon = false;
@@ -95,7 +95,7 @@ export function playerHasWonColumn(
  * @return {bool}        [whether player has a winning diagonal]
  */
 export function playerHasWonDiagonal(
-  player: $Keys<typeof Player>,
+  player: $Keys<typeof Side>,
   grid: Array<GameGrid>,
 ) {
   const clone1 = (copy(grid): WinningBoard);
@@ -120,7 +120,7 @@ const descending: WinningBoard = [
 export const checkDiagonal = (
   grid: Array<GameGrid>,
   winningBoard: WinningBoard,
-  possibleWinner: $Keys<typeof Player>,
+  possibleWinner: $Keys<typeof Side>,
 ) => {
   const score = grid
     .filter(
@@ -138,7 +138,7 @@ export const checkDiagonal = (
  * @return {bool}        [whether player has won]
  */
 export function playerHasWon(
-  player: $Keys<typeof Player>,
+  player: $Keys<typeof Side>,
   grid: Array<GameGrid>,
 ) {
   return playerHasWonColumn(player, grid) ||

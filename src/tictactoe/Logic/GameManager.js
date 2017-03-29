@@ -1,5 +1,9 @@
 /* @flow */
-import type { Update } from '../tictactoe.types';
+import Game from './Game';
+import type { Update, HTMLGameSquare, GameGrid } from '../tictactoe.types';
+import { Side } from '../tictactoe.types';
+
+const delay = 500; //ms
 
 //Actions will control the move of the player; accepts a
 //HTMLElement and
@@ -19,9 +23,8 @@ export const playerAction = (
   game: Game,
   square: mixed,
   updateBoard: Update,
-) => {
+): void => {
   if (!game.canMove()) return;
-  const delay = 500; //ms
 
   setTimeout(
     () => {
@@ -31,7 +34,7 @@ export const playerAction = (
 
       setTimeout(
         () => {
-          const postComputer = game.computerAction();
+          const postComputer = game.simulateMove();
           updateBoard(postComputer);
         },
         delay * 2,
@@ -51,21 +54,21 @@ export const extractGlyph = (elem: HTMLElement): string => {
 export const resetGameHandler = (game: Game, updateBoard: Update) =>
   (e: Event) => {
     const glyph = extractGlyph(e.target);
-    const postReset = game.resetGrid();
+    const postReset = game.reset();
     updateBoard(postReset);
-    if (glyph === Player.O) {
-      const postMove = simulateFirstMove(game);
+    if (glyph === Side.O) {
+      const postMove = game.simulateFirstMove();
       updateBoard(postMove);
     }
   };
 
-export const restartGameHandler = (game: Game) =>
+export const restartGameHandler = (game: Game, updateBoard: Update) =>
   (e: Event) => {
     const glyph = extractGlyph(e.target);
-    const postReset = game.restartGrid();
+    const postReset = game.restart();
     updateBoard(postReset);
-    if (glyph === Player.O) {
-      const postMove = simulateFirstMove(game);
+    if (glyph === Side.O) {
+      const postMove = game.simulateFirstMove();
       updateBoard(postMove);
     }
   };
@@ -76,7 +79,7 @@ export const restartGameHandler = (game: Game) =>
 //  should reset grid and perform first move
 export const startGameHandler = (game: Game, updateBoard: Update) =>
   (e: Event) => {
-    if (this.state.player === Player.O) {
+    if (game.player() === Side.O) {
       setTimeout(
         () => {
           const grid = game.simulateFirstMove();
@@ -90,10 +93,10 @@ export const startGameHandler = (game: Game, updateBoard: Update) =>
 export const rollbackHandler = (game: Game, callback: Update) =>
   (e: Event) => {
     const previous = game.rollback();
-    callback(rollback /*, game */);
+    callback(previous /*, game */);
   };
 
-export const choseTurnHandler = (game: Game, desired: $Keys<Player>) =>
+export const choseTurnHandler = (game: Game, desired: $Keys<typeof Side>) =>
   (e: Event) => {
     const previous = game.chooseSide(desired);
   };
