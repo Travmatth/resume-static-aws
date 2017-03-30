@@ -7,7 +7,7 @@ import {
   playerHasWon,
   playerHasWonDiagonal,
   serialize,
-} from './GameBoard';
+} from './Board';
 import type { GameGrid, GameState, ScoreCard } from '../tictactoe.types';
 import { Side } from '../tictactoe.types';
 

@@ -5,7 +5,7 @@ import {
   startGameHandler,
   rollbackHandler,
   chooseTurnHandler,
-} from './GameManager';
+} from './Manager';
 import Game from './Game';
 
 export {
