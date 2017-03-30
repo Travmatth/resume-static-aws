@@ -23,8 +23,8 @@ const playerAction = (game: Game, update: Update, end: () => void) =>
 
     // Simulate Player move
     const turn = game.player();
-    const action = makeAction(e.target);
-    game.takeTurn(action, turn);
+    const action = makeAction(e.target, turn);
+    game.takeTurn(action);
 
     setTimeout(
       () => {

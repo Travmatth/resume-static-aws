@@ -11,9 +11,9 @@ import {
 import type { GameGrid, GameState, ScoreCard } from '../tictactoe.types';
 import { Side } from '../tictactoe.types';
 
-export const genScoreCard = (): ScoreCard => ({ X: 0, Y: 0 });
+const genScoreCard = (): ScoreCard => ({ X: 0, Y: 0 });
 
-export default class Game {
+class Game {
   state: GameState;
 
   constructor() {
@@ -164,3 +164,5 @@ export default class Game {
     return serialize(this.state.grid);
   }
 }
+
+export { genScoreCard, Game };

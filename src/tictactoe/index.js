@@ -14,22 +14,44 @@ import {
   restartGameHandler,
 } from './Logic';
 
+// Whenever the game object's state changes we should update the DOM
+const update = (squares: DocumentFragment) =>
+  (latest: Array<string>) => {
+    for (var i = 0; i < 9; i++) {
+      const square = squares.children[i];
+      if (square) square.textContent = latest[i];
+    }
+  };
+
+// Responsible for replacing views on the root container
+const render = (
+  root: HTMLElement,
+  previous: ?DocumentFragment,
+  current: DocumentFragment,
+) =>
+  () => {
+    if (root.hasChildNodes() && previous) {
+      root.removeChild(previous);
+    }
+
+    root.appendChild(current);
+  };
+
 if (global.document !== undefined) {
   const game = new Game();
   const { createDocumentFragment } = document;
 
   // responsible for holding the view currently being shown
-  const root = document.getElementById('root');
-
+  const root = ((document.getElementById('root'): any): HTMLElement);
   // document fragments contain the elements assoc. w/ each view
   const start = document.createDocumentFragment();
   const play = document.createDocumentFragment();
   const score = document.createDocumentFragment();
 
   // trigger transition btw views
-  const resetTransition = render(root, start);
-  const startTransition = render(root, game);
-  const endTransition = render(root, score);
+  const resetTransition = render(root, score, start);
+  const startTransition = render(root, start, game);
+  const endTransition = render(root, game, score);
 
   // Starting View Handlers
   const startHandler = startGameHandler(game, update(play), startTransition);
@@ -53,19 +75,7 @@ if (global.document !== undefined) {
   );
 
   // Start scenes by binding the first view to the root container
-  render(root, startViewFragment)();
+  render(root, null, startViewFragment)();
 }
 
-// Whenever the game object's state changes we should update the DOM
-export const update = (squares: DocumentFragment) =>
-  (latest: Array<string>) => {
-    for (let i in Array(9).keys()) {
-      const square = squares.childNodes[i];
-      if (square) square.textContent = latest[i];
-    }
-  };
-
-export const render = (root: HTMLElement, fragment: DocumentFragment) =>
-  () => {
-    // Responsible for replacing views on the root container
-  };
+export { update, render };

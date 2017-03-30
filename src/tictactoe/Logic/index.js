@@ -6,7 +6,7 @@ import {
   rollbackHandler,
   chooseTurnHandler,
 } from './Manager';
-import Game from './Game';
+import { Game } from './Game';
 
 export {
   Game,
