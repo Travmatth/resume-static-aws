@@ -1,19 +1,41 @@
-const createScoreView = (fragment: DocumentFragment, restart, reset, game) => {
-  const yScore = scoreButton('y');
-  const xScore = scoreButton('x');
-  const reset = lifecycleButton(game, update);
-  const restart = lifecycleButton();
+import type { Handler } from '../tictactoe.types';
+import { Side } from '../tictactoe.types';
 
+const createScoreView = (
+  fragment: DocumentFragment,
+  restart: Handler,
+  reset: Handler,
+  transition: () => void,
+  game: Game,
+) => {
+  const oScore = scoreElement(game, Side.O);
+  const xScore = scoreElement(game, Side.X);
+  const restart = lifecycleButton('restart', restart);
+  const reset = lifecycleButton('reset', reset);
+
+  fragment.appendChild(oScore);
   fragment.appendChild(xScore);
-  fragment.appendChild(yScore);
-  fragment.appendChild(reset);
   fragment.appendChild(restart);
+  fragment.appendChild(reset);
 
   return fragment;
 };
 
-const scoreButton = () => {};
+const scoreElement = (game: Game, glyph: $Keys<typeof Side>) => {
+  const elem = document.createElement('div');
 
-const lifecycleButton = () => {};
+  elem.textContent = game.getScore(glyph);
 
-export { createScoreView, scoreButton, lifecycleButton };
+  return elem;
+};
+
+const lifecycleButton = (text: string, trigger: Handler) => {
+  const button = document.createElement('button');
+
+  button.textContent = text;
+  button.addEventListener('click', trigger);
+
+  return button;
+};
+
+export { createScoreView, scoreElement, lifecycleButton };

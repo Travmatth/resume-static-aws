@@ -4,12 +4,12 @@ import type { Update, HTMLGameSquare, GameGrid } from '../tictactoe.types';
 import { Side } from '../tictactoe.types';
 
 const delay = 500; //ms
+// Since update callbacks accept Array<string>, can overwrite game grid w/ ''
+const blank = ['', '', '', '', '', '', '', '', ''];
 
-const makeAction = (
-  elem: HTMLGameSquare,
-  player: $Keys<typeof Side>,
-): GameGrid => {
+const makeAction = (elem: HTMLGameSquare, player: $Keys<typeof Side>) => {
   const { dataset: { x, y } } = elem;
+
   return ({
     x: parseInt(x),
     y: parseInt(y),
@@ -17,98 +17,91 @@ const makeAction = (
   }: GameGrid);
 };
 
-const playerAction = (game: Game, updateBoard: Update, end: () => void) =>
+const playerAction = (game: Game, update: Update, end: () => void) =>
   (e: Event) => {
     if (!game.canMove()) return;
 
+    // Simulate Player move
+    const turn = game.player();
+    const action = makeAction(e.target);
+    game.takeTurn(action, turn);
+
     setTimeout(
       () => {
-        const turn = game.player();
-        const action = makeAction(e.target);
-        game.takeTurn(action, turn);
-
+        // process Player move
         if (game.isOver()) {
+          game.restart();
           end();
           return;
         } else {
-          const postPlayer = game.current();
-          updateBoard(postPlayer);
+          update(game.current());
         }
 
+        // simulate opponent move
         setTimeout(
           () => {
             game.simulateMove();
             if (game.isOver()) {
+              game.restart();
               end();
+              return;
             } else {
-              const postComputer = game.current();
-              updateBoard(postComputer);
+              update(game.current());
             }
           },
-          delay * 2,
+          delay,
         );
       },
-      delay * 1,
+      delay,
     );
   };
 
-// resetGame is responsible for resetting the game
-// if the player is first turn, should only reset game
-// if player is second turn, should reset grid and perform first move
-const resetGameHandler = (game: Game, updateBoard: Update) =>
+// Pressed in the score view to switch views: score -> start
+const resetGameHandler = (game: Game, reset: () => void) =>
   (e: Event) => {
-    const { textContent: glyph } = e.target;
-    game.reset();
-    const postReset = game.current();
-    updateBoard(postReset);
-    if (glyph === Side.O) {
-      game.simulateFirstMove();
-      const postMove = game.current();
-      updateBoard(postMove);
-    }
-  };
-
-const restartGameHandler = (game: Game, transition, root) =>
-  (e: Event) => {
-    const { textContent: glyph } = e.target;
     game.restart();
-    transition(root, game);
-    if (glyph === Side.O) {
+    reset();
+  };
+
+// restartGame is responsible for restarting the game
+// if the player is first turn, should only restart game
+// else player is second turn, should reset grid and perform first move
+const restartGameHandler = (game: Game, update: Update) =>
+  (e: Event) => {
+    game.restart();
+    update(blank);
+    if (game.player() === Side.O) {
       game.simulateFirstMove();
-      const postMove = game.current();
-      updateBoard(postMove);
+      update(game.current());
     }
   };
 
-// if the player is currently is first turn
-//  should only reset game
-// if player is second turn
-//  should reset grid and perform first move
-const startGameHandler = (game: Game, updateBoard: Update) =>
+const startGameHandler = (game: Game, update: Update, transition: () => void) =>
   (e: Event) => {
-    //Clear previous state of Game view, if any
-    updateBoard(['', '', '', '', '', '', '', '', '']);
+    // Clear previous state of Game view, if any
+    update(blank);
+    // swap Game View into DOM
+    transition();
     if (game.player() === Side.O) {
       setTimeout(
         () => {
           game.simulateFirstMove();
-          const grid = game.current();
-          updateBoard(grid);
+          update(game.current());
         },
         delay,
       );
     }
   };
 
-const rollbackHandler = (game: Game, callback: Update) =>
+const rollbackHandler = (game: Game, update: Update) =>
   (e: Event) => {
     game.rollback();
-    const previous = game.current();
-    callback(previous);
+    update(game.current());
   };
 
-const chooseTurnHandler = (game: Game, desired: $Keys<typeof Side>) =>
+const chooseTurnHandler = (game: Game) =>
   (e: Event) => {
+    const desired = e.target.dataset.glyph;
     const previous = game.chooseSide(desired);
   };
 

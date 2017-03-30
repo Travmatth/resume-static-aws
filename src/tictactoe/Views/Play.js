@@ -1,8 +1,9 @@
+import type { Handler } from '../tictactoe.types';
+
 const createPlayView = (
   fragment: DocumentFragment,
-  move: (e: Event) => void,
-  undo: (e: Event) => void,
-  game: Game,
+  move: Handler,
+  undo: Handler,
 ) => {
   for (let x of Array(3).keys()) {
     for (let y of Array(3).keys()) {
@@ -11,21 +12,20 @@ const createPlayView = (
   }
 
   fragment.appendChild(undoButton(undo));
-
   return fragment;
 };
 
-const gameTile = (x: number, y: number, move: (e: Event) => void) => {
+const gameTile = (x: number, y: number, move: Handler) => {
   const tile = document.createElement('button');
 
   tile.dataset.x = `${x}`;
   tile.dataset.y = `${y}`;
-  tile.addEvenListener(click, move);
+  tile.addEvenListener('click', move);
 
   return tile;
 };
 
-const undoButton = (undo: (e: Event) => void) => {
+const undoButton = (undo: Handler) => {
   const button = document.createElement('button');
 
   button.textContent = 'Undo Move';

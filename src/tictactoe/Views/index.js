@@ -1,15 +1,5 @@
-import { sideSelectionButton, startButton, createStartView } from './Start';
-import { gameTile, undoButton, createPlayView } from './Game';
-import { lifeCycleButton, scoreButton, createScoreView } from './Score';
+import { createStartView } from './Start';
+import { createPlayView } from './Game';
+import { createScoreView } from './Score';
 
-export {
-  createStartView,
-  createPlayView,
-  createScoreView,
-  startButton,
-  gameTile,
-  scoreButton,
-  undoButton,
-  sideSelectionButton,
-  lifecycleButton,
-};
+export { createStartView, createPlayView, createScoreView };
