@@ -48,7 +48,6 @@ export default class Game {
     });
 
     this.reset();
-    return serialize(this.state.grid);
   }
 
   // resets the game grid
@@ -59,8 +58,10 @@ export default class Game {
       finished: false,
       grid: createGrid(),
     });
+  }
 
-    return serialize(this.state.grid);
+  isOver() {
+    return this.state.finished;
   }
 
   update(newState: any) {
@@ -89,8 +90,6 @@ export default class Game {
         grid: history.pop(),
       });
     }
-
-    return serialize(this.state.grid);
   }
 
   // TAKE_TURN update game board, return current state
@@ -132,8 +131,6 @@ export default class Game {
     this.update({
       newGame: false,
     });
-
-    return serialize(this.state.grid);
   }
 
   simulateFirstMove() {
@@ -179,7 +176,9 @@ export default class Game {
       turn: turn === Side.X ? Side.O : Side.X,
       finished: empty <= 1 || hasWon,
     });
+  }
 
+  current() {
     return serialize(this.state.grid);
   }
 }

@@ -5,8 +5,6 @@ import { Side } from '../tictactoe.types';
 
 const delay = 500; //ms
 
-//Actions will control the move of the player; accepts a
-//HTMLElement and
 const makeAction = (
   elem: HTMLGameSquare,
   player: $Keys<typeof Side>,
@@ -19,56 +17,65 @@ const makeAction = (
   }: GameGrid);
 };
 
-export const playerAction = (
-  game: Game,
-  square: mixed,
-  updateBoard: Update,
-): void => {
-  if (!game.canMove()) return;
+const playerAction = (game: Game, updateBoard: Update, end: () => void) =>
+  (e: Event) => {
+    if (!game.canMove()) return;
 
-  setTimeout(
-    () => {
-      const turn = game.player();
-      const postPlayer = game.takeTurn(makeAction(square, turn));
-      updateBoard(postPlayer);
+    setTimeout(
+      () => {
+        const turn = game.player();
+        const action = makeAction(e.target);
+        game.takeTurn(action, turn);
 
-      setTimeout(
-        () => {
-          const postComputer = game.simulateMove();
-          updateBoard(postComputer);
-        },
-        delay * 2,
-      );
-    },
-    delay * 1,
-  );
-};
+        if (game.isOver()) {
+          end();
+          return;
+        } else {
+          const postPlayer = game.current();
+          updateBoard(postPlayer);
+        }
 
-export const extractGlyph = (elem: HTMLElement): string => {
-  return elem.textContent;
-};
+        setTimeout(
+          () => {
+            game.simulateMove();
+            if (game.isOver()) {
+              end();
+            } else {
+              const postComputer = game.current();
+              updateBoard(postComputer);
+            }
+          },
+          delay * 2,
+        );
+      },
+      delay * 1,
+    );
+  };
 
 // resetGame is responsible for resetting the game
 // if the player is first turn, should only reset game
 // if player is second turn, should reset grid and perform first move
-export const resetGameHandler = (game: Game, updateBoard: Update) =>
+const resetGameHandler = (game: Game, updateBoard: Update) =>
   (e: Event) => {
-    const glyph = extractGlyph(e.target);
-    const postReset = game.reset();
+    const { textContent: glyph } = e.target;
+    game.reset();
+    const postReset = game.current();
     updateBoard(postReset);
     if (glyph === Side.O) {
-      const postMove = game.simulateFirstMove();
+      game.simulateFirstMove();
+      const postMove = game.current();
       updateBoard(postMove);
     }
   };
 
-export const restartGameHandler = (game: Game, updateBoard: Update) =>
+const restartGameHandler = (game: Game, transition, root) =>
   (e: Event) => {
-    const glyph = extractGlyph(e.target);
-    const postReset = game.restart();
-    updateBoard(postReset);
+    const { textContent: glyph } = e.target;
+    game.restart();
+    transition(root, game);
     if (glyph === Side.O) {
-      const postMove = game.simulateFirstMove();
+      game.simulateFirstMove();
+      const postMove = game.current();
       updateBoard(postMove);
     }
   };
@@ -77,12 +84,15 @@ export const restartGameHandler = (game: Game, updateBoard: Update) =>
 //  should only reset game
 // if player is second turn
 //  should reset grid and perform first move
-export const startGameHandler = (game: Game, updateBoard: Update) =>
+const startGameHandler = (game: Game, updateBoard: Update) =>
   (e: Event) => {
+    //Clear previous state of Game view, if any
+    updateBoard(['', '', '', '', '', '', '', '', '']);
     if (game.player() === Side.O) {
       setTimeout(
         () => {
-          const grid = game.simulateFirstMove();
+          game.simulateFirstMove();
+          const grid = game.current();
           updateBoard(grid);
         },
         delay,
@@ -90,13 +100,23 @@ export const startGameHandler = (game: Game, updateBoard: Update) =>
     }
   };
 
-export const rollbackHandler = (game: Game, callback: Update) =>
+const rollbackHandler = (game: Game, callback: Update) =>
   (e: Event) => {
-    const previous = game.rollback();
-    callback(previous /*, game */);
+    game.rollback();
+    const previous = game.current();
+    callback(previous);
   };
 
-export const choseTurnHandler = (game: Game, desired: $Keys<typeof Side>) =>
+const chooseTurnHandler = (game: Game, desired: $Keys<typeof Side>) =>
   (e: Event) => {
     const previous = game.chooseSide(desired);
   };
+
+export {
+  playerAction,
+  restartGameHandler,
+  resetGameHandler,
+  startGameHandler,
+  rollbackHandler,
+  chooseTurnHandler,
+};
