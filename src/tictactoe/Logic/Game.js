@@ -2,7 +2,6 @@
 
 import {
   move,
-  copy,
   createGrid,
   playerHasWon,
   playerHasWonDiagonal,
@@ -94,7 +93,7 @@ class Game {
       const current = grid;
 
       this.update({
-        history: history.push(copy(current)),
+        history: history.push(current),
         grid: move(grid, turn),
       });
 
@@ -128,7 +127,7 @@ class Game {
     const { grid, history, turn, finished } = this.state;
 
     this.update({
-      history: history.push(copy(grid)),
+      history: history.push(grid),
       input: !this.state.input,
     });
 

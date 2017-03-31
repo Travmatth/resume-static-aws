@@ -32,8 +32,7 @@ export function move(grid: Array<GameGrid>, { x, y, player }: GameGrid) {
   return clone;
 }
 
-export const serialize = (grid: Array<GameGrid>) =>
-  copy(grid).map(cell => cell.player);
+export const serialize = (grid: Array<GameGrid>) => grid.map(c => c.player);
 
 // export function hasColumnScore(grid, score) {}
 // export function hasDiagonalScore(grid, score) {}
@@ -50,10 +49,9 @@ export function playerHasWonRow(
   grid: Array<GameGrid>,
 ) {
   let hasWon = false;
-  const clone = copy(grid);
 
   for (let row of Array(3).keys()) {
-    clone
+    grid
       .filter(cell => cell.player === player && cell.x === row)
       .reduce(prev => prev + 1, 0) >= 3
       ? (hasWon = true)
@@ -75,10 +73,9 @@ export function playerHasWonColumn(
   grid: Array<GameGrid>,
 ) {
   let hasWon = false;
-  const clone = copy(grid);
 
   for (let col of Array(3).keys()) {
-    clone
+    grid
       .filter(cell => cell.player === player && cell.y === col)
       .reduce(prev => prev + 1, 0) >= 3
       ? (hasWon = true)
@@ -98,11 +95,8 @@ export function playerHasWonDiagonal(
   player: $Keys<typeof Side>,
   grid: Array<GameGrid>,
 ) {
-  const clone1 = (copy(grid): WinningBoard);
-  const clone2 = (copy(grid): WinningBoard);
-
-  return checkDiagonal(clone1, ascending, player) ||
-    checkDiagonal(clone2, descending, player);
+  return checkDiagonal(grid, ascending, player) ||
+    checkDiagonal(grid, descending, player);
 }
 
 const ascending: WinningBoard = [
