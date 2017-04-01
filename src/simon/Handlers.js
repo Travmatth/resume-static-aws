@@ -55,6 +55,16 @@ const cancelAll = () => {
 const startHandler = (simon: Simon, colors: ColorsManager) =>
   (e: Event) => simon.power() ? startAll(simon, colors) : cancelAll();
 
+const handlePress = (color: ColorKeys, buttons: ColorButtons) =>
+  (e: Event) => {
+    // animate selection
+    // test whether selection passes
+    // if passes, do nothing
+    // else rejected
+    // if normal mode, restart current sequence
+    // if strict mode, restart game
+  };
+
 class ColorHandler {
   button: ColorButtons;
 

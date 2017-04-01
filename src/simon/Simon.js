@@ -1,3 +1,18 @@
+/*
+currentSequence
+attemptPress
+resetRound
+roundLength
+roundCountinue
+roundSuccess
+roundFailure
+strictness
+power
+turn
+advanceRound
+winGame
+initSeq
+ */
 // simon.totalMoves()
 
 // simon.currentMove()
