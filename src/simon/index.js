@@ -14,14 +14,15 @@ if (global.document !== undefined) {
     // Game Lifecycle Buttons
     const power = document.getElementById('power');
     const strict = document.getElementById('strict');
-    // Color Buttons
-    const red = document.getElementById('red');
-    const blue = document.getElementById('blue');
-    const green = document.getElementById('green');
-    const yellow = document.getElementById('yellow');
 
+    // Color Buttons
     const simon = new Simon();
-    const colorButtons = new ColorHandler({ red, blue, green, yellow });
+    const colorButtons = new ColorHandler({
+      red: document.getElementById('red'),
+      blue: document.getElementById('blue'),
+      green: document.getElementById('green'),
+      yellow: document.getElementById('yellow'),
+    });
 
     power.addEventListener('click', startHandler(simon, colorButtons));
     strict.addEventListener('click', strictHandler(simon));

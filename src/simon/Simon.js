@@ -1,6 +1,4 @@
 /*
-currentSequence
-attemptPress
 resetRound
 roundLength
 roundCountinue
@@ -11,29 +9,18 @@ power
 turn
 advanceRound
 winGame
-initSeq
  */
-// simon.totalMoves()
 
-// simon.currentMove()
+class Simon {
+  constructor() {}
+  initialSequence() {}
+  attemptPress() {}
+  currentColorDisplayed() {}
+  shouldRestartRound() {}
+  advanceRound() {}
+  totalRounds() {}
+  endRound() {}
+  totalMoves() {}
+}
 
-// simon.roundLength()
-// simon.round()
-//simon.shouldAdvanceRound() -> simon.round() < simon.roundLength()
-
-// simon.advanceRound()
-
-// simon.endRound()
-//   currentMove = 0;
-//   clearTimeout(timer);
-
-// simon.totalRounds
-
-// simon.advanceRound()
-// currentMove  = 0;
-// timer = setTimeout(roundHandler, roundDelay);
-
-// simon.shouldRestartRound()
-
-// const color = simon.currentColorDisplayed()
-// toggleElement(color)
+export { Simon };
