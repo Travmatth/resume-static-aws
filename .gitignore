@@ -10,3 +10,6 @@ flowcheck.txt
 flowcheck.txt
 yarn-error.log
 src/common/api_keys.js
+*.swp
+*.swo
+*~
