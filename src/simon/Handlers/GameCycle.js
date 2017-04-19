@@ -22,6 +22,7 @@ const cycle = [
   'hide-step',
   'hide-sequence',
   'start-input',
+  'gameplay',
   'end-input',
   'failed-round',
   'successful-round',

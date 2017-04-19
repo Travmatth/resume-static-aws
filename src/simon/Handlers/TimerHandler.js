@@ -21,7 +21,6 @@ export class TimerManager {
     colors: ColorHandler,
     update: (score: number) => void = () => {},
   ) {
-    this.cancelTimer();
     const { next, round, action: nextAction } = this._timer.tick(
       simon,
       colors,

@@ -27,7 +27,7 @@ if (global.document !== undefined) {
     const colorButtons = new ColorHandler(buttons);
 
     power.addEventListener('click', powerHandler(updateScore));
-    strict.addEventListener('click', strictHandler(strict));
+    strict.addEventListener('click', strictHandler);
 
     ['red', 'blue', 'green', 'yellow'].forEach(color => {
       const click = clickHandler(color, colorButtons, updateScore);

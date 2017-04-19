@@ -19,13 +19,12 @@ export default class Timer {
     this.current -= val;
   }
 
-  tick(simon: Simon, colors: ColorHandler, update: (score: number) => void) {
+  tick(simon: Simon, buttons: ColorHandler) {
     if (this.current > this.cycle.length) {
       console.warn('current game step exceeds possible steps, resetting');
       this.reset();
     }
 
-    const self = this;
     const { simon } = this;
     switch (this.cycle[this.current]) {
       // advance[0] = f: (null|restart) -> (end-start)
@@ -34,8 +33,8 @@ export default class Timer {
           next: true,
           round: delay['start'],
           action: () => {
-            self.increment();
-            colors.showAll();
+            this.increment();
+            buttons.showAll();
           },
         };
       // advance[1] = f: (start) -> (show-sequence)
@@ -44,8 +43,8 @@ export default class Timer {
           next: true,
           round: delay['end-start'],
           action: () => {
-            self.increment();
-            colors.hideAll();
+            this.increment();
+            buttons.hideAll();
           },
         };
       // advance[2] = f: (show-sequence) -> (show-step)
@@ -54,7 +53,7 @@ export default class Timer {
           next: true,
           round: delay['show-sequence'],
           action: () => {
-            self.increment();
+            this.increment();
           },
         };
       // advance[3] = f: (show-sequence) -> (show-step)
@@ -63,7 +62,7 @@ export default class Timer {
           next: true,
           round: delay['show-sequence-pause'],
           action: () => {
-            self.increment();
+            this.increment();
           },
         };
       // advance[3] = f: (show-sequence) -> (hide-step)
@@ -72,8 +71,8 @@ export default class Timer {
           next: true,
           round: delay['show-sequence'],
           action: () => {
-            self.increment();
-            colors.showColor(simon.currentColor());
+            this.increment();
+            buttons.showColor(simon.currentColor());
           },
         };
       // advance[4] = f: (show-step) -> (show-step|hide-sequence)
@@ -83,12 +82,12 @@ export default class Timer {
           round: delay['show-sequence'],
           action: () => {
             if (simon.showSequenceOver()) {
-              self.increment();
+              this.increment();
             } else {
-              self.decrement(2);
+              this.decrement(2);
             }
 
-            colors.hideColor(simon.currentColor());
+            buttons.hideColor(simon.currentColor());
             simon.nextColor();
           },
         };
@@ -98,17 +97,17 @@ export default class Timer {
           next: true,
           round: delay['show-sequence'],
           action: () => {
-            self.increment();
+            this.increment();
           },
         };
       // advance[6] = f: (start-input) -> (end-input)
       case 'start-input':
         return {
           next: true,
-          round: delay['start-input'],
+          round: this.round.length * 2.5 * 1000,
           action: () => {
-            self.increment();
-            simon.startInput();
+            this.increment();
+            simon.setPlayerCanMove(true);
           },
         };
       // advance[7] = f: (null|start-input) -> (successful-round|failed-round)
@@ -119,34 +118,12 @@ export default class Timer {
           action: () => {
             // If player has won, jump to successful-round
             // else forward to failed-round
-            if (simon.hasWon()) {
-              self.increment();
+            if (simon.hasWonRound() || simon.hasWonGame()) {
+              this.increment();
             }
 
-            self.increment();
-            simon.endInput();
-          },
-        };
-      // advance[8] = f: (failed-round) -> (end)
-      case 'failed-round':
-        return {
-          next: true,
-          round: delay['failed-round'],
-          action: () => {
-            self.increment();
-            simon.failedRound();
-            colors.gameLost();
-          },
-        };
-      // advance[9] = f: (successful-round) -> (failed-round)
-      case 'successful-round':
-        return {
-          next: true,
-          round: delay['successful-round'],
-          action: () => {
-            self.increment();
-            simon.wonRound();
-            colors.gameWon();
+            this.increment();
+            simon.setPlayerCanMove(false);
           },
         };
       // advance[10] = f: (end) -> (null|start)
@@ -155,10 +132,8 @@ export default class Timer {
           next: false,
           round: delay['end'],
           action: () => {
-            self.reset();
+            this.reset();
             simon.reset();
-            colors.roundEnd();
-            update();
           },
         };
     }
