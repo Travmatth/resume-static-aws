@@ -1,22 +1,25 @@
 /* @flow */
+
+import Simon from '../Simon';
+import { Colors } from '../simon.types';
+import type { ColorKeys } from '../simon.types';
 import { TimerManager } from './TimerHandler';
 
 const timer = new TimerManager();
 const simon = new Simon();
 
 // When power button is pressed, simon game may be started & score should illuminate
-const powerHandler = (update: (score: number) => void, buttons: any) => (
+const powerHandler = (update: number | ((string) => void), buttons: any) => (
   _: Event,
 ) => {
   simon.toggleState();
-  let score = simon.getScore();
 
   if (simon.hasPower()) {
-    update(score === null ? '--' : `${score}`);
-    timer.start(simon, buttons);
+    simon.reset();
+    timer.powerOn(simon, buttons, update);
   } else {
-    timer.cancelTimer();
-    update('');
+    simon.end();
+    timer.powerOff(update);
   }
 };
 
@@ -26,22 +29,21 @@ const scoreHandler = (element: HTMLElement) => (score: number | string) =>
   element.textContent = `${score}`;
 
 const clickHandler = (
-  color: Color,
+  color: ColorKeys,
   buttons: ColorHandler,
-  update: number => void,
+  update: number | ((string) => void),
 ) => (_: Event) => {
-  // Event should not fire if player cannot move
   if (!simon.playerCanMove()) return false;
 
   // start player press animation
-  simon.setPlayerCanMove(false);
-  buttons.showPress(color);
+  simon.setInput(false);
+  buttons.showColor(color);
 
   simon.move(color);
 
   // end player press animation after 1 second
   setTimeout(() => {
-    buttons.hidePress(color);
+    buttons.hideColor(color);
     update(simon.score());
 
     const hasFailed = simon.hasFailedRound();
@@ -70,7 +72,7 @@ const clickHandler = (
 
       // If correct move, do nothing
     } else {
-      simon.setPlayerCanMove(true);
+      simon.setInput(true);
     }
   }, 1000);
 };

@@ -1,8 +1,14 @@
+import { Colors } from '../simon.types';
+
 class Simon {
   constructor() {
     this.power = false;
     this.strict = false;
     this.score = 0;
+    this.round = [];
+    this.colors = Colors;
+    this.failure = false;
+    this.step = 0;
   }
 
   // Power
@@ -19,8 +25,22 @@ class Simon {
   }
 
   // Game state
-  setPlayerCanMove(move: boolean) {
-    this.input = move;
+  randomColor() {
+    const rand = Math.floor(Math.random() * 5);
+    return this.colors[rand];
+  }
+
+  reset() {
+    this.failure = false;
+    this.score = 0;
+    this.round = [this.randomColor()];
+    this.step = 0;
+  }
+
+  end() {}
+
+  setInput(input: boolean) {
+    this.input = input;
   }
 
   playerCanMove() {
@@ -28,41 +48,47 @@ class Simon {
   }
 
   hasWonGame() {
-    if (this.score === 20) return true;
-    return false;
+    return this.score >= 20 ? true : false;
   }
 
   hasWonRound() {
-    if (this.roundScore >= this.round.length) return true;
-    return false;
+    return this.roundScore >= this.round.length ? true : false;
   }
 
   showSequenceOver() {
-    if (this.sequenceStep() >= this.round.length) return true;
-    return false;
-  }
-
-  startInput() {
-    this.input = true;
+    return this.sequenceStep() >= this.round.length ? true : false;
   }
 
   // Game functionality
   move(color: Color) {
-    // if player can move; do so
-    // else return false?
+    const pos = this.attempt[this.attempt.length];
+
+    if (this.round[pos] === color) {
+      // if player can move; do so
+      this.attempt.push(color);
+      this.step += 1;
+    } else if (this.strict) {
+      this.attempt = [];
+      this.round = [this.randomColor()];
+      this.failure = true;
+      this.step = 0;
+    } else {
+      this.failure = true;
+      this.step = 0;
+    }
   }
 
-  currentColor() {}
-
-  nextColor() {}
-
-  endInput() {
-    this.input = false;
+  currentColor() {
+    return this.round[this.step];
   }
 
-  failedRound() {}
+  nextColor() {
+    this.step += 1;
+  }
 
-  reset() {}
+  failedRound() {
+    return this.failure;
+  }
 }
 
 export { Simon };

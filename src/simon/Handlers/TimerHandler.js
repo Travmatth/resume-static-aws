@@ -16,20 +16,34 @@ export class TimerManager {
     this._id && clearTimeout(this._id);
   }
 
+  powerOff(update: (number | string) => void) {
+    update('');
+    this.cancelTimer();
+  }
+
+  powerOn(
+    simon: Simon,
+    buttons: ColorHandler,
+    update: (number | string) => void,
+  ) {
+    update(simon.score() === null ? '--' : `${score}`);
+    this.advance(simon, buttons, update);
+  }
+
   advance(
     simon: Simon,
-    colors: ColorHandler,
-    update: (score: number) => void = () => {},
+    buttons: ColorHandler,
+    update: (number | string) => void,
   ) {
     const { next, round, action: nextAction } = this._timer.tick(
       simon,
-      colors,
+      buttons,
       update,
     );
-    if (next) this._fire(round, colors, nextAction);
+    if (next) this._fire(round, buttons, nextAction);
   }
 
-  _fire(roundLength: number, colors: ColorHandler, action: () => void) {
+  _fire(roundLength: number, buttons: ColorHandler, action: () => void) {
     const self = this;
 
     action();
@@ -37,9 +51,9 @@ export class TimerManager {
       // actions of current step? [what actions are possible?]
       const { next, round, action: nextAction } = self._timer.tick(
         simon,
-        colors,
+        buttons,
       );
-      if (next) self._fire(round, colors, nextAction);
+      if (next) self._fire(round, buttons, nextAction);
     };
 
     this._id = setTimeout(timeout, roundLength);

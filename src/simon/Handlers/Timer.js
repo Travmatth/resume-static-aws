@@ -27,6 +27,8 @@ export default class Timer {
 
     const { simon } = this;
     switch (this.cycle[this.current]) {
+      // prettier-ignore
+
       // advance[0] = f: (null|restart) -> (end-start)
       case 'start':
         return {
@@ -37,6 +39,8 @@ export default class Timer {
             buttons.showAll();
           },
         };
+      // prettier-ignore
+
       // advance[1] = f: (start) -> (show-sequence)
       case 'end-start':
         return {
@@ -47,6 +51,8 @@ export default class Timer {
             buttons.hideAll();
           },
         };
+      // prettier-ignore
+
       // advance[2] = f: (show-sequence) -> (show-step)
       case 'show-sequence':
         return {
@@ -56,6 +62,8 @@ export default class Timer {
             this.increment();
           },
         };
+      // prettier-ignore
+
       // advance[3] = f: (show-sequence) -> (show-step)
       case 'show-step-pause':
         return {
@@ -65,6 +73,8 @@ export default class Timer {
             this.increment();
           },
         };
+      // prettier-ignore
+
       // advance[3] = f: (show-sequence) -> (hide-step)
       case 'show-step':
         return {
@@ -75,6 +85,8 @@ export default class Timer {
             buttons.showColor(simon.currentColor());
           },
         };
+      // prettier-ignore
+
       // advance[4] = f: (show-step) -> (show-step|hide-sequence)
       case 'hide-step':
         return {
@@ -91,6 +103,8 @@ export default class Timer {
             simon.nextColor();
           },
         };
+      // prettier-ignore
+
       // advance[5] = f: (hide-step) -> (start-input)
       case 'hide-sequence':
         return {
@@ -100,6 +114,8 @@ export default class Timer {
             this.increment();
           },
         };
+      // prettier-ignore
+
       // advance[6] = f: (start-input) -> (end-input)
       case 'start-input':
         return {
@@ -107,9 +123,11 @@ export default class Timer {
           round: this.round.length * 2.5 * 1000,
           action: () => {
             this.increment();
-            simon.setPlayerCanMove(true);
+            simon.setInput(true);
           },
         };
+      // prettier-ignore
+
       // advance[7] = f: (null|start-input) -> (successful-round|failed-round)
       case 'end-input':
         return {
@@ -123,9 +141,11 @@ export default class Timer {
             }
 
             this.increment();
-            simon.setPlayerCanMove(false);
+            simon.setInput(false);
           },
         };
+      // prettier-ignore
+
       // advance[10] = f: (end) -> (null|start)
       case 'end':
         return {
