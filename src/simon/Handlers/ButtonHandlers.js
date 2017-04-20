@@ -1,17 +1,17 @@
 /* @flow */
 
-import Simon from '../Simon';
+import type Simon from '../Simon';
 import { Colors } from '../simon.types';
 import type { ColorKeys } from '../simon.types';
-import { TimerManager } from './TimerHandler';
-
-const timer = new TimerManager();
-const simon = new Simon();
+import type { TimerManager } from './TimerHandler';
 
 // When power button is pressed, simon game may be started & score should illuminate
-const powerHandler = (update: number | ((string) => void), buttons: any) => (
-  _: Event,
-) => {
+const powerHandler = (
+  update: number | ((string) => void),
+  buttons: any,
+  timer: TimerManager,
+  simon: Simon,
+) => (_: Event) => {
   simon.toggleState();
 
   if (simon.hasPower()) {
@@ -23,7 +23,7 @@ const powerHandler = (update: number | ((string) => void), buttons: any) => (
   }
 };
 
-const strictHandler = (_: Event) => simon.toggleStrict();
+const strictHandler = (simon: Simon) => (_: Event) => simon.toggleStrict();
 
 const scoreHandler = (element: HTMLElement) => (score: number | string) =>
   element.textContent = `${score}`;
@@ -32,6 +32,8 @@ const clickHandler = (
   color: ColorKeys,
   buttons: ColorHandler,
   update: number | ((string) => void),
+  simon: Simon,
+  timer: TimerManager,
 ) => (_: Event) => {
   if (!simon.playerCanMove()) return false;
 

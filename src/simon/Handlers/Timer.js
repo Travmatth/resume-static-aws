@@ -75,7 +75,7 @@ export default class Timer {
         };
       // prettier-ignore
 
-      // advance[3] = f: (show-sequence) -> (hide-step)
+      // advance[4] = f: (show-sequence) -> (hide-step)
       case 'show-step':
         return {
           next: true,
@@ -87,7 +87,7 @@ export default class Timer {
         };
       // prettier-ignore
 
-      // advance[4] = f: (show-step) -> (show-step|hide-sequence)
+      // advance[5] = f: (show-step) -> (show-step|hide-sequence)
       case 'hide-step':
         return {
           next: true,
@@ -105,7 +105,7 @@ export default class Timer {
         };
       // prettier-ignore
 
-      // advance[5] = f: (hide-step) -> (start-input)
+      // advance[6] = f: (hide-step) -> (start-input)
       case 'hide-sequence':
         return {
           next: true,
@@ -116,7 +116,7 @@ export default class Timer {
         };
       // prettier-ignore
 
-      // advance[6] = f: (start-input) -> (end-input)
+      // advance[7] = f: (start-input) -> (end-input)
       case 'start-input':
         return {
           next: true,
@@ -128,7 +128,7 @@ export default class Timer {
         };
       // prettier-ignore
 
-      // advance[7] = f: (null|start-input) -> (successful-round|failed-round)
+      // advance[8] = f: (null|start-input) -> (successful-round|failed-round)
       case 'end-input':
         return {
           next: true,
@@ -146,7 +146,7 @@ export default class Timer {
         };
       // prettier-ignore
 
-      // advance[10] = f: (end) -> (null|start)
+      // advance[9] = f: (end) -> (null|start)
       case 'end':
         return {
           next: false,
