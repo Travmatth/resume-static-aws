@@ -1,24 +1,42 @@
 /* @flow */
 
-import type { ColorKeys, Sound } from '../simon.types';
+import type { ColorKeys, Sound, ColorButtons } from '../simon.types';
+import type Sound from './SoundHandler';
 import { Colors } from '../simon.types';
 
 export default class ColorHandler {
   colors: Colors;
-  buttons: Array<HTMLButtonElement>;
+  buttons: ColorButtons;
 
-  constructor(buttons: Array<HTMLButtonElement>) {
+  constructor(buttons: ColorButtons, sounds: SoundHandler) {
     this.buttons = buttons;
     this.colors = Colors;
-    //this.won = ;
-    //this.fail = ;
-    //this.start = ;
+    this.sounds = sounds;
   }
 
-  showColor(color: ColorKeys) {}
-  hideColor(color: ColorKeys) {}
-  startSound(sound: Sound) {}
-  endSound(sound: Sound) {}
+  swapCss(color: ColorKeys) {
+    this.buttons[color].css === color
+      ? (this.buttons[color].css = `light-${color}`)
+      : (this.buttons[color].css = color);
+  }
+
+  showColor(color: ColorKeys) {
+    this.sounds.play(color);
+    this.swapCss(color);
+  }
+
+  hideColor(color: ColorKeys) {
+    this.sounds.pause(color);
+    this.swapCss(color);
+  }
+
+  startSound(sound: Sound) {
+    this.sounds.play(sound);
+  }
+
+  endSound(sound: Sound) {
+    this.sounds.pause(sound);
+  }
 
   flash(sound: Sound, advance: () => void) {
     this.showAll();

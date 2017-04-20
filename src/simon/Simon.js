@@ -1,6 +1,6 @@
 import { Colors } from '../simon.types';
 
-class Simon {
+export default class Simon {
   constructor() {
     this.power = false;
     this.strict = false;
@@ -90,5 +90,3 @@ class Simon {
     return this.failure;
   }
 }
-
-export { Simon };

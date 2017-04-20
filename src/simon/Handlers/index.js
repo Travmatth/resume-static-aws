@@ -1,5 +1,6 @@
-import { ColorHandler } from './ColorHandler';
-import { TimerManager } from './TimerHandler';
+import ColorHandler from './ColorHandler';
+import SoundHandler from './SoundHandler ';
+import TimerManager from './TimerHandler';
 import {
   clickHandler,
   strictHandler,
@@ -8,6 +9,7 @@ import {
 } from './ButtonHandlers';
 
 export {
+  SoundHandler,
   TimerManager,
   ColorHandler,
   clickHandler,

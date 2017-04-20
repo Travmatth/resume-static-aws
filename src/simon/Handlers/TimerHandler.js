@@ -1,9 +1,10 @@
 import type { Stage } from '../Simon.types';
 import type { ColorHandler } from './ColorHandler';
+import type { Simon } from '../Simon';
 import { Timer } from './Timer';
 import { delay, cycle } from './GameCycle';
 
-export class TimerManager {
+export default class TimerManager {
   _id: ?number;
   _timer: Timer;
 

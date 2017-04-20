@@ -55,6 +55,7 @@
     "css-loader": "^0.26.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "fetch-mock": "^5.8.0",
+    "file-loader": "^0.11.1",
     "flow-bin": "^0.42.0",
     "flow-status-webpack-plugin": "^0.1.7",
     "html-webpack-plugin": "^2.24.1",

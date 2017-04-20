@@ -2,10 +2,10 @@
 'use strict';
 
 // import webpack from 'webpack'
-import webpack from 'webpack'
-import validate from 'webpack-validator'
+import webpack from 'webpack';
+import validate from 'webpack-validator';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { StatsWriterPlugin } from "webpack-stats-plugin";
+import { StatsWriterPlugin } from 'webpack-stats-plugin';
 
 const root = process.cwd();
 const path = require('path');
@@ -21,7 +21,7 @@ const pages = [
   // 'tictactoe',
   // 'twitchtv',
   // 'wikiviewer',
-]
+];
 
 const common: WebpackConfiguration = validate({
   output: {
@@ -29,22 +29,26 @@ const common: WebpackConfiguration = validate({
     path: path.resolve(root, 'dist'),
   },
 
-  entry: Object.assign({},
-    { 'vendor': [
+  entry: Object.assign(
+    {},
+    {
+      vendor: [
         'babel-polyfill',
         /*'virtual-dom'*/
-      ]
+      ],
     },
-    { 'index': [
-      path.resolve(root, './src/index.js'),
-      path.resolve(root, 'src/index.scss'),
-    ]},
-    ...pages.map(page => ({ 
+    {
+      index: [
+        path.resolve(root, './src/index.js'),
+        path.resolve(root, 'src/index.scss'),
+      ],
+    },
+    ...pages.map(page => ({
       [`${page}/index`]: [
-          path.resolve(root, `./src/${page}/index.js`),
-          path.resolve(root, `src/${page}/index.scss`), 
-      ]
-    }))
+        path.resolve(root, `./src/${page}/index.js`),
+        path.resolve(root, `src/${page}/index.scss`),
+      ],
+    })),
   ),
 
   resolve: {
@@ -53,21 +57,26 @@ const common: WebpackConfiguration = validate({
 
   module: {
     loaders: [
-      { 
-        test: /\.js$/, 
-        loader: 'babel', 
+      {
+        test: /\.js$/,
+        loader: 'babel',
         exclude: /node_modules/,
       },
-      { 
-        test: /\.pug$/, 
+      {
+        test: /\.pug$/,
         exclude: /node_modules/,
-        loader: 'pug-loader' 
+        loader: 'pug-loader',
+      },
+      {
+        test: /\.(mp3|wav)$/,
+        include: /assets/,
+        loader: 'file-loader',
       },
       {
         test: /\.pegjs$/,
         exclude: /node_modules/,
-        loader: 'pegjs-loader'
-      }
+        loader: 'pegjs-loader',
+      },
     ],
   },
 
@@ -92,9 +101,9 @@ const common: WebpackConfiguration = validate({
         template: `src/${page}/index.pug`,
         title: `${page}`,
         filename: `${page}/index.html`,
-      })
+      });
     }),
-  ]
-})
+  ],
+});
 
-export default common
+export default common;
