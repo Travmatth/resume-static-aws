@@ -1,14 +1,15 @@
 /* @flow */
 
 import type { ColorKeys, Sound, ColorButtons } from '../simon.types';
-import type Sound from './SoundHandler';
+import type SoundManager from './SoundHandler';
 import { Colors } from '../simon.types';
 
 export default class ColorHandler {
   colors: Colors;
   buttons: ColorButtons;
+  sounds: SoundManager;
 
-  constructor(buttons: ColorButtons, sounds: SoundHandler) {
+  constructor(buttons: ColorButtons, sounds: SoundManager) {
     this.buttons = buttons;
     this.colors = Colors;
     this.sounds = sounds;
@@ -38,31 +39,31 @@ export default class ColorHandler {
     this.sounds.pause(sound);
   }
 
-  flash(sound: Sound, advance: () => void) {
+  flash(sound: Sound, resume: () => void) {
     this.showAll();
     this.startSound(sound);
 
-    setTimout(() => {
+    setTimeout(() => {
       this.hideAll();
       this.endSound(sound);
-      advance();
+      resume();
     }, 1000);
   }
 
-  wonGame(advance: () => void) {
-    this.flash('won', advance);
+  wonGame(resume: () => void) {
+    this.flash('won', resume);
   }
 
-  wonRound(advance: () => void) {
-    this.flash('won', advance);
+  wonRound(resume: () => void) {
+    this.flash('won', resume);
   }
 
-  strictFail(advance: () => void) {
-    this.flash('fail', advance);
+  strictFail(resume: () => void) {
+    this.flash('fail', resume);
   }
 
-  restartRound(advance: () => void) {
-    this.flash('start', advance);
+  restartRound(resume: () => void) {
+    this.flash('start', resume);
   }
 
   showAll() {

@@ -2,6 +2,7 @@
 
 import Simon from './Simon';
 import {
+  Timer,
   clickHandler,
   strictHandler,
   scoreHandler,
@@ -13,7 +14,8 @@ import {
 
 if (global.document !== undefined) {
   document.addEventListener('DOMContentLoaded', () => {
-    const timer = new TimerManager();
+    const timer = new Timer();
+    const timerManager = new TimerManager();
     const simon = new Simon();
     const sounds = new SoundHandler();
 
@@ -35,7 +37,10 @@ if (global.document !== undefined) {
     const buttons = { red, blue, green, yellow };
     const colorButtons = new ColorHandler(buttons, sounds);
 
-    power.addEventListener('click', powerHandler(updateScore, simon, timer));
+    power.addEventListener(
+      'click',
+      powerHandler(updateScore, simon, timerManager, timer),
+    );
     strict.addEventListener('click', strictHandler(simon));
 
     ['red', 'blue', 'green', 'yellow'].forEach(color => {
@@ -44,6 +49,7 @@ if (global.document !== undefined) {
         colorButtons,
         updateScore,
         simon,
+        timerManager,
         timer,
       );
       buttons[color].addEventListener('click', click);

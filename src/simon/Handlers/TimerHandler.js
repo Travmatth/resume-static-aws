@@ -1,7 +1,9 @@
+/* @flow */
+
 import type { Stage } from '../Simon.types';
-import type { ColorHandler } from './ColorHandler';
-import type { Simon } from '../Simon';
-import { Timer } from './Timer';
+import type ColorHandler from './ColorHandler';
+import type Simon from '../Simon';
+import type Timer from './Timer';
 import { delay, cycle } from './GameCycle';
 
 export default class TimerManager {
@@ -10,14 +12,14 @@ export default class TimerManager {
 
   constructor() {
     this._id = null;
-    this._timer = new Timer();
+    //this._timer = new Timer();
   }
 
   cancelTimer() {
     this._id && clearTimeout(this._id);
   }
 
-  powerOff(update: (number | string) => void) {
+  powerOff(update: (number | string) => string) {
     update('');
     this.cancelTimer();
   }
@@ -25,36 +27,38 @@ export default class TimerManager {
   powerOn(
     simon: Simon,
     buttons: ColorHandler,
-    update: (number | string) => void,
+    update: (number | string) => string,
+    timer: Timer,
   ) {
-    update(simon.score() === null ? '--' : `${score}`);
-    this.advance(simon, buttons, update);
+    const score = simon.getScore();
+    update(score === 0 ? '--' : `${score}`);
+    this.advance(simon, buttons, update, timer);
   }
 
   advance(
     simon: Simon,
     buttons: ColorHandler,
-    update: (number | string) => void,
+    update: (number | string) => string | null,
+    timer: Timer,
   ) {
-    const { next, round, action: nextAction } = this._timer.tick(
-      simon,
-      buttons,
-      update,
-    );
-    if (next) this._fire(round, buttons, nextAction);
+    // ^property `next`. Property cannot be accessed on
+    // possibly undefined value  `timer`
+    // $FLowIgnore
+    const { next, round, action: nextAction } =
+      timer && timer.tick(simon, buttons, update);
+    if (next) this._fire(round, buttons, nextAction, timer);
   }
 
-  _fire(roundLength: number, buttons: ColorHandler, action: () => void) {
-    const self = this;
-
+  _fire(
+    roundLength: number,
+    buttons: ColorHandler,
+    action: () => string | undefined,
+    timer: Timer,
+  ) {
     action();
     const timeout = () => {
-      // actions of current step? [what actions are possible?]
-      const { next, round, action: nextAction } = self._timer.tick(
-        simon,
-        buttons,
-      );
-      if (next) self._fire(round, buttons, nextAction);
+      const { next, round, action: nextAction } = timer.tick(simon, buttons);
+      if (next) this._fire(round, buttons, nextAction, timer);
     };
 
     this._id = setTimeout(timeout, roundLength);

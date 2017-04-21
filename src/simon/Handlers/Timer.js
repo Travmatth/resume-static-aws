@@ -1,8 +1,15 @@
-export default class Timer {
-  game: Simon;
+/* @flow */
 
-  constructor(game) {
-    this.game = game;
+import type Simon from '../simon.types';
+import typeof { cycle as Cycle } from './GameCycle';
+import { cycle, delay } from './GameCycle';
+import type ColorHandler from './ColorHandler';
+
+export default class Timer {
+  current: number;
+  cycle: Cycle;
+
+  constructor() {
     this.current = 0;
     this.cycle = cycle;
   }
@@ -25,7 +32,6 @@ export default class Timer {
       this.reset();
     }
 
-    const { simon } = this;
     switch (this.cycle[this.current]) {
       // prettier-ignore
 
@@ -68,7 +74,7 @@ export default class Timer {
       case 'show-step-pause':
         return {
           next: true,
-          round: delay['show-sequence-pause'],
+          round: delay['show-step-pause'],
           action: () => {
             this.increment();
           },
@@ -120,7 +126,7 @@ export default class Timer {
       case 'start-input':
         return {
           next: true,
-          round: this.round.length * 2.5 * 1000,
+          round: simon.round.length * 2.5 * 1000,
           action: () => {
             this.increment();
             simon.setInput(true);

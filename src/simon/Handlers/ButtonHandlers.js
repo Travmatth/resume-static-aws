@@ -3,23 +3,26 @@
 import type Simon from '../Simon';
 import { Colors } from '../simon.types';
 import type { ColorKeys } from '../simon.types';
-import type { TimerManager } from './TimerHandler';
+import type TimerManager from './TimerHandler';
+import type ColorHandler from './ColorHandler';
+import type Timer from './Timer';
 
 // When power button is pressed, simon game may be started & score should illuminate
 const powerHandler = (
-  update: number | ((string) => void),
-  buttons: any,
-  timer: TimerManager,
+  update: (number | string) => string,
+  buttons: ColorHandler,
+  timerManager: TimerManager,
   simon: Simon,
+  timer: Timer,
 ) => (_: Event) => {
   simon.toggleState();
 
-  if (simon.hasPower()) {
+  if (!simon.hasPower()) {
     simon.reset();
-    timer.powerOn(simon, buttons, update);
+    timerManager.powerOn(simon, buttons, update, timer);
   } else {
     simon.end();
-    timer.powerOff(update);
+    timerManager.powerOff(update);
   }
 };
 
@@ -31,9 +34,10 @@ const scoreHandler = (element: HTMLElement) => (score: number | string) =>
 const clickHandler = (
   color: ColorKeys,
   buttons: ColorHandler,
-  update: number | ((string) => void),
+  update: (number | string) => string,
   simon: Simon,
-  timer: TimerManager,
+  timerManager: TimerManager,
+  timer: Timer,
 ) => (_: Event) => {
   if (!simon.playerCanMove()) return false;
 
@@ -46,31 +50,39 @@ const clickHandler = (
   // end player press animation after 1 second
   setTimeout(() => {
     buttons.hideColor(color);
-    update(simon.score());
+    update(simon.getScore());
 
     const hasFailed = simon.hasFailedRound();
     const hasWon = simon.hasWonRound();
-    if (hasFailed || hasWon) simon.cancelTimer();
+    if (hasFailed || hasWon) timerManager.cancelTimer();
 
     // If player has won game, end & restart
     if (simon.hasWonGame()) {
       // show won game animation
-      buttons.wonGame(() => timer.advance(simon, buttons));
+      buttons.wonGame(() =>
+        timerManager.advance(simon, buttons, update, timer),
+      );
 
       // If player has won round, advance to next
     } else if (hasWon) {
       // show won round animation
-      buttons.wonRound(() => timer.advance(simon, buttons));
+      buttons.wonRound(() =>
+        timerManager.advance(simon, buttons, update, timer),
+      );
 
       // If failure during strict game, should restart
     } else if (hasFailed && simon.isStrict()) {
       // show strict fail animation
-      buttons.strictFail(() => timer.advance(simon, buttons));
+      buttons.strictFail(() =>
+        timerManager.advance(simon, buttons, update, timer),
+      );
 
       // If failure during regular game, should restart round
     } else if (hasFailed) {
       // show fail animation
-      buttons.restartRound(() => timer.advance(simon, buttons));
+      buttons.restartRound(() =>
+        timerManager.advance(simon, buttons, update, timer),
+      );
 
       // If correct move, do nothing
     } else {

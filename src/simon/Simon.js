@@ -1,6 +1,16 @@
-import { Colors } from '../simon.types';
+/* @flow */
+
+import { Colors, ColorKeys } from '../simon.types';
 
 export default class Simon {
+  power: boolean;
+  strict: boolean;
+  score: number;
+  round: Array<ColorKeys>;
+  colors: Colors;
+  failure: boolean;
+  step: number;
+
   constructor() {
     this.power = false;
     this.strict = false;
@@ -18,6 +28,10 @@ export default class Simon {
 
   hasPower() {
     return this.power;
+  }
+
+  isStrict() {
+    return this.strict;
   }
 
   toggleStrict() {
@@ -60,6 +74,10 @@ export default class Simon {
   }
 
   // Game functionality
+  getScore() {
+    return this.score;
+  }
+
   move(color: Color) {
     const pos = this.attempt[this.attempt.length];
 
@@ -86,7 +104,7 @@ export default class Simon {
     this.step += 1;
   }
 
-  failedRound() {
+  hasFailedRound() {
     return this.failure;
   }
 }

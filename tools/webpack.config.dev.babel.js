@@ -1,38 +1,49 @@
 /* @flow */
-import webpack from 'webpack'
-import common from './common'
-import merge from 'webpack-merge'
-import validate from 'webpack-validator'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import webpack from 'webpack';
+import common from './common';
+import merge from 'webpack-merge';
+import validate from 'webpack-validator';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import FlowStatusWebpackPlugin from 'flow-status-webpack-plugin';
 
-const config: WebpackConfiguration = validate(merge(common, {
-  module: {
-    loaders: [
-      {
-        test: /\.scss$/,
-        loader: ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader?sourceMap"),
+const config: WebpackConfiguration = validate(
+  merge(common, {
+    module: {
+      loaders: [
+        {
+          test: /\.scss$/,
+          exclude: /node_modules/,
+          loader: ExtractTextPlugin.extract(
+            'style-loader',
+            'css-loader!sass-loader?sourceMap',
+          ),
+        },
+        {
+          test: /\.(mp3|wav)$/,
+          exclude: /node_modules/,
+          loader: 'file-loader',
+        },
+      ],
+    },
+
+    devServer: {
+      stats: {
+        chunks: false,
       },
-    ]
-  },
+    },
 
-  devServer: {
-    stats: {
-      chunks: false,
-    }
-  },
+    plugins: [
+      new FlowStatusWebpackPlugin({
+        onSuccess: stdout => console.log(stdout),
+        onError: stdout => console.log(stdout),
+      }),
+      new ExtractTextPlugin('[name].css', {}),
+    ],
 
-  plugins: [
-    new FlowStatusWebpackPlugin({
-      onSuccess: stdout => console.log(stdout),
-      onError: stdout => console.log(stdout),
-    }),
-    new ExtractTextPlugin("[name].css", { }),
-  ],
+    output: {
+      filename: '[name].js',
+    },
+  }),
+);
 
-  output: {
-    filename: '[name].js',
-  },
-}))
-
-export default config 
+export default config;

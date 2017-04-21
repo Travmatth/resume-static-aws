@@ -68,11 +68,6 @@ const common: WebpackConfiguration = validate({
         loader: 'pug-loader',
       },
       {
-        test: /\.(mp3|wav)$/,
-        include: /assets/,
-        loader: 'file-loader',
-      },
-      {
         test: /\.pegjs$/,
         exclude: /node_modules/,
         loader: 'pegjs-loader',

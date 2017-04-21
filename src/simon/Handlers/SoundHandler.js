@@ -1,11 +1,16 @@
+/* @flow */
+
 import { Sound, ColorKeys } from '../simon.types';
 
 const sound = file => {
-  const path = `../assets/${file}`;
-  return new Audio(require(path));
+  // $FlowIgnore - The parameter passed to require() must be a literal string.
+  path = require(`../assets/${file}`);
+  // $FlowIgnore - Identifier `Audio`. Could not resolve name
+  return new Audio(path);
 };
 
 export default class SoundManager {
+  tones: { [Sound | ColorKeys]: HTMLAudioElement };
   constructor() {
     this.tones = {
       red: sound('red.wav'),
@@ -24,6 +29,6 @@ export default class SoundManager {
   }
 
   pause(sound: Sound | ColorKeys) {
-    this.tones[this.current].pause();
+    this.tones[sound].pause();
   }
 }
