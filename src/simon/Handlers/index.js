@@ -1,7 +1,7 @@
 /* @flow */
 
 import ColorHandler from './ColorHandler';
-import SoundManager from './SoundHandler ';
+import SoundManager from './SoundManager';
 import Timer from './Timer';
 import {
   clickHandler,

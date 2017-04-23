@@ -1,7 +1,7 @@
 /* @flow */
 
 import type { ColorKeys, Sound, ColorButtons } from '../simon.types';
-import type SoundManager from './SoundHandler';
+import type SoundManager from './SoundManager';
 import { Colors } from '../simon.types';
 
 export default class ColorHandler {
