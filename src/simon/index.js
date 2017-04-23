@@ -7,11 +7,6 @@ import {
   strictHandler,
   scoreHandler,
   powerHandler,
-  fire,
-  advance,
-  powerOn,
-  powerOff,
-  cancelTimer,
   ColorHandler,
   SoundManager,
 } from './Handlers';

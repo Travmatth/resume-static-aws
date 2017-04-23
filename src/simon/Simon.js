@@ -1,17 +1,20 @@
 /* @flow */
 
-import { Colors, ColorKeys } from '../simon.types';
+import { Colors, ColorKeys } from './simon.types';
 
 export default class Simon {
   power: boolean;
   strict: boolean;
   score: number;
   round: Array<ColorKeys>;
+  attempt: Array<ColorKeys>;
   colors: Colors;
   failure: boolean;
   step: number;
+  input: boolean;
 
   constructor() {
+    this.input = false;
     this.power = false;
     this.strict = false;
     this.score = 0;
@@ -62,15 +65,15 @@ export default class Simon {
   }
 
   hasWonGame() {
-    return this.score >= 20 ? true : false;
+    return this.score >= 20;
   }
 
   hasWonRound() {
-    return this.roundScore >= this.round.length ? true : false;
+    return this.attempt.length >= this.round.length;
   }
 
   showSequenceOver() {
-    return this.sequenceStep() >= this.round.length ? true : false;
+    return this.step >= this.round.length;
   }
 
   // Game functionality
@@ -78,7 +81,7 @@ export default class Simon {
     return this.score;
   }
 
-  move(color: Color) {
+  move(color: Colors) {
     const pos = this.attempt[this.attempt.length];
 
     if (this.round[pos] === color) {

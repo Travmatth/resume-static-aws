@@ -13,11 +13,6 @@ import {
 export {
   Timer,
   SoundManager,
-  fire,
-  advance,
-  powerOn,
-  powerOff,
-  cancelTimer,
   ColorHandler,
   clickHandler,
   strictHandler,
