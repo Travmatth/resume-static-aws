@@ -1,8 +1,7 @@
 /* @flow */
 
 import ColorHandler from './ColorHandler';
-import SoundHandler from './SoundHandler ';
-import TimerManager from './TimerHandler';
+import SoundManager from './SoundHandler ';
 import Timer from './Timer';
 import {
   clickHandler,
@@ -13,8 +12,12 @@ import {
 
 export {
   Timer,
-  SoundHandler,
-  TimerManager,
+  SoundManager,
+  fire,
+  advance,
+  powerOn,
+  powerOff,
+  cancelTimer,
   ColorHandler,
   clickHandler,
   strictHandler,

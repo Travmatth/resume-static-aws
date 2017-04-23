@@ -7,17 +7,20 @@ import {
   strictHandler,
   scoreHandler,
   powerHandler,
-  TimerManager,
+  fire,
+  advance,
+  powerOn,
+  powerOff,
+  cancelTimer,
   ColorHandler,
-  SoundHandler,
+  SoundManager,
 } from './Handlers';
 
 if (global.document !== undefined) {
   document.addEventListener('DOMContentLoaded', () => {
     const timer = new Timer();
-    const timerManager = new TimerManager();
     const simon = new Simon();
-    const sounds = new SoundHandler();
+    const sounds = new SoundManager();
 
     const strict = ((document.getElementById(
       'strict',
@@ -39,7 +42,7 @@ if (global.document !== undefined) {
 
     power.addEventListener(
       'click',
-      powerHandler(updateScore, simon, timerManager, timer),
+      powerHandler(updateScore, colorButtons, simon, timer),
     );
     strict.addEventListener('click', strictHandler(simon));
 
@@ -49,7 +52,6 @@ if (global.document !== undefined) {
         colorButtons,
         updateScore,
         simon,
-        timerManager,
         timer,
       );
       buttons[color].addEventListener('click', click);
