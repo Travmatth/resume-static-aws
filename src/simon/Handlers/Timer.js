@@ -162,6 +162,13 @@ export default class Timer {
             simon.reset();
           },
         };
+
+      default:
+        return {
+          next: false,
+          round: 0,
+          action: () => {},
+        };
     }
   }
 }
