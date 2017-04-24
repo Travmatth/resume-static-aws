@@ -57,20 +57,20 @@ const common: WebpackConfiguration = {
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loader: 'babel',
+        use: 'babel',
         exclude: /node_modules/,
       },
       {
         test: /\.pug$/,
-        exclude: /node_modules/,
+        use: /node_modules/,
         loader: 'pug-loader',
       },
       {
         test: /\.pegjs$/,
-        exclude: /node_modules/,
+        use: /node_modules/,
         loader: 'pegjs-loader',
       },
     ],

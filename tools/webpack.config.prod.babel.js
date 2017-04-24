@@ -7,19 +7,19 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const config: WebpackConfiguration = merge(common, {
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract(
-          'style-loader',
-          'css-loader!sass-loader!postcss-loader',
-        ),
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'postcss-loader', 'sass-loader'],
+        }),
       },
       {
         test: /\.(mp3|wav)$/,
         exclude: /node_modules/,
-        loader: 'file-loader',
+        use: 'file-loader',
       },
     ],
   },
