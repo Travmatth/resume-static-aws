@@ -7,7 +7,7 @@ import merge from 'webpack-merge';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import FlowStatusWebpackPlugin from 'flow-status-webpack-plugin';
 
-const config: WebpackConfiguration = merge(common, {
+const newConfigs = {
   module: {
     rules: [
       {
@@ -43,6 +43,7 @@ const config: WebpackConfiguration = merge(common, {
   output: {
     filename: '[name].js',
   },
-});
+};
+const config: WebpackConfiguration = merge(common, newConfigs);
 
 export default config;

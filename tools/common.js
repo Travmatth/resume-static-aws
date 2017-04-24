@@ -3,24 +3,12 @@
 
 // import webpack from 'webpack'
 import webpack from 'webpack';
+import pages from './directory';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { StatsWriterPlugin } from 'webpack-stats-plugin';
 
 const root = process.cwd();
 const path = require('path');
-
-const pages = [
-  'blog',
-  'calculator',
-  'localweather',
-  // Commented out for compilation perf during dev
-  // 'pomodoro',
-  // 'randomquote',
-  // 'simon',
-  // 'tictactoe',
-  // 'twitchtv',
-  // 'wikiviewer',
-];
 
 //$TODO: impl gist.github.com/addyosmani/58e00d3eb2bd6e1da316ed7c1a8e83d0
 //$TODO: impl github.com/johnagan/clean-webpack-plugin

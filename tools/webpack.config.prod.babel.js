@@ -7,7 +7,7 @@ import merge from 'webpack-merge';
 import autoprefixer from 'autoprefixer';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
-const config: WebpackConfiguration = merge(common, {
+const newConfigs = {
   module: {
     rules: [
       {
@@ -34,6 +34,8 @@ const config: WebpackConfiguration = merge(common, {
   output: {
     filename: '[name].[hash].js',
   },
-});
+};
+
+const config: WebpackConfiguration = merge(common, newConfigs);
 
 export default config;
