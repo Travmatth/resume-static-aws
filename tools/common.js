@@ -23,6 +23,8 @@ const pages = [
   // 'wikiviewer',
 ];
 
+//$TODO: impl gist.github.com/addyosmani/58e00d3eb2bd6e1da316ed7c1a8e83d0
+//$TODO: impl github.com/johnagan/clean-webpack-plugin
 const common: WebpackConfiguration = validate({
   output: {
     publicPath: '/',
