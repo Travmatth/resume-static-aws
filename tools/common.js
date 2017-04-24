@@ -65,13 +65,13 @@ const common: WebpackConfiguration = {
       },
       {
         test: /\.pug$/,
-        use: /node_modules/,
-        loader: 'pug-loader',
+        exclude: /node_modules/,
+        use: 'pug-loader',
       },
       {
         test: /\.pegjs$/,
-        use: /node_modules/,
-        loader: 'pegjs-loader',
+        exclude: /node_modules/,
+        use: 'pegjs-loader',
       },
     ],
   },
