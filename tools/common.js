@@ -3,7 +3,6 @@
 
 // import webpack from 'webpack'
 import webpack from 'webpack';
-import validate from 'webpack-validator';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { StatsWriterPlugin } from 'webpack-stats-plugin';
 
@@ -25,7 +24,7 @@ const pages = [
 
 //$TODO: impl gist.github.com/addyosmani/58e00d3eb2bd6e1da316ed7c1a8e83d0
 //$TODO: impl github.com/johnagan/clean-webpack-plugin
-const common: WebpackConfiguration = validate({
+const common: WebpackConfiguration = {
   output: {
     publicPath: '/',
     path: path.resolve(root, 'dist'),
@@ -101,6 +100,6 @@ const common: WebpackConfiguration = validate({
       });
     }),
   ],
-});
+};
 
 export default common;
