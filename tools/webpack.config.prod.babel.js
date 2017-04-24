@@ -26,8 +26,6 @@ const config: WebpackConfiguration = merge(common, {
 
   plugins: [
     new ExtractTextPlugin('[name].[hash].css', {}),
-    new webpack.optimize.OccurrenceOrderPlugin(true),
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin(),
   ],
 
