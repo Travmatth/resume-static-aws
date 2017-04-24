@@ -53,7 +53,7 @@ const common: WebpackConfiguration = {
   ),
 
   resolve: {
-    extensions: ['', '.js', '.scss', '.pegjs'],
+    extensions: ['.js', '.scss', '.pegjs'],
   },
 
   module: {
