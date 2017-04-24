@@ -1,4 +1,6 @@
 /* @flow */
+'use strict';
+
 import common from './common';
 import webpack from 'webpack';
 import merge from 'webpack-merge';
@@ -27,12 +29,6 @@ const config: WebpackConfiguration = merge(common, {
   plugins: [
     new ExtractTextPlugin('[name].[hash].css', {}),
     new webpack.optimize.UglifyJsPlugin(),
-  ],
-
-  postcss: [
-    autoprefixer({
-      browsers: ['last 2 versions'],
-    }),
   ],
 
   output: {
