@@ -27,7 +27,7 @@ const config: WebpackConfiguration = merge(common, {
   },
 
   plugins: [
-    new ExtractTextPlugin('[name].[hash].css', {}),
+    new ExtractTextPlugin('[name].[hash].css'),
     new webpack.optimize.UglifyJsPlugin(),
   ],
 

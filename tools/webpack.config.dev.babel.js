@@ -37,7 +37,7 @@ const config: WebpackConfiguration = merge(common, {
       onSuccess: stdout => console.log(stdout),
       onError: stdout => console.log(stdout),
     }),
-    new ExtractTextPlugin('[name].css', {}),
+    new ExtractTextPlugin('[name].css'),
   ],
 
   output: {
