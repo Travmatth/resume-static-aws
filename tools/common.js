@@ -60,7 +60,7 @@ const common: WebpackConfiguration = {
     rules: [
       {
         test: /\.js$/,
-        use: 'babel',
+        use: 'babel-loader',
         exclude: /node_modules/,
       },
       {
