@@ -75,7 +75,7 @@
     "svgo": "^0.7.1",
     "webpack": "^2.4.1",
     "webpack-dev-server": "^2.4.4",
-    "webpack-merge": "^0.17.0",
+    "webpack-merge": "^4.1.0",
     "webpack-s3-plugin": "^0.9.2",
     "webpack-stats-plugin": "^0.1.4"
   }
