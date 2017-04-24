@@ -36,6 +36,6 @@ const newConfigs = {
   },
 };
 
-const config: WebpackConfiguration = merge(common, newConfigs);
+const config = merge(common, newConfigs);
 
 export default config;
