@@ -30,15 +30,5 @@ var params = {
 
 var uploader = client.uploadDir(params);
 
-uploader.on('error', function(err) {
-  console.error('unable to sync:', err.stack);
-});
-
-uploader.on('progress', function() {
-  const percentage = uploader.progressAmount / uploader.progressTotal;
-  if (percentage % 10 === 0) console.log('progress', percentage);
-});
-
-uploader.on('end', function() {
-  console.log('done uploading');
-});
+uploader.on('error', err => console.error('unable to sync:', err.stack));
+uploader.on('end', () => console.log('done uploading'));
