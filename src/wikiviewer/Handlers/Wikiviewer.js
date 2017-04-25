@@ -1,4 +1,4 @@
-import { endpoint, params } from '../constants';
+import { endpoint, params } from './constants';
 import type {
   WikiSearchResult,
   WikiPage,
@@ -6,7 +6,7 @@ import type {
   Headings,
   Paragraphs,
   Searches,
-} from '../wikiviewer.types';
+} from './wikiviewer.types';
 import { serialize, ResponseError } from '../../common/utils';
 
 export default class WikiViewer {

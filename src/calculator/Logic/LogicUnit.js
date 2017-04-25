@@ -18,7 +18,7 @@ export default class LogicUnit {
 
   clear(): void {
     const len = this.expression.length - 1
-    const last = this.expression[len] 
+    const last = this.expression[len]
 
     //If last string is number, truncate number
     if (last && last.length > 1)
@@ -30,7 +30,7 @@ export default class LogicUnit {
   }
 
   delete(): void {
-    if (this.expression.length > 0) 
+    if (this.expression.length > 0)
       this.expression = [];
   }
 
@@ -66,8 +66,8 @@ export default class LogicUnit {
     // Constants are added as a number, functions as a string
     } else {
       switch (char) {
-        case '.': 
-          if (this.expression.length > 0) 
+        case '.':
+          if (this.expression.length > 0)
             this.expression[this.expression.length - 1] = `${last}.`
           break
 
@@ -75,11 +75,11 @@ export default class LogicUnit {
           break
 
         default:
-          if (char in constants) 
+          if (char in constants)
             this.expression.push(constants[char])
-          else if (char === '(' || char === ')') 
+          else if (char === '(' || char === ')')
             this.expression.push(char)
-          else 
+          else
             this.expression.push(!operators.has(char) ? char + '(' : char)
           break
       }

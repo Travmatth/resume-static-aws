@@ -4,9 +4,9 @@ import test from 'ava';
 import WikiViewer from './Wikiviewer';
 import { jsdom } from 'jsdom';
 import fetchMock from 'fetch-mock';
-import { ResponseError } from '../common/utils';
+import { ResponseError } from '../../common/utils';
 import { response, data } from './wikiviewer.mockdata';
-import { endpoint } from './wikiviewer.constants';
+import { endpoint } from './constants';
 
 let wikiViewer, searchButton, randomButton, searchInput;
 
