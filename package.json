@@ -11,7 +11,7 @@
     "start:prod": "rm -rf dist && NODE_ENV=production webpack-dev-server -p --config tools/webpack.config.prod.babel.js --hot --inline --content-base dist/ --color --bail",
     "build:prod": "rm -rf dist && NODE_ENV=production webpack -p --config tools/webpack.config.prod.babel.js --bail",
     "build:dev": "rm -rf dist && NODE_ENV=development webpack -d --config tools/webpack.config.dev.babel.js --bail",
-    "deploy": "rm -rf dist && NODE_ENV=production webpack -p --config tools/webpack.config.deploy.babel.js",
+    "deploy": "yarn run build:prod && ./tools/deploy.js",
     "build:parser": "pegjs src/calculator/arithmetic.pegjs"
   },
   "repository": {
@@ -70,6 +70,7 @@
     "prettier": "^1.1.0",
     "pug": "^2.0.0-beta6",
     "pug-loader": "^2.3.0",
+    "s3": "^4.4.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "svgo": "^0.7.1",
