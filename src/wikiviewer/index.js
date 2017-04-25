@@ -15,19 +15,19 @@ export const register = () => {
   ): any): HTMLInputElement);
 
   // Each Result has it's own heading
-  const headings = ((document.getElementsByTagName(
-    'h2',
-  ): any): HTMLCollection<HTMLElement>);
+  const headings = ((document.getElementsByTagName('h2'): any): HTMLCollection<
+    HTMLElement
+  >);
   // Each Result has it's own paragraph
-  const paragraphs = ((document.getElementsByTagName(
-    'p',
-  ): any): HTMLCollection<HTMLParagraphElement>);
+  const paragraphs = ((document.getElementsByTagName('p'): any): HTMLCollection<
+    HTMLParagraphElement
+  >);
   const searchHandler = wikiView.searchHandler(headings, paragraphs);
 
   searchText.onkeypress = wikiView.keypressHandler(headings, paragraphs);
   searchText.onchange = wikiView.typeHandler;
-  search.addEventListener('click', searchHandler);
-  random.addEventListener('click', wikiView.randomHandler(window));
+  search.onclick = searchHandler;
+  random.onclick = wikiView.randomHandler(window);
 };
 
 if (process.env.NODE_ENV !== 'ava') {
