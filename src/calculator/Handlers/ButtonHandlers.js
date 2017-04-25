@@ -8,7 +8,7 @@ const refreshHandler = (outputWindow: HTMLElement) => (msg: ?string): void => {
 };
 
 /* called when used selects a glyph */
-function keyPresshandler = (outputWindow: HTMLElement) => (val: Event): void {
+const keyPresshandler = (outputWindow: HTMLElement) => (val: Event): void {
   const { key } = val.target.dataset;
 	const refresh = refreshHandler(outputWindow);
 
