@@ -29,6 +29,5 @@ var params = {
 };
 
 var uploader = client.uploadDir(params);
-
-uploader.on('error', err => console.error('unable to sync:', err.stack));
-uploader.on('end', () => console.log('done uploading'));
+uploader.on('error', err => console.error('Unable to sync:', err.stack));
+uploader.on('end', () => console.log('Done Uploading'));
