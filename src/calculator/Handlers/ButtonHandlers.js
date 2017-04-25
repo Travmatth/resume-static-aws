@@ -3,14 +3,13 @@ import LogicUnit from '../Logic/LogicUnit';
 const logic = new LogicUnit();
 
 const refreshHandler = (outputWindow: HTMLElement) => (msg: ?string): void => {
-  if (outputWindow)
-    outputWindow.textContent = msg || logic.getExpression();
+  if (outputWindow) outputWindow.textContent = msg || logic.getExpression();
 };
 
 /* called when used selects a glyph */
-const keyPresshandler = (outputWindow: HTMLElement) => (val: Event): void {
+const keyPresshandler = (outputWindow: HTMLElement) => (val: Event): void => {
   const { key } = val.target.dataset;
-	const refresh = refreshHandler(outputWindow);
+  const refresh = refreshHandler(outputWindow);
 
   switch (key) {
     case '=':
@@ -36,9 +35,6 @@ const keyPresshandler = (outputWindow: HTMLElement) => (val: Event): void {
 
       break;
   }
-}
+};
 
-export {
-	refreshHandler,
-	keyPressHandler,
-}
+export { refreshHandler, keyPressHandler };
