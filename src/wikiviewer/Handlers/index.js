@@ -1,4 +1,4 @@
 import WikiViewer from './WikiViewer';
-export { endpoint }
+import { endpoint } from './constants';
 
 export { WikiViewer, endpoint };
