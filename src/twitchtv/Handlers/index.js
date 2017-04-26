@@ -1,3 +1,4 @@
+import { users } from './constants';
 import {
   verifyUser,
   handleNullStream,
@@ -5,6 +6,7 @@ import {
   fetchAllProfiles,
   agglomerate,
   extractUserName,
+  users,
 } from './Api';
 
 export {
@@ -14,4 +16,5 @@ export {
   fetchAllProfiles,
   agglomerate,
   extractUserName,
+  users,
 };

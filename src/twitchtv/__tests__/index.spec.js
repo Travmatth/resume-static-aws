@@ -23,17 +23,16 @@ import type {
   AllStreams,
   UndeterminedStreamType,
   PossiblyNestedStreams,
-} from './twitchtv.types';
+} from '../twitchtv.types';
 import { TWITCH_TV_API_KEY } from '../../common/api_keys';
 import {
-  twitchUser,
   userUrl,
   users,
   streamsUrl,
   emptyStream,
   createEmptyStream,
 } from '../Handlers/constants';
-import { serialize } from '../../../common/utils';
+import { serialize } from '../../common/utils';
 
 import {
   verifyUser,
@@ -42,7 +41,7 @@ import {
   fetchAllProfiles,
   agglomerate,
   extractUserName,
-} from '../index';
+} from '../Handlers';
 
 /*
   Setup

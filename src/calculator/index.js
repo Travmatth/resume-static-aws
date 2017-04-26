@@ -2,7 +2,7 @@
 import { keyPressHandler } from './Handlers';
 
 document.addEventListener('DOMContentLoaded', () => {
-  outputWindow = document.querySelector('h2.window');
+  const outputWindow = document.querySelector('h2.window');
 
   document.querySelectorAll('[data-key]').forEach(el => {
     const keyPress = keyPressHandler(outputWindow);

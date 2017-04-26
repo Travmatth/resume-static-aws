@@ -27,9 +27,9 @@ import { endpoint, openweatherApiParams } from './constants';
 // Mocking fetch during dev
 //import * as MOCK from './mockdata';
 const getWeatherHandler = (
-	header: ?HTMLElement,
-	cells: ?NodeList<HTMLElement>,
-	tempToggles: ?NodeList<HTMLInputElement>,
+  header: ?HTMLElement,
+  cells: ?NodeList<HTMLElement>,
+  tempToggles: ?NodeList<HTMLInputElement>,
 ) => async (location: Position) => {
   const { latitude, longitude } = location.coords;
   const params = openweatherApiParams(latitude, longitude);
@@ -148,7 +148,9 @@ const updateTableRows = (
   }
 };
 
-const toggleTempChangeHandler = (nodes: NodeList<HTMLElement> => (temperatures) => {
+const toggleTempChangeHandler = (nodes: NodeList<HTMLElement>) => (
+  temperatures: ?Array<DailyTemperature>,
+) => {
   let index = 0;
 
   let node = nodes.item(index);
@@ -163,8 +165,7 @@ const toggleTempChangeHandler = (nodes: NodeList<HTMLElement> => (temperatures) 
     // Finally, point to next element in source arrays
     index += 1;
     node = nodes.item(index);
-    if (temperatures)
-      temp = temperatures[index];
+    if (temperatures) temp = temperatures[index];
     else {
       break;
     }
@@ -173,9 +174,8 @@ const toggleTempChangeHandler = (nodes: NodeList<HTMLElement> => (temperatures) 
 
 // determine user preference in which temp scale temperature is displayed in
 const tempScale = () => {
-  return ((document.querySelector(
-    '.celsius',
-  ): any): HTMLInputElement).checked === true
+  return ((document.querySelector('.celsius'): any): HTMLInputElement)
+    .checked === true
     ? 'celsius'
     : 'fahrenheit';
 };
@@ -184,9 +184,7 @@ const tempScale = () => {
   Supporting Functions
 */
 
-const checkResponse = async (
-  response: Response,
-): Promise<FiveDayForecast> => {
+const checkResponse = async (response: Response): Promise<FiveDayForecast> => {
   if (response.status < 200 || response.status >= 400) {
     throw new ResponseError('localweather fetch failed', response);
   }
@@ -231,17 +229,17 @@ const stripDateIfRedundant = (
   const dateRedundant = index > 0 && seq[index - 1].day === day;
 
   if (dateRedundant) return { day: '', ...rest };
-  return { day, .temperatures..rest };
+  return { day, ...rest };
 };
 
 export {
-	getWeatherHandler,
-	fetchWeather,
-	updateTableRows,
-	toggleTempChangeHandler,
-	checkResponse,
-	processWeather,
-	processForecasts,
-	parseTime,
-	stripDateIfRedundant
+  getWeatherHandler,
+  fetchWeather,
+  updateTableRows,
+  toggleTempChangeHandler,
+  checkResponse,
+  processWeather,
+  processForecasts,
+  parseTime,
+  stripDateIfRedundant,
 };

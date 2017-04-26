@@ -1,12 +1,12 @@
 /* @flow */
 
 import test from 'ava';
-import WikiViewer from './Wikiviewer';
+import WikiViewer from '../Handlers';
 import { jsdom } from 'jsdom';
 import fetchMock from 'fetch-mock';
 import { ResponseError } from '../../common/utils';
 import { response, data } from './wikiviewer.mockdata';
-import { endpoint } from './constants';
+import { endpoint } from '../Handlers';
 
 let wikiViewer, searchButton, randomButton, searchInput;
 

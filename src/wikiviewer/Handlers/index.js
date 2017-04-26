@@ -1,3 +1,4 @@
 import WikiViewer from './WikiViewer';
+export { endpoint }
 
-export default WikiViewer;
+export { WikiViewer, endpoint };

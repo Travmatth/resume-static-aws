@@ -1,9 +1,9 @@
 /* @flow */
 
-import { fetchAllProfiles } from './Handlers';
+import { fetchAllProfiles, users } from './Handlers';
 
 const contentLoadedListener = async () => {
-  const profiles = await fetchAllProfiles(twitchUser);
+  const profiles = await fetchAllProfiles(users);
 };
 
 document.addEventListener('DOMContentLoaded', contentLoadedListener);
