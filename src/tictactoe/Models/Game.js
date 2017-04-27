@@ -1,14 +1,19 @@
 /* @flow */
 
 import {
-	copy,
+  makeHistory,
   move,
   createGrid,
   playerHasWon,
   playerHasWonDiagonal,
   serialize,
 } from './Board';
-import type { GameGrid, GameState, ScoreCard } from '../tictactoe.types';
+import type {
+  GameBoard,
+  GameGrid,
+  GameState,
+  ScoreCard,
+} from '../tictactoe.types';
 import { Side } from '../tictactoe.types';
 
 const genScoreCard = (): ScoreCard => ({ X: 0, O: 0 });
@@ -18,6 +23,7 @@ class Game {
 
   constructor() {
     this.state = ({
+      input: false,
       history: [],
       turn: Side.X,
       player: Side.X,
@@ -42,6 +48,7 @@ class Game {
 
   restart() {
     this.update({
+      input: true,
       finished: false,
       turn: Side.X,
       history: [],
@@ -77,7 +84,7 @@ class Game {
     }
   }
 
-  takeTurn(turn: GameGrid) {
+  takeTurn(selected: GameGrid) {
     // Only move if player has control of board, this shouldn't be reached
     if (!(this.state.player === this.state.turn)) {
       const msg = "takeTurn shouldn't be executing while player isn't moving";
@@ -85,20 +92,15 @@ class Game {
       return;
     }
 
-    const { grid, history } = this.state;
+    const { grid, history, turn } = this.state;
 
     const remaining = grid.filter(cell => cell.player === null);
 
     // if spaces available, store history, make move
     if (remaining.length > 0) {
-      const current = ((grid: any): GameGrid);
-
-			const nextHistory = ((copy(history): any): Array<GameGrid>);
-			nextHistory.push(current);
-
       this.update({
-				history: nextHistory,
-        grid: move(grid, turn),
+        history: makeHistory(grid, history),
+        grid: move(grid, selected),
       });
 
       // check winning status, update score
@@ -119,9 +121,18 @@ class Game {
     }
   }
 
+  startPlayerMove() {
+    this.update({ input: true });
+  }
+
+  endPlayerMove() {
+    this.update({ input: false });
+  }
+
   simulateFirstMove() {
     this.update({
       turn: Side.X,
+      input: false,
     });
 
     this.simulateMove();
@@ -131,7 +142,7 @@ class Game {
     const { grid, history, turn, finished } = this.state;
 
     this.update({
-      history: history.push(grid),
+      history: makeHistory(grid, history),
       input: !this.state.input,
     });
 
@@ -144,9 +155,10 @@ class Game {
     }
 
     // choose next move
-    const next = grid.filter(cell => cell.player === null).slice(0, 1);
+    const next = grid.filter(cell => cell.player === null)[0];
+    const { player: _, ...coords } = next;
 
-    const nextGrid = move(grid, { ...next, player: turn });
+    const nextGrid = move(grid, { coords, player: turn });
     this.update({ grid: nextGrid });
 
     // Check if computer has won

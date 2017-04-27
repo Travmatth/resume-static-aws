@@ -4,10 +4,10 @@
  * createGrid creates an array of cell objects
  * @return {[Cell]} List of cell Maps; {x, y, player}
  */
-import type { GameGrid, WinningBoard } from '../tictactoe.types';
+import type { GameGrid, WinningBoard, GameBoard } from '../tictactoe.types';
 import { Side } from '../tictactoe.types';
 
-export function createGrid() {
+function createGrid() {
   const grid = [];
 
   for (let x of Array(3).keys()) {
@@ -19,26 +19,31 @@ export function createGrid() {
   return grid;
 }
 
-export const copy = (obj: any): Object => JSON.parse(JSON.stringify(obj));
+const copy = (obj: any): any => JSON.parse(JSON.stringify(obj));
 
-export function move(grid: Array<GameGrid>, { x, y, player }: GameGrid) {
+const move = (grid: Array<GameGrid>, { x, y, player }: GameGrid) => {
   const square = x * 3 + y;
-  const clone = copy(grid);
+  const clone = (copy(grid): GameGrid);
 
   if (clone[square].player === null) {
     clone[square].player = player;
   }
 
   return clone;
-}
+};
 
-export const serialize = (grid: Array<GameGrid>) => grid.map(c => {
-	return c.player || ''
-});
+const serialize = (grid: Array<GameGrid>) => grid.map(c => c.player || '');
+
+const makeHistory = (current: Array<GameGrid>, history: Array<GameBoard>) => {
+  const next = (copy(history): Array<GameBoard>);
+  next.push(current);
+  return next;
+};
 
 // export function hasColumnScore(grid, score) {}
 // export function hasDiagonalScore(grid, score) {}
 // export function optimalMove() {}
+
 /**
  * playerHasWonRow will check the given grid and return true if any
  * horizontal Row is a win for the given player
@@ -46,10 +51,7 @@ export const serialize = (grid: Array<GameGrid>) => grid.map(c => {
  * @param  {grid}   grid   [grid in question]
  * @return {bool}          [whether player has a winning Row]
  */
-export function playerHasWonRow(
-  player: $Keys<typeof Side>,
-  grid: Array<GameGrid>,
-) {
+function playerHasWonRow(player: $Keys<typeof Side>, grid: Array<GameGrid>) {
   let hasWon = false;
 
   for (let row of Array(3).keys()) {
@@ -70,10 +72,7 @@ export function playerHasWonRow(
  * @param  {grid} grid   [grid in question]
  * @return {bool}        [whether player has a winning column]
  */
-export function playerHasWonColumn(
-  player: $Keys<typeof Side>,
-  grid: Array<GameGrid>,
-) {
+function playerHasWonColumn(player: $Keys<typeof Side>, grid: Array<GameGrid>) {
   let hasWon = false;
 
   for (let col of Array(3).keys()) {
@@ -93,12 +92,14 @@ export function playerHasWonColumn(
  * @param  {grid} grid   [grid in question]
  * @return {bool}        [whether player has a winning diagonal]
  */
-export function playerHasWonDiagonal(
+function playerHasWonDiagonal(
   player: $Keys<typeof Side>,
   grid: Array<GameGrid>,
 ) {
-  return checkDiagonal(grid, ascending, player) ||
-    checkDiagonal(grid, descending, player);
+  return (
+    checkDiagonal(grid, ascending, player) ||
+    checkDiagonal(grid, descending, player)
+  );
 }
 
 const ascending: WinningBoard = [
@@ -113,7 +114,7 @@ const descending: WinningBoard = [
   [false, false, true],
 ];
 
-export const checkDiagonal = (
+const checkDiagonal = (
   grid: Array<GameGrid>,
   winningBoard: WinningBoard,
   possibleWinner: $Keys<typeof Side>,
@@ -133,11 +134,23 @@ export const checkDiagonal = (
  * @param  {grid} grid   [grid in question]
  * @return {bool}        [whether player has won]
  */
-export function playerHasWon(
-  player: $Keys<typeof Side>,
-  grid: Array<GameGrid>,
-) {
-  return playerHasWonColumn(player, grid) ||
+function playerHasWon(player: $Keys<typeof Side>, grid: Array<GameGrid>) {
+  return (
+    playerHasWonColumn(player, grid) ||
     playerHasWonRow(player, grid) ||
-    playerHasWonDiagonal(player, grid);
+    playerHasWonDiagonal(player, grid)
+  );
 }
+
+export {
+  makeHistory,
+  createGrid,
+  copy,
+  move,
+  serialize,
+  playerHasWonRow,
+  playerHasWonColumn,
+  playerHasWonDiagonal,
+  checkDiagonal,
+  playerHasWon,
+};

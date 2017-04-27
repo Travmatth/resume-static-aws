@@ -13,3 +13,4 @@ src/common/api_keys.js
 *.swp
 *.swo
 *~
+tags

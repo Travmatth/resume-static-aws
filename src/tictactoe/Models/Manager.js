@@ -29,6 +29,7 @@ const playerAction = (game: Game, update: Update, end: () => void) => (
 
   setTimeout(() => {
     // process Player move
+    game.endPlayerMove();
     if (game.isOver()) {
       game.restart();
       end();
@@ -46,6 +47,7 @@ const playerAction = (game: Game, update: Update, end: () => void) => (
         return;
       } else {
         update(game.current());
+        game.startPlayerMove();
       }
     }, delay);
   }, delay);
@@ -82,6 +84,7 @@ const startGameHandler = (
     setTimeout(() => {
       game.simulateFirstMove();
       update(game.current());
+      game.startPlayerMove();
     }, delay);
   }
 };

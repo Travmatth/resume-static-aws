@@ -12,6 +12,8 @@ export type GameGrid = {|
   player: ?$Keys<typeof Side>,
 |};
 
+export type GameBoard = Array<GameGrid>;
+
 export type Coordinates = {
   x: string,
   y: string,
@@ -21,11 +23,12 @@ declare class HTMLGameSquare extends HTMLButtonElement {
   dataset: Coordinates,
 }
 
-export type GameState = {|
-  history: Array<GameGrid>,
+export type GameState = {
+  input: boolean,
+  history: Array<GameBoard>,
   turn: $Keys<typeof Side>,
   player: ?$Keys<typeof Side>,
   finished: boolean,
-  grid: Array<Grid>,
+  grid: Array<GameGrid>,
   score: ScoreCard,
-|};
+};
