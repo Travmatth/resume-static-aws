@@ -1,7 +1,7 @@
 /* @flow */
 import test from 'ava';
 
-import { LogicUnit } from '../Logic';
+import { LogicUnit } from '../Models';
 
 let expr, infix;
 

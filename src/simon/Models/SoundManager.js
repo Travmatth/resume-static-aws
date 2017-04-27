@@ -1,6 +1,6 @@
 /* @flow */
 
-import { Sound, ColorKeys } from '../simon.types';
+import type { Sound, ColorKeys } from '../simon.types';
 
 const sound = file => {
   // $FlowIgnore - The parameter passed to require() must be a literal string.

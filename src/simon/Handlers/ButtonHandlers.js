@@ -1,11 +1,10 @@
 /* @flow */
 
-import type Simon from '../Simon';
-import { Colors } from '../simon.types';
+import type { Simon, Timer } from '../Models';
+import { Colors } from '../Models';
 import type { ColorKeys } from '../simon.types';
 import { powerOn, powerOff, advance, cancelTimer } from './TimerHandler';
 import type ColorHandler from './ColorHandler';
-import type Timer from './Timer';
 
 // When power button is pressed, simon game may be started & score should illuminate
 const powerHandler = (

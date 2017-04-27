@@ -1,3 +1,6 @@
+/* @flow */
+'use strict';
+
 export type Paragraphs = HTMLCollection<HTMLParagraphElement>;
 export type Headings = HTMLCollection<HTMLElement>;
 export type Searches = ?Array<WikiPage>;

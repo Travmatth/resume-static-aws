@@ -1,14 +1,21 @@
 /* @flow */
 
-import { Colors, ColorKeys } from './simon.types';
+import type { ColorKeys } from '../simon.types';
 
-export default class Simon {
+const Colors = {
+  red: 'red',
+  yellow: 'yellow',
+  blue: 'blue',
+  green: 'green',
+};
+
+class Simon {
   power: boolean;
   strict: boolean;
   score: number;
   round: Array<ColorKeys>;
   attempt: Array<ColorKeys>;
-  colors: Colors;
+  colors: { red: 'red', yellow: 'yellow', blue: 'blue', green: 'green', };
   failure: boolean;
   step: number;
   input: boolean;
@@ -81,10 +88,8 @@ export default class Simon {
     return this.score;
   }
 
-  move(color: Colors) {
-    const pos = this.attempt[this.attempt.length];
-
-    if (this.round[pos] === color) {
+  move(color: ColorKeys) {
+    if (this.round[this.step] === color) {
       // if player can move; do so
       this.attempt.push(color);
       this.step += 1;
@@ -111,3 +116,5 @@ export default class Simon {
     return this.failure;
   }
 }
+
+export { Colors, Simon };

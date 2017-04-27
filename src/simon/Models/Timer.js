@@ -1,9 +1,9 @@
 /* @flow */
 
-import type Simon from '../simon.types';
+import type { Simon } from './Simon';
 import typeof { cycle as Cycle } from './GameCycle';
 import { cycle, delay } from './GameCycle';
-import type ColorHandler from './ColorHandler';
+import type { ColorHandler } from '../Handlers';
 
 export default class Timer {
   current: number;

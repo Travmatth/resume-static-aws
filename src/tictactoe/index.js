@@ -1,4 +1,6 @@
 /* @flow */
+'use strict';
+
 import { createStartView, createPlayView, createScoreView } from './Views';
 
 import {
@@ -12,30 +14,28 @@ import {
   //Score View
   resetGameHandler,
   restartGameHandler,
-} from './Logic';
+} from './Models';
 
 // Whenever the game object's state changes we should update the DOM
-const update = (squares: DocumentFragment) =>
-  (latest: Array<string>) => {
-    for (var i = 0; i < 9; i++) {
-      const square = squares.children[i];
-      if (square) square.textContent = latest[i];
-    }
-  };
+const update = (squares: DocumentFragment) => (latest: Array<string>) => {
+  for (var i = 0; i < 9; i++) {
+    const square = squares.children[i];
+    if (square) square.textContent = latest[i];
+  }
+};
 
 // Responsible for replacing views on the root container
 const render = (
   root: HTMLElement,
   previous: ?DocumentFragment,
   current: DocumentFragment,
-) =>
-  () => {
-    if (root.hasChildNodes() && previous) {
-      root.removeChild(previous);
-    }
+) => () => {
+  if (root.hasChildNodes() && previous) {
+    root.removeChild(previous);
+  }
 
-    root.appendChild(current);
-  };
+  root.appendChild(current);
+};
 
 if (global.document !== undefined) {
   const game = new Game();

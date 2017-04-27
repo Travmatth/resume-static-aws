@@ -1,10 +1,7 @@
-export const Colors = {
-  red: 'red',
-  yellow: 'yellow',
-  blue: 'blue',
-  green: 'green',
-};
+/* @flow */
+'use strict';
 
-export type Sound = 'won' | 'fail' | 'start';
-export type ColorKeys = $Keys<typeof Colors>;
+const Color = { red: 'red', green: 'green', yellow: 'yellow', blue: 'blue' };
+export type Sound = 'won' | 'lost' | 'start';
+export type ColorKeys = $Keys<typeof Color>;
 export type ColorButtons = { [key: ColorKeys]: HTMLButtonElement };

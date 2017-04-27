@@ -1,6 +1,7 @@
 /* @flow */
 
 import {
+	copy,
   move,
   createGrid,
   playerHasWon,
@@ -10,7 +11,7 @@ import {
 import type { GameGrid, GameState, ScoreCard } from '../tictactoe.types';
 import { Side } from '../tictactoe.types';
 
-const genScoreCard = (): ScoreCard => ({ X: 0, Y: 0 });
+const genScoreCard = (): ScoreCard => ({ X: 0, O: 0 });
 
 class Game {
   state: GameState;
@@ -52,8 +53,8 @@ class Game {
     return this.state.finished;
   }
 
-  update(newState: any) {
-    this.state = Object.assign({}, this.state, (newState: GameState));
+  update(newState: $Shape<GameState>) {
+    this.state = Object.assign(this.state, newState);
   }
 
   markWinner(winner: $Keys<typeof Side>) {
@@ -90,10 +91,13 @@ class Game {
 
     // if spaces available, store history, make move
     if (remaining.length > 0) {
-      const current = grid;
+      const current = ((grid: any): GameGrid);
+
+			const nextHistory = ((copy(history): any): Array<GameGrid>);
+			nextHistory.push(current);
 
       this.update({
-        history: history.push(current),
+				history: nextHistory,
         grid: move(grid, turn),
       });
 

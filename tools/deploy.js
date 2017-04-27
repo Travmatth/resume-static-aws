@@ -1,4 +1,7 @@
 #! /usr/bin/env node
+/* @flow */
+'use strict';
+
 const path = require('path');
 const s3 = require('s3');
 const s3Opts = require('../aws.js');

@@ -32,7 +32,9 @@ export function move(grid: Array<GameGrid>, { x, y, player }: GameGrid) {
   return clone;
 }
 
-export const serialize = (grid: Array<GameGrid>) => grid.map(c => c.player);
+export const serialize = (grid: Array<GameGrid>) => grid.map(c => {
+	return c.player || ''
+});
 
 // export function hasColumnScore(grid, score) {}
 // export function hasDiagonalScore(grid, score) {}

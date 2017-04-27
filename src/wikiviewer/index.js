@@ -1,4 +1,6 @@
 /* @flow */
+'use strict';
+
 import WikiViewer from './Handlers';
 
 export const register = () => {

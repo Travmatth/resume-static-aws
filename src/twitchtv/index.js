@@ -1,4 +1,5 @@
 /* @flow */
+'use strict';
 
 import { fetchAllProfiles, users } from './Handlers';
 

@@ -1,3 +1,6 @@
+/* @flow */
+'use strict';
+
 const pages = [
   'index',
   'blog/index',

@@ -1,3 +1,5 @@
+/* @flow */
+'use strict';
 import type { Handler } from '../tictactoe.types';
 import { Side } from '../tictactoe.types';
 

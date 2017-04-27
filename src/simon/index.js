@@ -1,14 +1,12 @@
 /* @flow */
 
-import Simon from './Simon';
+import { Simon, Timer, SoundManager } from './Models';
 import {
-  Timer,
   clickHandler,
   strictHandler,
   scoreHandler,
   powerHandler,
   ColorHandler,
-  SoundManager,
 } from './Handlers';
 
 if (global.document !== undefined) {

@@ -1,10 +1,8 @@
 /* @flow */
 
-import type { Stage } from '../Simon.types';
 import type ColorHandler from './ColorHandler';
-import type Simon from '../Simon';
-import type Timer from './Timer';
-import { delay, cycle } from './GameCycle';
+import type { Simon, Timer } from '../Models';
+import { delay, cycle } from '../Models';
 
 const clock: { id: null | number } = { id: null };
 

@@ -1,4 +1,4 @@
-import LogicUnit from '../Logic/LogicUnit';
+import LogicUnit from '../Models';
 
 const logic = new LogicUnit();
 

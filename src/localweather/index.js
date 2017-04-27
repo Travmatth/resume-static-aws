@@ -1,6 +1,10 @@
 import { toggleTempChangeHandler, getWeatherHandler } from './Handlers';
 
-let contentLoadedListener, toggles, header, cells, tempToggles;
+let contentLoadedListener: () => void;
+let toggles: NodeList<HTMLInputElement>;
+let header: NodeList<HTMLInputElement>;
+let cells: NodeList<HTMLInputElement>;
+let tempToggles: NodeList<HTMLInputElement>;
 
 if (document !== undefined) {
   contentLoadedListener = async () => {

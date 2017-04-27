@@ -1,7 +1,4 @@
 /* @flow */
-// import h from 'virtual-dom/h';
-// import diff from 'virtual-dom/diff';
-// import patch from 'virtual-dom/patch';
-// import createElement from 'virtual-dom/create-element';
+'use strict';
 
-document.addEventListener('DOMContentLoaded', () =>  console.log('index.js'));
+document.addEventListener('DOMContentLoaded', () => console.log('index.js'));

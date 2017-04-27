@@ -1,3 +1,5 @@
+/* @flow */
+'use strict';
 export const Side = { X: 'X', O: 'O' };
 export type ScoreCard = {| X: number, O: number |};
 export type WinningBoard = Array<Array<boolean>>;
@@ -19,11 +21,11 @@ declare class HTMLGameSquare extends HTMLButtonElement {
   dataset: Coordinates,
 }
 
-export type GameState = {
+export type GameState = {|
   history: Array<GameGrid>,
   turn: $Keys<typeof Side>,
   player: ?$Keys<typeof Side>,
   finished: boolean,
   grid: Array<Grid>,
   score: ScoreCard,
-};
+|};

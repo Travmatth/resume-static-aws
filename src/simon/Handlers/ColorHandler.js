@@ -1,11 +1,11 @@
 /* @flow */
 
 import type { ColorKeys, Sound, ColorButtons } from '../simon.types';
-import type SoundManager from './SoundManager';
-import { Colors } from '../simon.types';
+import type { SoundManager } from '../Models';
+import { Colors } from '../Models';
 
 export default class ColorHandler {
-  colors: Colors;
+  colors: { red: 'red', yellow: 'yellow', red: 'red', green: 'green' };
   buttons: ColorButtons;
   sounds: SoundManager;
 
@@ -16,9 +16,13 @@ export default class ColorHandler {
   }
 
   swapCss(color: ColorKeys) {
-    this.buttons[color].css === color
-      ? (this.buttons[color].css = `light-${color}`)
-      : (this.buttons[color].css = color);
+    if (this.buttons[color].css === color) {
+      this.buttons[color].classList.add(`light-${color}`);
+      this.buttons[color].classList.remove(color);
+    } else {
+      this.buttons[color].classList.add(color);
+      this.buttons[color].classList.remove(`light-${color}`);
+    }
   }
 
   showColor(color: ColorKeys) {
@@ -59,7 +63,7 @@ export default class ColorHandler {
   }
 
   strictFail(resume: () => void) {
-    this.flash('fail', resume);
+    this.flash('lost', resume);
   }
 
   restartRound(resume: () => void) {
@@ -67,10 +71,10 @@ export default class ColorHandler {
   }
 
   showAll() {
-    this.colors.forEach(color => this.showColor(color));
+    Object.keys(this.colors).forEach(color => this.showColor(color));
   }
 
   hideAll() {
-    this.colors.forEach(color => this.hideColor(color));
+    Object.keys(this.colors).forEach(color => this.hideColor(color));
   }
 }

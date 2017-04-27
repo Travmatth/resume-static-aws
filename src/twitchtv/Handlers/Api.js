@@ -1,3 +1,6 @@
+/* @flow */
+'use strict';
+
 import type {
   UserStream,
   Stream,
@@ -17,7 +20,7 @@ import {
 import { serialize } from '../../common/utils';
 
 const headers = new Headers({
-  'Accept': 'application/vnd.twitchtv.v3+json',
+  Accept: 'application/vnd.twitchtv.v3+json',
   'Client-ID': TWITCH_TV_API_KEY,
 });
 
@@ -49,9 +52,7 @@ const handleNullStream = async (body: UserStream): Stream => {
  * Accepts the Response object from fetch, classifies response and returns
  * a User object
  */
-const classifyResponse = async (
-  response: Response,
-): PossiblyNestedStreams => {
+const classifyResponse = async (response: Response): PossiblyNestedStreams => {
   if (response.status >= 400) {
     console.error('Invalid response to GET stream request', response);
     return null;
@@ -84,19 +85,16 @@ const fetchAllProfiles = (users: Array<string>): Promise<Array<Stream>> => {
 };
 
 const agglomerate = (userResponses: Array<PossiblyNestedStreams>) => {
-	const responses = userResponses.reduce(
-    (result, current) => {
-      if (current === null) {
-        return result;
-      } else if (Array.isArray(current)) {
-        return result.concat(current);
-      } else {
-        result.push(current);
-        return result;
-      }
-    },
-    [],
-  )
+  const responses = userResponses.reduce((result, current) => {
+    if (current === null) {
+      return result;
+    } else if (Array.isArray(current)) {
+      return result.concat(current);
+    } else {
+      result.push(current);
+      return result;
+    }
+  }, []);
   return ((responses: any): Array<Stream>);
 };
 
@@ -105,10 +103,10 @@ const extractUserName = (user: UserStream): string => {
 };
 
 export {
-	verifyUser,
-	handleNullStream,
-	classifyResponse,
-	fetchAllProfiles,
-	agglomerate,
-	extractUserName,
+  verifyUser,
+  handleNullStream,
+  classifyResponse,
+  fetchAllProfiles,
+  agglomerate,
+  extractUserName,
 };
