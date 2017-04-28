@@ -1,12 +1,12 @@
 /* @flow */
 'use strict';
 
-import type { NullUser } from 'twitchtv.types';
+import type { NullUser, Channel, User, UserStream } from '../twitchtv.types';
 
 // curl -H 'Accept: application/vnd.twitchtv.v3+json' \
 //      -H 'Client-ID: ${TWITCH_TV_API_KEY}' \
 //      -X GET https://api.twitch.tv/kraken/users/${user}
-export const nonexistentUser: NullUser = user => ({
+export const nonexistentUser = (user: string): NullUser => ({
   error: 'Not Found',
   status: 404,
   message: `User "${user}" was not found`,
@@ -15,7 +15,7 @@ export const nonexistentUser: NullUser = user => ({
 // curl -H 'Accept: application/vnd.twitchtv.v3+json' \
 //      -H 'Client-ID: ${TWITCH_TV_API_KEY}' \
 //      -X GET https://api.twitch.tv/kraken/users/${user}
-export const validUser = user => ({
+export const validUser = (user: string): User => ({
   display_name: `${user}`,
   _id: 71852806,
   name: `${user}`,
@@ -26,6 +26,7 @@ export const validUser = user => ({
   logo: `https://static-cdn.jtvnw.net/jtv_user_pictures/${user}-profile_image-9021dccf9399929e-300x300.jpeg`,
   _links: {
     self: `https://api.twitch.tv/kraken/users/${user}`,
+    channel: `https://api.twitch.tv/kraken/users/${user}`,
   },
 });
 
@@ -33,7 +34,7 @@ export const validUser = user => ({
 // curl -H 'Accept: application/vnd.twitchtv.v3+json' \
 //      -H 'Client-ID: ${TWITCH_TV_API_KEY}' \
 //      -X GET https://api.twitch.tv/kraken/channel/${user}
-export const onlineUserChannel = user => ({
+export const onlineUserChannel = (user: string) => ({
   mature: false,
   status: 'test status',
   broadcaster_language: 'en',
@@ -72,7 +73,7 @@ export const onlineUserChannel = user => ({
 // curl -H 'Accept: application/vnd.twitchtv.v3+json' \
 //      -H 'Client-ID: ${TWITCH_TV_API_KEY}' \
 //      -X GET https://api.twitch.tv/kraken/streams/${:channel}
-export const nonexistentOrOfflineUserStream = user => ({
+export const nonexistentOrOfflineUserStream = (user: string) => ({
   stream: null,
   _links: {
     self: `https://api.twitch.tv/kraken/streams/${user}`,
@@ -84,7 +85,7 @@ export const nonexistentOrOfflineUserStream = user => ({
 // curl -H 'Accept: application/vnd.twitchtv.v3+json' \
 //      -H 'Client-ID: ${TWITCH_TV_API_KEY}' \
 //      -X GET https://api.twitch.tv/kraken/streams/${:channel}
-export const onlineUserStreamCall = user => ({
+export const onlineUserStreamCall = (user: string): UserStream => ({
   _links: {
     channel: `https://api.twitch.tv/kraken/channels/${user}`,
     self: `https://api.twitch.tv/kraken/streams/${user}`,

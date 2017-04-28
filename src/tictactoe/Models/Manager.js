@@ -1,5 +1,5 @@
 /* @flow */
-import { Game } from './Game';
+import { Game } from '../Models';
 import type { Update, HTMLGameSquare, GameGrid } from '../tictactoe.types';
 import { Side } from '../tictactoe.types';
 
@@ -24,7 +24,7 @@ const playerAction = (game: Game, update: Update, end: () => void) => (
 
   // Simulate Player move
   const turn = game.player();
-  const action = makeAction(e.target, turn);
+  const action = makeAction(((e.target: any): HTMLGameSquare), turn);
   game.takeTurn(action);
 
   setTimeout(() => {
@@ -95,7 +95,7 @@ const rollbackHandler = (game: Game, update: Update) => (e: Event) => {
 };
 
 const chooseTurnHandler = (game: Game) => (e: Event) => {
-  const desired = e.target.dataset.glyph;
+  const desired = ((e.target.dataset.glyph: any): $Keys<typeof Side>);
   const previous = game.chooseSide(desired);
 };
 

@@ -21,9 +21,9 @@ function createGrid() {
 
 const copy = (obj: any): any => JSON.parse(JSON.stringify(obj));
 
-const move = (grid: Array<GameGrid>, { x, y, player }: GameGrid) => {
+const move = (grid: GameBoard, { x, y, player }: GameGrid) => {
   const square = x * 3 + y;
-  const clone = (copy(grid): GameGrid);
+  const clone = (copy(grid): GameBoard);
 
   if (clone[square].player === null) {
     clone[square].player = player;

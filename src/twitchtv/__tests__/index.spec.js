@@ -231,8 +231,10 @@ test('fetchAllProfiles should return Array<Promise<Stream>>', async t => {
 });
 
 test('agglomerate should reduce all PossiblyNestedStreams types into Array<Stream>', async t => {
-  const pre = [allStreamsCall.streams, onlineUserStreamCall('kraken'), null];
-  const post = [...allStreamsCall.streams, onlineUserStreamCall('kraken')];
+  const arr = ((allStreamsCall.streams: any): Array<Stream>);
+  const obj = ((onlineUserStreamCall('kraken'): any): Stream);
+  const pre = [arr, obj, null];
+  const post = [...arr, obj];
 
   t.deepEqual(agglomerate(pre), post);
 });

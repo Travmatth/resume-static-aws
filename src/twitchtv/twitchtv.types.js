@@ -31,6 +31,18 @@ export type NullUser = {
   'message': string,
 };
 
+export type User = {
+  '_id': string | number,
+  'bio': string | null,
+  'created_at': string,
+  'display_name': string,
+  'logo': string,
+  'name': string,
+  'type': string,
+  'updated_at': string,
+  '_links': Link,
+};
+
 export type Channel = {
   'mature': boolean,
   'status': string,
@@ -56,7 +68,7 @@ export type Channel = {
   '_links': ChannelLink,
 };
 
-export type OptionalChannel = Channel | NullChannel;
+export type OptionalChannel = Channel | null;
 
 export type Stream = {
   'game': string,
@@ -66,7 +78,7 @@ export type Stream = {
   'video_height': number,
   'is_playlist': boolean,
   'created_at': string,
-  '_id': number,
+  '_id': number | string,
   'channel': Channel,
   'preview': Preview,
   '_links': StreamLink,
@@ -79,7 +91,7 @@ export type AllStreams = {
 
 export type UndeterminedStreamType = Stream | AllStreams;
 
-export type PossiblyNestedStreams = Stream | Array<Stream> | Null;
+export type PossiblyNestedStreams = Stream | Array<Stream> | null;
 
 declare type Link = {
   self: string,

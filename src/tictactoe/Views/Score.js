@@ -2,6 +2,7 @@
 'use strict';
 import type { Handler } from '../tictactoe.types';
 import { Side } from '../tictactoe.types';
+import type { Game } from '../Models';
 
 const createScoreView = (
   fragment: DocumentFragment,
@@ -12,13 +13,13 @@ const createScoreView = (
 ) => {
   const oScore = scoreElement(game, Side.O);
   const xScore = scoreElement(game, Side.X);
-  const restart = lifecycleButton('restart', restart);
-  const reset = lifecycleButton('reset', reset);
+  const restartButton = lifecycleButton('restart', restart);
+  const resetButton = lifecycleButton('reset', reset);
 
   fragment.appendChild(oScore);
   fragment.appendChild(xScore);
-  fragment.appendChild(restart);
-  fragment.appendChild(reset);
+  fragment.appendChild(restartButton);
+  fragment.appendChild(resetButton);
 
   return fragment;
 };
@@ -26,7 +27,7 @@ const createScoreView = (
 const scoreElement = (game: Game, glyph: $Keys<typeof Side>) => {
   const elem = document.createElement('div');
 
-  elem.textContent = game.getScore(glyph);
+  elem.textContent = `${game.getScore(glyph)}`;
 
   return elem;
 };

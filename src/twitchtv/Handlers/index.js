@@ -9,7 +9,6 @@ import {
   fetchAllProfiles,
   agglomerate,
   extractUserName,
-  users,
 } from './Api';
 
 export {

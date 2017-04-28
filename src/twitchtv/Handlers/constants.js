@@ -1,7 +1,7 @@
 /* @flow */
 'use strict';
 
-import type { Stream } from './twitchtv.types';
+import type { Stream } from '../twitchtv.types';
 
 export const streamsUrl = 'https://api.twitch.tv/kraken/streams/';
 
@@ -21,8 +21,8 @@ export const users = [
   'ESL_SC2',
 ];
 
-export const createEmptyStream = (reason: boolean, user: string) =>
-  Object.assign({}, emptyStream, {
+export const createEmptyStream = (reason: boolean, user: string): Stream =>
+  Object.assign(emptyStream, {
     _id: reason === true
       ? `ERROR:${user} is offline`
       : `ERROR:${user} is not a streamer`,

@@ -5,11 +5,10 @@ import { endpoint, params } from './constants';
 import type {
   WikiSearchResult,
   WikiPage,
-  WikiInit,
   Headings,
   Paragraphs,
   Searches,
-} from './wikiviewer.types';
+} from '../wikiviewer.types';
 import { serialize, ResponseError } from '../../common/utils';
 
 export default class WikiViewer {
@@ -22,18 +21,18 @@ export default class WikiViewer {
   updateDOM(searches: Searches, headings: Headings, paragraphs: Paragraphs) {
     if (searches) {
       let node, result, imgNode;
-      for (var i = 0; i < this.headings.length; i++) {
-        wiki = searches[i];
+      for (var i = 0; i < headings.length; i++) {
+        let wiki = searches[i];
         const page = `https://en.wikipedia.org/?curid=${wiki.pageid}`;
 
-        headings[i].child[1].href = page;
-        headings[i].child[0].textContent = wiki.title;
-        paragraphs[i] = wiki.extract.replace(/may refer to:/, 'disambiguation');
+        ((headings[i].children[1]: any): HTMLAnchorElement).href = page;
+        headings[i].children[0].textContent = wiki.title;
+        paragraphs[i].textContent = wiki.extract.replace(/may refer to:/, 'disambiguation');
       }
     }
   }
 
-  search(headings: Headings, paragraphs: Paragraphs) {
+  search() {
     const { query } = this;
     if (!query.length === 0) return;
 
@@ -47,9 +46,9 @@ export default class WikiViewer {
       });
   }
 
-  randomHandler(win: Window) {
+  randomHandler(win: window) {
     return () => {
-      winw.location = 'https://en.wikipedia.org/wiki/Special:Random';
+      win.location = 'https://en.wikipedia.org/wiki/Special:Random';
     };
   }
 
@@ -74,14 +73,14 @@ export default class WikiViewer {
   }
 
   typeHandler(event: Event) {
-    this.query.push(((event.target: mixed): HTMLInputElement).value);
+    this.query.push(((event.target: any): HTMLInputElement).value);
   }
 }
 
 export function checkHeaders(response: Response) {
   if (response.status >= 400)
     throw new ResponseError('WikiViewer fetch failed', response);
-  return ((response.json(): mixed): Promise<WikiSearchResult>);
+  return ((response.json(): any): Promise<WikiSearchResult>);
 }
 
 export function processWikis({ query: { pages } }: WikiSearchResult) {

@@ -50,8 +50,8 @@ if (global.document !== undefined) {
 
   // trigger transition btw views
   const resetTransition = render(root, score, start);
-  const startTransition = render(root, start, game);
-  const endTransition = render(root, game, score);
+  const startTransition = render(root, start, play);
+  const endTransition = render(root, play, score);
 
   // Starting View Handlers
   const startHandler = startGameHandler(game, update(play), startTransition);

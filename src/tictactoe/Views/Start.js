@@ -11,8 +11,8 @@ const createStartView = (
   choose: Handler,
 ) => {
   // Pressed in the start screen, should select a side for the player
-  const x = sideSelectionButton(Side.X, choose);
-  const o = sideSelectionButton(Side.O, choose);
+  const x = sideSelectionButton(Side.X, choose, start);
+  const o = sideSelectionButton(Side.O, choose, start);
   // Pressed in the start screen, should start the game by switching views
   const button = startButton(start);
 
@@ -32,7 +32,11 @@ const startButton = (handler: Handler) => {
   return start;
 };
 
-const sideSelectionButton = (glyph: $Keys<typeof Side>, choose: Handler) => {
+const sideSelectionButton = (
+  glyph: $Keys<typeof Side>,
+  choose: Handler,
+  start: Handler,
+) => {
   const select = document.createElement('button');
 
   start.textContent = glyph;

@@ -19,13 +19,12 @@ export type WikiPage = {
 };
 
 export type Limits = {
-  'extracts': 20,
+  extracts: number,
 };
 
-export type WikiPages = {|
+export type WikiPages = {
   [string]: WikiPage,
-  'limits': Limits,
-|};
+};
 
 export type QueryResult = {
   'pages': WikiPages,
@@ -35,4 +34,5 @@ export type WikiSearchResult = {|
   'batchcomplete': '' | true,
   'continue': WikiContinue,
   'query': QueryResult,
+  'limits': Limits,
 |};

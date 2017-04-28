@@ -1,7 +1,7 @@
 /* @flow */
 'use strict';
 
-export const endpoint = `https://en.wikipedia.org/w/api.php`;
+const endpoint = `https://en.wikipedia.org/w/api.php`;
 
 const params = {
   format: 'json',
@@ -17,3 +17,5 @@ const params = {
   gsrsearch: '',
   redirects: 1,
 };
+
+export { endpoint, params };

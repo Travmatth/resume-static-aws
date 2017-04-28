@@ -158,7 +158,7 @@ class Game {
     const next = grid.filter(cell => cell.player === null)[0];
     const { player: _, ...coords } = next;
 
-    const nextGrid = move(grid, { coords, player: turn });
+    const nextGrid = move(grid, { ...coords, player: turn });
     this.update({ grid: nextGrid });
 
     // Check if computer has won

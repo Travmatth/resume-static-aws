@@ -19,15 +19,15 @@ export type Coordinates = {
   y: string,
 };
 
-declare class HTMLGameSquare extends HTMLButtonElement {
-  dataset: Coordinates,
+export class HTMLGameSquare extends HTMLButtonElement {
+  dataset: Coordinates;
 }
 
 export type GameState = {
   input: boolean,
   history: Array<GameBoard>,
   turn: $Keys<typeof Side>,
-  player: ?$Keys<typeof Side>,
+  player: $Keys<typeof Side>,
   finished: boolean,
   grid: Array<GameGrid>,
   score: ScoreCard,

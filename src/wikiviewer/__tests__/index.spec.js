@@ -2,12 +2,11 @@
 'use strict';
 
 import test from 'ava';
-import WikiViewer from '../Handlers';
+import { WikiViewer, endpoint } from '../Models';
 import { jsdom } from 'jsdom';
 import fetchMock from 'fetch-mock';
 import { ResponseError } from '../../common/utils';
-import { response, data } from './wikiviewer.mockdata';
-import { endpoint } from '../Handlers';
+import { exampleWikipediaSearch, wikis } from './wikiviewer.mockdata';
 
 let wikiViewer, searchButton, randomButton, searchInput;
 
@@ -36,21 +35,21 @@ test.afterEach.always('after', t => fetchMock.restore());
 */
 
 test("search should properly form url's", async t => {
-  fetchMock.post(endpoint, response);
+  fetchMock.post(endpoint, exampleWikipediaSearch);
 });
 
 test('search should return null on incorrect response', async t => {
-  fetchMock.post(endpoint, response);
+  fetchMock.post(endpoint, exampleWikipediaSearch);
 });
 
 test("search should fetch and process wiki's", async t => {
-  fetchMock.post(endpoint, response);
+  fetchMock.post(endpoint, exampleWikipediaSearch);
 });
 
 test('randomSearch should change window location', async t => {});
 
 test("enter should fetch wiki's and update dom", async t => {
-  fetchMock.post(endpoint, response);
+  fetchMock.post(endpoint, exampleWikipediaSearch);
 });
 
 test('type should update state of wikiviewer with text', async t => {});

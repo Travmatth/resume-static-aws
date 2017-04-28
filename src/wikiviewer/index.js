@@ -1,7 +1,7 @@
 /* @flow */
 'use strict';
 
-import WikiViewer from './Handlers';
+import { WikiViewer } from './Models';
 
 export const register = () => {
   const wikiView = new WikiViewer();
