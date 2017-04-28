@@ -61,7 +61,7 @@ test('fetchWeather can return parsed json', async t => {
 test.serial('fetchWeather throws appropriately', async t => {
   fetchMock.post(url, { status: 404, body: data });
 
-  await t.throws(fetchWeather(url), ResponseError);
+  await t.throws(() => fetchWeather(url), ResponseError);
 });
 
 test('updateTableRows() populates given DOM element w/ correct data', async t => {
