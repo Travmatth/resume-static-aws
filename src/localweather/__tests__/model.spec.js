@@ -11,14 +11,14 @@ import { ResponseError } from '../../common/utils';
 */
 
 import {
-  getWeather,
+  getWeatherHandler,
   fetchWeather,
   openweatherApiParams,
   endpoint,
-  contentLoadedListener,
   updateTableRows,
   toggleTempChange,
-} from '../index';
+} from '../Handlers';
+import contentLoadedListener from '../index';
 
 import { serialize } from '../../common/utils';
 import { OPEN_WEATHER_APPID } from '../../common/api_keys';
@@ -47,14 +47,15 @@ test.afterEach.always('after', t => {
 */
 
 test('fetchWeather can return parsed json', async t => {
-  fetchMock.post(url, response);
+  t.fail();
+  //fetchMock.post(url, response);
 
-  const json = await fetchWeather(url);
-  const { now: date, ...rest } = json;
-  const { now, ...object } = data;
+  //const json = await fetchWeather(url);
+  //const { now: date, ...rest } = json;
+  //const { now, ...object } = data;
 
-  t.deepEqual(rest, object);
-  t.is(typeof date, 'number');
+  //t.deepEqual(rest, object);
+  //t.is(typeof date, 'number');
 });
 
 //I need to run .serial() to pass, why?
@@ -88,21 +89,22 @@ test('updateTableRows() populates given DOM element w/ correct data', async t =>
 });
 
 test('contentLoadedListener() obtains user coordinates and populates list elements', async t => {
-  fetchMock.post(url, response);
+  //fetchMock.post(url, response);
 
-  const json = await contentLoadedListener(10);
+  //const json = await contentLoadedListener(10);
 
   // not sure what i'll be measuring yet
-  t.pass();
+  t.fail();
 });
 
 test('toggleTempChange should switch temperature scale', async t => {
-  const nodes = document.querySelectorAll('.measurement');
+  //const nodes = document.querySelectorAll('.measurement');
 
-  t.is(nodes.item(0).textContent, '84');
-  const json = await getWeather(
-    (({ coords: { latitude: 0, longitude: 0 } }: any): Position),
-  );
-  toggleTempChange('fffff');
-  t.is(nodes.item(0).textContent, '28.74');
+  //t.is(nodes.item(0).textContent, '84');
+  //const json = await getWeatherHandler(
+  //(({ coords: { latitude: 0, longitude: 0 } }: any): Position),
+  //);
+  //toggleTempChange('fffff');
+  //t.is(nodes.item(0).textContent, '28.74');
+  t.fail();
 });

@@ -62,6 +62,4 @@ test('checkHeaders should return response body', async t => {});
 
 test("processWikis should return nested wiki's", async t => {});
 
-test('updateDOM should do so', async t => {
-  t.fail();
-});
+test('updateDOM should do so', async t => {});
