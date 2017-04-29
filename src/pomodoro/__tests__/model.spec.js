@@ -1,10 +1,6 @@
 /* @flow */
 'use strict';
 
-import test from 'ava';
+beforeEach('', () => {});
 
-test.beforeEach('', t => {});
-
-test('', t => {
-  t.pass();
-});
+test('', () => {});

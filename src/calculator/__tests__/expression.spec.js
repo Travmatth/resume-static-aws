@@ -1,74 +1,72 @@
 /* @flow */
-import test from 'ava';
-
 import { LogicUnit } from '../Models';
 
 let expr, infix;
 
-test.beforeEach('LogicUnit', t => {
+beforeEach('LogicUnit', () => {
   expr = new LogicUnit();
   infix = [];
 });
 
 //UPDATING
-test('decimals can be entered', t => {
+test('decimals can be entered', () => {
   expr.update('9');
   expr.update('.');
   expr.update('3');
   expr.update('3');
-  t.is(expr.expression[0], '9.33');
+  expect(expr.expression[0]).toBe('9.33');
 });
 
-test('decimals can be deleted', t => {
+test('decimals can be deleted', () => {
   expr.update('9');
   expr.update('.');
   expr.update('3');
   expr.update('3');
   expr.clear();
-  t.is(expr.getExpression(), '9.3');
+  expect(expr.getExpression()).toBe('9.3');
 });
 
-test('decimal can be deleted', t => {
+test('decimal can be deleted', () => {
   expr.update('9');
   expr.update('.');
   expr.clear();
-  t.is(expr.getExpression(), '9');
+  expect(expr.getExpression()).toBe('9');
 });
 
 //ARITHMETIC
-test('1 + 1 should work', t => {
+test('1 + 1 should work', () => {
   expr.update('1');
   expr.update('+');
   expr.update('1');
   expr.compute();
-  t.is(expr.getExpression(), '2');
+  expect(expr.getExpression()).toBe('2');
 });
 
-test('2 * 3 should work', t => {
+test('2 * 3 should work', () => {
   expr.update('2');
   expr.update('*');
   expr.update('3');
   expr.compute();
-  t.is(expr.getExpression(), '6');
+  expect(expr.getExpression()).toBe('6');
 });
 
-test('4 / 2 should work', t => {
+test('4 / 2 should work', () => {
   expr.update('4');
   expr.update('/');
   expr.update('2');
   expr.compute();
-  t.is(expr.getExpression(), '2');
+  expect(expr.getExpression()).toBe('2');
 });
 
-test('4 - 2 should work', t => {
+test('4 - 2 should work', () => {
   expr.update('4');
   expr.update('-');
   expr.update('2');
   expr.compute();
-  t.is(expr.getExpression(), '2');
+  expect(expr.getExpression()).toBe('2');
 });
 
-test('6 / 3 * (4 - 6) + 5 should work', t => {
+test('6 / 3 * (4 - 6) + 5 should work', () => {
   expr.update('6');
   expr.update('/');
   expr.update('3');
@@ -81,56 +79,56 @@ test('6 / 3 * (4 - 6) + 5 should work', t => {
   expr.update('+');
   expr.update('5');
   expr.compute();
-  t.is(expr.getExpression(), '1');
+  expect(expr.getExpression()).toBe('1');
 });
 
 //FUNCTIONS
-test('E symbol can be entered', async t => {
+test('E symbol can be entered', async () => {
   const expected = ['2.718'];
   expr.update('E');
-  t.is(expr.expression[0], expected[0]);
+  expect(expr.expression[0]).toBe(expected[0]);
 });
 
-test('PI symbol can be entered', async t => {
+test('PI symbol can be entered', async () => {
   const expected = ['3.14'];
   expr.update('PI');
-  t.is(expr.expression[0], expected[0]);
+  expect(expr.expression[0]).toBe(expected[0]);
 });
 
-test('LN2 symbol can be entered', async t => {
+test('LN2 symbol can be entered', async () => {
   const expected = ['0.693'];
   expr.update('LN2');
-  t.is(expr.expression[0], expected[0]);
+  expect(expr.expression[0]).toBe(expected[0]);
 });
 
-test('SIN should compute correctly', t => {
+test('SIN should compute correctly', () => {
   expr.update('SIN');
   expr.update('0');
   expr.update(')');
   expr.compute();
-  t.is(expr.getExpression(), '0');
+  expect(expr.getExpression()).toBe('0');
 });
 
-test('COS should compute correctly', t => {
+test('COS should compute correctly', () => {
   expr.update('COS');
   expr.update('0');
   expr.update(')');
   expr.compute();
-  t.is(expr.getExpression(), '1');
+  expect(expr.getExpression()).toBe('1');
 });
 
-test('TAN should compute correctly', t => {
+test('TAN should compute correctly', () => {
   expr.update('TAN');
   expr.update('1');
   expr.update(')');
   expr.compute();
-  t.is(expr.getExpression(), '1.55741');
+  expect(expr.getExpression()).toBe('1.55741');
 });
 
-test('LOG should compute correctly', t => {
+test('LOG should compute correctly', () => {
   expr.update('LOG');
   expr.update('1');
   expr.update(')');
   expr.compute();
-  t.is(expr.getExpression(), '0');
+  expect(expr.getExpression()).toBe('0');
 });

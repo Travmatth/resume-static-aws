@@ -1,7 +1,6 @@
 /* @flow */
 'use strict';
 
-import test from 'ava';
 import fetchMock from 'fetch-mock';
 import { response, data } from './mockdata';
 import { ResponseError } from '../../common/utils';
@@ -36,9 +35,9 @@ const url =
   'APPID=' +
   OPEN_WEATHER_APPID;
 
-test.before(() => {});
+beforeAll(() => {});
 
-test.afterEach.always('after', t => {
+test('after', () => {
   fetchMock.restore();
 });
 
@@ -46,8 +45,8 @@ test.afterEach.always('after', t => {
   Test
 */
 
-test('fetchWeather can return parsed json', async t => {
-  t.fail();
+test('fetchWeather can return parsed json', async done => {
+  done.fail();
   //fetchMock.post(url, response);
 
   //const json = await fetchWeather(url);
@@ -59,13 +58,13 @@ test('fetchWeather can return parsed json', async t => {
 });
 
 //I need to run .serial() to pass, why?
-test.serial('fetchWeather throws appropriately', async t => {
+test('fetchWeather throws appropriately', async () => {
   fetchMock.post(url, { status: 404, body: data });
 
-  await t.throws(() => fetchWeather(url), ResponseError);
+  await expect(() => fetchWeather(url)).toThrowError(ResponseError);
 });
 
-test('updateTableRows() populates given DOM element w/ correct data', async t => {
+test('updateTableRows() populates given DOM element w/ correct data', async () => {
   const cells = document.querySelectorAll('.cell');
   const forecasts = [data.forecasts[0]];
 
@@ -81,23 +80,23 @@ test('updateTableRows() populates given DOM element w/ correct data', async t =>
   const imgElement = (cell.children[3].children[0]: any).src;
   const descriptionElement = cell.children[4].textContent;
 
-  t.is(day, dayElement);
-  t.is(time, timeElement);
-  t.is(temp.celsius, temperatureElement);
-  t.is(icon, imgElement);
-  t.is(description, descriptionElement);
+  expect(day).toBe(dayElement);
+  expect(time).toBe(timeElement);
+  expect(temp.celsius).toBe(temperatureElement);
+  expect(icon).toBe(imgElement);
+  expect(description).toBe(descriptionElement);
 });
 
-test('contentLoadedListener() obtains user coordinates and populates list elements', async t => {
+test('contentLoadedListener() obtains user coordinates and populates list elements', async done => {
   //fetchMock.post(url, response);
 
   //const json = await contentLoadedListener(10);
 
   // not sure what i'll be measuring yet
-  t.fail();
+  done.fail();
 });
 
-test('toggleTempChange should switch temperature scale', async t => {
+test('toggleTempChange should switch temperature scale', async done => {
   //const nodes = document.querySelectorAll('.measurement');
 
   //t.is(nodes.item(0).textContent, '84');
@@ -106,5 +105,5 @@ test('toggleTempChange should switch temperature scale', async t => {
   //);
   //toggleTempChange('fffff');
   //t.is(nodes.item(0).textContent, '28.74');
-  t.fail();
+  done.fail();
 });
