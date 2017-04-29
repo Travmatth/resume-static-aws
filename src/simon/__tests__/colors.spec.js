@@ -1,6 +1,6 @@
 /* @flow */
 'use strict';
 
-beforeEach('', () => {});
-
-test('', () => {});
+test('', () => {
+  expect(true).toBe(true);
+});

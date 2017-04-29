@@ -1,6 +1,4 @@
 /* @flow */
 'use strict';
 
-beforeEach('', () => {});
-
-test('', () => {});
+test.only('', () => {});

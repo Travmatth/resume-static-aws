@@ -6,7 +6,7 @@
   "scripts": {
     "flow": "flow",
     "flow:status": "flow status",
-    "test": "BABEL_ENV=ava ava --verbose **/*.spec.js",
+    "test": "jest",
     "start": "rm -rf dist && NODE_ENV=development webpack-dev-server -d --config tools/webpack.config.dev.babel.js --host 0.0.0.0 --hot --inline --content-base dist/ --color --bail",
     "start:prod": "rm -rf dist && NODE_ENV=production webpack-dev-server -p --config tools/webpack.config.prod.babel.js --hot --inline --content-base dist/ --color --bail",
     "build:prod": "rm -rf dist && NODE_ENV=production webpack -p --config tools/webpack.config.prod.babel.js --bail",
@@ -24,15 +24,8 @@
     "url": "https://github.com/Travmatth/resume-static-aws/issues"
   },
   "homepage": "https://github.com/Travmatth/resume-static-aws#readme",
-  "ava": {
-    "require": [
-      "babel-core/register",
-      "babel-polyfill",
-      "./src/common/browser-setup.js"
-    ],
-    "babel": {
-      "babelrc": true
-    }
+  "jest": {
+    "testRegex": "[A-Za-z]+\\.spec\\.js$"
   },
   "dependencies": {
     "babel-polyfill": "^6.16.0",
@@ -59,6 +52,7 @@
     "flow-bin": "^0.42.0",
     "flow-status-webpack-plugin": "^0.1.7",
     "html-webpack-plugin": "^2.24.1",
+    "jest": "^19.0.2",
     "jest-codemods": "^0.10.0",
     "jquery": "^3.1.1",
     "jsdom": "^9.9.1",

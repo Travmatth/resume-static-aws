@@ -12,16 +12,17 @@ const intendedProjectFile = file => {
 const write = files => {
   for (let file of files) {
     const text = fs.readFileSync(file, 'utf8').split('\n');
-    const first = text[0];
-    const second = text[1];
+    const str = "beforeEach('', () => {});";
+    text.filter((val, i) => {
+      if (val === str) console.log('match found @: ', file, i);
+      if (file === 'src/blog/__tests__/handlers.spec.js') {
+        text.splice(i, 1);
+        console.log(text.join('\n'));
+      }
+      return val === str;
+    });
 
-    if (!first || !second) continue;
-    if (!/\/\* \@flow \*\//.test(first) && !/'use strict'/.test(second)) {
-      console.log('writing to file: ', file);
-      text.unshift("'use strict';");
-      text.unshift('/* @flow */');
-      fs.writeFileSync(file, text.join('\n'), 'utf8');
-    }
+    //fs.writeFileSync(file, text.join('\n'), 'utf8');
   }
 };
 
