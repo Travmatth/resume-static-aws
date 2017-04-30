@@ -27,13 +27,13 @@ beforeEach(() => {
   wikiViewer = new WikiViewer(searchButton, randomButton, searchInput, nodes);
 });
 
-test('after', () => fetchMock.restore());
+afterEach(() => fetch.resetMocks());
 
 /*
   Test
 */
 
-test("search should properly form url's", async () => {
+test.only("search should properly form url's", async () => {
   fetchMock.post(endpoint, exampleWikipediaSearch);
 });
 

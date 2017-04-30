@@ -47,8 +47,8 @@ import {
   Setup
 */
 
-test('after', () => {
-  fetchMock.restore();
+beforeEach(() => {
+  fetch.resetMocks();
 });
 
 /*
@@ -71,23 +71,24 @@ test('createEmptyStream should do so', async () => {
   );
 });
 
+const json = (m: Object): string => JSON.stringify(m);
 test('verifyUser should return false if 404 response', async () => {
   const user = 'fasdf';
-  fetchMock.get(userUrl + user, { status: 404, body: {} });
+  fetch.mockResponseOnce(json({}), { status: 404 });
 
   expect(await verifyUser(user)).toBe(false);
 });
 
 test('verifyUser should return false if error response', async () => {
   const user = 'fasdf';
-  fetchMock.get(userUrl + user, { body: nonexistentUser(user) });
+  fetch.mockResponseOnce(json({ ...nonexistentUser(user) }));
 
   expect(await verifyUser(user)).toBe(false);
 });
 
 test('verifyUser should return true if user exists', async () => {
   const user = 'RobotCaleb';
-  fetchMock.get(userUrl + user, { body: onlineUserChannel(user) });
+  fetch.mockResponseOnce(JSON.stringify({ body: onlineUserChannel(user) }));
 
   const exists = await verifyUser(user);
   expect(exists).toBe(true);
@@ -95,7 +96,7 @@ test('verifyUser should return true if user exists', async () => {
 
 test('handleNullStream should return emptyStream if user is offline', async () => {
   const user = 'test_channel';
-  fetchMock.get(userUrl + user, { body: onlineUserChannel(user) });
+  fetch.mockResponseOnce(JSON.stringify({ body: onlineUserChannel(user) }));
 
   const stream = await handleNullStream(nonexistentOrOfflineUserStream(user));
   expect(stream._id).toBe(`ERROR:${user} is offline`);
@@ -103,9 +104,8 @@ test('handleNullStream should return emptyStream if user is offline', async () =
 
 test('handleNullStream should return emptyStream if user is nonexistent', async () => {
   const user = 'brunofin';
-  const url = userUrl + user;
   const body = nonexistentUser(user);
-  fetchMock.get(url, { body });
+  fetch.mockResponseOnce(JSON.stringify(body));
 
   const stream = await handleNullStream(nonexistentOrOfflineUserStream(user));
   expect(stream._id).toBe(`ERROR:${user} is not a streamer`);
@@ -142,10 +142,9 @@ test('classifyResponse can return Stream', async () => {
 
 test('classifyResponse can return emptyStream if user is nonexistent', async () => {
   const user = 'brunofin';
-  fetchMock.get(userUrl + user, {
-    status: 404,
-    body: nonexistentUser(user),
-  });
+  const body = JSON.stringify({ ...nonexistentUser(user) });
+  fetch.mockResponseOnce(body, { status: 404 });
+  fetch.mockResponseOnce(body, { status: 200 });
 
   const response = (({
     json() {
@@ -161,10 +160,8 @@ test('classifyResponse can return emptyStream if user is nonexistent', async () 
 
 test('classifyResponse can return emptyStream if user is offline', async () => {
   const user = 'OgamingSC2';
-  fetchMock.get(userUrl + user, {
-    status: 404,
-    body: validUser(user),
-  });
+  const body = json({ ...validUser(user) });
+  fetch.mockResponseOnce(body, { status: 404 });
 
   const response = (({
     json() {
@@ -189,22 +186,25 @@ test('fetchAllProfiles should return Array<Promise<Stream>>', async () => {
   const nonexistentStreams = ['brunofin', 'ESL_SC2'];
 
   //all streamers requires only 1 api call, to fetch all streams
-  fetchMock.get(streamsUrl, allStreamsCall);
+  const res = JSON.stringify(allStreamsCall);
+  fetch.mockResponseOnce(res);
   const allStreamers = allStreamsCall['streams'];
 
   //online streamers require only 1 api call, to fetch their stream
   let onlineStreamers = [];
   onlineStreams.map(user => {
-    fetchMock.get(streamsUrl + user, { body: onlineUserStreamCall(user) });
-    onlineStreamers.push(onlineUserStreamCall(user));
+    let online = onlineUserStreamCall(user);
+    fetch.mockResponseOnce(JSON.stringify(online));
+    onlineStreamers.push(online);
   });
 
   //offline streamers require 2 api calls, to fetch their stream & valid user
   let offlineStreamers = [];
   offlineStreams.map(user => {
     const res = nonexistentOrOfflineUserStream(user);
-    fetchMock.get(streamsUrl + user, { body: res });
-    fetchMock.get(userUrl + user, { body: validUser(user) });
+    fetch.mockResponseOnce(JSON.stringify(res));
+    fetch.mockResponseOnce(JSON.stringify(validUser(user)));
+
     offlineStreamers.push(createEmptyStream(true, user));
   });
 
@@ -212,8 +212,12 @@ test('fetchAllProfiles should return Array<Promise<Stream>>', async () => {
   let nonexistentStreamers = [];
   nonexistentStreams.map(user => {
     const res = nonexistentOrOfflineUserStream(user);
-    fetchMock.get(streamsUrl + user, { body: res }); // fetch stream
-    fetchMock.get(userUrl + user, { body: nonexistentUser(user) }); // nonexistent user
+
+    // fetch stream
+    fetch.mockResponseOnce(JSON.stringify(res));
+    // nonexistent user
+    fetch.mockResponseOnce(JSON.stringify(nonexistentUser(user)));
+
     nonexistentStreamers.push(createEmptyStream(false, user));
   });
 

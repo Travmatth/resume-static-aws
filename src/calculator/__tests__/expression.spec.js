@@ -3,7 +3,7 @@ import { LogicUnit } from '../Models';
 
 let expr, infix;
 
-beforeEach('LogicUnit', () => {
+beforeEach(() => {
   expr = new LogicUnit();
   infix = [];
 });
