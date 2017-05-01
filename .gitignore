@@ -14,3 +14,5 @@ src/common/api_keys.js
 *.swo
 *~
 tags
+tests/lcov.info
+tests/coverage-final.json

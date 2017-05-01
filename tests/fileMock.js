@@ -1,1 +1,1 @@
-modules.export = 'aString';
+modules.export = 'test-stub';
