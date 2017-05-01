@@ -2,7 +2,8 @@
 'use strict';
 
 import { response, data } from './mockdata';
-import { ResponseError } from '../../common/utils';
+import { ResponseError, serialize } from 'common/utils';
+import { OPEN_WEATHER_APPID } from 'common/api_keys';
 
 /*
   Model under test
@@ -17,9 +18,6 @@ import {
   toggleTempChangeHandler,
 } from '../Handlers';
 import contentLoadedListener from '../index';
-
-import { serialize } from '../../common/utils';
-import { OPEN_WEATHER_APPID } from '../../common/api_keys';
 
 /*
   Setup

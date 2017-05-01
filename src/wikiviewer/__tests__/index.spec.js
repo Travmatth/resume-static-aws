@@ -2,7 +2,7 @@
 'use strict';
 
 import { WikiViewer, endpoint } from '../Models';
-import { ResponseError } from '../../common/utils';
+import { ResponseError } from 'common/utils';
 import { exampleWikipediaSearch, wikis } from './wikiviewer.mockdata';
 
 let wikiViewer, searchButton, randomButton, searchInput;

@@ -1,7 +1,7 @@
 /* @flow */
 
 import type { Timer } from '../pomodoro.types';
-import { parseTimeToText, scale } from '../../common/utils';
+import { parseTimeToText, scale } from 'common/utils';
 
 const State = { STOPPED: 'STOPPED', RUNNING: 'RUNNING' };
 const Phase = { work: 'work', rest: 'rest' };
@@ -11,7 +11,7 @@ export default class Pomodoro {
   state: $Keys<typeof State>;
   phase: $Keys<typeof Phase>;
   clock: ?number;
-  calculate: (number) => number;
+  calculate: number => number;
 
   constructor(work: number, rest: number) {
     this.state = State.STOPPED;

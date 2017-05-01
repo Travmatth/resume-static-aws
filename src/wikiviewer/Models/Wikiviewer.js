@@ -9,7 +9,7 @@ import type {
   Paragraphs,
   Searches,
 } from '../wikiviewer.types';
-import { serialize, ResponseError } from '../../common/utils';
+import { serialize, ResponseError } from 'common/utils';
 
 export default class WikiViewer {
   query: Array<string>;
@@ -27,7 +27,10 @@ export default class WikiViewer {
 
         ((headings[i].children[1]: any): HTMLAnchorElement).href = page;
         headings[i].children[0].textContent = wiki.title;
-        paragraphs[i].textContent = wiki.extract.replace(/may refer to:/, 'disambiguation');
+        paragraphs[i].textContent = wiki.extract.replace(
+          /may refer to:/,
+          'disambiguation',
+        );
       }
     }
   }

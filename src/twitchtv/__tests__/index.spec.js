@@ -11,7 +11,7 @@ import {
   onlineUserStreamCall,
   nonexistentOrOfflineUserStream,
 } from './mockdata';
-import { ResponseError } from '../../common/utils';
+import { ResponseError, serialize } from 'common/utils';
 
 /*
   Models under test
@@ -24,7 +24,7 @@ import type {
   UndeterminedStreamType,
   PossiblyNestedStreams,
 } from '../twitchtv.types';
-import { TWITCH_TV_API_KEY } from '../../common/api_keys';
+import { TWITCH_TV_API_KEY } from 'common/api_keys';
 import {
   userUrl,
   users,
@@ -32,7 +32,6 @@ import {
   emptyStream,
   createEmptyStream,
 } from '../Handlers/constants';
-import { serialize } from '../../common/utils';
 
 import {
   verifyUser,

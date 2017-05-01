@@ -9,7 +9,8 @@ import type {
   PossiblyNestedStreams,
 } from '../twitchtv.types';
 
-import { TWITCH_TV_API_KEY } from '../../common/api_keys';
+import { TWITCH_TV_API_KEY } from 'common/api_keys';
+import { serialize } from 'common/utils';
 import {
   users,
   streamsUrl,
@@ -17,7 +18,6 @@ import {
   emptyStream,
   createEmptyStream,
 } from './constants';
-import { serialize } from '../../common/utils';
 
 const headers = new Headers({
   Accept: 'application/vnd.twitchtv.v3+json',

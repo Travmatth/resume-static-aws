@@ -20,8 +20,8 @@ import {
   appendSuffix,
   ResponseError,
   convertFahrenheitToCelsius,
-} from '../../common/utils';
-import { OPEN_WEATHER_APPID } from '../../common/api_keys';
+} from 'common/utils';
+import { OPEN_WEATHER_APPID } from 'common/api_keys';
 import { endpoint, openweatherApiParams } from './constants';
 
 // Mocking fetch during dev
