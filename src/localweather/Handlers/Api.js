@@ -159,8 +159,8 @@ const toggleTempChangeHandler = (nodes: NodeList<HTMLElement>) => (
 
   while (node && temp) {
     node.textContent = tempScale() === 'celsius'
-      ? `${temp.celsius}`
-      : `${temp.fahrenheit}`;
+      ? `${temp.fahrenheit}`
+      : `${temp.celsius}`;
 
     // Finally, point to next element in source arrays
     index += 1;
