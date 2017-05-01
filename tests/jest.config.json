@@ -1,0 +1,7 @@
+{
+  "testRegex": "[A-Za-z]+\\.spec\\.js$",
+  "setupFiles": [
+    "./tests/setup.js"
+  ],
+  "coverageDirectory": "tests"
+}
