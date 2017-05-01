@@ -138,7 +138,6 @@ test('toggleTempChange should switch temperature scale', async () => {
   const toggleTempChange = toggleTempChangeHandler(nodes);
   const temps = [{ celsius: 28.74, fahrenheit: 84 }];
   document.querySelector('.celsius').checked = true;
-  console.log(document.querySelector('.celsius').checked);
   toggleTempChange(temps);
   expect(node.textContent).toBe('84');
 });
