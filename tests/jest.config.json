@@ -8,5 +8,9 @@
   },
   "moduleFileExtensions": ["js"],
   "moduleDirectories": ["<rootDir>/node_modules", "<rootDir>/src"],
-  "coverageDirectory": "<rootDir>/tests"
+  "coverageDirectory": "<rootDir>/tests",
+  "transform": {
+    "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+    "\\.pug$": "<rootDir>/tests/preprocessors/pug-preprocessor.js"
+  }
 }
