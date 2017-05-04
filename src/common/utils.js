@@ -53,16 +53,16 @@ export class ResponseError extends ExtendableError {
 export function appendSuffix(day: number): string {
   return day === 1
     ? `${day}st`
-    : day === 2
-        ? `${day}nd`
-        : day === 3 ? `${day}rd` : day === 4 ? `${day}th` : `${day}th`;
+    : day === 2 ? `${day}nd` : day === 3 ? `${day}rd` : `${day}th`;
 }
 
 export function dateString(time: Date): string {
-  return `${week[time.getDay()]}, ` +
+  return (
+    `${week[time.getDay()]}, ` +
     `${month[time.getMonth()]} ` +
-    `${appendSuffix(time.getDate())}`;
+    `${appendSuffix(time.getDate())}`
+  );
 }
 
 export const convertFahrenheitToCelsius = (temp: number) =>
-  Math.round(temp * 1.8 + 32);
+  Math.round((temp - 32) * 5 / 9);

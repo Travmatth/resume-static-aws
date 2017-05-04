@@ -56,7 +56,8 @@ const classifyResponse = async (
   response: Response,
 ): Promise<PossiblyNestedStreams> => {
   if (response.status >= 400) {
-    console.error('Invalid response to GET stream request', response);
+    if (process.env.NODE_ENV != 'test')
+      console.error('Invalid response to GET stream request', response);
     return null;
   }
 

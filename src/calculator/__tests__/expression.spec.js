@@ -3,132 +3,172 @@ import { LogicUnit } from '../Models';
 
 let expr, infix;
 
-beforeEach(() => {
-  expr = new LogicUnit();
-  infix = [];
-});
+describe('Calculator Model', () => {
+  beforeEach(() => {
+    expr = new LogicUnit();
+    infix = [];
+  });
 
-//UPDATING
-test('decimals can be entered', () => {
-  expr.update('9');
-  expr.update('.');
-  expr.update('3');
-  expr.update('3');
-  expect(expr.expression[0]).toBe('9.33');
-});
+  //UPDATING
+  it('should be able to enter decimals', () => {
+    expr.update('9');
+    expr.update('.');
+    expr.update('3');
+    expr.update('3');
+    expect(expr.expression[0]).toBe('9.33');
+  });
 
-test('decimals can be deleted', () => {
-  expr.update('9');
-  expr.update('.');
-  expr.update('3');
-  expr.update('3');
-  expr.clear();
-  expect(expr.getExpression()).toBe('9.3');
-});
+  it('should remove digits from decimal position', () => {
+    expr.update('9');
+    expr.update('.');
+    expr.update('3');
+    expr.update('3');
+    expr.clear();
+    expect(expr.getExpression()).toBe('9.3');
+  });
 
-test('decimal can be deleted', () => {
-  expr.update('9');
-  expr.update('.');
-  expr.clear();
-  expect(expr.getExpression()).toBe('9');
-});
+  it('should remove decimal from integers', () => {
+    expr.update('9');
+    expr.update('.');
+    expr.clear();
+    expect(expr.getExpression()).toBe('9');
+  });
 
-//ARITHMETIC
-test('1 + 1 should work', () => {
-  expr.update('1');
-  expr.update('+');
-  expr.update('1');
-  expr.compute();
-  expect(expr.getExpression()).toBe('2');
-});
+  it('should remove integers entirely', () => {
+    expr.update('9');
+    expr.clear();
+    expect(expr.getExpression()).toBe('');
+  });
 
-test('2 * 3 should work', () => {
-  expr.update('2');
-  expr.update('*');
-  expr.update('3');
-  expr.compute();
-  expect(expr.getExpression()).toBe('6');
-});
+  it('should remove symbol from expression', () => {
+    expr.update('9');
+    expr.update('+');
+    expr.clear();
+    expect(expr.getExpression()).toBe('9');
+  });
 
-test('4 / 2 should work', () => {
-  expr.update('4');
-  expr.update('/');
-  expr.update('2');
-  expr.compute();
-  expect(expr.getExpression()).toBe('2');
-});
+  it('should drop digit from number', () => {
+    expr.update('9');
+    expr.update('+');
+    expr.update('9');
+    expr.update('9');
+    expr.clear();
+    expect(expr.getExpression()).toBe('9 + 9');
+  });
 
-test('4 - 2 should work', () => {
-  expr.update('4');
-  expr.update('-');
-  expr.update('2');
-  expr.compute();
-  expect(expr.getExpression()).toBe('2');
-});
+  //ARITHMETIC
+  it('1 + 1 should work', () => {
+    expr.update('1');
+    expr.update('+');
+    expr.update('1');
+    expr.compute();
+    expect(expr.getExpression()).toBe('2');
+  });
 
-test('6 / 3 * (4 - 6) + 5 should work', () => {
-  expr.update('6');
-  expr.update('/');
-  expr.update('3');
-  expr.update('*');
-  expr.update('(');
-  expr.update('4');
-  expr.update('-');
-  expr.update('6');
-  expr.update(')');
-  expr.update('+');
-  expr.update('5');
-  expr.compute();
-  expect(expr.getExpression()).toBe('1');
-});
+  it('2 * 3 should work', () => {
+    expr.update('2');
+    expr.update('*');
+    expr.update('3');
+    expr.compute();
+    expect(expr.getExpression()).toBe('6');
+  });
 
-//FUNCTIONS
-test('E symbol can be entered', async () => {
-  const expected = ['2.718'];
-  expr.update('E');
-  expect(expr.expression[0]).toBe(expected[0]);
-});
+  it('4 / 2 should work', () => {
+    expr.update('4');
+    expr.update('/');
+    expr.update('2');
+    expr.compute();
+    expect(expr.getExpression()).toBe('2');
+  });
 
-test('PI symbol can be entered', async () => {
-  const expected = ['3.14'];
-  expr.update('PI');
-  expect(expr.expression[0]).toBe(expected[0]);
-});
+  it('4 - 2 should work', () => {
+    expr.update('4');
+    expr.update('-');
+    expr.update('2');
+    expr.compute();
+    expect(expr.getExpression()).toBe('2');
+  });
 
-test('LN2 symbol can be entered', async () => {
-  const expected = ['0.693'];
-  expr.update('LN2');
-  expect(expr.expression[0]).toBe(expected[0]);
-});
+  it('6 / 3 * (4 - 6) + 5 should work', () => {
+    expr.update('6');
+    expr.update('/');
+    expr.update('3');
+    expr.update('*');
+    expr.update('(');
+    expr.update('4');
+    expr.update('-');
+    expr.update('6');
+    expr.update(')');
+    expr.update('+');
+    expr.update('5');
+    expr.compute();
+    expect(expr.getExpression()).toBe('1');
+  });
 
-test('SIN should compute correctly', () => {
-  expr.update('SIN');
-  expr.update('0');
-  expr.update(')');
-  expr.compute();
-  expect(expr.getExpression()).toBe('0');
-});
+  //FUNCTIONS
+  it('E symbol can be entered', async () => {
+    const expected = ['2.718'];
+    expr.update('E');
+    expect(expr.expression[0]).toBe(expected[0]);
+  });
 
-test('COS should compute correctly', () => {
-  expr.update('COS');
-  expr.update('0');
-  expr.update(')');
-  expr.compute();
-  expect(expr.getExpression()).toBe('1');
-});
+  it('PI symbol can be entered', async () => {
+    const expected = ['3.14'];
+    expr.update('PI');
+    expect(expr.expression[0]).toBe(expected[0]);
+  });
 
-test('TAN should compute correctly', () => {
-  expr.update('TAN');
-  expr.update('1');
-  expr.update(')');
-  expr.compute();
-  expect(expr.getExpression()).toBe('1.55741');
-});
+  it('LN2 symbol can be entered', async () => {
+    const expected = ['0.693'];
+    expr.update('LN2');
+    expect(expr.expression[0]).toBe(expected[0]);
+  });
 
-test('LOG should compute correctly', () => {
-  expr.update('LOG');
-  expr.update('1');
-  expr.update(')');
-  expr.compute();
-  expect(expr.getExpression()).toBe('0');
+  it('SIN should compute correctly', () => {
+    expr.update('SIN');
+    expr.update('0');
+    expr.update(')');
+    expr.compute();
+    expect(expr.getExpression()).toBe('0');
+  });
+
+  it('COS should compute correctly', () => {
+    expr.update('COS');
+    expr.update('0');
+    expr.update(')');
+    expr.compute();
+    expect(expr.getExpression()).toBe('1');
+  });
+
+  it('TAN should compute correctly', () => {
+    expr.update('TAN');
+    expr.update('1');
+    expr.update(')');
+    expr.compute();
+    expect(expr.getExpression()).toBe('1.55741');
+  });
+
+  it('LOG should compute correctly', () => {
+    expr.update('LOG');
+    expr.update('1');
+    expr.update(')');
+    expr.compute();
+    expect(expr.getExpression()).toBe('0');
+  });
+
+  it('should throw on badly formatted expression', () => {
+    expr.update('1');
+    expr.update('+');
+    const msg = 'Expected "(", [a-zA-Z], or real but end of input found.';
+    expect(expr.compute()).toBe(msg);
+  });
+
+  it('delete should clear internal state', () => {
+    expr.update('1');
+    expr.update('+');
+    expr.delete();
+    expect(expr.getExpression()).toBe('');
+  });
+
+  // lines 28,29,57,75
 });

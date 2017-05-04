@@ -1,12 +1,12 @@
 {
   "testRegex": "[A-Za-z]+\\.spec\\.js$",
   "setupFiles": [
-    "<rootDir>/tests/setup.js"
+    "<rootDir>/tests/setup/setup.js"
   ],
   "moduleNameMapper": {
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tests/fileMock.js"
   },
   "moduleFileExtensions": ["js"],
   "moduleDirectories": ["<rootDir>/node_modules", "<rootDir>/src"],
-  "coverageDirectory": "<rootDir>/tests"
+  "coverageDirectory": "<rootDir>/tests/coverage"
 }
