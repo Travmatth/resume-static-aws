@@ -44,7 +44,6 @@ export default class WikiViewer {
       .then(checkHeaders)
       .then(processWikis)
       .catch(err => {
-        console.error('Fetch failed', err);
         return null;
       });
   }

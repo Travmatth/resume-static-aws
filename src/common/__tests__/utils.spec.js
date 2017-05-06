@@ -59,8 +59,8 @@ describe('Shared utility code', () => {
   });
 
   it('dateString should convert date -> string', () => {
-    const date = new Date();
-    expect(dateString(date)).toBe('Wednesday, May 3rd');
+    const date = new Date(1493915890641);
+    expect(dateString(date)).toBe('Thursday, May 4th');
   });
 
   it('convertFahrenheitToCelsius should convert fahrenheit -> celsius', () => {

@@ -13,7 +13,7 @@ export const data: Weather = {
       weather: 'Clear',
       cloud: 36,
       temp: {
-        celsius: 84,
+        celsius: -2,
         fahrenheit: 28.74,
       },
       time: '1:00',
@@ -27,7 +27,7 @@ export const data: Weather = {
       weather: 'Snow',
       cloud: 20,
       temp: {
-        celsius: 82,
+        celsius: -2,
         fahrenheit: 27.82,
       },
       time: '4:00',
@@ -41,7 +41,7 @@ export const data: Weather = {
       weather: 'Clear',
       cloud: 0,
       temp: {
-        celsius: 75,
+        celsius: -4,
         fahrenheit: 24.08,
       },
       time: '7:00',
@@ -55,7 +55,7 @@ export const data: Weather = {
       weather: 'Clouds',
       cloud: 12,
       temp: {
-        celsius: 76,
+        celsius: -4,
         fahrenheit: 24.48,
       },
       time: '10:00',
@@ -69,7 +69,7 @@ export const data: Weather = {
       weather: 'Clouds',
       cloud: 24,
       temp: {
-        celsius: 77,
+        celsius: -4,
         fahrenheit: 24.8,
       },
       time: '1:00',
@@ -83,7 +83,7 @@ export const data: Weather = {
       weather: 'Clear',
       cloud: 36,
       temp: {
-        celsius: 75,
+        celsius: -5,
         fahrenheit: 23.62,
       },
       time: '4:00',
@@ -97,7 +97,7 @@ export const data: Weather = {
       weather: 'Clear',
       cloud: 44,
       temp: {
-        celsius: 74,
+        celsius: -5,
         fahrenheit: 23.46,
       },
       time: '7:00',
@@ -111,7 +111,7 @@ export const data: Weather = {
       weather: 'Clear',
       cloud: 48,
       temp: {
-        celsius: 77,
+        celsius: -4,
         fahrenheit: 24.75,
       },
       time: '10:00',
@@ -125,7 +125,7 @@ export const data: Weather = {
       weather: 'Clear',
       cloud: 56,
       temp: {
-        celsius: 78,
+        celsius: -4,
         fahrenheit: 25.64,
       },
       time: '1:00',
@@ -139,7 +139,7 @@ export const data: Weather = {
       weather: 'Clear',
       cloud: 64,
       temp: {
-        celsius: 79,
+        celsius: -3,
         fahrenheit: 26.21,
       },
       time: '4:00',
@@ -153,7 +153,7 @@ export const data: Weather = {
       weather: 'Clouds',
       cloud: 76,
       temp: {
-        celsius: 79,
+        celsius: -3,
         fahrenheit: 26.33,
       },
       time: '7:00',
@@ -167,7 +167,7 @@ export const data: Weather = {
       weather: 'Clear',
       cloud: 8,
       temp: {
-        celsius: 82,
+        celsius: -2,
         fahrenheit: 27.9,
       },
       time: '10:00',
@@ -181,7 +181,7 @@ export const data: Weather = {
       weather: 'Clear',
       cloud: 0,
       temp: {
-        celsius: 86,
+        celsius: -1,
         fahrenheit: 30.07,
       },
       time: '1:00',
@@ -195,7 +195,7 @@ export const data: Weather = {
       weather: 'Clouds',
       cloud: 20,
       temp: {
-        celsius: 85,
+        celsius: -2,
         fahrenheit: 29.2,
       },
       time: '4:00',
@@ -209,7 +209,7 @@ export const data: Weather = {
       weather: 'Clear',
       cloud: 8,
       temp: {
-        celsius: 78,
+        celsius: -4,
         fahrenheit: 25.58,
       },
       time: '7:00',
@@ -223,7 +223,7 @@ export const data: Weather = {
       weather: 'Clouds',
       cloud: 64,
       temp: {
-        celsius: 79,
+        celsius: -3,
         fahrenheit: 26.36,
       },
       time: '10:00',
@@ -237,7 +237,7 @@ export const data: Weather = {
       weather: 'Snow',
       cloud: 88,
       temp: {
-        celsius: 80,
+        celsius: -3,
         fahrenheit: 26.71,
       },
       time: '1:00',
@@ -251,7 +251,7 @@ export const data: Weather = {
       weather: 'Snow',
       cloud: 88,
       temp: {
-        celsius: 81,
+        celsius: -3,
         fahrenheit: 27.38,
       },
       time: '4:00',
@@ -265,7 +265,7 @@ export const data: Weather = {
       weather: 'Snow',
       cloud: 92,
       temp: {
-        celsius: 84,
+        celsius: -2,
         fahrenheit: 29.02,
       },
       time: '7:00',
@@ -279,7 +279,7 @@ export const data: Weather = {
       weather: 'Rain',
       cloud: 92,
       temp: {
-        celsius: 92,
+        celsius: 1,
         fahrenheit: 33.08,
       },
       time: '10:00',
@@ -293,7 +293,7 @@ export const data: Weather = {
       weather: 'Rain',
       cloud: 100,
       temp: {
-        celsius: 94,
+        celsius: 1,
         fahrenheit: 34.66,
       },
       time: '1:00',
@@ -307,7 +307,7 @@ export const data: Weather = {
       weather: 'Rain',
       cloud: 92,
       temp: {
-        celsius: 97,
+        celsius: 2,
         fahrenheit: 35.84,
       },
       time: '4:00',
@@ -321,7 +321,7 @@ export const data: Weather = {
       weather: 'Rain',
       cloud: 92,
       temp: {
-        celsius: 98,
+        celsius: 3,
         fahrenheit: 36.65,
       },
       time: '7:00',
@@ -335,7 +335,7 @@ export const data: Weather = {
       weather: 'Rain',
       cloud: 100,
       temp: {
-        celsius: 101,
+        celsius: 3,
         fahrenheit: 38.22,
       },
       time: '10:00',
@@ -349,7 +349,7 @@ export const data: Weather = {
       weather: 'Rain',
       cloud: 92,
       temp: {
-        celsius: 110,
+        celsius: 6,
         fahrenheit: 43.09,
       },
       time: '1:00',
@@ -363,7 +363,7 @@ export const data: Weather = {
       weather: 'Rain',
       cloud: 92,
       temp: {
-        celsius: 119,
+        celsius: 9,
         fahrenheit: 48.14,
       },
       time: '4:00',
@@ -377,7 +377,7 @@ export const data: Weather = {
       weather: 'Rain',
       cloud: 92,
       temp: {
-        celsius: 127,
+        celsius: 12,
         fahrenheit: 52.94,
       },
       time: '7:00',
@@ -391,7 +391,7 @@ export const data: Weather = {
       weather: 'Rain',
       cloud: 92,
       temp: {
-        celsius: 134,
+        celsius: 14,
         fahrenheit: 56.59,
       },
       time: '10:00',
@@ -405,7 +405,7 @@ export const data: Weather = {
       weather: 'Rain',
       cloud: 64,
       temp: {
-        celsius: 133,
+        celsius: 14,
         fahrenheit: 56.35,
       },
       time: '1:00',
@@ -419,7 +419,7 @@ export const data: Weather = {
       weather: 'Rain',
       cloud: 92,
       temp: {
-        celsius: 122,
+        celsius: 10,
         fahrenheit: 50.01,
       },
       time: '4:00',
@@ -433,7 +433,7 @@ export const data: Weather = {
       weather: 'Rain',
       cloud: 92,
       temp: {
-        celsius: 112,
+        celsius: 7,
         fahrenheit: 44.39,
       },
       time: '7:00',
@@ -447,7 +447,7 @@ export const data: Weather = {
       weather: 'Clouds',
       cloud: 92,
       temp: {
-        celsius: 103,
+        celsius: 4,
         fahrenheit: 39.65,
       },
       time: '10:00',
@@ -461,7 +461,7 @@ export const data: Weather = {
       weather: 'Clouds',
       cloud: 68,
       temp: {
-        celsius: 94,
+        celsius: 1,
         fahrenheit: 34.63,
       },
       time: '1:00',
@@ -475,7 +475,7 @@ export const data: Weather = {
       weather: 'Clear',
       cloud: 0,
       temp: {
-        celsius: 86,
+        celsius: -1,
         fahrenheit: 29.74,
       },
       time: '4:00',
@@ -489,7 +489,7 @@ export const data: Weather = {
       weather: 'Clear',
       cloud: 0,
       temp: {
-        celsius: 81,
+        celsius: -3,
         fahrenheit: 27.43,
       },
       time: '7:00',
@@ -503,7 +503,7 @@ export const data: Weather = {
       weather: 'Clear',
       cloud: 0,
       temp: {
-        celsius: 85,
+        celsius: -1,
         fahrenheit: 29.65,
       },
       time: '10:00',
@@ -517,7 +517,7 @@ export const data: Weather = {
       weather: 'Clear',
       cloud: 0,
       temp: {
-        celsius: 88,
+        celsius: -0,
         fahrenheit: 31.2,
       },
       time: '1:00',
@@ -531,7 +531,7 @@ export const data: Weather = {
       weather: 'Clouds',
       cloud: 12,
       temp: {
-        celsius: 87,
+        celsius: -1,
         fahrenheit: 30.38,
       },
       time: '4:00',
