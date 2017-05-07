@@ -3,9 +3,9 @@
 
 const pages = [
   'index',
-  'blog/index',
+  //'blog/index',
   'calculator/index',
-  'localweather/index',
+  //'localweather/index',
   // Commented out for compilation perf during dev
   // 'pomodoro/index',
   // 'randomquote/index',

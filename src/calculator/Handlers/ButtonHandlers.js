@@ -1,4 +1,4 @@
-import LogicUnit from '../Models';
+import { LogicUnit } from '../Models';
 
 const logic = new LogicUnit();
 
@@ -7,7 +7,7 @@ const refreshHandler = (outputWindow: HTMLElement) => (msg: ?string): void => {
 };
 
 /* called when used selects a glyph */
-const keyPresshandler = (outputWindow: HTMLElement) => (val: Event): void => {
+const keyPressHandler = (outputWindow: HTMLElement) => (val: Event): void => {
   const { key } = val.target.dataset;
   const refresh = refreshHandler(outputWindow);
 
