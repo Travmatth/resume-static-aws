@@ -8,7 +8,7 @@
   },
   "transform": {
     "^.+\\.js?$": "babel-jest",
-    "\\.pug$": "<rootDir>/tests/preprocessor.js"
+    ".*\\.pug$": "<rootDir>/tests/preprocessor.js"
   },
   "moduleFileExtensions": ["js"],
   "moduleDirectories": ["<rootDir>/node_modules", "<rootDir>/src"],
