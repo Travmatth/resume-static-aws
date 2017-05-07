@@ -10,6 +10,8 @@ import FlowStatusWebpackPlugin from 'flow-status-webpack-plugin';
 
 const newConfigs = pageConfigs(page => {
   return {
+    devtool: 'cheap-eval-source-map',
+
     module: {
       rules: [
         {
