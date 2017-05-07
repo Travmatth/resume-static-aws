@@ -1,0 +1,18 @@
+extends ../common/layout
+
+block heading
+	script(src=htmlWebpackPlugin.files.chunks['wikiviewer/index'].entry)
+	link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
+
+block content
+	h1 #{JSON.stringify(htmlWebpackPlugin)}
+	div.view
+	div.center-panel
+		input#search-text
+		button#search-btn
+		button#random-btn
+	div.result-container
+		div.heading
+			h1
+			h2
+		p#anchor Some Text
