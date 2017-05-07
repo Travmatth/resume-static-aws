@@ -1,6 +1,8 @@
 describe('POC', () => {
   beforeAll(() => {
-    document.body.innerHTML = require('../index.pug');
+    const html = require('../index.pug');
+    console.log(html);
+    document.body.innerHTML = html;
   });
 
   it('exists', () => {

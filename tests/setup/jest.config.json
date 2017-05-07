@@ -6,6 +6,10 @@
   "moduleNameMapper": {
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tests/fileMock.js"
   },
+  "transform": {
+    "^.+\\.js?$": "babel-jest",
+    "\\.pug$": "<rootDir>/tests/preprocessor.js"
+  },
   "moduleFileExtensions": ["js"],
   "moduleDirectories": ["<rootDir>/node_modules", "<rootDir>/src"],
   "coverageDirectory": "<rootDir>/tests/coverage"
