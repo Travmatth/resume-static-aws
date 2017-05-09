@@ -1,8 +1,9 @@
 extends ../common/layout
 
 block heading
-	script(src=htmlWebpackPlugin.files.chunks['localweather/index'].entry)
-	link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
+	if (htmlWebpackPlugin)
+		script(src=htmlWebpackPlugin.files.chunks['localweather/index'].entry)
+		link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
 
 block content
 	include ../common/nav.pug
@@ -11,9 +12,9 @@ block content
 		div
 			h1.heading
 			div.control-bar
-				input.celsius(name="temp", type="radio") 
+				input.celsius(name="temp", type="radio")
 				|Celsius
-				input.fahrenheit(name="temp", type="radio", checked="true") 
+				input.fahrenheit(name="temp", type="radio", checked="true")
 				|Fahrenheit
 
 		table
@@ -29,265 +30,265 @@ block content
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather
 				tr.cell.hide
 					td.day
 					td.time
 					td.measurement
-					td.icon 
+					td.icon
 						img
 					td.weather

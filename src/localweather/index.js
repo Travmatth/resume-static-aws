@@ -7,7 +7,7 @@ let cells: NodeList<HTMLInputElement>;
 let tempToggles: NodeList<HTMLInputElement>;
 
 if (document !== undefined) {
-  contentLoadedListener = async () => {
+  document.addEventListener('DOMContentLoaded', () => {
     toggles = document.querySelectorAll('.measurement');
     header = document.querySelector('.heading');
     cells = document.querySelectorAll('.cell');
@@ -22,9 +22,7 @@ if (document !== undefined) {
 
     const getWeather = getWeatherHandler(header, cells, tempToggles);
     navigator.geolocation.getCurrentPosition(getWeather);
-  };
-
-  document.addEventListener('DOMContentLoaded', contentLoadedListener);
+  });
 }
 
 export default contentLoadedListener;

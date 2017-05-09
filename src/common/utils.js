@@ -66,3 +66,10 @@ export function dateString(time: Date): string {
 
 export const convertFahrenheitToCelsius = (temp: number) =>
   Math.round((temp - 32) * 5 / 9);
+
+export const syntheticDispatch = (element: any, type: string, data = {}) => {
+  var event = document.createEvent('Event');
+  event.initEvent(type, true, true);
+
+  element.dispatchEvent({ data, ...event });
+};
