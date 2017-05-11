@@ -4,7 +4,7 @@
 import { syntheticDispatch } from 'common/utils';
 import * as Handlers from '../Handlers';
 
-describe('Localweather App', () => {
+describe.only('Localweather App', () => {
   beforeEach(() => {
     global.navigator = global.navigator || {};
     global.navigator.geolocation = {};

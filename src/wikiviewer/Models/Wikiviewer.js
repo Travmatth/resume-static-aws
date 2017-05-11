@@ -21,16 +21,18 @@ export default class WikiViewer {
   updateDOM(searches: Searches, headings: Headings, paragraphs: Paragraphs) {
     if (searches) {
       let node, result, imgNode;
+
       for (var i = 0; i < headings.length; i++) {
         let wiki = searches[i];
         const page = `https://en.wikipedia.org/?curid=${wiki.pageid}`;
-
-        ((headings[i].children[1]: any): HTMLAnchorElement).href = page;
-        headings[i].children[0].textContent = wiki.title;
-        paragraphs[i].textContent = wiki.extract.replace(
+        const paragraph = wiki.extract.replace(
           /may refer to:/,
-          'disambiguation',
+          'disambiguation:',
         );
+
+        headings[i].children[0].textContent = wiki.title;
+        ((headings[i].children[1]: any): HTMLAnchorElement).href = page;
+        paragraphs[i].textContent = paragraph;
       }
     }
   }

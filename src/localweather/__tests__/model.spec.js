@@ -9,20 +9,13 @@ import { OPEN_WEATHER_APPID } from 'common/api_keys';
   Model under test
 */
 
-import {
-  getWeatherHandler,
-  fetchWeather,
-  openweatherApiParams,
-  endpoint,
-  updateTableRows,
-  toggleTempChangeHandler,
-} from '../Handlers';
+import { fetchWeather, stripDateIfRedundant } from '../Handlers';
 import contentLoadedListener from '../index';
 
 /*
   Test
 */
-describe('Localweather Model', () => {
+describe('Localweather API', () => {
   afterEach(() => {
     fetch.resetMocks();
   });
@@ -45,5 +38,21 @@ describe('Localweather Model', () => {
     } catch (err) {
       expect(err.response.status).toBe(404);
     }
+  });
+
+  it('stripDateIfRedundant should include first appearance of date', () => {
+    const first = { day: 'a', foo: 'bar' };
+    const second = { day: 'b', foo: 'bar' };
+
+    const daily = stripDateIfRedundant(second, 1, [first, second]);
+    expect(daily.day).toBe(second.day);
+  });
+
+  it('stripDateIfRedundant should ignore redunant dates', () => {
+    const first = { day: 'a', foo: 'bar' };
+    const second = { day: 'a', foo: 'bar' };
+
+    const daily = stripDateIfRedundant(second, 1, [first, second]);
+    expect(daily.day).toBe('');
   });
 });

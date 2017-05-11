@@ -18,6 +18,7 @@ import {
 } from './Handlers';
 
 export {
+  tempScale,
   getWeatherHandler,
   fetchWeather,
   updateTableRows,

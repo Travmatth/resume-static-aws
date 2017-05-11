@@ -17,7 +17,7 @@ export const register = () => {
   ): any): HTMLInputElement);
 
   // Each Result has it's own heading
-  const headings = ((document.getElementsByTagName('h2'): any): HTMLCollection<
+  const headings = ((document.querySelectorAll('div.heading'): any): NodeList<
     HTMLElement
   >);
   // Each Result has it's own paragraph
@@ -32,6 +32,6 @@ export const register = () => {
   random.onclick = wikiView.randomHandler(window);
 };
 
-if (process.env.NODE_ENV !== 'ava') {
+if (global.document !== undefined) {
   document.addEventListener('DOMContentLoaded', register);
 }

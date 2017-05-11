@@ -1,8 +1,9 @@
 extends ../common/layout
 
 block heading
-	script(src=htmlWebpackPlugin.files.chunks['wikiviewer/index'].entry)
-	link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
+	if (htmlWebpackPlugin)
+		script(src=htmlWebpackPlugin.files.chunks['wikiviewer/index'].entry)
+		link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
 
 block content
 	h1 #{JSON.stringify(htmlWebpackPlugin)}

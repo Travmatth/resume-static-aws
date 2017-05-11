@@ -16,10 +16,11 @@ import {
   endpoint,
   updateTableRows,
   toggleTempChangeHandler,
+  tempScale,
 } from '../Handlers';
 import contentLoadedListener from '../index';
 
-test('Localweather Handlers', () => {
+describe('Localweather Handlers', () => {
   afterEach(() => {
     fetch.resetMocks();
   });
@@ -50,6 +51,10 @@ test('Localweather Handlers', () => {
     expect(temp.celsius).toBe(temperatureElement);
     expect(icon).toBe(imgElement);
     expect(description).toBe(descriptionElement);
+  });
+
+  it('tempScale should return state of radio buttons', () => {
+    expect(tempScale()).toBe('fahrenheit');
   });
 
   it('toggleTempChange should switch temperature scale', async () => {

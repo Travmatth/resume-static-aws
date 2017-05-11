@@ -1,7 +1,7 @@
 /* @flow */
 'use strict';
 
-import WikiViewer from './WikiViewer';
+import WikiViewer, { checkHeaders, processWikis } from './WikiViewer';
 import { endpoint, params } from './constants';
 
-export { WikiViewer, endpoint, params };
+export { WikiViewer, endpoint, params, checkHeaders, processWikis };
