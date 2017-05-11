@@ -1,4 +1,8 @@
 /* @flow */
 'use strict';
 
-test('', () => {});
+describe('TicTacToe Score', () => {
+  it('', () => {
+    expect(true).toBe(false);
+  });
+});

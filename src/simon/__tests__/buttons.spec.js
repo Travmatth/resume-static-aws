@@ -1,6 +1,8 @@
 /* @flow */
 'use strict';
 
-test('TEST', () => {
-  expect(true).toBe(true);
+describe('Simon Handlers', () => {
+  it('', () => {
+    expect(true).toBe(false);
+  });
 });

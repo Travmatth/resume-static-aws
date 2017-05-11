@@ -1,4 +1,8 @@
 /* @flow */
 'use strict';
 
-test('', () => {});
+describe('Simon GameCycle', () => {
+  it('', () => {
+    expect(true).toBe(false);
+  });
+});

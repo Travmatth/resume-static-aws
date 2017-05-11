@@ -1,4 +1,8 @@
 /* @flow */
 'use strict';
 
-test('', () => {});
+describe('Simon Game Timer', () => {
+  it('', () => {
+    expect(true).toBe(false);
+  });
+});

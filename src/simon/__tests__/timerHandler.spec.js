@@ -1,4 +1,8 @@
 /* @flow */
 'use strict';
 
-test('', () => {});
+describe('Simon Game Timer Handler', () => {
+  it('', () => {
+    expect(true).toBe(false);
+  });
+});

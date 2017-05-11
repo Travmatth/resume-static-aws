@@ -1,4 +1,8 @@
 /* @flow */
 'use strict';
 
-test('', () => {});
+describe('Pomodoro Model', () => {
+  it('', () => {
+    expect(true).toBe(false);
+  });
+});

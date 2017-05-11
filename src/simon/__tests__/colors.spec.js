@@ -1,6 +1,8 @@
 /* @flow */
 'use strict';
 
-test('', () => {
-  expect(true).toBe(true);
+describe('Simon Colors', () => {
+  it('', () => {
+    expect(true).toBe(true);
+  });
 });

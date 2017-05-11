@@ -1,8 +1,6 @@
 /* @flow */
 'use strict';
 
-import jsdom from 'jsdom';
-import fetchMock from 'fetch-mock';
 import {
   validUser,
   nonexistentUser,

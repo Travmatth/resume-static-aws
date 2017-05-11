@@ -1,4 +1,8 @@
 /* @flow */
 'use strict';
 
-test('', () => {});
+describe('RandomQuote Model', () => {
+  it('', () => {
+    expect(true).toBe(false);
+  });
+});

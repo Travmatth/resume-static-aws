@@ -1,4 +1,8 @@
 /* @flow */
 'use strict';
 
-test('', () => {});
+describe('TicTacToe Manager', () => {
+  it('', () => {
+    expect(true).toBe(false);
+  });
+});
