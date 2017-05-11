@@ -3,14 +3,14 @@ import { week, month } from './constants';
 import ExtendableError from 'extendable-error-class';
 
 //insert npm joke here
-export const padLeft = (number: string, columns: number) => {
+const padLeft = (number: string, columns: number) => {
   while (number.length < columns) {
     number = `0${number}`;
   }
   return number;
 };
 
-export const parseTimeToText = (elapsedTime: number) => {
+const parseTimeToText = (elapsedTime: number) => {
   const time = new Date(elapsedTime);
   const minutes = padLeft(time.getMinutes().toString(), 2);
   const seconds = padLeft(time.getSeconds().toString(), 2);
@@ -21,9 +21,9 @@ export const parseTimeToText = (elapsedTime: number) => {
 const SEC_IN_MINUTES = 60;
 const kSEC_IN_SECONDS = 1000;
 
-export const scale = (val: number) => val * kSEC_IN_SECONDS * SEC_IN_MINUTES;
+const scale = (val: number) => val * kSEC_IN_SECONDS * SEC_IN_MINUTES;
 
-export function serialize(url: string, params: Object) {
+const serialize = (url: string, params: Object) => {
   const query = [];
 
   if (params !== undefined) url += '?';
@@ -39,9 +39,9 @@ export function serialize(url: string, params: Object) {
   }
 
   return url + query.join('&');
-}
+};
 
-export class ResponseError extends ExtendableError {
+class ResponseError extends ExtendableError {
   response: Response;
 
   constructor(message: string, response: Response) {
@@ -50,26 +50,38 @@ export class ResponseError extends ExtendableError {
   }
 }
 
-export function appendSuffix(day: number): string {
+const appendSuffix = (day: number) => {
   return day === 1
     ? `${day}st`
     : day === 2 ? `${day}nd` : day === 3 ? `${day}rd` : `${day}th`;
-}
+};
 
-export function dateString(time: Date): string {
+const dateString = (time: Date) => {
   return (
     `${week[time.getDay()]}, ` +
     `${month[time.getMonth()]} ` +
     `${appendSuffix(time.getDate())}`
   );
-}
+};
 
-export const convertFahrenheitToCelsius = (temp: number) =>
+const convertFahrenheitToCelsius = (temp: number) =>
   Math.round((temp - 32) * 5 / 9);
 
-export const syntheticDispatch = (element: any, type: string, data = {}) => {
+const syntheticDispatch = (element: any, type: string, data = {}) => {
   var event = document.createEvent('Event');
   event.initEvent(type, true, true);
 
   element.dispatchEvent({ data, ...event });
+};
+
+export {
+  padLeft,
+  parseTimeToText,
+  scale,
+  serialize,
+  ResponseError,
+  appendSuffix,
+  dateString,
+  convertFahrenheitToCelsius,
+  syntheticDispatch,
 };
