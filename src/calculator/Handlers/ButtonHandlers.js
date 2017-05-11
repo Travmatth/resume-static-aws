@@ -1,3 +1,5 @@
+/* @flow */
+
 import { LogicUnit } from '../Models';
 
 const logic = new LogicUnit();

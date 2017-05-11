@@ -17,8 +17,8 @@ const write = files => {
       if (val === str) console.log('match found @: ', file, i);
       if (file === 'src/blog/__tests__/handlers.spec.js') {
         text.splice(i, 1);
-        console.log(text.join('\n'));
       }
+
       return val === str;
     });
 

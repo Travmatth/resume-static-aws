@@ -1,17 +1,12 @@
+/* @flow */
 import { toggleTempChangeHandler, getWeatherHandler } from './Handlers';
-
-let contentLoadedListener: () => void;
-let toggles: NodeList<HTMLInputElement>;
-let header: NodeList<HTMLInputElement>;
-let cells: NodeList<HTMLInputElement>;
-let tempToggles: NodeList<HTMLInputElement>;
 
 if (document !== undefined) {
   document.addEventListener('DOMContentLoaded', () => {
-    toggles = document.querySelectorAll('.measurement');
-    header = document.querySelector('.heading');
-    cells = document.querySelectorAll('.cell');
-    tempToggles = ((document.querySelectorAll('input'): any): NodeList<
+    const toggles = document.querySelectorAll('.measurement');
+    const header = document.querySelector('.heading');
+    const cells = document.querySelectorAll('.cell');
+    const tempToggles = ((document.querySelectorAll('input'): any): NodeList<
       HTMLInputElement
     >);
 
@@ -24,5 +19,3 @@ if (document !== undefined) {
     navigator.geolocation.getCurrentPosition(getWeather);
   });
 }
-
-export default contentLoadedListener;

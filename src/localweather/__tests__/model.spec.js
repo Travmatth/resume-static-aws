@@ -1,5 +1,4 @@
 /* @flow */
-'use strict';
 
 import { response, data, url } from './mockdata';
 import { ResponseError, serialize } from 'common/utils';

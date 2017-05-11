@@ -1,5 +1,4 @@
 /* @flow */
-'use strict';
 
 import common from './common';
 import pageConfigs from './directory';

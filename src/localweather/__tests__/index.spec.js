@@ -1,5 +1,4 @@
 /* @flow */
-'use strict';
 
 import { syntheticDispatch } from 'common/utils';
 import * as Handlers from '../Handlers';

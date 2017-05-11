@@ -1,5 +1,4 @@
 /* @flow */
-'use strict';
 
 import { WikiViewer, endpoint } from '../Models';
 import { ResponseError } from 'common/utils';

@@ -1,2 +1,7 @@
 /* @flow */
-document.addEventListener('DOMContentLoaded', () =>  console.log('randomquote.js'));
+
+if (document !== undefined) {
+  document.addEventListener('DOMContentLoaded', () =>
+    console.log('randomquote.js'),
+  );
+}

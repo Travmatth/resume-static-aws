@@ -1,5 +1,4 @@
 /* @flow */
-'use strict';
 
 import { OPEN_WEATHER_APPID } from 'common/api_keys';
 

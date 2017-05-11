@@ -1,5 +1,4 @@
 /* @flow */
-'use strict';
 
 import type { WikiSearchResult, WikiPage } from '../wikiviewer.types';
 

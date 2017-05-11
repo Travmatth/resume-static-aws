@@ -1,5 +1,4 @@
 /* @flow */
-'use strict';
 
 import { endpoint, params } from './constants';
 import type {

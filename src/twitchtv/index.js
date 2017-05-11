@@ -1,10 +1,9 @@
 /* @flow */
-'use strict';
 
 import { fetchAllProfiles, users } from './Handlers';
 
-const contentLoadedListener = async () => {
-  const profiles = await fetchAllProfiles(users);
-};
-
-document.addEventListener('DOMContentLoaded', contentLoadedListener);
+if (document !== undefined) {
+  document.addEventListener('DOMContentLoaded', async () => {
+    const profiles = await fetchAllProfiles(users);
+  });
+}

@@ -1,3 +1,4 @@
+/* @flow */
 import type { Handler } from '../tictactoe.types';
 
 const createPlayView = (

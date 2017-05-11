@@ -1,5 +1,4 @@
 /* @flow */
-'use strict';
 
 // Used by the postcss plugin to set autoprefixing of css
 module.exports = {

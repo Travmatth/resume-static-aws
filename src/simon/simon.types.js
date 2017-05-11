@@ -1,5 +1,4 @@
 /* @flow */
-'use strict';
 
 const Color = { red: 'red', green: 'green', yellow: 'yellow', blue: 'blue' };
 export type Sound = 'won' | 'lost' | 'start';

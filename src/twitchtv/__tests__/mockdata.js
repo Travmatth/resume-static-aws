@@ -1,5 +1,4 @@
 /* @flow */
-'use strict';
 
 import type { NullUser, Channel, User, UserStream } from '../twitchtv.types';
 

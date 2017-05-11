@@ -1,5 +1,4 @@
 /* @flow */
-'use strict';
 import { WikiViewer, checkHeaders, processWikis } from '../Models';
 
 describe('WikiViewer Model', () => {

@@ -1,5 +1,4 @@
 /* @flow */
-'use strict';
 
 declare type ChannelLink = {
   'self': string,

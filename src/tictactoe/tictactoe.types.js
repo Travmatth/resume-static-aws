@@ -1,5 +1,4 @@
 /* @flow */
-'use strict';
 export const Side = { X: 'X', O: 'O' };
 export type ScoreCard = {| X: number, O: number |};
 export type WinningBoard = Array<Array<boolean>>;

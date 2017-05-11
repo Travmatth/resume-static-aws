@@ -39,15 +39,11 @@ if (document !== undefined) {
     );
     strict.addEventListener('click', strictHandler(simon));
 
-    ['red', 'blue', 'green', 'yellow'].forEach(color => {
-      const click = clickHandler(
-        color,
-        colorButtons,
-        updateScore,
-        simon,
-        timer,
+    Object.keys(buttons).forEach(color => {
+      buttons[color].addEventListener(
+        'click',
+        clickHandler(color, colorButtons, updateScore, simon, timer),
       );
-      buttons[color].addEventListener('click', click);
     });
   });
 }

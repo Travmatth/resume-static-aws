@@ -1,5 +1,4 @@
 /* @flow */
-'use strict';
 
 // import webpack from 'webpack'
 import webpack from 'webpack';

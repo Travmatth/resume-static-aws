@@ -1,2 +1,2 @@
 /* @flow */
-document.addEventListener('DOMContentLoaded', () =>  console.log('blog.js'));
+document.addEventListener('DOMContentLoaded', () => console.log('blog.js'));

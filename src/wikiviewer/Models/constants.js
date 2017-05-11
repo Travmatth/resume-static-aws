@@ -1,5 +1,4 @@
 /* @flow */
-'use strict';
 
 const endpoint = `https://en.wikipedia.org/w/api.php`;
 

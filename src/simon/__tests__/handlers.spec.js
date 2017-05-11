@@ -1,5 +1,4 @@
 /* @flow */
-'use strict';
 
 describe('Simon Handlers', () => {
   it('', () => {
