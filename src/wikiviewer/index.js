@@ -32,6 +32,6 @@ export const register = () => {
   random.onclick = wikiView.randomHandler(window);
 };
 
-if (global.document !== undefined) {
+if (document !== undefined) {
   document.addEventListener('DOMContentLoaded', register);
 }

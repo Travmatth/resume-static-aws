@@ -9,7 +9,7 @@ import {
   ColorHandler,
 } from './Handlers';
 
-if (global.document !== undefined) {
+if (document !== undefined) {
   document.addEventListener('DOMContentLoaded', () => {
     const timer = new Timer();
     const simon = new Simon();

@@ -37,7 +37,7 @@ const render = (
   root.appendChild(current);
 };
 
-if (global.document !== undefined) {
+if (document !== undefined) {
   const game = new Game();
   const { createDocumentFragment } = document;
 

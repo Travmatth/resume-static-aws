@@ -1,7 +1,7 @@
 /* @flow */
 import { Pomodoro } from './Models';
 
-if (global.document !== undefined) {
+if (document !== undefined) {
   document.addEventListener('DOMContentLoaded', bindToListeners);
 }
 
