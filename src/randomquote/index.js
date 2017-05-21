@@ -2,10 +2,10 @@
 
 if (document !== undefined) {
   document.addEventListener('DOMContentLoaded', () => {
-		const nextQuote = fetchQuoteHandler(document.getElementById('container'))
-		const quote = document.getElementById('fetch-quote')
-		quote.addEventListener('click', nextQuote)
-	};
+    const nextQuote = fetchQuoteHandler(document.getElementById('container'));
+    const quote = document.getElementById('fetch-quote');
+    quote.addEventListener('click', nextQuote);
+  });
 }
 /*
 // Libraries
