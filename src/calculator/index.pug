@@ -1,14 +1,13 @@
 extends ../common/layout
 
 block heading
-	script(src=htmlWebpackPlugin.files.js[0])
-	link(href=`${htmlWebpackPlugin.files.css[0]}` rel="stylesheet" type="text/css")
+	if (htmlWebpackPlugin)
+		script(src=htmlWebpackPlugin.files.js[0])
+		link(href=`${htmlWebpackPlugin.files.css[0]}` rel="stylesheet" type="text/css")
 
 block content
 	include ../common/nav.pug
 	section
-		script.
-			console.log(!{JSON.stringify(htmlWebpackPlugin)})
 		h2.window
 		div.keypad
 			div.advanced

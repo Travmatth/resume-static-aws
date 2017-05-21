@@ -1,9 +1,9 @@
 /* @flow */
 
-import { syntheticDispatch } from 'common/utils';
+import { dispatch } from 'common/utils';
 import * as Handlers from '../Handlers';
 
-describe.only('Localweather App', () => {
+describe('Localweather App', () => {
   beforeEach(() => {
     global.navigator = global.navigator || {};
     global.navigator.geolocation = {};
@@ -13,7 +13,7 @@ describe.only('Localweather App', () => {
 
   it('should call getCurrentPosition to handler on DOMContentLoaded', () => {
     require('../index');
-    syntheticDispatch(document, 'DOMContentLoaded');
+    dispatch(document, 'DOMContentLoaded');
     expect(global.navigator.geolocation.getCurrentPosition).toHaveBeenCalled();
   });
 
@@ -25,9 +25,9 @@ describe.only('Localweather App', () => {
     const buttons = document.querySelectorAll('input');
 
     require('../index');
-    syntheticDispatch(document, 'DOMContentLoaded');
+    dispatch(document, 'DOMContentLoaded');
 
-    buttons.forEach(btn => syntheticDispatch(btn, 'click'));
+    buttons.forEach(btn => dispatch(btn, 'click'));
 
     expect(Handlers.toggleTempChangeHandler).toHaveBeenCalledTimes(2);
     expect(Handlers.getWeatherHandler).toHaveBeenCalled();

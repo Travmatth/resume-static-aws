@@ -67,14 +67,24 @@ const dateString = (time: Date) => {
 const convertFahrenheitToCelsius = (temp: number) =>
   Math.round((temp - 32) * 5 / 9);
 
-const syntheticDispatch = (element: any, type: string, data = {}) => {
-  var event = document.createEvent('Event');
-  event.initEvent(type, true, true);
-
-  element.dispatchEvent({ data, ...event });
+const dispatch = (
+  selector: string | HTMLElement,
+  type: string | Event,
+  data = {},
+) => {
+  const element = typeof selector === 'string'
+    ? document.querySelector(selector)
+    : selector;
+  var event = typeof type === 'string'
+    ? new CustomEvent(type, { target: element })
+    : type;
+  element.dispatchEvent(event);
 };
 
+const json = (m: Object): string => JSON.stringify(m);
+
 export {
+  json,
   padLeft,
   parseTimeToText,
   scale,
@@ -83,5 +93,5 @@ export {
   appendSuffix,
   dateString,
   convertFahrenheitToCelsius,
-  syntheticDispatch,
+  dispatch,
 };

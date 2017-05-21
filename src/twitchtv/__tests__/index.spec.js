@@ -8,7 +8,7 @@ import {
   onlineUserStreamCall,
   nonexistentOrOfflineUserStream,
 } from './mockdata';
-import { ResponseError, serialize } from 'common/utils';
+import { ResponseError, serialize, json } from 'common/utils';
 
 /*
   Models under test
@@ -39,13 +39,7 @@ import {
   extractUserName,
 } from '../Handlers';
 
-/*
-  Setup
-*/
-
-beforeEach(() => {
-  fetch.resetMocks();
-});
+afterEach(() => fetch.resetMocks());
 
 /*
   Test
@@ -67,7 +61,6 @@ test('createEmptyStream should do so', async () => {
   );
 });
 
-const json = (m: Object): string => JSON.stringify(m);
 test('verifyUser should return false if 404 response', async () => {
   const user = 'fasdf';
   fetch.mockResponseOnce(json({}), { status: 404 });

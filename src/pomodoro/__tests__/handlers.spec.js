@@ -1,4 +1,5 @@
 /* @flow */
+import { dispatch } from 'common/utils';
 
 describe('Pomodoro Handlers', () => {
   it('', () => {

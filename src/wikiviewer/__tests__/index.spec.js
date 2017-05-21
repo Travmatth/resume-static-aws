@@ -1,82 +1,60 @@
 /* @flow */
 
-import { WikiViewer, endpoint } from '../Models';
-import { ResponseError } from 'common/utils';
-import { exampleWikipediaSearch, wikis } from './wikiviewer.mockdata';
+import * as Handlers from '../Handlers';
+import { ResponseError, dispatch } from 'common/utils';
 
-let wikiViewer, searchButton, randomButton, searchInput;
+jest.mock('../Handlers', () => {
+  const modules = {};
 
-beforeAll(() => {
-  document.body.innerHTML =
-    '<li class="wikiPage">' +
-    '<div class="content">' +
-    '<h2 class="title" />' +
-    '<a class="squish"> Open in Wikipedia </a> ' +
-    '</div>' +
-    '<p/>' +
-    '</li>';
-  searchButton = ((document.createElement('button'): any): HTMLButtonElement);
-  randomButton = ((document.createElement('button'): any): HTMLButtonElement);
-  searchInput = ((document.createElement('input'): any): HTMLInputElement);
-  const nodes = ((document.getElementsByClassName(
-    'wikiPage',
-  ): any): HTMLCollection<HTMLElement>);
+  modules.searchHandlerCallback = jest.fn();
+  modules.searchHandler = () => modules.searchHandlerCallback;
 
-  wikiViewer = new WikiViewer(searchButton, randomButton, searchInput, nodes);
+  modules.keypressHandlerCallback = jest.fn();
+  modules.keypressHandler = () => modules.keypressHandlerCallback;
+
+  modules.randomHandlerCallback = jest.fn();
+  modules.randomHandler = () => modules.randomHandlerCallback;
+
+  modules.typeHandlerCallback = jest.fn();
+  modules.typeHandler = () => modules.typeHandlerCallback;
+
+  return modules;
 });
 
-afterEach(() => fetch.resetMocks());
-
-/*
-  Test
-*/
-
-test('search should return null on incorrect response', async () => {
-  fetch.mockResponseOnce(JSON.stringify(exampleWikipediaSearch), {
-    status: 404,
+describe('WikiViewer DOM', () => {
+  beforeEach(() => {
+    document.body.innerHTML = require('../index.pug');
+    require('../index.js');
+    dispatch(document, 'DOMContentLoaded');
   });
-  wikiViewer.search();
-  expect(true).toBe(true);
-});
 
-test("search should fetch and process wiki's", async () => {
-  fetch.mockResponseOnce(JSON.stringify(exampleWikipediaSearch), {
-    status: 200,
+  afterEach(() => {
+    // last 3 tests won't pass when this is present, bug?
+    // poss. interaction btw setting document.body.innerHTML and ???
+    //jest.resetModules();
+    jest.clearAllMocks();
   });
-  expect(true).toBe(true);
-});
 
-test('randomSearch should change window location', async () => {
-  expect(true).toBe(true);
-});
-
-test("enter should fetch wiki's and update dom", async () => {
-  fetch.mockResponseOnce(JSON.stringify(exampleWikipediaSearch), {
-    status: 200,
+  it('searchText should have an onkeypress handler', () => {
+    dispatch(
+      document.getElementById('search-text'),
+      new KeyboardEvent('keypress', { key: 'Enter', bubbles: true }),
+    );
+    expect(Handlers.keypressHandlerCallback).toHaveBeenCalled();
   });
-  expect(true).toBe(true);
-});
 
-test('type should update state of wikiviewer with text', async () => {
-  expect(true).toBe(true);
-});
+  it('searchText should have an onchange handler', () => {
+    dispatch(document.getElementById('search-text'), 'change');
+    expect(Handlers.typeHandlerCallback).toHaveBeenCalled();
+  });
 
-test('enter should be able to delete text', async () => {
-  expect(true).toBe(true);
-});
+  it('search should have a click handler', () => {
+    dispatch(document.getElementById('search-btn'), 'click');
+    expect(Handlers.searchHandlerCallback).toHaveBeenCalled();
+  });
 
-test('checkHeaders should throw on incorrect response', async () => {
-  expect(true).toBe(true);
-});
-
-test('checkHeaders should return response body', async () => {
-  expect(true).toBe(true);
-});
-
-test("processWikis should return nested wiki's", async () => {
-  expect(true).toBe(true);
-});
-
-test('updateDOM should do so', async () => {
-  expect(true).toBe(true);
+  it('random should have a click handler', () => {
+    document.getElementById('random-btn').click();
+    expect(Handlers.randomHandlerCallback).toHaveBeenCalled();
+  });
 });

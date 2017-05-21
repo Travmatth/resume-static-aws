@@ -16,7 +16,6 @@ const keyPressHandler = (outputWindow: HTMLElement) => (val: Event): void => {
   switch (key) {
     case '=':
       refresh(logic.compute());
-
       break;
 
     case 'clear':

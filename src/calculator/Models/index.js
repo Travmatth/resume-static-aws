@@ -1,3 +1,4 @@
 /* @flow */
 import LogicUnit from './LogicUnit';
-export { LogicUnit };
+import { glyphs } from './constants';
+export { LogicUnit, glyphs };

@@ -1,10 +1,15 @@
 /* @flow */
 
-import { WikiViewer } from './Models';
+import {
+  keypressHandler,
+  typeHandler,
+  searchHandler,
+  randomHandler,
+} from './Handlers';
 
 if (document !== undefined) {
   document.addEventListener('DOMContentLoaded', () => {
-    const wikiView = new WikiViewer();
+    const query: Array<string> = [];
 
     const search = ((document.getElementById(
       'search-btn',
@@ -13,7 +18,7 @@ if (document !== undefined) {
       'random-btn',
     ): any): HTMLButtonElement);
     const searchText = ((document.getElementById(
-      'search-txt',
+      'search-text',
     ): any): HTMLInputElement);
 
     // Each Result has it's own heading
@@ -24,11 +29,10 @@ if (document !== undefined) {
     const paragraphs = ((document.getElementsByTagName(
       'p',
     ): any): HTMLCollection<HTMLParagraphElement>);
-    const searchHandler = wikiView.searchHandler(headings, paragraphs);
 
-    searchText.onkeypress = wikiView.keypressHandler(headings, paragraphs);
-    searchText.onchange = wikiView.typeHandler;
-    search.onclick = searchHandler;
-    random.onclick = wikiView.randomHandler(window);
+    searchText.onkeypress = keypressHandler(query, headings, paragraphs);
+    searchText.onchange = typeHandler(query);
+    search.onclick = searchHandler(query, headings, paragraphs);
+    random.onclick = randomHandler(window);
   });
 }
