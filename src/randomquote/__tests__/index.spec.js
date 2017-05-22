@@ -1,3 +1,4 @@
+/* @flow */
 import { dispatch } from 'common/utils';
 import * as Handlers from '../Handlers';
 
