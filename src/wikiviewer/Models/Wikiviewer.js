@@ -8,7 +8,7 @@ import type {
   Paragraphs,
   Searches,
 } from '../wikiviewer.types';
-import { serialize, ResponseError } from 'common/utils';
+import { serialize, ResponseError, checkHeaders } from 'common/utils';
 
 const query = [];
 
@@ -75,12 +75,6 @@ const typeHandler = (event: Event) => {
   query.push(((event.target: any): HTMLInputElement).value);
 };
 
-const checkHeaders = (response: Response) => {
-  if (response.status >= 400)
-    throw new ResponseError('WikiViewer fetch failed', response);
-  return ((response.json(): any): Promise<WikiSearchResult>);
-};
-
 const processWikis = ({ query: { pages } }: WikiSearchResult) => {
   const { limits, ...wikis } = pages;
   return Object.values(wikis);
@@ -94,6 +88,5 @@ export {
   refreshResults,
   keypressHandler,
   typeHandler,
-  checkHeaders,
   processWikis,
 };

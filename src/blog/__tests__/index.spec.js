@@ -1,3 +1,3 @@
 /* @flow */
 
-test('Blog Handlers', () => {});
+test.skip('Blog Handlers', () => {});

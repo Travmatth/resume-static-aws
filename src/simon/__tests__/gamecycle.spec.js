@@ -1,6 +1,6 @@
 /* @flow */
 
-describe('Simon GameCycle', () => {
+describe.skip('Simon GameCycle', () => {
   it('', () => {
     expect(true).toBe(false);
   });

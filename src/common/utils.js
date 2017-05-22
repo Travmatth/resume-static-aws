@@ -83,7 +83,13 @@ const dispatch = (
 
 const json = (m: Object): string => JSON.stringify(m);
 
+const checkHeaders = (response: Response) => {
+  if (response.status >= 400) throw new ResponseError('fetch failed', response);
+  return ((response.json(): any): Promise<any>);
+};
+
 export {
+  checkHeaders,
   json,
   padLeft,
   parseTimeToText,

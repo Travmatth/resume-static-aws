@@ -1,6 +1,6 @@
 /* @flow */
 
-describe('Simon Game Timer Model', () => {
+describe.skip('Simon Game Timer Model', () => {
   it('', () => {
     expect(true).toBe(false);
   });
