@@ -1,9 +1,10 @@
 /* @flow */
-
-import { fetchAllProfiles, users } from './Handlers';
+import { fetchHandler } from './Handlers';
 
 if (document !== undefined) {
-  document.addEventListener('DOMContentLoaded', async () => {
-    const profiles = await fetchAllProfiles(users);
+  document.addEventListener('DOMContentLoaded', () => {
+    const fetch = fetchHandler(document.querySelector('ul'));
+    const btn = document.querySelector('button');
+    btn.addEventListener('click', fetch);
   });
 }

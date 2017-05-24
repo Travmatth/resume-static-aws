@@ -16,7 +16,8 @@ import {
   userUrl,
   emptyStream,
   createEmptyStream,
-} from './constants';
+  extractUserName,
+} from '../Models';
 
 const headers = new Headers({
   Accept: 'application/vnd.twitchtv.v3+json',
@@ -100,15 +101,10 @@ const agglomerate = (userResponses: Array<PossiblyNestedStreams>) => {
   return ((responses: any): Array<Stream>);
 };
 
-const extractUserName = (user: UserStream): string => {
-  return user['_links']['self'].split('/').slice(-1)[0];
-};
-
 export {
   verifyUser,
   handleNullStream,
   classifyResponse,
   fetchAllProfiles,
   agglomerate,
-  extractUserName,
 };

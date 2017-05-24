@@ -21,7 +21,7 @@ const gameTile = (x: number, y: number, move: Handler) => {
 
   tile.dataset.x = `${x}`;
   tile.dataset.y = `${y}`;
-  tile.addEvenListener('click', move);
+  tile.addEventListener('click', move);
 
   return tile;
 };

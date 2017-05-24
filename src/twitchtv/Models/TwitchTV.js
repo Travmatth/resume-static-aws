@@ -1,33 +1,16 @@
 /* @flow */
-
 import type { Stream } from '../twitchtv.types';
 
-export const streamsUrl = 'https://api.twitch.tv/kraken/streams/';
-
-export const userUrl = 'https://api.twitch.tv/kraken/users/';
-
-export const users = [
-  '' /* call current streamers api */,
-  'freecodecamp',
-  'noobs2ninjas',
-  'RobotCaleb',
-  'OgamingSC2',
-  'comster404',
-  'cretetion',
-  'storbeck',
-  'habathcx',
-  'brunofin',
-  'ESL_SC2',
-];
-
-export const createEmptyStream = (reason: boolean, user: string): Stream =>
+const createEmptyStream = (reason: boolean, user: string): Stream =>
   Object.assign(emptyStream, {
-    _id: reason === true
-      ? `ERROR:${user} is offline`
-      : `ERROR:${user} is not a streamer`,
+    _id: reason === true ? `${user} is offline` : `${user} is not a streamer`,
   });
 
-export const emptyStream: Stream = {
+const extractUserName = (user: UserStream): string => {
+  return user['_links']['self'].split('/').slice(-1)[0];
+};
+
+const emptyStream: Stream = {
   game: '',
   viewers: 0,
   average_fps: 0,
@@ -81,3 +64,5 @@ export const emptyStream: Stream = {
     self: '',
   },
 };
+
+export { createEmptyStream, emptyStream, extractUserName };

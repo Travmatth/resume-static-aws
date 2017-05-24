@@ -1,6 +1,6 @@
 /* @flow */
 
-describe.skip('TicTacToe Manager', () => {
+describe.skip('TicTacToe Handlers', () => {
   it('', () => {
     expect(true).toBe(false);
   });

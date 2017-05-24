@@ -88,36 +88,35 @@ class Game {
     // Only move if player has control of board, this shouldn't be reached
     if (!(this.state.player === this.state.turn)) {
       const msg = "takeTurn shouldn't be executing while player isn't moving";
-      console.error(msg);
+      if (!process || process.env.NODE_ENV !== 'test') console.error(msg);
       return;
     }
 
-    const { grid, history, turn } = this.state;
+    const { history, player } = this.state;
 
-    const remaining = grid.filter(cell => cell.player === null);
+    const remaining = this.state.grid.filter(cell => cell.player === null);
 
     // if spaces available, store history, make move
     if (remaining.length > 0) {
       this.update({
-        history: makeHistory(grid, history),
-        grid: move(grid, selected),
+        history: makeHistory(this.state.grid, history),
+        grid: move(this.state.grid, { ...selected, player }),
       });
 
       // check winning status, update score
       let hasWon = false;
-      if (playerHasWon(turn, grid)) {
+      if (playerHasWon(player, this.state.grid)) {
         hasWon = true;
-        this.state.score[turn] += 1;
+        this.state.score[player] += 1;
       }
 
       // set rest of state
       this.update({
-        turn: turn === 'X' ? 'O' : 'X',
+        turn: player === 'X' ? 'O' : 'X',
         finished: remaining.length <= 1 || hasWon,
       });
 
       //Finished turn at this point
-      return;
     }
   }
 
@@ -163,7 +162,7 @@ class Game {
 
     // Check if computer has won
     let hasWon = false;
-    if (playerHasWon(turn, grid)) {
+    if (playerHasWon(turn, nextGrid)) {
       hasWon = true;
       this.state.score[turn] += 1;
     }
