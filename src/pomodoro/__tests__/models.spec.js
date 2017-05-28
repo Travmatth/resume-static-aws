@@ -1,6 +1,6 @@
 /* @flow */
 
-describe.skip('Pomodoro Model', () => {
+describe.skip('Pomodoro Models', () => {
   it('', () => {
     expect(true).toBe(false);
   });

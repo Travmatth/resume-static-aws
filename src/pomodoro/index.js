@@ -2,8 +2,7 @@
 import { Pomodoro } from './Models';
 
 if (document !== undefined) {
-  document.addEventListener('DOMContentLoaded', bindToListeners);
-  () => {
+  document.addEventListener('DOMContentLoaded', () => {
     const pom = new Pomodoro(1, 1);
     const display = ((document.getElementById('time'): any): HTMLElement);
     const incWorkBtn = ((document.getElementById(
@@ -18,6 +17,9 @@ if (document !== undefined) {
     const decRestBtn = ((document.getElementById(
       'rest-dec',
     ): any): HTMLButtonElement);
+    const resetBtn = ((document.getElementById(
+      'reset-btn',
+    ): any): HTMLButtonElement);
     const timerBtn = ((document.getElementById(
       'timer-btn',
     ): any): HTMLButtonElement);
@@ -28,5 +30,5 @@ if (document !== undefined) {
     decWorkBtn.addEventListener('click', pom.stepper('dec', 'work'));
     incRestBtn.addEventListener('click', pom.stepper('inc', 'rest'));
     decRestBtn.addEventListener('click', pom.stepper('dec', 'rest'));
-  };
+  });
 }
