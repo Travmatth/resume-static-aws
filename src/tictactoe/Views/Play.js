@@ -19,6 +19,7 @@ const createPlayView = (
 const gameTile = (x: number, y: number, move: Handler) => {
   const tile = document.createElement('button');
 
+  tile.dataset = tile.dataset || {};
   tile.dataset.x = `${x}`;
   tile.dataset.y = `${y}`;
   tile.addEventListener('click', move);
@@ -30,9 +31,9 @@ const undoButton = (undo: Handler) => {
   const button = document.createElement('button');
 
   button.textContent = 'Undo Move';
-  button.addEvenListener(click, undo);
+  button.addEventListener('click', undo);
 
-  return tile;
+  return button;
 };
 
 export { createPlayView, gameTile, undoButton };

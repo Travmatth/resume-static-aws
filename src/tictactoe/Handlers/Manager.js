@@ -29,24 +29,23 @@ const playerAction = (game: Game, update: Update, end: () => void) => (
 
   setTimeout(() => {
     // process Player move
+    update(game.current());
     game.endPlayerMove();
     if (game.isOver()) {
       game.restart();
       end();
       return;
-    } else {
-      update(game.current());
     }
 
     // simulate opponent move
     setTimeout(() => {
       game.simulateMove();
+      update(game.current());
       if (game.isOver()) {
         game.restart();
         end();
         return;
       } else {
-        update(game.current());
         game.startPlayerMove();
       }
     }, delay);
@@ -106,4 +105,5 @@ export {
   startGameHandler,
   rollbackHandler,
   chooseTurnHandler,
+  makeAction,
 };

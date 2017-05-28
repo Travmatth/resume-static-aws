@@ -1,4 +1,5 @@
 import {
+  makeAction,
   playerAction,
   resetGameHandler,
   restartGameHandler,
@@ -8,6 +9,7 @@ import {
 } from './Manager';
 
 export {
+  makeAction,
   playerAction,
   resetGameHandler,
   restartGameHandler,

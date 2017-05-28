@@ -10,13 +10,13 @@ const createScoreView = (
   transition: () => void,
   game: Game,
 ) => {
-  const oScore = scoreElement(game, Side.O);
   const xScore = scoreElement(game, Side.X);
+  const oScore = scoreElement(game, Side.O);
   const restartButton = lifecycleButton('restart', restart);
   const resetButton = lifecycleButton('reset', reset);
 
-  fragment.appendChild(oScore);
   fragment.appendChild(xScore);
+  fragment.appendChild(oScore);
   fragment.appendChild(restartButton);
   fragment.appendChild(resetButton);
 

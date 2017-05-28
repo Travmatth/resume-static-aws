@@ -10,8 +10,8 @@ const createStartView = (
   choose: Handler,
 ) => {
   // Pressed in the start screen, should select a side for the player
-  const x = sideSelectionButton(Side.X, choose, start);
-  const o = sideSelectionButton(Side.O, choose, start);
+  const x = sideSelectionButton(Side.X, choose);
+  const o = sideSelectionButton(Side.O, choose);
   // Pressed in the start screen, should start the game by switching views
   const button = startButton(start);
 
@@ -26,21 +26,20 @@ const startButton = (handler: Handler) => {
   const start = document.createElement('button');
 
   start.textContent = 'start';
+  start.className = 'start';
   start.addEventListener('click', handler);
 
   return start;
 };
 
-const sideSelectionButton = (
-  glyph: $Keys<typeof Side>,
-  choose: Handler,
-  start: Handler,
-) => {
+const sideSelectionButton = (glyph: $Keys<typeof Side>, choose: Handler) => {
   const select = document.createElement('button');
+  select.dataset = select.dataset || {};
 
-  start.textContent = glyph;
-  start.dataset.glyph = glyph;
-  start.addEventListener('click', choose);
+  select.textContent = glyph;
+  select.className = 'select';
+  select.dataset.glyph = glyph;
+  select.addEventListener('click', choose);
 
   return select;
 };

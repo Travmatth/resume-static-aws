@@ -1,4 +1,5 @@
 {
+  "timers": "fake",
   "testRegex": "[A-Za-z]+\\.spec\\.js$",
   "setupFiles": [
     "<rootDir>/tests/setup/setup.js"
