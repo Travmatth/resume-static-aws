@@ -23,14 +23,14 @@ export default class Pomodoro {
   stepper(direction: string, counter: string) {
     const step = direction === 'inc' ? 1 : -1;
     return (e: Event) =>
-      this.timer[counter] = Math.max(this.timer[counter] + step, 0);
+      this.timer[counter] = Math.max(this.timer[counter] + scale(step), 0);
   }
 
   measure(anchor: number) {
     return (current: number) => current - anchor;
   }
 
-  stopTimer(display: HTMLElement) {
+  stopTimer() {
     if (this.clock) clearInterval(this.clock);
   }
 
@@ -59,9 +59,13 @@ export default class Pomodoro {
   // returns func triggered by press on start/stop timer, adjust timer display
   toggle(display: HTMLElement) {
     return (e: Event) => {
-      if (this.state === State.STOPPED)
+      if (this.state === State.STOPPED) {
+        this.state = State.RUNNING;
         this.startTimer(display, Date.now(), this.phase);
-      if (this.state === State.RUNNING) this.stopTimer(display);
+      } else {
+        this.state = State.STOPPED;
+        this.stopTimer(display);
+      }
     };
   }
 
