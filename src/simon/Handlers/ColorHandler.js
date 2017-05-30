@@ -16,7 +16,7 @@ export default class ColorHandler {
   }
 
   swapCss(color: ColorKeys) {
-    if (this.buttons[color].css === color) {
+    if (this.buttons[color].className === color) {
       this.buttons[color].classList.add(`light-${color}`);
       this.buttons[color].classList.remove(color);
     } else {
