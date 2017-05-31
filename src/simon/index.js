@@ -11,6 +11,7 @@ import {
 
 if (document !== undefined) {
   document.addEventListener('DOMContentLoaded', () => {
+    const clock = { id: null };
     const timer = new Timer();
     const simon = new Simon();
     const sounds = new SoundManager();
@@ -42,7 +43,7 @@ if (document !== undefined) {
     Object.keys(buttons).forEach(color => {
       buttons[color].addEventListener(
         'click',
-        clickHandler(color, colorButtons, updateScore, simon, timer),
+        clickHandler(color, colorButtons, updateScore, simon, timer, clock),
       );
     });
   });

@@ -12,6 +12,7 @@ const powerHandler = (
   buttons: ColorHandler,
   simon: Simon,
   timer: Timer,
+  clock: { id: null | number },
 ) => (_: Event) => {
   simon.toggleState();
 
@@ -19,11 +20,11 @@ const powerHandler = (
     const score = simon.getScore();
     simon.reset();
     update(score === 0 ? '--' : `${score}`);
-    powerOn(simon, buttons, timer, update);
+    powerOn(simon, buttons, timer, update, clock);
   } else {
     simon.end();
     update('');
-    powerOff();
+    powerOff(clock);
   }
 };
 
@@ -38,6 +39,7 @@ const clickHandler = (
   update: (number | string) => string,
   simon: Simon,
   timer: Timer,
+  clock: { id: null | number },
 ) => (_: Event) => {
   if (!simon.playerCanMove()) return false;
 
@@ -56,7 +58,7 @@ const clickHandler = (
     const hasWon = simon.hasWonRound();
     if (hasFailed || hasWon) cancelTimer();
 
-    const move = () => advance(simon, buttons, update, timer);
+    const move = () => advance(simon, buttons, update, timer, clock);
     // If player has won game, end & restart
     if (simon.hasWonGame()) {
       // show won game animation

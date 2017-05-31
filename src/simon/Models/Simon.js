@@ -15,7 +15,7 @@ class Simon {
   score: number;
   round: Array<ColorKeys>;
   attempt: Array<ColorKeys>;
-  colors: { red: 'red', yellow: 'yellow', blue: 'blue', green: 'green', };
+  colors: { red: 'red', yellow: 'yellow', blue: 'blue', green: 'green' };
   failure: boolean;
   step: number;
   input: boolean;
@@ -29,6 +29,7 @@ class Simon {
     this.colors = Colors;
     this.failure = false;
     this.step = 0;
+    this.attempt = [];
   }
 
   // Power
@@ -50,8 +51,8 @@ class Simon {
 
   // Game state
   randomColor() {
-    const rand = Math.floor(Math.random() * 5);
-    return this.colors[rand];
+    const rand = Math.floor(Math.random() * 4);
+    return Object.keys(this.colors)[rand];
   }
 
   reset() {

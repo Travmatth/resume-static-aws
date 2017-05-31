@@ -1,6 +1,7 @@
 /* @flow */
 
 import ColorHandler from './ColorHandler';
+import { cancelTimer, advance, powerOn, powerOff, fire } from './TimerHandler';
 import {
   clickHandler,
   strictHandler,
@@ -14,4 +15,9 @@ export {
   strictHandler,
   scoreHandler,
   powerHandler,
+  cancelTimer,
+  advance,
+  powerOn,
+  powerOff,
+  fire,
 };
