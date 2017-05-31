@@ -66,6 +66,26 @@ export default class ColorHandler {
     this.flash('lost', resume);
   }
 
+  wonStart() {
+    this.startSound('won');
+    this.showAll();
+  }
+
+  wonEnd() {
+    this.endSound('won');
+    this.hideAll();
+  }
+
+  failEnd() {
+    this.endSound('lost');
+    this.hideAll();
+  }
+
+  failStart() {
+    this.startSound('lost');
+    this.showAll();
+  }
+
   restartRound(resume: () => void) {
     this.flash('start', resume);
   }

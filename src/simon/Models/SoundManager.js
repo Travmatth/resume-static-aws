@@ -4,7 +4,7 @@ import type { Sound, ColorKeys } from '../simon.types';
 
 const sound = file => {
   // $FlowIgnore - The parameter passed to require() must be a literal string.
-  path = require(`../assets/${file}`);
+  const path = require(`../assets/${file}`);
   // $FlowIgnore - Identifier `Audio`. Could not resolve name
   return new Audio(path);
 };

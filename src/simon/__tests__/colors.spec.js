@@ -93,6 +93,46 @@ describe('Simon Colors', () => {
     expect(spy).toHaveBeenCalled();
   });
 
+  it('wonStart should flash all colors, start won audio', () => {
+    color.startSound = jest.fn();
+    color.showAll = jest.fn();
+
+    color.wonStart();
+
+    expect(color.startSound).toHaveBeenCalledWith('won');
+    expect(color.showAll).toHaveBeenCalled();
+  });
+
+  it('wonEnd should flash all colors, start won audio', () => {
+    color.endSound = jest.fn();
+    color.hideAll = jest.fn();
+
+    color.wonEnd();
+
+    expect(color.endSound).toHaveBeenCalledWith('won');
+    expect(color.hideAll).toHaveBeenCalled();
+  });
+
+  it('failStart should flash all colors, start fail audio', () => {
+    color.startSound = jest.fn();
+    color.showAll = jest.fn();
+
+    color.failStart();
+
+    expect(color.startSound).toHaveBeenCalledWith('lost');
+    expect(color.showAll).toHaveBeenCalled();
+  });
+
+  it('failEnd should flash all colors, end fail audio', () => {
+    color.endSound = jest.fn();
+    color.hideAll = jest.fn();
+
+    color.failEnd();
+
+    expect(color.endSound).toHaveBeenCalledWith('lost');
+    expect(color.hideAll).toHaveBeenCalled();
+  });
+
   it("strictFail should flash 'lost'", () => {
     const resume = jest.fn();
     const spy = jest.spyOn(color, 'flash').mockImplementation(() => {});
