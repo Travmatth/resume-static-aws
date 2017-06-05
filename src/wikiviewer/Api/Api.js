@@ -1,6 +1,6 @@
 /* @flow */
 
-import { endpoint, params } from './constants';
+import { endpoint, params } from '../Models';
 import type { WikiSearchResult } from '../wikiviewer.types';
 import { serialize, ResponseError } from 'common/utils';
 

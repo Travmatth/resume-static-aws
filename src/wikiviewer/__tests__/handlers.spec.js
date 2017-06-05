@@ -1,11 +1,17 @@
 /* @flow */
 
-import * as Handlers from '../Handlers';
+import {
+  typeHandler,
+  randomHandler,
+  searchHandler,
+  keypressHandler,
+  updateDOM,
+} from '../Handlers';
 import { ResponseError, dispatch, json } from 'common/utils';
 import { wikis, exampleWikipediaSearch } from './wikiviewer.mockdata';
 
 describe('WikiViewer Handlers', () => {
-  beforeEach(() => document.body.innerHTML = require('../index.pug'));
+  beforeEach(() => (document.body.innerHTML = require('../index.pug')));
 
   afterEach(() => {
     fetch.resetMocks();
@@ -14,13 +20,13 @@ describe('WikiViewer Handlers', () => {
 
   it('typeHandler should update query with event targets value', () => {
     const query = [];
-    Handlers.typeHandler(query)({ target: { value: 'a' } });
+    typeHandler(query)({ target: { value: 'a' } });
     expect(query).toEqual(['a']);
   });
 
   it('randomHandler should change window location', () => {
     const win = { location: '' };
-    Handlers.randomHandler(win)();
+    randomHandler(win)();
     expect(win.location).toBe('https://en.wikipedia.org/wiki/Special:Random');
   });
 
@@ -31,7 +37,7 @@ describe('WikiViewer Handlers', () => {
     const paragraphs = document.querySelectorAll('p');
     const headings = document.querySelectorAll('div.heading');
 
-    await Handlers.searchHandler(query, headings, paragraphs)();
+    await searchHandler(query, headings, paragraphs)();
     expect(document.body.outerHTML).toMatchSnapshot();
   });
 
@@ -42,7 +48,7 @@ describe('WikiViewer Handlers', () => {
     const paragraphs = document.querySelectorAll('p');
     const headings = document.querySelectorAll('div.heading');
 
-    await Handlers.searchHandler(query, headings, paragraphs)();
+    await searchHandler(query, headings, paragraphs)();
     expect(document.body.outerHTML).toMatchSnapshot();
   });
 
@@ -53,7 +59,7 @@ describe('WikiViewer Handlers', () => {
     const paragraphs = document.querySelectorAll('p');
     const headings = document.querySelectorAll('div.heading');
 
-    const handler = Handlers.keypressHandler(query, headings, paragraphs);
+    const handler = keypressHandler(query, headings, paragraphs);
     await handler({ key: 'Enter' });
 
     expect(document.body.outerHTML).toMatchSnapshot();
@@ -63,11 +69,11 @@ describe('WikiViewer Handlers', () => {
     const paragraphs = document.querySelectorAll('p');
     const headings = document.querySelectorAll('div.heading');
     const query = [];
-    const type = Handlers.typeHandler(query);
+    const type = typeHandler(query);
     type({ target: { value: 'a' } });
     type({ target: { value: 'b' } });
 
-    const handler = Handlers.keypressHandler(query, headings, paragraphs);
+    const handler = keypressHandler(query, headings, paragraphs);
     await handler({ key: 'Backspace' });
 
     expect(query).toEqual(['a']);
@@ -78,7 +84,7 @@ describe('WikiViewer Handlers', () => {
     const paragraphs = document.querySelectorAll('p');
     const headings = document.querySelectorAll('div.heading');
 
-    await Handlers.updateDOM(wikis, headings, paragraphs);
+    await updateDOM(wikis, headings, paragraphs);
     const t = document.body.outerHTML;
     //console.log(t);
     expect(t).toMatchSnapshot();

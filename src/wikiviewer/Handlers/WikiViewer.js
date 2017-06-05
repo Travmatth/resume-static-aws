@@ -1,7 +1,7 @@
 /* @flow */
 
 import type { Headings, Paragraphs, Searches } from '../wikiviewer.types';
-import { search } from './Api';
+import { search } from '../Api';
 
 const updateDOM = (
   searches: Searches,
@@ -29,7 +29,7 @@ const updateDOM = (
 };
 
 const randomHandler = (win: window) => {
-  return () => win.location = 'https://en.wikipedia.org/wiki/Special:Random';
+  return () => (win.location = 'https://en.wikipedia.org/wiki/Special:Random');
 };
 
 const searchHandler = (

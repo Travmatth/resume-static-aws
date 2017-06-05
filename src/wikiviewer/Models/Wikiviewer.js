@@ -1,6 +1,6 @@
 /* @flow */
 
-import { endpoint, params } from './constants';
+import { endpoint, params } from '../Models';
 import type {
   WikiSearchResult,
   WikiPage,
@@ -66,7 +66,7 @@ const keypressHandler = (headings: Headings, paragraphs: Paragraphs) => {
     if (event.key === 'Enter') {
       refreshResults(headings, paragraphs);
     } else if (event.key === 'Backspace' && query.length > 0) {
-      query = query.slice(0, -1);
+      query.pop();
     }
   };
 };

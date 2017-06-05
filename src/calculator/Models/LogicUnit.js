@@ -31,8 +31,7 @@ export default class LogicUnit {
       // If last char is symbol, drop symbol
       this.expression = this.expression.slice(0, -1);
     } else {
-      if (!process.env.NODE_ENV === 'test')
-        console.error('Unrecognized expression: ', this.expression);
+      console.error('Unrecognized expression: ', this.expression);
       this.expression = [''];
     }
   }

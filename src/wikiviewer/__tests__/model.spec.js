@@ -1,8 +1,9 @@
 /* @flow */
-import { checkHeaders, processWikis } from '../Handlers';
+import { checkHeaders } from '../Api';
+import { processWikis } from '../Models';
 
 describe('WikiViewer Model', () => {
-  beforeEach(() => document.body.innerHTML = require('../index.pug'));
+  beforeEach(() => (document.body.innerHTML = require('../index.pug')));
 
   it('checkHeaders should reject on invalid response.status', async () => {
     const res = { status: 404 };
