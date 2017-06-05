@@ -87,8 +87,7 @@ class Game {
   takeTurn(selected: GameGrid) {
     // Only move if player has control of board, this shouldn't be reached
     if (!(this.state.player === this.state.turn)) {
-      const msg = "takeTurn shouldn't be executing while player isn't moving";
-      if (!process || process.env.NODE_ENV !== 'test') console.error(msg);
+      console.error("takeTurn shouldn't be execute while player isn't moving");
       return;
     }
 

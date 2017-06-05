@@ -1,4 +1,5 @@
 {
+  "rootDir": "../../",
   "timers": "fake",
   "testRegex": "[A-Za-z]+\\.spec\\.js$",
   "setupFiles": [
@@ -13,5 +14,6 @@
   },
   "moduleFileExtensions": ["js"],
   "moduleDirectories": ["<rootDir>/node_modules", "<rootDir>/src"],
-  "coverageDirectory": "<rootDir>/tests/coverage"
+  "coverageDirectory": "<rootDir>/tests/coverage",
+  "coveragePathIgnorePatterns": ["<rootDir>/src/calculator/Models/arithmetic.js"]
 }

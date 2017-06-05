@@ -45,7 +45,7 @@ const getWeatherHandler = (
     if (header) header.textContent = city;
     if (cells) updateTableRows(cells, forecasts, 'fahrenheit');
   } catch (error) {
-    if (process.env.NODE_ENV !== 'test') console.error('error', error);
+    console.error('error', error);
   }
 };
 

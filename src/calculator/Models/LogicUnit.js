@@ -47,7 +47,7 @@ export default class LogicUnit {
       const parsed = parseFloat(result).toFixed(5).replace(/\.?0+$/, '');
       this.expression = [parsed];
     } catch (thrown) {
-      if (process.env.NODE_ENV !== 'test') console.error(thrown);
+      console.error(thrown);
       return thrown.message;
     }
   }
