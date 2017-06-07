@@ -1,8 +1,4 @@
-const dispatch = (
-  selector: string | HTMLElement,
-  type: string | Event,
-  data = {},
-) => {
+const dispatch = (selector: string | HTMLElement, type: string | Event) => {
   const element = typeof selector === 'string'
     ? document.querySelector(selector)
     : selector;
