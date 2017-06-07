@@ -25,7 +25,7 @@ const fetchQuote = () => {
       author: response.quoteAuthor || 'Author Unknown',
     }))
     .catch(error => {
-      if (!process) console.error(error);
+      console.error(error);
       return null;
     });
 };
