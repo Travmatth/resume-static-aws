@@ -2,10 +2,8 @@
 import { removeChildren, fetchHandler } from '../Handlers';
 import { fetchAllProfiles } from '../Api';
 
-jest.mock('../Api', () => {
-  const module = {};
-
-  module.fetchAllProfiles = () =>
+jest.mock('../Api', () => ({
+  fetchAllProfiles: () =>
     Promise.resolve([
       {
         _id: 1,
@@ -27,10 +25,8 @@ jest.mock('../Api', () => {
           display_name: 'display_name2',
         },
       },
-    ]);
-
-  return module;
-});
+    ]),
+}));
 
 describe('TwitchTV Handlers', () => {
   it('removeChildren should strip children from element', () => {
@@ -41,8 +37,8 @@ describe('TwitchTV Handlers', () => {
   });
 
   it('fetchHandler should call api and populate elements', async () => {
-    //fetch.mockResponseOnce(json(mock));
     const node = document.createElement('ul');
+    node.appendChild(document.createElement('div'));
     await fetchHandler(node)();
 
     expect(node.children.length).toBe(2);

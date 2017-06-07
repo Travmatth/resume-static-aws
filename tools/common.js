@@ -28,6 +28,7 @@ const common = pageConfigs(page => {
       extensions: ['.js', '.scss', '.pegjs'],
       alias: {
         common: path.resolve(root, 'src', 'common'),
+        tests: path.resolve(root, 'tests'),
       },
     },
 

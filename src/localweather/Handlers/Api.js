@@ -9,6 +9,7 @@ import type {
   Weather,
   FiveDayForecast,
 } from '../localweather.types';
+import { checkHeaders } from 'common/utils';
 
 /*
   Libraries
@@ -68,7 +69,8 @@ const fetchWeather = async (url: string): Promise<Weather> => {
 
   // return await Promise.resolve(stub)
   return await fetch(url, opts)
-    .then(checkResponse)
+    //.then(checkResponse)
+    .then(checkHeaders)
     .then(processWeather)
     .catch(error => {
       throw error;
@@ -79,13 +81,13 @@ const fetchWeather = async (url: string): Promise<Weather> => {
   Supporting Functions
 */
 
-const checkResponse = async (response: Response): Promise<FiveDayForecast> => {
-  if (response.status < 200 || response.status >= 400) {
-    throw new ResponseError('localweather fetch failed', response);
-  }
+//const checkResponse = async (response: Response): Promise<FiveDayForecast> => {
+//if (response.status < 200 || response.status >= 400) {
+//throw new ResponseError('localweather fetch failed', response);
+//}
 
-  return await (response.json(): Promise<FiveDayForecast>);
-};
+//return await (response.json(): Promise<FiveDayForecast>);
+//};
 
 const processWeather = (data: FiveDayForecast): Weather => ({
   city: data.city.name,
@@ -129,7 +131,7 @@ const stripDateIfRedundant = (
 
 export {
   fetchWeather,
-  checkResponse,
+  //checkResponse,
   processWeather,
   processForecasts,
   parseTime,

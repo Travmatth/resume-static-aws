@@ -17,7 +17,7 @@ const fetchQuote = () => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: json({ url }),
+    body: JSON.stringify({ url }),
   })
     .then(checkHeaders)
     .then(response => ({

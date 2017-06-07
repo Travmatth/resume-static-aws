@@ -1,6 +1,6 @@
 /* @flow */
 import * as Handlers from '../Handlers';
-import { dispatch } from 'common/utils';
+import { dispatch } from 'tests/utils';
 
 const glyphs = [
   'SIN',

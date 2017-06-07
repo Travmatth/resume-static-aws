@@ -7,8 +7,13 @@ import {
   keypressHandler,
   updateDOM,
 } from '../Handlers';
+import * as Api from '../Api';
 import { ResponseError, dispatch, json } from 'common/utils';
 import { wikis, exampleWikipediaSearch } from './wikiviewer.mockdata';
+
+jest.mock('../Api', () => ({
+  search: () => require('./wikiviewer.mockdata').wikis,
+}));
 
 describe('WikiViewer Handlers', () => {
   beforeEach(() => (document.body.innerHTML = require('../index.pug')));
@@ -31,8 +36,6 @@ describe('WikiViewer Handlers', () => {
   });
 
   it('searchHandler should call refreshResults and updateDOM', async () => {
-    fetch.mockResponseOnce(json(exampleWikipediaSearch), { status: 200 });
-
     const query = ['foo'];
     const paragraphs = document.querySelectorAll('p');
     const headings = document.querySelectorAll('div.heading');
@@ -42,8 +45,6 @@ describe('WikiViewer Handlers', () => {
   });
 
   it('refreshResults should call updateDOM with results of search', async () => {
-    fetch.mockResponseOnce(json(exampleWikipediaSearch), { status: 200 });
-
     const query = ['foo'];
     const paragraphs = document.querySelectorAll('p');
     const headings = document.querySelectorAll('div.heading');
@@ -53,8 +54,6 @@ describe('WikiViewer Handlers', () => {
   });
 
   it("keyPressHandler should call refreshResults on 'Enter' key", async () => {
-    fetch.mockResponseOnce(json(exampleWikipediaSearch), { status: 200 });
-
     const query = ['foo'];
     const paragraphs = document.querySelectorAll('p');
     const headings = document.querySelectorAll('div.heading');
@@ -80,13 +79,11 @@ describe('WikiViewer Handlers', () => {
   });
 
   it('updateDOM should populate given elements with returned data', async () => {
-    //console.log(document.body.outerHTML);
     const paragraphs = document.querySelectorAll('p');
     const headings = document.querySelectorAll('div.heading');
 
     await updateDOM(wikis, headings, paragraphs);
     const t = document.body.outerHTML;
-    //console.log(t);
     expect(t).toMatchSnapshot();
   });
 });

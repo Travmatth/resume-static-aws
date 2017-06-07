@@ -1,7 +1,8 @@
 /* @flow */
 
 import * as Handlers from '../Handlers';
-import { ResponseError, dispatch } from 'common/utils';
+import { ResponseError } from 'common/utils';
+import { dispatch } from 'tests/utils';
 
 jest.mock('../Handlers', () => {
   const modules = {};

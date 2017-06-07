@@ -67,22 +67,6 @@ const dateString = (time: Date) => {
 const convertFahrenheitToCelsius = (temp: number) =>
   Math.round((temp - 32) * 5 / 9);
 
-const dispatch = (
-  selector: string | HTMLElement,
-  type: string | Event,
-  data = {},
-) => {
-  const element = typeof selector === 'string'
-    ? document.querySelector(selector)
-    : selector;
-  var event = typeof type === 'string'
-    ? new CustomEvent(type, { target: element })
-    : type;
-  element.dispatchEvent(event);
-};
-
-const json = (m: Object): string => JSON.stringify(m);
-
 const checkHeaders = (response: Response) => {
   if (response.status >= 400) throw new ResponseError('fetch failed', response);
   return ((response.json(): any): Promise<any>);
@@ -90,7 +74,6 @@ const checkHeaders = (response: Response) => {
 
 export {
   checkHeaders,
-  json,
   padLeft,
   parseTimeToText,
   scale,
@@ -99,5 +82,4 @@ export {
   appendSuffix,
   dateString,
   convertFahrenheitToCelsius,
-  dispatch,
 };

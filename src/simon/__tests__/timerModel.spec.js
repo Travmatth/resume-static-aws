@@ -246,4 +246,14 @@ describe('Simon Game Timer Model', () => {
     expect(buttons.failEnd).toHaveBeenCalled();
     expect(simon.reset).toHaveBeenCalled();
   });
+
+  it('timer should return default action if stage is not recognized', () => {
+    timer.current = 12;
+
+    const { next, round, action } = timer.tick(simon, buttons);
+    action();
+
+    expect(next).toBe(false);
+    expect(round).toBe(0);
+  });
 });

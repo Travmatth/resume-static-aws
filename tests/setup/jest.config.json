@@ -6,7 +6,8 @@
     "<rootDir>/tests/setup/setup.js"
   ],
   "moduleNameMapper": {
-    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tests/mocks/fileMock.js"
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tests/mocks/fileMock.js",
+    "^tests(.*)$": "<rootDir>/tests$1"
   },
   "transform": {
     "^.+\\.js?$": "babel-jest",
@@ -14,5 +15,14 @@
   },
   "moduleFileExtensions": ["js"],
   "moduleDirectories": ["<rootDir>/node_modules", "<rootDir>/src"],
-  "coverageDirectory": "<rootDir>/tests/coverage"
+  "coverageDirectory": "<rootDir>/tests/coverage",
+  "coveragePathIgnorePatterns": [
+    "calculator/Parser",
+    "tests"
+  ],
+  "coverageThreshold": {
+    "global": {
+      "statements": 95
+    }
+  }
 }

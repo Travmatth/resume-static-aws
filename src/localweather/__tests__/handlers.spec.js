@@ -2,6 +2,7 @@
 
 import { response, data, url } from './mockdata';
 import { ResponseError, serialize } from 'common/utils';
+import { json } from 'tests/utils';
 import { OPEN_WEATHER_APPID } from 'common/api_keys';
 
 /*
@@ -24,7 +25,7 @@ describe('Localweather Handlers', () => {
     fetch.resetMocks();
   });
 
-  beforeAll(() => {
+  beforeEach(() => {
     document.body.innerHTML = require('../index.pug');
   });
 
@@ -52,12 +53,9 @@ describe('Localweather Handlers', () => {
     expect(description).toBe(descriptionElement);
   });
 
-  it('tempScale should return state of radio buttons', () => {
-    expect(tempScale()).toBe('fahrenheit');
-  });
+  it('getWeatherHandler should catch error if fetchWeather throws', async () => {
+    fetch.mockResponseOnce(json({}), { status: 404 });
 
-  it('toggleTempChange should switch temperature scale', async () => {
-    fetch.mockResponseOnce(JSON.stringify(response), { status: 200 });
     const node = document.querySelector('.measurement');
     const nodes = document.querySelectorAll('.measurement');
 
@@ -68,7 +66,30 @@ describe('Localweather Handlers', () => {
       document.querySelectorAll('input'),
     );
 
-    const json = await getWeather(
+    await getWeather(
+      (({ coords: { latitude: 0, longitude: 0 } }: any): Position),
+    );
+
+    expect(node.textContent).toBe('');
+  });
+
+  it('tempScale should return state of radio buttons', () => {
+    expect(tempScale()).toBe('fahrenheit');
+  });
+
+  it('toggleTempChange should switch temperature scale', async () => {
+    fetch.mockResponseOnce(json(response), { status: 200 });
+    const node = document.querySelector('.measurement');
+    const nodes = document.querySelectorAll('.measurement');
+
+    const cells = document.querySelectorAll('.cell');
+    const getWeather = getWeatherHandler(
+      document.querySelectorAll('.heading'),
+      cells,
+      document.querySelectorAll('input'),
+    );
+
+    await getWeather(
       (({ coords: { latitude: 0, longitude: 0 } }: any): Position),
     );
 

@@ -17,7 +17,7 @@ import type { GameGrid } from '../tictactoe.types';
 describe('TicTacToe Board', () => {
   let grid: Array<GameGrid>;
 
-  beforeEach(() => grid = createGrid());
+  beforeEach(() => (grid = createGrid()));
 
   it('createGrid should create a 3x3 grid of game squares with null players', () => {
     const all = grid.reduce((result: boolean, gamegrid: GameGrid) => {
@@ -31,6 +31,12 @@ describe('TicTacToe Board', () => {
     const original = {};
     const clone = copy(original);
     expect(original === clone).toBe(false);
+  });
+
+  it("move shouldn't set player in square if already occupied", () => {
+    grid[0].player = 'O';
+    const next = move(grid, { x: 0, y: 0, player: 'X' });
+    expect(next[0].player).toBe('O');
   });
 
   it('move should accept grid and gamegrid, set player in given square', () => {

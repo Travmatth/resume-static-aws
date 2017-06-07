@@ -8,7 +8,8 @@ import {
   onlineUserStreamCall,
   nonexistentOrOfflineUserStream,
 } from './mockdata';
-import { ResponseError, serialize, json } from 'common/utils';
+import { ResponseError, serialize } from 'common/utils';
+import { json } from 'tests/utils';
 
 import type {
   UserStream,
@@ -54,7 +55,7 @@ describe('TwitchTV Api', () => {
 
   it('verifyUser should return true if user exists', async () => {
     const user = 'RobotCaleb';
-    fetch.mockResponseOnce(JSON.stringify({ body: onlineUserChannel(user) }));
+    fetch.mockResponseOnce(json({ body: onlineUserChannel(user) }));
 
     const exists = await verifyUser(user);
     expect(exists).toBe(true);
@@ -62,7 +63,7 @@ describe('TwitchTV Api', () => {
 
   it('handleNullStream should return emptyStream if user is offline', async () => {
     const user = 'test_channel';
-    fetch.mockResponseOnce(JSON.stringify({ body: onlineUserChannel(user) }));
+    fetch.mockResponseOnce(json({ body: onlineUserChannel(user) }));
 
     const stream = await handleNullStream(nonexistentOrOfflineUserStream(user));
     expect(stream._id).toBe(`${user} is offline`);
@@ -71,7 +72,7 @@ describe('TwitchTV Api', () => {
   it('handleNullStream should return emptyStream if user is nonexistent', async () => {
     const user = 'brunofin';
     const body = nonexistentUser(user);
-    fetch.mockResponseOnce(JSON.stringify(body));
+    fetch.mockResponseOnce(json(body));
 
     const stream = await handleNullStream(nonexistentOrOfflineUserStream(user));
     expect(stream._id).toBe(`${user} is not a streamer`);
@@ -110,7 +111,7 @@ describe('TwitchTV Api', () => {
 
   it('classifyResponse can return emptyStream if user is nonexistent', async () => {
     const user = 'brunofin';
-    const body = JSON.stringify({ ...nonexistentUser(user) });
+    const body = json({ ...nonexistentUser(user) });
     fetch.mockResponseOnce(body, { status: 404 });
     fetch.mockResponseOnce(body, { status: 200 });
 
@@ -154,7 +155,7 @@ describe('TwitchTV Api', () => {
     const nonexistentStreams = ['brunofin', 'ESL_SC2'];
 
     //all streamers requires only 1 api call, to fetch all streams
-    const res = JSON.stringify(allStreamsCall);
+    const res = json(allStreamsCall);
     fetch.mockResponseOnce(res);
     const allStreamers = allStreamsCall['streams'];
 
@@ -162,7 +163,7 @@ describe('TwitchTV Api', () => {
     let onlineStreamers = [];
     onlineStreams.map(user => {
       let online = onlineUserStreamCall(user);
-      fetch.mockResponseOnce(JSON.stringify(online));
+      fetch.mockResponseOnce(json(online));
       onlineStreamers.push(online);
     });
 
@@ -170,8 +171,8 @@ describe('TwitchTV Api', () => {
     let offlineStreamers = [];
     offlineStreams.map(user => {
       const res = nonexistentOrOfflineUserStream(user);
-      fetch.mockResponseOnce(JSON.stringify(res));
-      fetch.mockResponseOnce(JSON.stringify(validUser(user)));
+      fetch.mockResponseOnce(json(res));
+      fetch.mockResponseOnce(json(validUser(user)));
 
       offlineStreamers.push(createEmptyStream(true, user));
     });
@@ -182,9 +183,9 @@ describe('TwitchTV Api', () => {
       const res = nonexistentOrOfflineUserStream(user);
 
       // fetch stream
-      fetch.mockResponseOnce(JSON.stringify(res));
+      fetch.mockResponseOnce(json(res));
       // nonexistent user
-      fetch.mockResponseOnce(JSON.stringify(nonexistentUser(user)));
+      fetch.mockResponseOnce(json(nonexistentUser(user)));
 
       nonexistentStreamers.push(createEmptyStream(false, user));
     });

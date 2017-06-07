@@ -1,5 +1,5 @@
 /* @flow */
-import { dispatch } from 'common/utils';
+import { dispatch } from 'tests/utils';
 import * as Pomodoro from '../Models';
 
 jest.mock('../Models', () => {

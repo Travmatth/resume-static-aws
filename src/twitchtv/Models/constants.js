@@ -19,18 +19,6 @@ const users = [
   'ESL_SC2',
 ];
 
-const createEmptyStream = (reason: boolean, user: string): Stream =>
-  Object.assign(emptyStream, {
-    _id: reason === true
-      ? `${user} is offline`
-      : `${user} is not a streamer`,
-  });
-
-const extractUserName = (user: UserStream): string => {
-  return user['_links']['self'].split('/').slice(-1)[0];
-};
-
-
 const emptyStream: Stream = {
   game: '',
   viewers: 0,
@@ -86,11 +74,4 @@ const emptyStream: Stream = {
   },
 };
 
-export {
-	streamsUrl,
-	userUrl,
-	users,
-	createEmptyStream,
-	emptyStream,
-	extractUserName,
-}
+export { streamsUrl, userUrl, users, emptyStream };

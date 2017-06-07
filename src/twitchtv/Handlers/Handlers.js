@@ -17,7 +17,7 @@ const fetchHandler = (list: HTMLULElement) => async (_: Event) => {
   streamers.map((streamer: Stream) => {
     const li = document.createElement('li');
 
-    //_id = number || `${user} is offline`
+    //_id === number || `${user} is offline`
     const isOnline = typeof streamer._id === 'number';
 
     if (isOnline) {

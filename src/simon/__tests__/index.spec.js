@@ -1,6 +1,6 @@
 /* @flow */
 
-import { dispatch } from 'common/utils';
+import { dispatch } from 'tests/utils';
 import * as Handlers from '../Handlers';
 import * as Models from '../Models';
 

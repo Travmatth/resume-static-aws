@@ -1,6 +1,6 @@
 import { fetchQuote, createLink } from '../Api';
 import { exampleResponse } from './mockdata';
-import { json } from 'common/utils';
+import { json } from 'tests/utils';
 
 const quote =
   'When you see a man of worth, think of how you may emulate him. ' +

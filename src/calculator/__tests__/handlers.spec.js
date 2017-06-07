@@ -1,6 +1,6 @@
 /* @flow */
 import { keyPressHandler, refreshHandler } from '../Handlers';
-import { dispatch } from 'common/utils';
+import { dispatch } from 'tests/utils';
 
 let win: HTMLElement;
 const err = 'Expected "(", [a-zA-Z], or real but end of input found.';

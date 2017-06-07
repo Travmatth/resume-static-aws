@@ -1,6 +1,6 @@
 /* @flow */
 
-import arithmetic from './Arithmetic';
+import { arithmetic } from '../Parser';
 
 const operators = new Set(['+', '-', '*', '/', '^']);
 const constants = { E: '2.718', PI: '3.14', LN2: '0.693' };

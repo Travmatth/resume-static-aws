@@ -7,6 +7,7 @@ import {
   ResponseError,
   appendSuffix,
   convertFahrenheitToCelsius,
+  checkHeaders,
 } from '../utils';
 
 //49,54,62,68
@@ -64,5 +65,25 @@ describe('Shared utility code', () => {
 
   it('convertFahrenheitToCelsius should convert fahrenheit -> celsius', () => {
     expect(convertFahrenheitToCelsius(100)).toBe(38);
+  });
+
+  it('checkHeaders should reject on invalid response.status', async () => {
+    const res = { status: 404 };
+    try {
+      checkHeaders(res);
+    } catch (error) {
+      expect(error.response.status === res.status);
+    }
+  });
+
+  it('checkHeaders should return json if valid response', async () => {
+    const res = {
+      status: 200,
+      json: () => {
+        return Promise.resolve('working');
+      },
+    };
+
+    expect(await checkHeaders(res)).toBe('working');
   });
 });
