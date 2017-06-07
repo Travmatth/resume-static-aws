@@ -19,7 +19,9 @@ describe('Localweather App', () => {
 
   it('should set event listeners on temperature radio buttons', () => {
     const mock = jest.fn();
+    //$FlowIgnore
     Handlers.toggleTempChangeHandler = jest.fn(() => mock);
+    //$FlowIgnore
     Handlers.getWeatherHandler = jest.fn(() => mock);
 
     const buttons = document.querySelectorAll('input');
