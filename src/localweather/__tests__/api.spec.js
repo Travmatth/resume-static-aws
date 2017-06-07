@@ -4,16 +4,9 @@ import { response, data, url } from './mockdata';
 import { ResponseError, serialize } from 'common/utils';
 import { OPEN_WEATHER_APPID } from 'common/api_keys';
 
-/*
-  Model under test
-*/
-
-import { fetchWeather, stripDateIfRedundant } from '../Handlers';
+import { fetchWeather, stripDateIfRedundant } from '../Api';
 import contentLoadedListener from '../index';
 
-/*
-  Test
-*/
 describe('Localweather API', () => {
   afterEach(() => {
     fetch.resetMocks();

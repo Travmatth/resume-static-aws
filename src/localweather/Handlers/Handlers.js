@@ -1,6 +1,6 @@
 /* @flow */
 
-import { fetchWeather } from './Api';
+import { fetchWeather } from '../Api';
 
 import type {
   ApiParams,
@@ -12,10 +12,6 @@ import type {
   FiveDayForecast,
 } from '../localweather.types';
 
-/*
-  Libraries
-*/
-
 import {
   serialize,
   dateString,
@@ -24,7 +20,7 @@ import {
   convertFahrenheitToCelsius,
 } from 'common/utils';
 import { OPEN_WEATHER_APPID } from 'common/api_keys';
-import { endpoint, openweatherApiParams } from './constants';
+import { endpoint, openweatherApiParams } from '../Models';
 
 // Mocking fetch during dev
 //import * as MOCK from './mockdata';

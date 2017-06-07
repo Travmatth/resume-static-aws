@@ -11,10 +11,6 @@ import type {
 } from '../localweather.types';
 import { checkHeaders } from 'common/utils';
 
-/*
-  Libraries
-*/
-
 import {
   serialize,
   dateString,
@@ -23,7 +19,7 @@ import {
   convertFahrenheitToCelsius,
 } from 'common/utils';
 import { OPEN_WEATHER_APPID } from 'common/api_keys';
-import { endpoint, openweatherApiParams } from './constants';
+import { endpoint, openweatherApiParams } from '../Models';
 
 /*
   Network call
@@ -81,14 +77,6 @@ const fetchWeather = async (url: string): Promise<Weather> => {
   Supporting Functions
 */
 
-//const checkResponse = async (response: Response): Promise<FiveDayForecast> => {
-//if (response.status < 200 || response.status >= 400) {
-//throw new ResponseError('localweather fetch failed', response);
-//}
-
-//return await (response.json(): Promise<FiveDayForecast>);
-//};
-
 const processWeather = (data: FiveDayForecast): Weather => ({
   city: data.city.name,
   now: Date.now(),
@@ -131,7 +119,6 @@ const stripDateIfRedundant = (
 
 export {
   fetchWeather,
-  //checkResponse,
   processWeather,
   processForecasts,
   parseTime,

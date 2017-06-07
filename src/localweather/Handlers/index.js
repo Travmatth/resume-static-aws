@@ -1,15 +1,6 @@
 /* @flow */
 
 import {
-  fetchWeather,
-  checkResponse,
-  processWeather,
-  processForecasts,
-  parseTime,
-  stripDateIfRedundant,
-} from './Api';
-
-import {
   tempScale,
   getWeatherHandler,
   updateTableRows,
@@ -19,12 +10,6 @@ import {
 export {
   tempScale,
   getWeatherHandler,
-  fetchWeather,
   updateTableRows,
   toggleTempChangeHandler,
-  checkResponse,
-  processWeather,
-  processForecasts,
-  parseTime,
-  stripDateIfRedundant,
 };
