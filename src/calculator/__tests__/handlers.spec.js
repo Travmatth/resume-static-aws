@@ -12,7 +12,7 @@ describe('Calculator Handlers', () => {
     ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
     require('../index.js');
     dispatch(document, 'DOMContentLoaded');
-    win: HTMLElement = (document.querySelector('.window'): any);
+    win = ((document.querySelector('.window'): any): HTMLElement);
   });
 
   afterEach(() => {

@@ -18,9 +18,9 @@ jest.mock('../Api', () => ({
 }));
 
 describe('WikiViewer Handlers', () => {
-  //$FlowIgnore
   beforeEach(
     () =>
+      //$FlowIgnore
       (((document.body: any): HTMLElement).innerHTML = require('../index.pug')),
   );
 

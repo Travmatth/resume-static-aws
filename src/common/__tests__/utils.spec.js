@@ -36,7 +36,7 @@ describe('Shared utility code', () => {
   });
 
   it('serialize should omit ? when no params present', () => {
-    const url = serialize('test', {});
+    const url = serialize('test');
     expect(url).toBe('test');
   });
 
