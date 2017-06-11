@@ -1,58 +1,63 @@
 /* @flow */
 import { ColorHandler } from '../Handlers';
+import type { SoundManager } from '../Models';
+import { Colors } from '../Models';
+
+class Sounds {}
 
 describe('Simon Colors', () => {
   let color: ColorHandler;
   let buttons: { [string]: HTMLElement };
-  let sounds: { play: Function, pause: Function };
+  let sounds: SoundManager;
 
   beforeEach(() => {
     buttons = {
-      red: document.createElement('div'),
-      yellow: document.createElement('div'),
-      green: document.createElement('div'),
-      blue: document.createElement('div'),
+      red: document.createElement('button'),
+      yellow: document.createElement('button'),
+      green: document.createElement('button'),
+      blue: document.createElement('button'),
     };
 
     Object.keys(buttons).forEach(color => buttons[color].classList.add(color));
 
-    sounds = {
-      play: jest.fn(),
-      pause: jest.fn(),
-    };
+    sounds = ((new Sounds(): any): SoundManager);
+    //$FlowIgnore
+    sounds.play = jest.fn();
+    //$FlowIgnore
+    sounds.pause = jest.fn();
 
     color = new ColorHandler(buttons, sounds);
   });
 
   it('swapCss should toggle css classes on color elements', () => {
-    color.swapCss('red');
-    expect(buttons['red'].className).toBe('light-red');
+    color.swapCss(Colors.red);
+    expect(buttons[Colors.red].className).toBe('light-red');
 
-    color.swapCss('red');
-    expect(buttons['red'].className).toBe('red');
+    color.swapCss(Colors.red);
+    expect(buttons[Colors.red].className).toBe(Colors.red);
   });
 
   it('showColor should play sound & toggle css', () => {
-    color.showColor('red');
+    color.showColor(Colors.red);
     expect(sounds.play).toHaveBeenCalled();
-    expect(buttons['red'].className).toBe('light-red');
+    expect(buttons[Colors.red].className).toBe('light-red');
   });
 
   it('hideColor should stop sound & toggle css', () => {
-    color.showColor('red');
-    color.hideColor('red');
+    color.showColor(Colors.red);
+    color.hideColor(Colors.red);
 
     expect(sounds.pause).toHaveBeenCalled();
-    expect(buttons['red'].className).toBe('red');
+    expect(buttons[Colors.red].className).toBe(Colors.red);
   });
 
   it('startSound should play sound', () => {
-    color.startSound('red');
+    color.startSound(Colors.red);
     expect(sounds.play).toHaveBeenCalled();
   });
 
   it('endSound should stop sound', () => {
-    color.endSound('red');
+    color.endSound(Colors.red);
     expect(sounds.pause).toHaveBeenCalled();
   });
 
@@ -65,7 +70,7 @@ describe('Simon Colors', () => {
     const endSound = jest.spyOn(color, 'endSound').mockImplementation(() => {});
     const resume = jest.fn();
 
-    color.flash('', resume);
+    color.flash('red', resume);
 
     expect(showAll).toHaveBeenCalled();
     expect(startSound).toHaveBeenCalled();
@@ -94,7 +99,9 @@ describe('Simon Colors', () => {
   });
 
   it('wonStart should flash all colors, start won audio', () => {
+    //$FlowIgnore
     color.startSound = jest.fn();
+    //$FlowIgnore
     color.showAll = jest.fn();
 
     color.wonStart();
@@ -104,7 +111,9 @@ describe('Simon Colors', () => {
   });
 
   it('wonEnd should flash all colors, start won audio', () => {
+    //$FlowIgnore
     color.endSound = jest.fn();
+    //$FlowIgnore
     color.hideAll = jest.fn();
 
     color.wonEnd();
@@ -114,7 +123,9 @@ describe('Simon Colors', () => {
   });
 
   it('failStart should flash all colors, start fail audio', () => {
+    //$FlowIgnore
     color.startSound = jest.fn();
+    //$FlowIgnore
     color.showAll = jest.fn();
 
     color.failStart();
@@ -124,7 +135,9 @@ describe('Simon Colors', () => {
   });
 
   it('failEnd should flash all colors, end fail audio', () => {
+    //$FlowIgnore
     color.endSound = jest.fn();
+    //$FlowIgnore
     color.hideAll = jest.fn();
 
     color.failEnd();
@@ -150,6 +163,7 @@ describe('Simon Colors', () => {
   });
 
   it('showAll should flash all colors', () => {
+    //$FlowIgnore
     color.showColor = jest.fn();
     color.showAll();
 
@@ -157,6 +171,7 @@ describe('Simon Colors', () => {
   });
 
   it('hideAll should hide all colors', () => {
+    //$FlowIgnore
     color.hideColor = jest.fn();
     color.hideAll();
 

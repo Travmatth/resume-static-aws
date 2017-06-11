@@ -36,7 +36,7 @@ if (document !== undefined) {
 
     power.addEventListener(
       'click',
-      powerHandler(updateScore, colorButtons, simon, timer),
+      powerHandler(updateScore, colorButtons, simon, timer, clock),
     );
     strict.addEventListener('click', strictHandler(simon));
 

@@ -32,26 +32,30 @@ jest.mock('../Handlers', () => {
 
 describe('Simon page', () => {
   beforeEach(() => {
-    document.body.innerHTML = require('../index.pug');
+    //$FlowIgnore
+    ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
     require('../index.js');
     dispatch(document, 'DOMContentLoaded');
   });
 
   it('should have listener on power button', () => {
-    document.getElementById('power').click();
+    ((document.getElementById('power'): any): HTMLButtonElement).click();
+    //$FlowIgnore
     expect(Handlers.powerHandlerCallback).toHaveBeenCalled();
   });
 
   it('should have listener on strict button', () => {
-    document.getElementById('strict').click();
+    ((document.getElementById('strict'): any): HTMLButtonElement).click();
+    //$FlowIgnore
     expect(Handlers.strictHandlerCallback).toHaveBeenCalled();
   });
 
   it('should have listener on color buttons', () => {
     ['red', 'yellow', 'green', 'blue'].forEach(color => {
-      document.getElementById(color).click();
+      ((document.getElementById(color): any): HTMLButtonElement).click();
     });
 
+    //$FlowIgnore
     expect(Handlers.clickHandlerCallback).toHaveBeenCalledTimes(4);
   });
 });

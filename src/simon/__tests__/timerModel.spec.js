@@ -1,6 +1,7 @@
 /* @flow */
 import { Timer, Simon } from '../Models';
 import { delay } from '../Models';
+import type { ColorHandler } from '../Handlers';
 
 class MockButtons {}
 
@@ -12,7 +13,7 @@ describe('Simon Game Timer Model', () => {
   beforeEach(() => {
     timer = new Timer();
     simon = new Simon();
-    buttons = new MockButtons();
+    buttons = ((new MockButtons(): any): ColorHandler);
   });
 
   it('reset should set current to zero', () => {
@@ -60,6 +61,7 @@ describe('Simon Game Timer Model', () => {
   });
 
   it('cycle: start should increment and show all buttons', () => {
+    //$FlowIgnore
     buttons.showAll = jest.fn();
 
     const { next, round, action } = timer.tick(simon, buttons);
@@ -73,6 +75,7 @@ describe('Simon Game Timer Model', () => {
 
   it('cycle: end-start should increment and hide all buttons', () => {
     timer.current = 1;
+    //$FlowIgnore
     buttons.hideAll = jest.fn();
 
     const { next, round, action } = timer.tick(simon, buttons);
@@ -108,6 +111,7 @@ describe('Simon Game Timer Model', () => {
 
   it('cycle: show-step should increment and show specified color', () => {
     timer.current = 4;
+    //$FlowIgnore
     buttons.showColor = jest.fn();
 
     const { next, round, action } = timer.tick(simon, buttons);
@@ -121,7 +125,9 @@ describe('Simon Game Timer Model', () => {
 
   it('cycle: hide-step should hide color, queue next color, and increment if sequence is over', () => {
     timer.current = 5;
+    //$FlowIgnore
     buttons.hideColor = jest.fn();
+    //$FlowIgnore
     simon.showSequenceOver = jest.fn(() => true);
 
     const { next, round, action } = timer.tick(simon, buttons);
@@ -135,7 +141,9 @@ describe('Simon Game Timer Model', () => {
 
   it('cycle: hide-step should hide color, queue next color, and decrement if sequence is over', () => {
     timer.current = 5;
+    //$FlowIgnore
     buttons.hideColor = jest.fn();
+    //$FlowIgnore
     simon.showSequenceOver = jest.fn(() => false);
 
     const { next, round, action } = timer.tick(simon, buttons);
@@ -160,6 +168,7 @@ describe('Simon Game Timer Model', () => {
 
   it('cycle: start-input should increment and set simon input to true', () => {
     timer.current = 7;
+    //$FlowIgnore
     simon.setInput = jest.fn();
     simon.round = ['red'];
 
@@ -174,8 +183,11 @@ describe('Simon Game Timer Model', () => {
 
   it('cycle: end-input should set simon input to false and jump to successful-round if player has won round or game', () => {
     timer.current = 8;
+    //$FlowIgnore
     simon.setInput = jest.fn();
+    //$FlowIgnore
     simon.hasWonRound = jest.fn(() => true);
+    //$FlowIgnore
     simon.hasWonGame = jest.fn(() => false);
 
     const { next, round, action } = timer.tick(simon, buttons);
@@ -189,8 +201,11 @@ describe('Simon Game Timer Model', () => {
 
   it('cycle: end-input should set simon input to false and increment to failed-round if player has failed round or game', () => {
     timer.current = 8;
+    //$FlowIgnore
     simon.setInput = jest.fn();
+    //$FlowIgnore
     simon.hasWonRound = jest.fn(() => false);
+    //$FlowIgnore
     simon.hasWonGame = jest.fn(() => false);
 
     const { next, round, action } = timer.tick(simon, buttons);
@@ -204,6 +219,7 @@ describe('Simon Game Timer Model', () => {
 
   it('cycle: failed-round should start failed animation and jump to end', () => {
     timer.current = 9;
+    //$FlowIgnore
     buttons.failStart = jest.fn();
 
     const { next, round, action } = timer.tick(simon, buttons);
@@ -217,6 +233,7 @@ describe('Simon Game Timer Model', () => {
 
   it('cycle: successful-round should start win animation and increment to end', () => {
     timer.current = 10;
+    //$FlowIgnore
     buttons.wonStart = jest.fn();
 
     const { next, round, action } = timer.tick(simon, buttons);
@@ -231,8 +248,11 @@ describe('Simon Game Timer Model', () => {
   it('cycle: end should stop all animations and reset game and timer state', () => {
     timer.current = 11;
     const spy = jest.spyOn(timer, 'reset');
+    //$FlowIgnore
     simon.reset = jest.fn();
+    //$FlowIgnore
     buttons.wonEnd = jest.fn();
+    //$FlowIgnore
     buttons.failEnd = jest.fn();
 
     const { next, round, action } = timer.tick(simon, buttons);

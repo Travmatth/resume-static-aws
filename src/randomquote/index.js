@@ -3,9 +3,12 @@ import { fetchQuoteHandler } from './Handlers';
 
 if (document !== undefined) {
   document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById('quotebox');
-    const tweet = document.querySelector('.tweet');
+    const container = ((document.getElementById('quotebox'): any): HTMLElement);
+    const tweet = ((document.querySelector('.tweet'): any): HTMLElement);
     const nextQuote = fetchQuoteHandler(container, tweet);
-    document.getElementById('refresh').addEventListener('click', nextQuote);
+    ((document.getElementById('refresh'): any): HTMLElement).addEventListener(
+      'click',
+      nextQuote,
+    );
   });
 }

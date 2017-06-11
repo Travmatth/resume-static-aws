@@ -13,7 +13,8 @@ jest.mock('../Handlers', () => {
 
 describe('TwitchTV page', () => {
   beforeEach(() => {
-    document.body.innerHTML = require('../index.pug');
+    //$FlowIgnore
+    ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
     require('../index.js');
     dispatch(document, 'DOMContentLoaded');
   });

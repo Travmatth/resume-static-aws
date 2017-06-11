@@ -22,9 +22,9 @@ if (document !== undefined) {
     ): any): HTMLInputElement);
 
     // Each Result has it's own heading
-    const headings = ((document.querySelectorAll('div.heading'): any): NodeList<
-      HTMLElement
-    >);
+    const headings = ((document.querySelectorAll(
+      'div.heading',
+    ): any): HTMLCollection<HTMLElement>);
     // Each Result has it's own paragraph
     const paragraphs = ((document.getElementsByTagName(
       'p',

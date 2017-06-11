@@ -1,15 +1,16 @@
 /* @flow */
 export const Side = { X: 'X', O: 'O' };
+export type Sides = $Keys<typeof Side> | null;
 export type ScoreCard = {| X: number, O: number |};
 export type WinningBoard = Array<Array<boolean>>;
 export type Update = (grid: Array<string>) => void;
 export type Handler = (e: Event) => void;
 
-export type GameGrid = {|
+export type GameGrid = {
   x: number,
   y: number,
   player: ?$Keys<typeof Side>,
-|};
+};
 
 export type GameBoard = Array<GameGrid>;
 
@@ -24,10 +25,10 @@ export class HTMLGameSquare extends HTMLButtonElement {
 
 export type GameState = {
   input: boolean,
-  history: Array<GameBoard>,
+  history: Array<Array<GameGrid>>,
   turn: $Keys<typeof Side>,
   player: $Keys<typeof Side>,
   finished: boolean,
-  grid: Array<GameGrid>,
+  grid: GameBoard,
   score: ScoreCard,
 };

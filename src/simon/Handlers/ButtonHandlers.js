@@ -31,7 +31,7 @@ const powerHandler = (
 const strictHandler = (simon: Simon) => (_: Event) => simon.toggleStrict();
 
 const scoreHandler = (element: HTMLElement) => (score: number | string) =>
-  element.textContent = `${score}`;
+  (element.textContent = `${score}`);
 
 const clickHandler = (
   color: ColorKeys,
@@ -56,7 +56,7 @@ const clickHandler = (
 
     const hasFailed = simon.hasFailedRound();
     const hasWon = simon.hasWonRound();
-    if (hasFailed || hasWon) cancelTimer();
+    if (hasFailed || hasWon) cancelTimer(clock);
 
     const move = () => advance(simon, buttons, update, timer, clock);
     // If player has won game, end & restart

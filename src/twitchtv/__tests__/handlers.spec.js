@@ -43,8 +43,9 @@ describe('TwitchTV Handlers', () => {
 
     expect(node.children.length).toBe(2);
 
-    const img = node.children[0].children[0];
-    const a = node.children[0].children[1].children[0];
+    const img = ((node.children[0].children[0]: any): HTMLImageElement);
+    const a = ((node.children[0].children[1]
+      .children[0]: any): HTMLAnchorElement);
     const link = node.children[0].children[1];
     const viewers = node.children[0].children[2];
     const game = node.children[0].children[3];

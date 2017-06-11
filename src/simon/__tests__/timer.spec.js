@@ -1,6 +1,8 @@
 /* @flow */
 
 import { Simon } from '../Models';
+import type { ColorHandler } from '../Handlers';
+import type { Timer } from '../Models';
 import { cancelTimer, advance, powerOn, powerOff, fire } from '../Handlers';
 
 describe('Simon Game Timer', () => {
@@ -19,16 +21,16 @@ describe('Simon Game Timer', () => {
   it('powerOn should call advance', () => {
     let limit = 5;
     const roundLength = 1;
-    const buttons = {};
-    const action = jest.fn(() => limit -= 1);
-    const timer = {
+    const buttons = (({}: any): ColorHandler);
+    const action = jest.fn(() => (limit -= 1));
+    const timer = (({
       tick: () => ({
         next: limit === 0 ? false : true,
         round: 10,
         action,
         limit,
       }),
-    };
+    }: any): Timer);
     const simon = new Simon();
     const clock = { id: null };
 
@@ -41,16 +43,16 @@ describe('Simon Game Timer', () => {
   it('fire should execute action and set timeout for next', () => {
     let limit = 5;
     const roundLength = 1;
-    const buttons = {};
-    const action = jest.fn(() => limit -= 1);
-    const timer = {
+    const buttons = (({}: any): ColorHandler);
+    const action = jest.fn(() => (limit -= 1));
+    const timer = (({
       tick: () => ({
         next: limit === 0 ? false : true,
         round: 10,
         action,
         limit,
       }),
-    };
+    }: any): Timer);
     const simon = new Simon();
     const clock = { id: null };
 
@@ -63,16 +65,16 @@ describe('Simon Game Timer', () => {
   it('advance should call fire', () => {
     let limit = 5;
     const roundLength = 1;
-    const buttons = {};
-    const action = jest.fn(() => limit -= 1);
-    const timer = {
+    const buttons = (({}: any): ColorHandler);
+    const action = jest.fn(() => (limit -= 1));
+    const timer = (({
       tick: () => ({
         next: limit === 0 ? false : true,
         round: 10,
         action,
         limit,
       }),
-    };
+    }: any): Timer);
     const simon = new Simon();
     const clock = { id: null };
 

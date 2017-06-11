@@ -1,10 +1,11 @@
 /* @flow */
 import { Game, genScoreCard, createGrid } from '../Models';
+import type { GameBoard, GameGrid } from '../tictactoe.types';
 
 describe('TicTacToe Game', () => {
   let game: Game;
 
-  beforeEach(() => game = new Game());
+  beforeEach(() => (game = new Game()));
 
   it('instantiates with correct default state', () => {
     expect(game.state.input).toBe(false);
@@ -38,8 +39,8 @@ describe('TicTacToe Game', () => {
     game.state.input = false;
     game.state.finished = true;
     game.state.turn = 'O';
-    game.state.history = ['a'];
-    game.state.grid = ['a'];
+    game.state.history = [createGrid()];
+    game.state.grid = ((['a']: any): Array<GameGrid>);
 
     game.restart();
 
@@ -122,6 +123,7 @@ describe('TicTacToe Game', () => {
     expect(game.state.input).toBe(false);
     expect(spy).toHaveBeenCalled();
 
+    //$FlowIgnore
     spy.mockRestore();
   });
 

@@ -19,7 +19,7 @@ describe('TicTacToe Views', () => {
   describe('Helpers', () => {
     it('render should append initial node', () => {
       const root = document.createElement('div');
-      const el = document.createElement('div');
+      const el = ((document.createElement('div'): any): DocumentFragment);
       el.textContent = 'test';
 
       render(root, null, el)();
@@ -29,8 +29,8 @@ describe('TicTacToe Views', () => {
 
     it('render should replace one view with another', () => {
       const root = document.createElement('div');
-      const first = document.createElement('div');
-      const second = document.createElement('div');
+      const first = ((document.createElement('div'): any): DocumentFragment);
+      const second = ((document.createElement('div'): any): DocumentFragment);
 
       first.textContent = 'first';
       second.textContent = 'second';

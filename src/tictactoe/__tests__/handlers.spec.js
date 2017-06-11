@@ -12,7 +12,7 @@ import { Game } from '../Models';
 
 describe('TicTacToe Handlers', () => {
   let game: Game;
-  beforeEach(() => game = new Game());
+  beforeEach(() => (game = new Game()));
 
   it('makeAction should accpet GameSquare HTMLElement and return a GameGrid object', () => {
     const elem = document.createElement('div');
@@ -26,7 +26,9 @@ describe('TicTacToe Handlers', () => {
   });
 
   it("playerAction returns a function that returns if player can't move", () => {
+    //$FlowIgnore
     game.canMove = jest.fn(() => false);
+    //$FlowIgnore
     game.player = jest.fn();
 
     const update = jest.fn();
@@ -44,12 +46,19 @@ describe('TicTacToe Handlers', () => {
   });
 
   it('playerAction returns a function that moves both player and computer after staggered timeouts', () => {
+    //$FlowIgnore
     game.restart = jest.fn();
+    //$FlowIgnore
     game.takeTurn = jest.fn();
+    //$FlowIgnore
     game.simulateMove = jest.fn();
+    //$FlowIgnore
     game.endPlayerMove = jest.fn();
+    //$FlowIgnore
     game.isOver = jest.fn(() => false);
+    //$FlowIgnore
     game.startPlayerMove = jest.fn();
+    //$FlowIgnore
     game.current = jest
       .fn()
       .mockImplementationOnce(() => 'a')
@@ -87,14 +96,20 @@ describe('TicTacToe Handlers', () => {
     expect(game.startPlayerMove).toHaveBeenCalled();
 
     // cleanup
+    //$FlowIgnore
     spy.mockRestore();
   });
 
   it('playerAction returns a function that ends & restarts game if player has won', () => {
+    //$FlowIgnore
     game.restart = jest.fn();
+    //$FlowIgnore
     game.takeTurn = jest.fn();
+    //$FlowIgnore
     game.endPlayerMove = jest.fn();
+    //$FlowIgnore
     game.isOver = jest.fn(() => true);
+    //$FlowIgnore
     game.current = jest.fn().mockImplementationOnce(() => 'a');
 
     const spy = jest.spyOn(game, 'player');
@@ -122,19 +137,27 @@ describe('TicTacToe Handlers', () => {
     expect(end).toHaveBeenCalledWith();
 
     // cleanup
+    //$FlowIgnore
     spy.mockRestore();
   });
 
   it('playerAction returns a function that ends & restarts game if computer has won', () => {
+    //$FlowIgnore
     game.restart = jest.fn();
+    //$FlowIgnore
     game.takeTurn = jest.fn();
+    //$FlowIgnore
     game.simulateMove = jest.fn();
+    //$FlowIgnore
     game.endPlayerMove = jest.fn();
+    //$FlowIgnore
     game.isOver = jest
       .fn()
       .mockImplementationOnce(() => false)
       .mockImplementationOnce(() => true);
+    //$FlowIgnore
     game.startPlayerMove = jest.fn();
+    //$FlowIgnore
     game.current = jest
       .fn()
       .mockImplementationOnce(() => 'a')
@@ -172,12 +195,16 @@ describe('TicTacToe Handlers', () => {
     expect(end).toHaveBeenCalledWith();
 
     // cleanup
+    //$FlowIgnore
     spy.mockRestore();
   });
 
   it("restartGameHandler should restart game, update game when player is 'X'", () => {
+    //$FlowIgnore
     game.restart = jest.fn();
+    //$FlowIgnore
     game.player = jest.fn(() => 'X');
+    //$FlowIgnore
     game.simulateFirstMove = jest.fn();
     const update = jest.fn();
 
@@ -188,8 +215,11 @@ describe('TicTacToe Handlers', () => {
   });
 
   it("restartGameHandler should restart game, update game, and simulate first move when player is 'X'", () => {
+    //$FlowIgnore
     game.restart = jest.fn();
+    //$FlowIgnore
     game.player = jest.fn(() => 'O');
+    //$FlowIgnore
     game.simulateFirstMove = jest.fn();
     const update = jest.fn();
 
@@ -201,6 +231,7 @@ describe('TicTacToe Handlers', () => {
   });
 
   it('resetGameHandler should restart game and trigger reset', () => {
+    //$FlowIgnore
     game.restart = jest.fn();
     const reset = jest.fn();
 
@@ -210,6 +241,7 @@ describe('TicTacToe Handlers', () => {
   });
 
   it("startGameHandler should clear grid and trigger view transition when player is 'X'", () => {
+    //$FlowIgnore
     game.player = jest.fn(() => 'X');
     const update = jest.fn();
     const transition = jest.fn();
@@ -221,8 +253,11 @@ describe('TicTacToe Handlers', () => {
   });
 
   it("startGameHandler should clear grid, trigger view transition, simulate move, update, and allow player input when player is 'O'", () => {
+    //$FlowIgnore
     game.player = jest.fn(() => 'O');
+    //$FlowIgnore
     game.simulateFirstMove = jest.fn();
+    //$FlowIgnore
     game.startPlayerMove = jest.fn();
     const update = jest.fn();
     const transition = jest.fn();
@@ -240,6 +275,7 @@ describe('TicTacToe Handlers', () => {
   });
 
   it('rollbackHandler should rollback game state and update grid', () => {
+    //$FlowIgnore
     game.rollback = jest.fn();
     const update = jest.fn();
 
@@ -250,6 +286,7 @@ describe('TicTacToe Handlers', () => {
   });
 
   it('chooseTurnHandler extract desired side from HTMLElement and use it to set game side', () => {
+    //$FlowIgnore
     game.chooseSide = jest.fn();
 
     chooseTurnHandler(game)({ target: { dataset: { glyph: 'X' } } });

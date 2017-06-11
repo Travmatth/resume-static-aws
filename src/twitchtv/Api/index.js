@@ -5,7 +5,6 @@ import {
   classifyResponse,
   fetchAllProfiles,
   agglomerate,
-  extractUserName,
 } from './Api';
 
 export {
@@ -14,5 +13,4 @@ export {
   classifyResponse,
   fetchAllProfiles,
   agglomerate,
-  extractUserName,
 };

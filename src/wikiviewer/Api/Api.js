@@ -1,11 +1,11 @@
 /* @flow */
 
 import { endpoint, params } from '../Models';
-import type { WikiSearchResult } from '../wikiviewer.types';
+import type { WikiSearchResult, WikiPage } from '../wikiviewer.types';
 import { serialize, ResponseError, checkHeaders } from 'common/utils';
 
-const search = (query: Array<string>) => {
-  if (query.length === 0) return null;
+const search = (query: Array<string>): Promise<?Array<WikiPage>> => {
+  if (query.length === 0) return Promise.resolve(null);
 
   params['gsrsearch'] = query.join('');
   return fetch(serialize(endpoint, params))

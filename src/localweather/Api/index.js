@@ -2,7 +2,6 @@
 
 import {
   fetchWeather,
-  checkResponse,
   processWeather,
   processForecasts,
   parseTime,
@@ -11,7 +10,6 @@ import {
 
 export {
   fetchWeather,
-  checkResponse,
   processWeather,
   processForecasts,
   parseTime,

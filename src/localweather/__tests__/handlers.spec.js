@@ -11,13 +11,11 @@ import { OPEN_WEATHER_APPID } from 'common/api_keys';
 
 import {
   getWeatherHandler,
-  fetchWeather,
-  openweatherApiParams,
-  endpoint,
   updateTableRows,
   toggleTempChangeHandler,
   tempScale,
 } from '../Handlers';
+import { openweatherApiParams, endpoint } from '../Models';
 import contentLoadedListener from '../index';
 
 describe('Localweather Handlers', () => {
@@ -26,12 +24,12 @@ describe('Localweather Handlers', () => {
   });
 
   beforeEach(() => {
-    document.body.innerHTML = require('../index.pug');
+    //$FlowIgnore
+    ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
   });
 
   it('updateTableRows() populates given DOM element w/ correct data', async () => {
-    //const node = document.createElement('div')
-    const cells = document.body.querySelectorAll('.cell');
+    const cells = ((document.body: any): HTMLElement).querySelectorAll('.cell');
     const forecasts = [data.forecasts[0]];
 
     // Populate cells
@@ -56,12 +54,12 @@ describe('Localweather Handlers', () => {
   it('getWeatherHandler should catch error if fetchWeather throws', async () => {
     fetch.mockResponseOnce(json({}), { status: 404 });
 
-    const node = document.querySelector('.measurement');
+    const node: HTMLElement = (document.querySelector('.measurement'): any);
     const nodes = document.querySelectorAll('.measurement');
 
     const cells = document.querySelectorAll('.cell');
     const getWeather = getWeatherHandler(
-      document.querySelectorAll('.heading'),
+      ((document.querySelectorAll('.heading'): any): HTMLElement),
       cells,
       document.querySelectorAll('input'),
     );
@@ -79,12 +77,12 @@ describe('Localweather Handlers', () => {
 
   it('toggleTempChange should switch temperature scale', async () => {
     fetch.mockResponseOnce(json(response), { status: 200 });
-    const node = document.querySelector('.measurement');
+    const node: HTMLElement = (document.querySelector('.measurement'): any);
     const nodes = document.querySelectorAll('.measurement');
 
     const cells = document.querySelectorAll('.cell');
     const getWeather = getWeatherHandler(
-      document.querySelectorAll('.heading'),
+      ((document: any): Document).querySelector('.heading'),
       cells,
       document.querySelectorAll('input'),
     );
@@ -96,7 +94,9 @@ describe('Localweather Handlers', () => {
     expect(node.textContent).toBe('28.74');
     const toggleTempChange = toggleTempChangeHandler(nodes);
     const temps = [{ celsius: 28.74, fahrenheit: 84 }];
-    document.querySelector('.celsius').checked = true;
+    ((document.querySelector(
+      '.celsius',
+    ): any): HTMLInputElement).checked = true;
     toggleTempChange(temps);
     expect(node.textContent).toBe('84');
   });

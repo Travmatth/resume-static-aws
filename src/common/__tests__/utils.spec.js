@@ -14,7 +14,10 @@ import {
 describe('Shared utility code', () => {
   it('ResponseError is an error with a response property', () => {
     try {
-      const err = new ResponseError('test-string', 'test-val');
+      const err = new ResponseError(
+        'test-string',
+        (('test-val': any): Response),
+      );
       throw err;
     } catch (resErr) {
       expect(resErr.response).toBe('test-val');
@@ -33,7 +36,7 @@ describe('Shared utility code', () => {
   });
 
   it('serialize should omit ? when no params present', () => {
-    const url = serialize('test');
+    const url = serialize('test', {});
     expect(url).toBe('test');
   });
 
@@ -68,7 +71,7 @@ describe('Shared utility code', () => {
   });
 
   it('checkHeaders should reject on invalid response.status', async () => {
-    const res = { status: 404 };
+    const res: Response = ({ status: 404 }: any);
     try {
       checkHeaders(res);
     } catch (error) {
@@ -77,12 +80,12 @@ describe('Shared utility code', () => {
   });
 
   it('checkHeaders should return json if valid response', async () => {
-    const res = {
+    const res: Response = ({
       status: 200,
       json: () => {
         return Promise.resolve('working');
       },
-    };
+    }: any);
 
     expect(await checkHeaders(res)).toBe('working');
   });

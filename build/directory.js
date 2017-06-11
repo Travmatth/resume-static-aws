@@ -14,7 +14,6 @@ const pages = [
   // 'wikiviewer/index',
 ];
 
-// pageConfigs: (page) => config -> { page: config }
 const pageConfigs = (configure: string => Object) => {
   return pages.reduce((keyedConfig, page) => {
     keyedConfig[page] = configure(page);

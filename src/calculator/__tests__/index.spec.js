@@ -48,11 +48,13 @@ jest.mock('../Handlers', () => {
 
 describe('Calculator index', () => {
   beforeEach(() => {
-    document.body.innerHTML = require('../index.pug');
+    //$FlowIgnore
+    ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
     require('../index.js');
     dispatch(document, 'DOMContentLoaded');
   });
 
+  //$FlowIgnore
   afterEach(() => Handlers.keyPressHandlerCallback.mockReset());
 
   it('calculator buttons should be responsive to click events', () => {
@@ -60,6 +62,7 @@ describe('Calculator index', () => {
       dispatch(`button[data-key="${glyph}"]`, 'click');
     });
 
+    //$FlowIgnore
     expect(Handlers.keyPressHandlerCallback).toHaveBeenCalledTimes(29);
   });
 
@@ -67,6 +70,7 @@ describe('Calculator index', () => {
     glyphs.forEach((glyph: string) => {
       dispatch(`button[data-key="${glyph}"]`, 'click');
     });
+    //$FlowIgnore
     expect(Handlers.keyPressHandlerCallback).toHaveBeenCalledTimes(29);
   });
 });

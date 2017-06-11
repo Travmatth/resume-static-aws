@@ -24,7 +24,8 @@ jest.mock('../Handlers', () => {
 
 describe('WikiViewer DOM', () => {
   beforeEach(() => {
-    document.body.innerHTML = require('../index.pug');
+    //$FlowIgnore
+    ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
     require('../index.js');
     dispatch(document, 'DOMContentLoaded');
   });
@@ -41,21 +42,25 @@ describe('WikiViewer DOM', () => {
       document.getElementById('search-text'),
       new KeyboardEvent('keypress', { key: 'Enter', bubbles: true }),
     );
+    //$FlowIgnore
     expect(Handlers.keypressHandlerCallback).toHaveBeenCalled();
   });
 
   it('searchText should have an onchange handler', () => {
     dispatch(document.getElementById('search-text'), 'change');
+    //$FlowIgnore
     expect(Handlers.typeHandlerCallback).toHaveBeenCalled();
   });
 
   it('search should have a click handler', () => {
     dispatch(document.getElementById('search-btn'), 'click');
+    //$FlowIgnore
     expect(Handlers.searchHandlerCallback).toHaveBeenCalled();
   });
 
   it('random should have a click handler', () => {
-    document.getElementById('random-btn').click();
+    dispatch(document.getElementById('random-btn'), 'click');
+    //$FlowIgnore
     expect(Handlers.randomHandlerCallback).toHaveBeenCalled();
   });
 });

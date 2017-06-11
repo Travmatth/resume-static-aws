@@ -4,7 +4,7 @@ import { LogicUnit } from '../Models';
 
 const logic = new LogicUnit();
 
-const refreshHandler = (outputWindow: HTMLElement) => (msg: ?string): void => {
+const refreshHandler = (outputWindow: ?HTMLElement) => (msg: ?string): void => {
   if (outputWindow) outputWindow.textContent = msg || logic.getExpression();
 };
 

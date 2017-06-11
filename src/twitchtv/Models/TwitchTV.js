@@ -1,5 +1,5 @@
 /* @flow */
-import type { Stream } from '../twitchtv.types';
+import type { Stream, UserStream } from '../twitchtv.types';
 
 const createEmptyStream = (reason: boolean, user: string): Stream =>
   Object.assign(emptyStream, {

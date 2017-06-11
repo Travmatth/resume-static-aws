@@ -13,13 +13,15 @@ jest.mock('../Handlers', () => {
 
 describe('RandomQuote page', () => {
   beforeEach(() => {
-    document.body.innerHTML = require('../index.pug');
+    //$FlowIgnore
+    ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
     require('../index.js');
     dispatch(document, 'DOMContentLoaded');
   });
 
   it('should have a button to fetch next quote', () => {
     dispatch(document.querySelector('.refresh'), 'click');
+    //$FlowIgnore
     expect(Handlers.fetchQuoteHandlerCallback).toHaveBeenCalled();
   });
 });

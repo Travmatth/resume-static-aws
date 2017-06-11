@@ -12,10 +12,10 @@ import {
   checkDiagonal,
   playerHasWon,
 } from '../Models';
-import type { GameGrid } from '../tictactoe.types';
+import type { GameGrid, GameBoard } from '../tictactoe.types';
 
 describe('TicTacToe Board', () => {
-  let grid: Array<GameGrid>;
+  let grid: GameBoard;
 
   beforeEach(() => (grid = createGrid()));
 

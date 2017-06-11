@@ -2,6 +2,7 @@
 
 import { Pomodoro } from '../Models';
 
+//$FlowIgnore
 Date.now = jest
   .fn()
   .mockImplementationOnce(() => 1496006730873)
@@ -19,25 +20,25 @@ Date.now = jest
 describe('Pomodoro Models', () => {
   let pomodoro: Pomodoro;
 
-  beforeEach(() => pomodoro = new Pomodoro(1, 1));
+  beforeEach(() => (pomodoro = new Pomodoro(1, 1)));
 
   it('stepper should return function that can inc rest', () => {
-    pomodoro.stepper('inc', 'rest')();
+    pomodoro.stepper('inc', 'rest')((({}: any): Event));
     expect(pomodoro.timer.rest).toBe(120000);
   });
 
   it('stepper should return function that can dec rest', () => {
-    pomodoro.stepper('dec', 'rest')();
+    pomodoro.stepper('dec', 'rest')((({}: any): Event));
     expect(pomodoro.timer.rest).toBe(0);
   });
 
   it('stepper should return function that can inc work', () => {
-    pomodoro.stepper('inc', 'work')();
+    pomodoro.stepper('inc', 'work')((({}: any): Event));
     expect(pomodoro.timer.work).toBe(120000);
   });
 
   it('stepper should return function that can dec work', () => {
-    pomodoro.stepper('dec', 'work')();
+    pomodoro.stepper('dec', 'work')((({}: any): Event));
     expect(pomodoro.timer.work).toBe(0);
   });
 
@@ -66,20 +67,22 @@ describe('Pomodoro Models', () => {
   });
 
   it('toggleDisplay should return function that can toogles startTimer', () => {
+    //$FlowIgnore
     pomodoro.startTimer = jest.fn();
+    //$FlowIgnore
     pomodoro.stopTimer = jest.fn();
     const toggle = pomodoro.toggle(document.createElement('div'));
 
     expect(pomodoro.state).toBe('STOPPED');
-    toggle();
+    toggle((({}: any): Event));
     expect(pomodoro.state).toBe('RUNNING');
-    toggle();
+    toggle((({}: any): Event));
     expect(pomodoro.state).toBe('STOPPED');
   });
 
   it('reset should set timer display to 0:0.00', () => {
     const elem = document.createElement('div');
-    pomodoro.reset(elem)();
+    pomodoro.reset(elem)((({}: any): Event));
     expect(elem.textContent).toBe('0:0.00');
   });
 });

@@ -8,7 +8,9 @@ import {
   updateDOM,
 } from '../Handlers';
 import * as Api from '../Api';
-import { ResponseError, dispatch, json } from 'common/utils';
+import type { Headings, Paragraphs } from '../wikiviewer.types';
+import { ResponseError } from 'common/utils';
+import { dispatch, json } from 'tests/utils';
 import { wikis, exampleWikipediaSearch } from './wikiviewer.mockdata';
 
 jest.mock('../Api', () => ({
@@ -16,7 +18,11 @@ jest.mock('../Api', () => ({
 }));
 
 describe('WikiViewer Handlers', () => {
-  beforeEach(() => (document.body.innerHTML = require('../index.pug')));
+  //$FlowIgnore
+  beforeEach(
+    () =>
+      (((document.body: any): HTMLElement).innerHTML = require('../index.pug')),
+  );
 
   afterEach(() => {
     fetch.resetMocks();
@@ -25,7 +31,7 @@ describe('WikiViewer Handlers', () => {
 
   it('typeHandler should update query with event targets value', () => {
     const query = [];
-    typeHandler(query)({ target: { value: 'a' } });
+    typeHandler(query)((({ target: { value: 'a' } }: any): Event));
     expect(query).toEqual(['a']);
   });
 
@@ -37,53 +43,62 @@ describe('WikiViewer Handlers', () => {
 
   it('searchHandler should call refreshResults and updateDOM', async () => {
     const query = ['foo'];
-    const paragraphs = document.querySelectorAll('p');
-    const headings = document.querySelectorAll('div.heading');
+    const paragraphs = ((document.querySelectorAll('p'): any): Paragraphs);
+    const headings = ((document.querySelectorAll(
+      'div.heading',
+    ): any): Headings);
 
     await searchHandler(query, headings, paragraphs)();
-    expect(document.body.outerHTML).toMatchSnapshot();
+    expect(((document.body: any): HTMLElement).outerHTML).toMatchSnapshot();
   });
 
   it('refreshResults should call updateDOM with results of search', async () => {
     const query = ['foo'];
-    const paragraphs = document.querySelectorAll('p');
-    const headings = document.querySelectorAll('div.heading');
+    const paragraphs = ((document.querySelectorAll('p'): any): Paragraphs);
+    const headings = ((document.querySelectorAll(
+      'div.heading',
+    ): any): Headings);
 
     await searchHandler(query, headings, paragraphs)();
-    expect(document.body.outerHTML).toMatchSnapshot();
+    expect(((document.body: any): HTMLElement).outerHTML).toMatchSnapshot();
   });
 
   it("keyPressHandler should call refreshResults on 'Enter' key", async () => {
     const query = ['foo'];
-    const paragraphs = document.querySelectorAll('p');
-    const headings = document.querySelectorAll('div.heading');
+    const paragraphs = ((document.querySelectorAll('p'): any): Paragraphs);
+    const headings = ((document.querySelectorAll(
+      'div.heading',
+    ): any): Headings);
 
     const handler = keypressHandler(query, headings, paragraphs);
-    await handler({ key: 'Enter' });
+    await handler((({ key: 'Enter' }: any): Event));
 
-    expect(document.body.outerHTML).toMatchSnapshot();
+    expect(((document.body: any): HTMLElement).outerHTML).toMatchSnapshot();
   });
 
   it("keyPressHandler should drop elements of query on 'Backspace' key", async () => {
-    const paragraphs = document.querySelectorAll('p');
-    const headings = document.querySelectorAll('div.heading');
+    const paragraphs = ((document.querySelectorAll('p'): any): Paragraphs);
+    const headings = ((document.querySelectorAll(
+      'div.heading',
+    ): any): Headings);
     const query = [];
     const type = typeHandler(query);
-    type({ target: { value: 'a' } });
-    type({ target: { value: 'b' } });
+    type((({ target: { value: 'a' } }: any): Event));
+    type((({ target: { value: 'b' } }: any): Event));
 
     const handler = keypressHandler(query, headings, paragraphs);
-    await handler({ key: 'Backspace' });
+    await handler((({ key: 'Backspace' }: any): Event));
 
     expect(query).toEqual(['a']);
   });
 
   it('updateDOM should populate given elements with returned data', async () => {
-    const paragraphs = document.querySelectorAll('p');
-    const headings = document.querySelectorAll('div.heading');
+    const paragraphs = ((document.querySelectorAll('p'): any): Paragraphs);
+    const headings = ((document.querySelectorAll(
+      'div.heading',
+    ): any): Headings);
 
     await updateDOM(wikis, headings, paragraphs);
-    const t = document.body.outerHTML;
-    expect(t).toMatchSnapshot();
+    expect(((document.body: any): HTMLElement).outerHTML).toMatchSnapshot();
   });
 });

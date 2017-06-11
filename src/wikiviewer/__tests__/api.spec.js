@@ -3,6 +3,7 @@
 import { search, checkHeaders, processWikis } from '../Api';
 import { ResponseError } from 'common/utils';
 import { dispatch, json } from 'tests/utils';
+import type { WikiPage, WikiSearchResult } from '../wikiviewer.types';
 import { wikis, exampleWikipediaSearch } from './wikiviewer.mockdata';
 
 const objectify = (arr: Array<WikiPage>) => {
@@ -20,7 +21,8 @@ describe('WikiViewer Api', () => {
 
   it('search should return parsed json object', async () => {
     fetch.mockResponseOnce(json(exampleWikipediaSearch), { status: 200 });
-    const returned = objectify(await search(['foo']));
+    const data = ((await search(['foo']): any): Array<WikiPage>);
+    const returned = objectify(data);
     const expected = objectify(wikis);
 
     expect(returned).toEqual(expected);
@@ -36,7 +38,7 @@ describe('WikiViewer Api', () => {
   });
 
   it('processWikis should normalize nested json into array', () => {
-    const wikis = {
+    const wikis = (({
       query: {
         pages: {
           limits: '',
@@ -45,7 +47,7 @@ describe('WikiViewer Api', () => {
           c: 'c',
         },
       },
-    };
+    }: any): WikiSearchResult);
 
     expect(processWikis(wikis)).toEqual(['a', 'b', 'c']);
   });

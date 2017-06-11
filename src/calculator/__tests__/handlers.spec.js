@@ -4,14 +4,15 @@ import { dispatch } from 'tests/utils';
 
 let win: HTMLElement;
 const err = 'Expected "(", [a-zA-Z], or real but end of input found.';
-const press = (key: string) => ({ target: { dataset: { key } } });
+const press = (key: string): Event => ({ target: { dataset: { key } } }: any);
 
 describe('Calculator Handlers', () => {
   beforeEach(() => {
-    document.body.innerHTML = require('../index.pug');
+    //$FlowIgnore
+    ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
     require('../index.js');
     dispatch(document, 'DOMContentLoaded');
-    win = document.querySelector('.window');
+    win: HTMLElement = (document.querySelector('.window'): any);
   });
 
   afterEach(() => {

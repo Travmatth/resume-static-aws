@@ -1,6 +1,6 @@
 /* @flow */
 import { fetchQuoteHandler } from '../Handlers';
-import { dispatch } from 'common/utils';
+import { dispatch } from 'tests/utils';
 import * as Api from '../Api';
 
 jest.mock('../Api', () => {
@@ -14,13 +14,15 @@ jest.mock('../Api', () => {
 
 describe('RandomQuote Handlers', () => {
   beforeEach(() => {
-    document.body.innerHTML = require('../index.pug');
+    //$FlowIgnore
+    ((document: any): Document).body.innerHTML = require('../index.pug');
   });
 
   it('fetchQuoteHandler should fill in quote, author, and twitter link', async () => {
-    const container = document.querySelector('.quotebox');
-    const tweet = document.querySelector('.tweet');
-    await fetchQuoteHandler(container, tweet)();
+    const container = ((document.querySelector('.quotebox'): any): HTMLElement);
+    const tweet = ((document.querySelector('.tweet'): any): HTMLElement);
+    const ev = (({}: any): Event);
+    await fetchQuoteHandler(container, tweet)(ev);
     expect(container.children[0].textContent).toBe('a');
     expect(container.children[1].textContent).toBe('b');
     expect(tweet.textContent).toBe('stub');
