@@ -3,7 +3,6 @@ import { keyPressHandler, refreshHandler } from '../Handlers';
 import { dispatch } from 'tests/utils';
 
 let win: HTMLElement;
-const err = 'Expected "(", [a-zA-Z], or real but end of input found.';
 const press = (key: string): Event => ({ target: { dataset: { key } } }: any);
 
 describe('Calculator Handlers', () => {
@@ -32,7 +31,7 @@ describe('Calculator Handlers', () => {
 
   it("keyPressHandler should refresh window on '=' key", () => {
     keyPressHandler(win)(press('='));
-    expect(win.textContent).toBe(err);
+    expect(win.textContent).toBe('Error');
   });
 
   it("keyPressHandler should clear logic & refresh on 'clear' key", () => {

@@ -159,8 +159,7 @@ describe('Calculator Model', () => {
   it('should throw on badly formatted expression', () => {
     expr.update('1');
     expr.update('+');
-    const msg = 'Expected "(", [a-zA-Z], or real but end of input found.';
-    expect(expr.compute()).toBe(msg);
+    expect(expr.compute()).toBe('Error');
   });
 
   it('delete should clear internal state', () => {
