@@ -1,5 +1,6 @@
 /* @flow */
 import { keyPressHandler } from './Handlers';
+import { eventType } from 'common/utils';
 
 if (document !== undefined) {
   document.addEventListener('DOMContentLoaded', () => {
@@ -8,9 +9,7 @@ if (document !== undefined) {
     ): any);
 
     document.querySelectorAll('[data-key]').forEach(el => {
-      const keyPress = keyPressHandler(outputWindow);
-      el.addEventListener('click', keyPress);
-      el.addEventListener('touchstart', keyPress, { passive: true });
+      el.addEventListener(eventType(), keyPressHandler(outputWindow));
     });
   });
 }
