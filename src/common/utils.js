@@ -74,7 +74,10 @@ const checkHeaders = (response: Response) => {
   return ((response.json(): any): Promise<any>);
 };
 
+const eventType = () => ('ontouchstart' in window ? 'touchstart' : 'click');
+
 export {
+  eventType,
   checkHeaders,
   padLeft,
   parseTimeToText,

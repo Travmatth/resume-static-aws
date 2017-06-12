@@ -1,5 +1,6 @@
 /* @flow */
 import {
+  eventType,
   parseTimeToText,
   padLeft,
   serialize,
@@ -88,5 +89,17 @@ describe('Shared utility code', () => {
     }: any);
 
     expect(await checkHeaders(res)).toBe('working');
+  });
+
+  it("eventType should return 'click' on desktop devices", () => {
+    delete window['ontouchstart'];
+
+    expect(eventType()).toBe('click');
+  });
+
+  it("eventType should return 'touchstart' on mobile devices", () => {
+    window.ontouchstart = true;
+
+    expect(eventType()).toBe('touchstart');
   });
 });
