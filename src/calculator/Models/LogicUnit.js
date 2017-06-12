@@ -25,14 +25,12 @@ export default class LogicUnit {
 
     // If last char is digit in decimal pos, drop digit
     // If last char is decimal on integer, drop drop decimal
-    if (last && last.length > 1) this.expression[len] = last.slice(0, -1);
-    else if (this.expression && this.expression.length > 1) {
+    if (last && last.length > 1) {
+      this.expression[len] = last.slice(0, -1);
+    } else if (this.expression && this.expression.length > 1) {
       // If last char is integer, drop integer
       // If last char is symbol, drop symbol
       this.expression = this.expression.slice(0, -1);
-    } else {
-      console.error('Unrecognized expression: ', this.expression);
-      this.expression = [''];
     }
   }
 
@@ -47,7 +45,8 @@ export default class LogicUnit {
       this.expression = [parsed];
     } catch (thrown) {
       console.error(thrown);
-      return thrown.message;
+      window.alert(thrown.message);
+      return 'Error';
     }
   }
 
