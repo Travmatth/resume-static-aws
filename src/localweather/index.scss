@@ -6,11 +6,18 @@ $primary-background: #F8F8F8;
 
 body {
   background-color: $primary-background;
- }
+}
 
-section {
-  width: 60vw;
+section.app-container {
+  width: 100vw;
+  position: absolute;
+  top: 10vh;
+  left: 0;
+  right: 0;
   margin: 0 auto;
+  & > div {
+    min-height: 2em;
+  }
 }
 
 .heading {
@@ -18,15 +25,21 @@ section {
 }
 
 .control-bar {
+  width: 60vw;
   display: inline;
   float: right;
+  min-height: 2em;
 }
 
 table {
+  display: block;
   z-index: 1;
   text-align: center;
   border-collapse: collapse;
   padding: 0 3px 0 3px;
+  & > * {
+    min-width: 60vw;
+  }
 }
 
 td {

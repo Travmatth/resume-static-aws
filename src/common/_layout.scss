@@ -5,9 +5,24 @@ $large-screen: 995px;
 $min-width: 0px;
 $max-width: 1024px;
 
+section.nav-container {
+  display: block;
+  width: 100vw;
+};
+
+table {
+  width: 60vw;
+}
+
+tr { min-width: 2; }
+
+td {
+  width: 100%;
+}
+
 /* Navigation menu on top of screen */
 nav {
-  width: 100vw;
+  width: 100%;
   height: 10vh;
   background-color: lightblue;
   z-index: 3;

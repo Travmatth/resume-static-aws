@@ -95,6 +95,7 @@ const updateTableRows = (
   }
 };
 
+//TODO: figure out failing test, rewrite -> store temp in dataset
 const toggleTempChangeHandler = (nodes: NodeList<HTMLElement>) => (
   temperatures: ?Array<DailyTemperature>,
 ) => {
