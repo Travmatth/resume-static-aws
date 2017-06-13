@@ -5,10 +5,6 @@ import { ResponseError, serialize } from 'common/utils';
 import { json } from 'tests/utils';
 import { OPEN_WEATHER_APPID } from 'common/api_keys';
 
-/*
-  Model under test
-*/
-
 import {
   getWeatherHandler,
   updateTableRows,
@@ -17,6 +13,10 @@ import {
 } from '../Handlers';
 import { openweatherApiParams, endpoint } from '../Models';
 import contentLoadedListener from '../index';
+
+import fetchJsonp from 'fetch-jsonp';
+
+jest.mock('fetch-jsonp', () => require('jest-fetch-mock'));
 
 describe('Localweather Handlers', () => {
   afterEach(() => {

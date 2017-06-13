@@ -7,13 +7,16 @@ import { OPEN_WEATHER_APPID } from 'common/api_keys';
 import { fetchWeather, stripDateIfRedundant } from '../Api';
 import contentLoadedListener from '../index';
 
+import fetchJsonp from 'fetch-jsonp';
+jest.mock('fetch-jsonp', () => fetch = require('jest-fetch-mock'));
+
 describe('Localweather API', () => {
   afterEach(() => {
     fetch.resetMocks();
   });
 
   it('fetchWeather can return parsed json', async () => {
-    fetch.mockResponseOnce(JSON.stringify(response));
+    fetch.mockResponseOnce(JSON.stringify(response), { status: 200 });
 
     const json = await fetchWeather(url);
     const { now: date, ...rest } = json;

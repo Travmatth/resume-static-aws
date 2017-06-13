@@ -9,7 +9,6 @@ import type {
   Weather,
   FiveDayForecast,
 } from '../localweather.types';
-import { checkHeaders } from 'common/utils';
 
 import {
   serialize,
@@ -18,12 +17,11 @@ import {
   ResponseError,
   convertFahrenheitToCelsius,
 } from 'common/utils';
+
+import fetchJsonp from 'fetch-jsonp';
+import { checkHeaders } from 'common/utils';
 import { OPEN_WEATHER_APPID } from 'common/api_keys';
 import { endpoint, openweatherApiParams } from '../Models';
-
-/*
-  Network call
-*/
 
 const fetchWeather = async (url: string): Promise<Weather> => {
   /* Fetch initial resource after delay, direct fetching leads to:
@@ -46,36 +44,24 @@ const fetchWeather = async (url: string): Promise<Weather> => {
      questions/25727306/
      request-header-field-access-control-allow-headers-is-not-allowed-by-access-contr
 
-     Should I use JSONP + validation, will this work?
-     Or set up proxy on heroku?
+     using JSONP + validation to bypass
   */
 
   const opts = {
-    method: 'POST',
+    method: 'GET',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
   };
 
-  // Stubbing out fetch while designing layout
-  // const data = [JSON.stringify(MOCK.response)]
-  // const blob = new Blob(data, { type: 'application/json' });
-  // const stub = new Response(blob)
-
-  // return await Promise.resolve(stub)
-  return await fetch(url, opts)
-    //.then(checkResponse)
+  return await fetchJsonp(url, opts)
     .then(checkHeaders)
     .then(processWeather)
     .catch(error => {
       throw error;
     });
 };
-
-/*
-  Supporting Functions
-*/
 
 const processWeather = (data: FiveDayForecast): Weather => ({
   city: data.city.name,

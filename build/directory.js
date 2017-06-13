@@ -3,8 +3,8 @@
 const pages = [
   'index',
   //'blog/index',
-  'calculator/index',
-  //'localweather/index',
+  //'calculator/index',
+  'localweather/index',
   // Commented out for compilation perf during dev
   // 'pomodoro/index',
   // 'randomquote/index',
