@@ -80,4 +80,7 @@ input[type="radio"] {
 
 /* Large screens ~ipad and above */
 @media screen and (min-width: $large-screen) {
+  td {
+    width: 40%;
+  }
 }

@@ -52,7 +52,17 @@ describe('Localweather Handlers', () => {
   });
 
   it('updateTableRows should store temperature data in nodes dataset', async () => {
-    expect(true).toBe(false);
+    const cells = ((document.body: any): HTMLElement).querySelectorAll('.cell');
+    const forecasts = [data.forecasts[0]];
+
+    const { temp } = forecasts[0];
+    // Populate cells
+    updateTableRows(cells, forecasts, 'celsius');
+
+    const temperatureElement = cells.item(0).children[2];
+
+    expect(temp.celsius).toBe(temperatureElement.dataset.celsius);
+    expect(temp.fahrenheit).toBe(temperatureElement.dataset.fahrenheit);
   });
 
   it('getWeatherHandler should catch error if fetchWeather throws', async () => {
@@ -97,13 +107,8 @@ describe('Localweather Handlers', () => {
 
     expect(node.textContent).toBe('28.74');
     const toggleTempChange = toggleTempChangeHandler(nodes);
-    const temps = [{ celsius: 28.74, fahrenheit: 84 }];
-    ((document.querySelector(
-      '.celsius',
-    ): any): HTMLInputElement).checked = true;
-    //toggleTempChange(temps);
-    const event = {};
+    const event = (({ target: { dataset: { type: 'celsius' } } }: any): Event);
     toggleTempChange(event);
-    expect(node.textContent).toBe('84');
+    expect(node.textContent).toBe('-2');
   });
 });

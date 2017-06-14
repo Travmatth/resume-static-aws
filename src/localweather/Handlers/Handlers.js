@@ -80,11 +80,17 @@ const updateTableRows = (
 
     node.children[0].textContent = day;
     node.children[1].textContent = time;
+
+    if (!node.children[2].dataset) node.children[2].dataset = {};
+    node.children[2].dataset.celsius = temp.celsius;
+    node.children[2].dataset.fahrenheit = temp.fahrenheit;
+
     node.children[2].textContent = temperature === 'celsius'
       ? `${temp.celsius}`
       : `${temp.fahrenheit}`;
-    const imgElem: any = node.children[3].children[0];
-    imgElem.src = icon;
+
+    ((node.children[3].children[0]: any): HTMLImageElement).src = icon;
+
     node.children[4].textContent = description;
 
     if (node.className === 'hide') node.className.replace(/hide/, 'show');
@@ -98,26 +104,18 @@ const updateTableRows = (
 
 //TODO: figure out failing test, rewrite -> store temp in dataset
 const toggleTempChangeHandler = (nodes: NodeList<HTMLElement>) => (
-  temperatures: ?Array<DailyTemperature>,
+  //temperatures: ?Array<DailyTemperature>,
+  event: Event,
 ) => {
   let index = 0;
-
   let node = nodes.item(index);
-  let temp;
-  if (temperatures) temp = temperatures[index];
+  let desired = event.target.dataset.type === 'fahrenheit';
 
-  while (node && temp) {
-    node.textContent = tempScale() === 'celsius'
-      ? `${temp.fahrenheit}`
-      : `${temp.celsius}`;
+  while (node) {
+    node.textContent = node.dataset[desired ? 'fahrenheit' : 'celsius'];
 
-    // Finally, point to next element in source arrays
     index += 1;
     node = nodes.item(index);
-    if (temperatures) temp = temperatures[index];
-    else {
-      break;
-    }
   }
 };
 
