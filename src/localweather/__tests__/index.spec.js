@@ -20,8 +20,7 @@ describe('Localweather App', () => {
     global.navigator = global.navigator || {};
     global.navigator.geolocation = {};
     global.navigator.geolocation.getCurrentPosition = jest.fn();
-    //$FlowIgnore
-    ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
+    ((document.body: any): HTMLElement).innerHTML = require('../index.pug').default;
   });
 
   it('should call getCurrentPosition to handler on DOMContentLoaded', () => {

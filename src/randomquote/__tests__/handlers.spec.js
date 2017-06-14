@@ -14,8 +14,7 @@ jest.mock('../Api', () => {
 
 describe('RandomQuote Handlers', () => {
   beforeEach(() => {
-    //$FlowIgnore
-    ((document: any): Document).body.innerHTML = require('../index.pug');
+    ((document.body: any): HTMLElement).innerHTML = require('../index.pug').default;
   });
 
   it('fetchQuoteHandler should fill in quote, author, and twitter link', async () => {

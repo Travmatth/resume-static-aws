@@ -24,8 +24,7 @@ jest.mock('../Handlers', () => {
 
 describe('WikiViewer DOM', () => {
   beforeEach(() => {
-    //$FlowIgnore
-    ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
+    ((document.body: any): HTMLElement).innerHTML = require('../index.pug').default;
     require('../index.js');
     dispatch(document, 'DOMContentLoaded');
   });
