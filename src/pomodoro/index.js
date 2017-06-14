@@ -1,5 +1,6 @@
 /* @flow */
 import { Pomodoro } from './Models';
+import { eventType } from 'common/utils';
 
 if (document !== undefined) {
   document.addEventListener('DOMContentLoaded', () => {
@@ -24,11 +25,11 @@ if (document !== undefined) {
       'timer-btn',
     ): any): HTMLButtonElement);
 
-    resetBtn.addEventListener('click', pom.reset(display));
-    timerBtn.addEventListener('click', pom.toggle(display));
-    incWorkBtn.addEventListener('click', pom.stepper('inc', 'work'));
-    decWorkBtn.addEventListener('click', pom.stepper('dec', 'work'));
-    incRestBtn.addEventListener('click', pom.stepper('inc', 'rest'));
-    decRestBtn.addEventListener('click', pom.stepper('dec', 'rest'));
+    resetBtn.addEventListener(eventType(), pom.reset(display));
+    timerBtn.addEventListener(eventType(), pom.toggle(display));
+    incWorkBtn.addEventListener(eventType(), pom.stepper('inc', 'work'));
+    decWorkBtn.addEventListener(eventType(), pom.stepper('dec', 'work'));
+    incRestBtn.addEventListener(eventType(), pom.stepper('inc', 'rest'));
+    decRestBtn.addEventListener(eventType(), pom.stepper('dec', 'rest'));
   });
 }
