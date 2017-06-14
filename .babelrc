@@ -1,12 +1,10 @@
 {
-	"plugins": [
-		"transform-es2015-modules-commonjs",
-		"transform-flow-strip-types"
-	],
-  "presets": ["es2015", "stage-0"],
-  "env": {
-    "ava": {
-      "presets": ["es2015", "stage-0"]
-    }
-  } 
+  "plugins": [
+    "transform-es2015-modules-commonjs",
+    "transform-flow-strip-types"
+  ],
+  "presets": [
+    ["es2015", { "modules": false }],
+    "stage-0"
+  ]
 }
