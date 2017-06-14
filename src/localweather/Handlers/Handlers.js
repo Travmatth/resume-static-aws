@@ -56,6 +56,7 @@ const getWeatherHandler = (
  * @param  { Array<Forecasts> } results the parsed weather forecasts
  * @return { void } void
  */
+//TODO: store temperatures in dataset attr
 const updateTableRows = (
   nodes: NodeList<HTMLElement>,
   results: Array<Daily>,

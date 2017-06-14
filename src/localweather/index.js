@@ -1,5 +1,6 @@
 /* @flow */
 import { toggleTempChangeHandler, getWeatherHandler } from './Handlers';
+import { eventType } from 'common/utils';
 
 if (document !== undefined) {
   document.addEventListener('DOMContentLoaded', () => {
@@ -10,10 +11,8 @@ if (document !== undefined) {
       HTMLInputElement
     >);
 
-    if (tempToggles)
-      tempToggles.forEach(elem => {
-        elem.addEventListener('click', toggleTempChangeHandler(toggles));
-      });
+    const toggle = toggleTempChangeHandler(toggles);
+    tempToggles.forEach(elem => elem.addEventListener(eventType(), toggle));
 
     const getWeather = getWeatherHandler(header, cells, tempToggles);
     navigator.geolocation.getCurrentPosition(getWeather);

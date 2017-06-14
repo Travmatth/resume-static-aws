@@ -51,6 +51,10 @@ describe('Localweather Handlers', () => {
     expect(description).toBe(descriptionElement);
   });
 
+  it('updateTableRows should store temperature data in nodes dataset', async () => {
+    expect(true).toBe(false);
+  });
+
   it('getWeatherHandler should catch error if fetchWeather throws', async () => {
     fetch.mockResponseOnce(json({}), { status: 404 });
 
@@ -97,7 +101,9 @@ describe('Localweather Handlers', () => {
     ((document.querySelector(
       '.celsius',
     ): any): HTMLInputElement).checked = true;
-    toggleTempChange(temps);
+    //toggleTempChange(temps);
+    const event = {};
+    toggleTempChange(event);
     expect(node.textContent).toBe('84');
   });
 });

@@ -12,10 +12,12 @@ block content
 		div
 			h1.heading
 			div.control-bar
-				input.celsius(name="temp", type="radio")
-				|Celsius
-				input.fahrenheit(name="temp", type="radio", checked="true")
-				|Fahrenheit
+				div.celsius
+					input(name="temp", type="radio")
+					|Celsius
+				div.fahrenheit
+					input(name="temp", type="radio", checked="true")
+					|Fahrenheit
 
 		table
 			thead

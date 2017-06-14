@@ -1,8 +1,8 @@
 @import '../common/_layout';
 
-$table-col: #D0D0D0;
-$table-head: #787878;
 $primary-background: #F8F8F8;
+$small-screen: 994px;
+$large-screen: 995px;
 
 body {
   background-color: $primary-background;
@@ -14,10 +14,49 @@ section.app-container {
   top: 10vh;
   left: 0;
   right: 0;
-  margin: 0 auto;
-  & > div {
-    min-height: 2em;
+  & > * {
+    margin: 0 auto;
   }
+  & > div {
+    padding-top: 1%;
+    min-height: 2em;
+    width: 60vw;
+  }
+}
+
+table {
+  width: 60vw;
+  border: black solid;
+  height: 80vh;
+  display: block;
+  text-align: center;
+  border-collapse: collapse;
+  padding: 0 3px 0 3px;
+  overflow: auto;
+}
+
+thead {
+}
+
+tbody {
+}
+
+tr {
+  &:nth-child(odd) {
+    background-color: #E0E0E0;
+  }
+}
+
+td {}
+
+.celsius,
+.fahrenheit {
+  display: inline;
+  margin: 0 5px 0 5px;
+}
+
+input[type="radio"] {
+  margin-right: 3px;
 }
 
 .heading {
@@ -29,104 +68,16 @@ section.app-container {
   display: inline;
   float: right;
   min-height: 2em;
+  max-width: fit-content;
 }
 
-table {
-  display: block;
-  z-index: 1;
-  text-align: center;
-  border-collapse: collapse;
-  padding: 0 3px 0 3px;
-  & > * {
-    min-width: 60vw;
+/* Small screens ~ipad and under */
+@media screen and (min-width: $min-width) and (max-width: $small-screen) {
+  table {
+    height: 75vh;
   }
 }
 
-td {
-  padding: 0 10px 0 10px;
+/* Large screens ~ipad and above */
+@media screen and (min-width: $large-screen) {
 }
-
-thead {
-  background-color: $table-head;
-}
-
-tr {
-  background-color: $table-col;
-
-  &:nth-child(odd) {
-    background-color: #E0E0E0;
-  }
-}
-
-tbody {
-  border-width: 2px 0 2px 0;
-}
-
-// .lw.nav {
-//   top: 0;
-//   left: 0;
-//   position: fixed;
-// }
-
-// .heading {
-//   float: left;
-//   display: inline;
-//   position: fixed;
-//   top: -31px;
-//   right: 0;
-// }
-
-// .spacer {
-//   background-color: white;
-// }
-
-// .toggle-button {
-//   // float: left;
-// }
-
-// .depressed {
-//   border-style: solid;
-//   border-top-width: 0;
-//   border-bottom-width: 0;
-//   background-color: lightgray;
-// }
-
-// .background {
-//   width: 100%;
-//   height: 90vh;
-//   display: flex;
-//   align-items: center;
-//   align-content: center;
-//   justify-content: center;
-// }
-
-// .weather {
-//   // transform: translateY(40%);
-//   position: absolute;
-//   top: -20%;
-
-//   &.weather-enter {
-//     opacity: 0.01;
-//     // transform: translateY(-75%);
-//     top: 0%;
-
-//     &.weather-enter-active {
-//       opacity: 1;
-//       transition: opacity 2s ease-in;
-//       transition: top /* transform */ 2s ease-in;
-//       top: 0%;
-//       // transform: translateY(25%);
-//     }
-//   }
-
-//   &.weather-leave {
-//     width: 0vh;
-//     height: 0vh;
-//     opacity: 1;
-
-//     &.weather-leave-active {
-//       opacity: 0;
-//       transition: opacity 0 ease-in;
-//     }
-//   }
-// }
