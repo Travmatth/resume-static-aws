@@ -1,3 +1,9 @@
-.testing {
+@import '../common/_layout';
+
+.view {
   display: block;
+  position: absolute;
+  top: 11vh;
+  bottom: 0;
+  width: 100%;
 }
