@@ -1,11 +1,11 @@
-extends common/layout
+extends common/pug/layout
 
 block heading
 	script(src=htmlWebpackPlugin.files.chunks['index'].entry)
 	link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
 
 block content
-	include common/nav.pug
+	include common/pug/nav.pug
 
 	main
 		section#landing

@@ -1,4 +1,4 @@
-extends ../common/layout
+extends ../common/pug/layout
 
 block heading
 	if (htmlWebpackPlugin)
@@ -6,7 +6,7 @@ block heading
 		link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
 
 block content
-	include ../common/nav.pug
+	include ../common/pug/nav.pug
 	div.view
 		div.center-panel
 			div.gadget

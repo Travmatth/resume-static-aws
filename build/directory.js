@@ -7,11 +7,11 @@ const pages = [
   //'localweather/index',
   // Commented out for compilation perf during dev
   'pomodoro/index',
-  // 'randomquote/index',
-  // 'simon/index',
-  // 'tictactoe/index',
-  // 'twitchtv/index',
-  // 'wikiviewer/index',
+  //'randomquote/index',
+  //'simon/index',
+  //'tictactoe/index',
+  //'twitchtv/index',
+  //'wikiviewer/index',
 ];
 
 const pageConfigs = (configure: string => Object) => {
