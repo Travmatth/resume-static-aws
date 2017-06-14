@@ -3,6 +3,21 @@
 import { dispatch } from 'tests/utils';
 import * as Handlers from '../Handlers';
 
+jest.mock('../Handlers', () => {
+  const module = {};
+  const mock = jest.fn();
+  //$FlowIgnore
+  module.toggleTempChangeHandlerCallback = jest.fn();
+
+  //$FlowIgnore
+  module.toggleTempChangeHandler = jest.fn(
+    () => module.toggleTempChangeHandlerCallback,
+  );
+  //$FlowIgnore
+  module.getWeatherHandler = jest.fn();
+  return module;
+});
+
 describe('Localweather App', () => {
   beforeEach(() => {
     global.navigator = global.navigator || {};
@@ -18,22 +33,16 @@ describe('Localweather App', () => {
     expect(global.navigator.geolocation.getCurrentPosition).toHaveBeenCalled();
   });
 
-  it('should set event listeners on temperature radio buttons', () => {
-    const mock = jest.fn();
-    //$FlowIgnore
-    Handlers.toggleTempChangeHandler = jest.fn(() => mock);
-    //$FlowIgnore
-    Handlers.getWeatherHandler = jest.fn(() => mock);
-
+  it('should set event listeners on temperature radio buttons', async () => {
     const buttons = document.querySelectorAll('input');
 
     require('../index');
-    dispatch(document, 'DOMContentLoaded');
+    await dispatch(document, 'DOMContentLoaded');
 
     buttons.forEach(btn => dispatch(btn, 'click'));
 
     expect(Handlers.toggleTempChangeHandler).toHaveBeenCalledTimes(2);
     expect(Handlers.getWeatherHandler).toHaveBeenCalled();
-    expect(mock).toHaveBeenCalledTimes(2);
+    expect(Handlers.toggleTempChangeHandlerCallback).toHaveBeenCalledTimes(2);
   });
 });
