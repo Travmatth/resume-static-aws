@@ -1,9 +1,121 @@
 @import '../common/scss/_layout';
 
-.view {
-  display: block;
-  position: absolute;
-  top: 11vh;
-  bottom: 0;
-  width: 100%;
+$small-screen: 994px;
+$large-screen: 995px;
+
+* {
+	text-align: center;
+	margin: 0;
+}
+
+section.view {
+	display: block;
+	position: absolute;
+	top: 10vh;
+	bottom: 0;
+	width: 100%;
+  background-color: green;
+}
+
+.centered {
+	position: relative;
+	width: 50vw;
+	margin: 5vw auto;
+	top: auto;
+	bottom: auto;
+}
+
+article {
+	display: flex;
+	background-color: yellow;
+	flex-direction: row;
+	flex-wrap: wrap;
+	& * {
+		border-collapse: collapse;
+	}
+}
+
+.rest,
+.work {
+	background-color: blue;
+	//display: inline-block;
+	//margin: 0 10px 0 10px;
+	//height: 20vw;
+	width: 25vw;
+}
+
+.container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: center;
+	height: 50vw;
+	width: 50vw;
+	border-radius: 50%;
+	border: solid black;
+}
+
+.first {
+	//background-color: orange;
+}
+
+.second {
+	//background-color: purple;
+}
+
+.third {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: center;
+	//background-color: brown;
+}
+
+#timer-btn,
+#reset-btn {
+	height: fit-content;
+	width: fit-content;
+	background-color: brown;
+	vertical-align: top;
+	margin: 3px;
+}
+
+.first,
+.second,
+.third {
+	width: 100%;
+	height: 33%;
+}
+
+.timer {
+	background-color: red;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: center;
+
+	height: 50vw;
+	width: 50vw;
+	border: black solid;
+	border-radius: 50%;
+}
+
+/* Small screens ~ipad and under */
+@media screen and (min-width: $min-width) and (max-width: $small-screen) {
+}
+
+/* Large screens ~ipad and above */
+@media screen and (min-width: $large-screen) {
+	.container {
+		max-width: 482px;
+		max-height: 488px;
+	}
+
+	.work,
+	.rest {
+		max-width: 244px;
+	}
 }

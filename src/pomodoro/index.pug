@@ -7,16 +7,20 @@ block heading
 
 block content
 	include ../common/pug/nav.pug
-	div.view
-		div.center-panel
-			div.gadget
-				div.rest 1
-					button#rest-dec -
-					button#rest-inc +
-				div.work 1
-					button#work-dec -
-					button#work-inc +
-				div.timer
-					div#time 0:0.00
-					button#timer-btn Start
-					button#reset-btn Reset
+	section.view
+		article.centered
+			div.rest
+				h3.rest-counter 1
+				button#rest-dec -
+				button#rest-inc +
+			div.work
+				h3.work-counter 1
+				button#work-dec -
+				button#work-inc +
+			div.container
+					div.first
+					div.second
+						h1 0:0.00
+					div.third
+						button#timer-btn Start
+						button#reset-btn Reset
