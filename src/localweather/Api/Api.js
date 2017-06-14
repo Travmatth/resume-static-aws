@@ -83,7 +83,7 @@ const processForecasts = (outlook: Forecast): DailyForecast => ({
   ...parseTime(outlook.dt),
 });
 
-const parseTime = (time: number): { day: string, time: string } => {
+const parseTime = (time: number) => {
   const duration = new Date(time * 1000);
   const hours = duration.getHours() % 12;
   const minutes = duration.getMinutes();
