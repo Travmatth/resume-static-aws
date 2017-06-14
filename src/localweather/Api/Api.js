@@ -16,11 +16,11 @@ import {
   appendSuffix,
   ResponseError,
   convertFahrenheitToCelsius,
-} from 'common/utils';
+} from 'common/js/utils';
 
 import fetchJsonp from 'fetch-jsonp';
-import { checkHeaders } from 'common/utils';
-import { OPEN_WEATHER_APPID } from 'common/api_keys';
+import { checkHeaders } from 'common/js/utils';
+import { OPEN_WEATHER_APPID } from 'common/js/api_keys';
 import { endpoint, openweatherApiParams } from '../Models';
 
 const fetchWeather = async (url: string): Promise<Weather> => {

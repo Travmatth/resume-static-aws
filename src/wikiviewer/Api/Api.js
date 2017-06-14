@@ -2,7 +2,7 @@
 
 import { endpoint, params } from '../Models';
 import type { WikiSearchResult, WikiPage } from '../wikiviewer.types';
-import { serialize, ResponseError, checkHeaders } from 'common/utils';
+import { serialize, ResponseError, checkHeaders } from 'common/js/utils';
 
 const search = (query: Array<string>): Promise<?Array<WikiPage>> => {
   if (query.length === 0) return Promise.resolve(null);

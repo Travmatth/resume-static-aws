@@ -8,8 +8,8 @@ import type {
   PossiblyNestedStreams,
 } from '../twitchtv.types';
 
-import { TWITCH_TV_API_KEY } from 'common/api_keys';
-import { serialize } from 'common/utils';
+import { TWITCH_TV_API_KEY } from 'common/js/api_keys';
+import { serialize } from 'common/js/utils';
 import {
   users,
   streamsUrl,

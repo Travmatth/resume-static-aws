@@ -1,6 +1,6 @@
 /* @flow */
 import { Pomodoro } from './Models';
-import { eventType } from 'common/utils';
+import { eventType } from 'common/js/utils';
 
 if (document !== undefined) {
   document.addEventListener('DOMContentLoaded', () => {

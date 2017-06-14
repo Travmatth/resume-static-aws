@@ -9,7 +9,7 @@ import {
 } from '../Handlers';
 import * as Api from '../Api';
 import type { Headings, Paragraphs } from '../wikiviewer.types';
-import { ResponseError } from 'common/utils';
+import { ResponseError } from 'common/js/utils';
 import { dispatch, json } from 'tests/utils';
 import { wikis, exampleWikipediaSearch } from './wikiviewer.mockdata';
 
@@ -21,7 +21,7 @@ describe('WikiViewer Handlers', () => {
   beforeEach(
     () =>
       //$FlowIgnore
-      (((document.body: any): HTMLElement).innerHTML = require('../index.pug')),
+      ((document.body: any): HTMLElement).innerHTML = require('../index.pug'),
   );
 
   afterEach(() => {

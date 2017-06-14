@@ -1,6 +1,6 @@
 /* @flow */
 import { toggleTempChangeHandler, getWeatherHandler } from './Handlers';
-import { eventType } from 'common/utils';
+import { eventType } from 'common/js/utils';
 
 if (document !== undefined) {
   document.addEventListener('DOMContentLoaded', () => {

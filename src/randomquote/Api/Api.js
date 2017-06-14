@@ -1,4 +1,4 @@
-import { serialize, json, checkHeaders } from 'common/utils';
+import { serialize, json, checkHeaders } from 'common/js/utils';
 
 const fetchQuote = () => {
   //Proxying call to avoid jsonp && CORS restrictions

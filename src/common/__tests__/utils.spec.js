@@ -9,7 +9,7 @@ import {
   appendSuffix,
   convertFahrenheitToCelsius,
   checkHeaders,
-} from '../utils';
+} from '../js/utils';
 
 //49,54,62,68
 describe('Shared utility code', () => {

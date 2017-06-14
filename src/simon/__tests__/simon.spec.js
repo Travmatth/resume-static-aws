@@ -2,15 +2,6 @@
 
 import { Simon, Colors } from '../Models';
 
-//constructor() {
-//this.input = false;
-//this.power = false;
-//this.strict = false;
-//this.score = 0;
-//this.round = [];
-//this.colors = Colors;
-//this.failure = false;
-//this.step = 0;
 describe('Simon Game Model', () => {
   let simon: Simon;
 

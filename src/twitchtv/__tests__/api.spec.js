@@ -8,7 +8,7 @@ import {
   onlineUserStreamCall,
   nonexistentOrOfflineUserStream,
 } from './mockdata';
-import { ResponseError, serialize } from 'common/utils';
+import { ResponseError, serialize } from 'common/js/utils';
 import { json } from 'tests/utils';
 
 import type {
@@ -18,7 +18,7 @@ import type {
   UndeterminedStreamType,
   PossiblyNestedStreams,
 } from '../twitchtv.types';
-import { TWITCH_TV_API_KEY } from 'common/api_keys';
+import { TWITCH_TV_API_KEY } from 'common/js/api_keys';
 import {
   userUrl,
   users,
