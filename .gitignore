@@ -8,7 +8,7 @@ out.json
 flowcheck.txt
 flowcheck.txt
 yarn-error.log
-src/common/api_keys.js
+src/common/js/api_keys.js
 *.swp
 *.swo
 *~
