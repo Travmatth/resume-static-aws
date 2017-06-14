@@ -6,14 +6,11 @@ import * as Handlers from '../Handlers';
 jest.mock('../Handlers', () => {
   const module = {};
   const mock = jest.fn();
-  //$FlowIgnore
   module.toggleTempChangeHandlerCallback = jest.fn();
 
-  //$FlowIgnore
   module.toggleTempChangeHandler = jest.fn(
     () => module.toggleTempChangeHandlerCallback,
   );
-  //$FlowIgnore
   module.getWeatherHandler = jest.fn();
   return module;
 });
@@ -43,6 +40,7 @@ describe('Localweather App', () => {
 
     expect(Handlers.toggleTempChangeHandler).toHaveBeenCalledTimes(2);
     expect(Handlers.getWeatherHandler).toHaveBeenCalled();
+    //$FlowIgnore
     expect(Handlers.toggleTempChangeHandlerCallback).toHaveBeenCalledTimes(2);
   });
 });
