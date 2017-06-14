@@ -24,7 +24,7 @@ describe('Localweather Handlers', () => {
   });
 
   beforeEach(() => {
-    ((document.body: any): HTMLElement).innerHTML = require('../index.pug').default;
+    ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
   });
 
   it('updateTableRows() populates given DOM element w/ correct data', async () => {

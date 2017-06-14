@@ -20,7 +20,7 @@ jest.mock('../Api', () => ({
 describe('WikiViewer Handlers', () => {
   beforeEach(
     () =>
-      ((document.body: any): HTMLElement).innerHTML = require('../index.pug').default,
+      ((document.body: any): HTMLElement).innerHTML = require('../index.pug'),
   );
 
   afterEach(() => {

@@ -7,7 +7,7 @@ const press = (key: string): Event => ({ target: { dataset: { key } } }: any);
 
 describe('Calculator Handlers', () => {
   beforeEach(() => {
-    ((document.body: any): HTMLElement).innerHTML = require('../index.pug').default;
+    ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
     require('../index.js');
     dispatch(document, 'DOMContentLoaded');
     win = ((document.querySelector('.window'): any): HTMLElement);

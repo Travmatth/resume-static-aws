@@ -13,7 +13,7 @@ jest.mock('../Handlers', () => {
 
 describe('RandomQuote page', () => {
   beforeEach(() => {
-    ((document.body: any): HTMLElement).innerHTML = require('../index.pug').default;
+    ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
     require('../index.js');
     dispatch(document, 'DOMContentLoaded');
   });

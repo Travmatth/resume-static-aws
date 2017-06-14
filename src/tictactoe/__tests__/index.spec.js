@@ -31,7 +31,7 @@ jest.mock('../Handlers', () => {
 
 describe('TicTacToe page', () => {
   beforeEach(() => {
-    ((document.body: any): HTMLElement).innerHTML = require('../index.pug').default;
+    ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
     require('../index.js');
     dispatch(document, 'DOMContentLoaded');
   });

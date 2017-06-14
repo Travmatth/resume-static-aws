@@ -48,7 +48,7 @@ jest.mock('../Handlers', () => {
 
 describe('Calculator index', () => {
   beforeEach(() => {
-    ((document.body: any): HTMLElement).innerHTML = require('../index.pug').default;
+    ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
     require('../index.js');
     dispatch(document, 'DOMContentLoaded');
   });
