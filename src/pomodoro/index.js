@@ -1,12 +1,8 @@
 /* @flow */
 
-import {
-  stepperHandler,
-  stopTimer,
-  startTimer,
-  toggleHandler,
-  resetHandler,
-} from './Handlers';
+import { stepperHandler, toggleHandler, resetHandler } from './Handlers';
+
+import { stopTimer, startTimer } from './Models';
 
 import { State, Phase } from './Models';
 import { eventType, scale } from 'common/js/utils';
