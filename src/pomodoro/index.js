@@ -1,11 +1,33 @@
 /* @flow */
-import { Pomodoro } from './Models';
-import { eventType } from 'common/js/utils';
+
+import {
+  stepperHandler,
+  stopTimer,
+  startTimer,
+  toggleHandler,
+  resetHandler,
+} from './Handlers';
+
+import { State, Phase } from './Models';
+import { eventType, scale } from 'common/js/utils';
 
 if (document !== undefined) {
+  const timeLimit = scale(1);
+  const timer = { work: timeLimit, rest: timeLimit };
+  const game = {
+    id: null,
+    phase: Phase.work,
+    state: State.STOPPED,
+  };
+
   document.addEventListener('DOMContentLoaded', () => {
-    const pom = new Pomodoro(1, 1);
-    const display = ((document.getElementById('time'): any): HTMLElement);
+    const timerDisplay = ((document.getElementById('time'): any): HTMLElement);
+    const restDisplay = ((document.getElementById(
+      'rest-counter',
+    ): any): HTMLElement);
+    const workDisplay = ((document.getElementById(
+      'work-counter',
+    ): any): HTMLElement);
     const incWorkBtn = ((document.getElementById(
       'work-inc',
     ): any): HTMLButtonElement);
@@ -25,11 +47,30 @@ if (document !== undefined) {
       'timer-btn',
     ): any): HTMLButtonElement);
 
-    resetBtn.addEventListener(eventType(), pom.reset(display));
-    timerBtn.addEventListener(eventType(), pom.toggle(display));
-    incWorkBtn.addEventListener(eventType(), pom.stepper('inc', 'work'));
-    decWorkBtn.addEventListener(eventType(), pom.stepper('dec', 'work'));
-    incRestBtn.addEventListener(eventType(), pom.stepper('inc', 'rest'));
-    decRestBtn.addEventListener(eventType(), pom.stepper('dec', 'rest'));
+    const toggle = toggleHandler(
+      timerDisplay,
+      timer,
+      game,
+      startTimer,
+      stopTimer,
+    );
+    timerBtn.addEventListener(eventType(), toggle);
+    resetBtn.addEventListener(eventType(), resetHandler(timerDisplay));
+    incWorkBtn.addEventListener(
+      eventType(),
+      stepperHandler(workDisplay, 'inc', Phase.work, timer),
+    );
+    decWorkBtn.addEventListener(
+      eventType(),
+      stepperHandler(workDisplay, 'dec', Phase.work, timer),
+    );
+    incRestBtn.addEventListener(
+      eventType(),
+      stepperHandler(restDisplay, 'inc', Phase.rest, timer),
+    );
+    decRestBtn.addEventListener(
+      eventType(),
+      stepperHandler(restDisplay, 'dec', Phase.rest, timer),
+    );
   });
 }

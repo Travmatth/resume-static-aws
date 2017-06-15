@@ -23,6 +23,8 @@ const kSEC_IN_SECONDS = 1000;
 
 const scale = (val: number) => val * kSEC_IN_SECONDS * SEC_IN_MINUTES;
 
+const shrink = (val: number) => val / kSEC_IN_SECONDS / SEC_IN_MINUTES;
+
 const serialize = (url: string, params: ?Object) => {
   const query = [];
 
@@ -82,6 +84,7 @@ export {
   padLeft,
   parseTimeToText,
   scale,
+  shrink,
   serialize,
   ResponseError,
   appendSuffix,

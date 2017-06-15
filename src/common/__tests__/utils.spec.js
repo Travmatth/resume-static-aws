@@ -9,6 +9,8 @@ import {
   appendSuffix,
   convertFahrenheitToCelsius,
   checkHeaders,
+  shrink,
+  scale,
 } from '../js/utils';
 
 //49,54,62,68
@@ -23,6 +25,14 @@ describe('Shared utility code', () => {
     } catch (resErr) {
       expect(resErr.response).toBe('test-val');
     }
+  });
+
+  it('scale should convert from int -> ms', () => {
+    expect(scale(1)).toBe(60000);
+  });
+
+  it('shrink should convert from ms -> int', () => {
+    expect(shrink(60000)).toBe(1);
   });
 
   it('parseTimeToText should do so', () => {

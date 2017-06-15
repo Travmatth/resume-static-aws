@@ -1,27 +1,18 @@
 /* @flow */
 import { dispatch } from 'tests/utils';
-import * as Pomodoro from '../Models';
+import * as Pomodoro from '../Handlers';
 
-jest.mock('../Models', () => {
-  const mocks = {};
+jest.mock('../Handlers', () => {
+  const module = {};
 
-  mocks.resetCallback = jest.fn();
-  mocks.toggleCallback = jest.fn();
-  mocks.stepperCallback = jest.fn();
+  module.resetCallback = jest.fn();
+  module.toggleCallback = jest.fn();
+  module.stepperCallback = jest.fn();
+  module.resetHandler = jest.fn(() => module.resetCallback);
+  module.toggleHandler = jest.fn(() => module.toggleCallback);
+  module.stepperHandler = jest.fn(() => module.stepperCallback);
 
-  class Pomodoro {
-    reset() {
-      return mocks.resetCallback;
-    }
-    toggle() {
-      return mocks.toggleCallback;
-    }
-    stepper() {
-      return mocks.stepperCallback;
-    }
-  }
-
-  return { Pomodoro, mocks };
+  return module;
 });
 
 describe('Pomodoro page', () => {
@@ -34,36 +25,36 @@ describe('Pomodoro page', () => {
   it('should have a listener able to increment work count', () => {
     dispatch('#work-inc', 'click');
     //$FlowIgnore
-    expect(Pomodoro.mocks.stepperCallback).toHaveBeenCalled();
+    expect(Pomodoro.stepperCallback).toHaveBeenCalled();
   });
 
   it('should have a listener able to decrement work count', () => {
     dispatch('#work-dec', 'click');
     //$FlowIgnore
-    expect(Pomodoro.mocks.stepperCallback).toHaveBeenCalled();
+    expect(Pomodoro.stepperCallback).toHaveBeenCalled();
   });
 
   it('should have a listener able to increment rest count', () => {
     dispatch('#rest-inc', 'click');
     //$FlowIgnore
-    expect(Pomodoro.mocks.stepperCallback).toHaveBeenCalled();
+    expect(Pomodoro.stepperCallback).toHaveBeenCalled();
   });
 
   it('should have a listener able to decrement rest count', () => {
     dispatch('#rest-dec', 'click');
     //$FlowIgnore
-    expect(Pomodoro.mocks.stepperCallback).toHaveBeenCalled();
+    expect(Pomodoro.stepperCallback).toHaveBeenCalled();
   });
 
   it('should have a listener able to reset pomodoro', () => {
     dispatch('#reset-btn', 'click');
     //$FlowIgnore
-    expect(Pomodoro.mocks.resetCallback).toHaveBeenCalled();
+    expect(Pomodoro.resetCallback).toHaveBeenCalled();
   });
 
   it('should have a listener able to start/stop pomodoro', () => {
     dispatch('#timer-btn', 'click');
     //$FlowIgnore
-    expect(Pomodoro.mocks.toggleCallback).toHaveBeenCalled();
+    expect(Pomodoro.toggleCallback).toHaveBeenCalled();
   });
 });
