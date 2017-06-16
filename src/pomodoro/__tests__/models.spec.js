@@ -25,12 +25,14 @@ describe('Pomodoro Models', () => {
   let timer: Timer;
   let game: Game;
   let node: HTMLElement;
+  let circle: HTMLElement;
 
   beforeEach(() => {
     jest.clearAllMocks();
     timer = { work: scale(1), rest: scale(1) };
     game = { id: null, state: State.RUNNING, phase: Phase.work };
     node = document.createElement('div');
+    circle = document.createElement('div');
   });
 
   it('stopTimer should call clearInterval', () => {
@@ -41,13 +43,13 @@ describe('Pomodoro Models', () => {
   });
 
   it('startTimer should measure elapsed time', () => {
-    startTimer(node, Date.now(), timer, game);
+    startTimer(node, circle, Date.now(), timer, game);
     jest.runTimersToTime(100);
     expect(node.textContent).toBe('00:00.100');
   });
 
   it('startTimer should stop measuring elapsed time past the max', () => {
-    startTimer(node, Date.now(), timer, game);
+    startTimer(node, circle, Date.now(), timer, game);
     jest.runTimersToTime(1005);
     expect(node.textContent).toBe('01:00.000');
   });

@@ -39,14 +39,19 @@ if (document !== undefined) {
     const timerBtn = ((document.getElementById(
       'timer-btn',
     ): any): HTMLButtonElement);
+    const circleDisplay = ((document.getElementById(
+      'container',
+    ): any): HTMLElement);
 
     const toggle = toggleHandler(
       timerDisplay,
+      circleDisplay,
       timer,
       game,
       startTimer,
       stopTimer,
     );
+
     timerBtn.addEventListener(eventType(), toggle);
     resetBtn.addEventListener(eventType(), resetHandler(timerDisplay));
     incWorkBtn.addEventListener(

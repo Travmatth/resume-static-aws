@@ -18,7 +18,8 @@ const stepperHandler = (
 
 // returns func triggered by press on start/stop timer, adjust timer node
 const toggleHandler = (
-  node: HTMLElement,
+  timerDisplay: HTMLElement,
+  circleDisplay: HTMLElement,
   timer: Timer,
   game: Game,
   start: (HTMLElement, number, Timer, Game) => {},
@@ -26,7 +27,7 @@ const toggleHandler = (
 ) => (e: Event) => {
   if (game.state === State.STOPPED) {
     game.state = State.RUNNING;
-    start(node, Date.now(), timer, game);
+    start(timerDisplay, circleDisplay, Date.now(), timer, game);
   } else {
     game.state = State.STOPPED;
     stop(game);

@@ -77,10 +77,11 @@ describe('Pomodoro Handlers', () => {
   });
 
   it('toggleDisplay should return function that can toggle startTimer', () => {
+    const circle = document.createElement('div');
     const start = jest.fn();
     const stop = jest.fn();
 
-    const toggle = toggleHandler(node, timer, game, start, stop);
+    const toggle = toggleHandler(node, circle, timer, game, start, stop);
 
     expect(game.state).toBe('RUNNING');
 
