@@ -11,10 +11,23 @@ import {
   checkHeaders,
   shrink,
   scale,
+  checkForNegativeZero,
 } from '../js/utils';
 
 //49,54,62,68
 describe('Shared utility code', () => {
+  it('checkForNegativeZero returns 0 if input is -0', () => {
+    expect(Object.is(checkForNegativeZero(-0), +0)).toBe(true);
+  });
+
+  it('checkForNegativeZero returns 0 if input is 0', () => {
+    expect(Object.is(checkForNegativeZero(+0), +0)).toBe(true);
+  });
+
+  it('checkForNegativeZero returns input, if input is other integer', () => {
+    expect(checkForNegativeZero(-1)).toBe(-1);
+  });
+
   it('ResponseError is an error with a response property', () => {
     try {
       const err = new ResponseError(

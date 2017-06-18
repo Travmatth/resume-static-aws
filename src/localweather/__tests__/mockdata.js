@@ -530,7 +530,7 @@ export const data: Weather = {
       weather: 'Clear',
       cloud: 0,
       temp: {
-        celsius: -0,
+        celsius: 0,
         fahrenheit: 31.2,
       },
       time: '1:00',

@@ -68,8 +68,11 @@ const dateString = (time: Date) => {
   );
 };
 
+const checkForNegativeZero = (n: number) =>
+  (n === 0 ? ((n = +n) || 1 / n) < 0 ? 0 : n : n);
+
 const convertFahrenheitToCelsius = (temp: number) =>
-  Math.round((temp - 32) * 5 / 9);
+  checkForNegativeZero(Math.round((temp - 32) * 5 / 9));
 
 const checkHeaders = (response: Response) => {
   if (response.status >= 400) throw new ResponseError('fetch failed', response);
@@ -79,6 +82,7 @@ const checkHeaders = (response: Response) => {
 const eventType = () => ('ontouchstart' in window ? 'touchstart' : 'click');
 
 export {
+  checkForNegativeZero,
   eventType,
   checkHeaders,
   padLeft,
