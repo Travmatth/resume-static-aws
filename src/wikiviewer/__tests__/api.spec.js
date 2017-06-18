@@ -7,13 +7,9 @@ import type { WikiPage, WikiSearchResult } from '../wikiviewer.types';
 import { wikis, exampleWikipediaSearch } from './wikiviewer.mockdata';
 
 const objectify = (arr: Array<WikiPage>) => {
-  const obj = {};
-
-  arr.map(wiki => {
-    obj[wiki.pageid] = wiki;
-  });
-
-  return obj;
+  return arr.reduce((curr, acc) => {
+    return (acc[curr.pageid] = curr);
+  }, {});
 };
 
 describe('WikiViewer Api', () => {
