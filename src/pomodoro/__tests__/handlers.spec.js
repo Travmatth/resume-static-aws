@@ -131,4 +131,10 @@ describe('Pomodoro Handlers', () => {
     resetHandler(node, timerBtn, set, game)((({}: any): Event));
     expect(set.mock.calls[0][0]).toBe(0);
   });
+
+  it('reset should flip start button text when needed', () => {
+    timerBtn.textContent = 'stop';
+    resetHandler(node, timerBtn, () => {}, game)((({}: any): Event));
+    expect(timerBtn.textContent).toBe('start');
+  });
 });
