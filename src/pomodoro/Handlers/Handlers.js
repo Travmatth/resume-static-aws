@@ -4,6 +4,9 @@ import { State, Phase, startTimer, stopTimer } from '../Models';
 import type { Timer, Game } from '../pomodoro.types';
 import { parseTimeToText, scale, shrink } from 'common/js/utils';
 
+const setFill = (node: HTMLElement) => (fill: number) =>
+  node.style.backgroundImage = `linear-gradient(0deg, black ${fill}%, transparent 0%)`;
+
 // returns functions that will inc || dec rest || work states on press
 const stepperHandler = (
   node: HTMLElement,
@@ -20,14 +23,18 @@ const stepperHandler = (
 const toggleHandler = (
   timerDisplay: HTMLElement,
   circleDisplay: HTMLElement,
+  startBtn: HTMLButtonElement,
   timer: Timer,
   game: Game,
   start: (HTMLElement, number, Timer, Game) => {},
   stop: Game => {},
+  set: number => {},
 ) => (e: Event) => {
+  startBtn.textContent = startBtn.textContent === 'start' ? 'stop' : 'start';
+
   if (game.state === State.STOPPED) {
     game.state = State.RUNNING;
-    start(timerDisplay, circleDisplay, Date.now(), timer, game);
+    start(timerDisplay, startBtn, circleDisplay, Date.now(), timer, game, set);
   } else {
     game.state = State.STOPPED;
     stop(game);
@@ -35,7 +42,25 @@ const toggleHandler = (
 };
 
 // returns func triggered by press on reset timer, adjusts timer node
-const resetHandler = (node: HTMLElement) => (_: Event) =>
-  node.textContent = '0:0.00';
+const resetHandler = (
+  timerNode: HTMLElement,
+  startBtn: HTMLButtonElement,
+  set: number => {},
+  game: Game,
+) => (_: Event) => {
+  if (startBtn.textContent === 'stop') startBtn.textContent = 'start';
+  game.state = State.STOPPED;
+  stopTimer(game);
+  //toggleOff((({}: any): Event));
+  timerNode.textContent = '0:0.00';
+  set(0);
+};
 
-export { stepperHandler, stopTimer, startTimer, toggleHandler, resetHandler };
+export {
+  setFill,
+  stepperHandler,
+  stopTimer,
+  startTimer,
+  toggleHandler,
+  resetHandler,
+};

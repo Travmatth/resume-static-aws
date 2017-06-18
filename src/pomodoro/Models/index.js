@@ -12,25 +12,28 @@ const stopTimer = (game: Game) => {
 
 const startTimer = (
   timerNode: HTMLElement,
+  startBtn: HTMLButtonElement,
   circleNode: HTMLElement,
   starttime: number,
   timer: Timer,
   game: Game,
+  set: number => {},
 ) =>
   game.id = setInterval(() => {
     const max = timer[game.phase];
     const elapsed = Date.now() - starttime;
-    const style = `linear-gradient(0deg, black ${elapsed / max * 100}%, transparent 0%)`;
-    circleNode.style.backgroundImage = style;
+
+    set(elapsed / max * 100);
 
     if (elapsed < max) {
       // If time has not run out yet, set displayed time
       timerNode.textContent = parseTimeToText(elapsed);
+      startBtn.textContent = 'stop';
     } else {
       // If time is out, set final timerNode, clear timer, shift phase
       timerNode.textContent = parseTimeToText(max);
-      if (game.id) clearInterval(game.id);
       game.phase = game.phase === Phase.work ? Phase.rest : Phase.work;
+      stopTimer(startBtn, game, set);
     }
   }, 10);
 

@@ -5,6 +5,7 @@ import * as Pomodoro from '../Handlers';
 jest.mock('../Handlers', () => {
   const module = {};
 
+  module.setFill = jest.fn();
   module.resetCallback = jest.fn();
   module.toggleCallback = jest.fn();
   module.stepperCallback = jest.fn();

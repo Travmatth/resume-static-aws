@@ -1,6 +1,11 @@
 /* @flow */
 
-import { stepperHandler, toggleHandler, resetHandler } from './Handlers';
+import {
+  stepperHandler,
+  toggleHandler,
+  resetHandler,
+  setFill,
+} from './Handlers';
 import { stopTimer, startTimer, State, Phase } from './Models';
 import { eventType, scale } from 'common/js/utils';
 
@@ -43,17 +48,23 @@ if (document !== undefined) {
       'container',
     ): any): HTMLElement);
 
+    const set = setFill(circleDisplay);
+
     const toggle = toggleHandler(
       timerDisplay,
       circleDisplay,
+      timerBtn,
       timer,
       game,
       startTimer,
       stopTimer,
+      set,
     );
 
+    const reset = resetHandler(timerDisplay, timerBtn, set, game);
     timerBtn.addEventListener(eventType(), toggle);
-    resetBtn.addEventListener(eventType(), resetHandler(timerDisplay));
+    resetBtn.addEventListener(eventType(), reset);
+
     incWorkBtn.addEventListener(
       eventType(),
       stepperHandler(workDisplay, 'inc', Phase.work, timer),

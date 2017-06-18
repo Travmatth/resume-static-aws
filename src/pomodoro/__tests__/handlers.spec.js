@@ -1,6 +1,7 @@
 /* @flow */
 
 import {
+  setFill,
   stepperHandler,
   stopTimer,
   startTimer,
@@ -30,12 +31,14 @@ describe('Pomodoro Handlers', () => {
   let timer: Timer;
   let game: Game;
   let node: HTMLElement;
+  let timerBtn: HTMLButtonElement;
 
   beforeEach(() => {
     jest.clearAllMocks();
     timer = { work: scale(1), rest: scale(1) };
     game = { id: null, state: State.RUNNING, phase: Phase.work };
     node = document.createElement('div');
+    timerBtn = document.createElement('button');
   });
 
   it('stepperHandler should return function that can increment rest', () => {
@@ -76,12 +79,36 @@ describe('Pomodoro Handlers', () => {
     expect(node.textContent).toBe(`${0}`);
   });
 
-  it('toggleDisplay should return function that can toggle startTimer', () => {
+  it("setFill should set given node's backgroundImage to appropriate fill level", () => {
+    const inlineStyle = 'linear-gradient(0deg, black 10%, transparent 0%)';
+    const node = {
+      style: {
+        backgroundImage: null,
+      },
+    };
+
+    setFill(node)(10);
+
+    expect(node.style.backgroundImage).toBe(inlineStyle);
+  });
+
+  it('toggleHandler should return function that can toggle startTimer', () => {
     const circle = document.createElement('div');
+    const startBtn = document.createElement('button');
+    startBtn.textContent = 'start';
+
     const start = jest.fn();
     const stop = jest.fn();
 
-    const toggle = toggleHandler(node, circle, timer, game, start, stop);
+    const toggle = toggleHandler(
+      node,
+      circle,
+      startBtn,
+      timer,
+      game,
+      start,
+      stop,
+    );
 
     expect(game.state).toBe('RUNNING');
 
@@ -95,7 +122,13 @@ describe('Pomodoro Handlers', () => {
   });
 
   it('reset should set timer display to 0:0.00', () => {
-    resetHandler(node)((({}: any): Event));
+    resetHandler(node, timerBtn, jest.fn(), game)((({}: any): Event));
     expect(node.textContent).toBe('0:0.00');
+  });
+
+  it('reset should set timer fill to 0', () => {
+    const set = jest.fn();
+    resetHandler(node, timerBtn, set, game)((({}: any): Event));
+    expect(set.mock.calls[0][0]).toBe(0);
   });
 });
