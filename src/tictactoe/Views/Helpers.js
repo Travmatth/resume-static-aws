@@ -14,7 +14,7 @@ const render = (
   current: DocumentFragment,
 ) => () => {
   if (root.hasChildNodes() && previous) {
-    root.removeChild(previous);
+    root.firstChild.remove();
   }
 
   root.appendChild(current);

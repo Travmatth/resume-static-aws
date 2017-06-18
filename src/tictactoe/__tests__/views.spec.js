@@ -18,22 +18,31 @@ import { Game } from '../Models';
 describe('TicTacToe Views', () => {
   describe('Helpers', () => {
     it('render should append initial node', () => {
-      const root = document.createElement('div');
-      const el = ((document.createElement('div'): any): DocumentFragment);
+      const root = document.createDocumentFragment();
+      const first = document.createDocumentFragment();
+      const el = document.createElement('div');
+      first.appendChild(el);
       el.textContent = 'test';
 
-      render(root, null, el)();
+      render(root, null, first)();
 
       expect(root.children[0].textContent).toBe('test');
     });
 
     it('render should replace one view with another', () => {
       const root = document.createElement('div');
-      const first = ((document.createElement('div'): any): DocumentFragment);
-      const second = ((document.createElement('div'): any): DocumentFragment);
 
-      first.textContent = 'first';
-      second.textContent = 'second';
+      const first = document.createDocumentFragment();
+      const second = document.createDocumentFragment();
+
+      const firstNode = document.createElement('div');
+      const secondNode = document.createElement('div');
+
+      firstNode.textContent = 'first';
+      secondNode.textContent = 'second';
+
+      first.appendChild(firstNode);
+      second.appendChild(secondNode);
 
       render(root, null, first)();
       render(root, first, second)();
