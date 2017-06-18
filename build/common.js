@@ -5,6 +5,7 @@ import webpack from 'webpack';
 import pageConfigs from './directory';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { StatsWriterPlugin } from 'webpack-stats-plugin';
+import CleanWebpackPlugin from 'clean-webpack-plugin';
 
 const root = process.cwd();
 const path = require('path');
@@ -53,6 +54,7 @@ const common = pageConfigs(page => {
     },
 
     plugins: [
+      new CleanWebpackPlugin('dist'),
       // Ignore flow files in local directories
       // new webpack.IgnorePlugin(/\.flow$/),
       // Write out stats file to build directory.
