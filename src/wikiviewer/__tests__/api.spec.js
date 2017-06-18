@@ -6,11 +6,10 @@ import { dispatch, json } from 'tests/utils';
 import type { WikiPage, WikiSearchResult } from '../wikiviewer.types';
 import { wikis, exampleWikipediaSearch } from './wikiviewer.mockdata';
 
-const objectify = (arr: Array<WikiPage>) => {
-  return arr.reduce((curr, acc) => {
+const objectify = (arr: Array<WikiPage>) =>
+  arr.reduce((curr, acc) => {
     return (acc[curr.pageid] = curr);
   }, {});
-};
 
 describe('WikiViewer Api', () => {
   afterEach(() => fetch.resetMocks());
