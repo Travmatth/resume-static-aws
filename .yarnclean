@@ -41,3 +41,4 @@ Gruntfile.js
 *.gz
 *.md
 !svgo/.svgo.yml
+!istanbul-reports/lib/html/assets
