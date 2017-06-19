@@ -13,7 +13,8 @@
     "build:prod": "NODE_ENV=production webpack -p --config build/webpack.config.prod.babel.js --bail",
     "build:dev": "NODE_ENV=development webpack -d --config build/webpack.config.dev.babel.js --bail",
     "deploy": "yarn run build:prod && ./tools/deploy.js",
-    "build:parser": "pegjs src/calculator/arithmetic.pegjs"
+    "build:parser": "pegjs src/calculator/arithmetic.pegjs",
+    "coverage": "yarn test -- --coverage"
   },
   "repository": {
     "type": "git",
@@ -53,7 +54,7 @@
     "flow-bin": "^0.42.0",
     "flow-status-webpack-plugin": "^0.1.7",
     "html-webpack-plugin": "^2.24.1",
-    "jest": "^19.0.2",
+    "jest": "19.0.2",
     "jest-codemods": "^0.10.0",
     "jest-fetch-mock": "^1.1.1",
     "jquery": "^3.1.1",
