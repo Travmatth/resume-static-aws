@@ -88,7 +88,9 @@ const parseTime = (time: number) => {
   const hours = duration.getHours() % 12;
   const minutes = duration.getMinutes();
 
-  return { day: dateString(duration), time: `${hours}:${minutes}0` };
+  const t = { day: dateString(duration), time: `${hours}:${minutes}0` };
+  console.log('parseTime time: ', time, ' result: ', t);
+  return t;
 };
 
 const stripDateIfRedundant = (
