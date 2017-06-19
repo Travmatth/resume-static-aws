@@ -1,6 +1,7 @@
 /* @flow */
 
 // import webpack from 'webpack'
+import path from 'path';
 import webpack from 'webpack';
 import pageConfigs from './directory';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -8,7 +9,6 @@ import { StatsWriterPlugin } from 'webpack-stats-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 
 const root = process.cwd();
-const path = require('path');
 
 const common = pageConfigs(page => {
   return {
