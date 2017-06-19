@@ -8,18 +8,19 @@ block heading
 block content
 	include ../common/pug/nav.pug
 	section.view
-		article.centered
-			div.rest
-				h3#rest-counter 1
-				button#rest-dec -
-				button#rest-inc +
-				h3 Rest
-			div.work
-				h3#work-counter 1
-				button#work-dec -
-				button#work-inc +
-				h3 Work
-			div#container
+		div.container
+			div.app
+				div.rest
+					button#rest-dec -
+					h3#rest-counter 1
+					button#rest-inc +
+					h3 Rest
+				div.work
+					button#work-dec -
+					h3#work-counter 1
+					button#work-inc +
+					h3 Work
+				div#timer
 					div.first
 					div.second
 						h1#time 0:0.00
