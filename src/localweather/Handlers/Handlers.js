@@ -19,7 +19,7 @@ import {
   ResponseError,
   convertFahrenheitToCelsius,
 } from 'common/js/utils';
-import { OPEN_WEATHER_APPID } from 'common/js/api_keys';
+import OPEN_WEATHER_APPID from 'protected/localweather.key';
 import { endpoint, openweatherApiParams } from '../Models';
 
 // Mocking fetch during dev

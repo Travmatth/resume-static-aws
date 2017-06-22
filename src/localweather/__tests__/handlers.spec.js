@@ -3,7 +3,7 @@
 import { response, data, url } from './mockdata';
 import { ResponseError, serialize } from 'common/js/utils';
 import { json } from 'tests/utils';
-import { OPEN_WEATHER_APPID } from 'common/js/api_keys';
+import OPEN_WEATHER_APPID from 'protected/localweather.key';
 
 import {
   getWeatherHandler,

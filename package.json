@@ -15,7 +15,7 @@
     "deploy": "yarn run build:prod && ./tools/deploy.js",
     "build:parser": "pegjs src/calculator/arithmetic.pegjs",
     "coverage": "yarn test -- --coverage",
-		"coveralls": "cat tests/coverage/lcov.info | coveralls --verbose"
+    "coveralls": "cat tests/coverage/lcov.info | coveralls --verbose"
   },
   "repository": {
     "type": "git",
@@ -70,6 +70,7 @@
     "prettier": "^1.1.0",
     "pug": "^2.0.0-rc.1",
     "pug-loader": "^2.3.0",
+    "raw-loader": "^0.5.1",
     "s3": "^4.4.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",

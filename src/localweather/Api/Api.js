@@ -20,8 +20,8 @@ import {
 
 import fetchJsonp from 'fetch-jsonp';
 import { checkHeaders } from 'common/js/utils';
-import { OPEN_WEATHER_APPID } from 'common/js/api_keys';
 import { endpoint, openweatherApiParams } from '../Models';
+import OPEN_WEATHER_APPID from 'protected/localweather.key';
 
 const fetchWeather = async (url: string): Promise<Weather> => {
   /* Fetch initial resource after delay, direct fetching leads to:

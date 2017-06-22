@@ -1,5 +1,5 @@
 /* @flow */
-import { OPEN_WEATHER_APPID } from 'common/js/api_keys';
+import OPEN_WEATHER_APPID from 'protected/localweather.key';
 import type { Weather } from '../localweather.types';
 
 export const url =

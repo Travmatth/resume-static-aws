@@ -26,9 +26,10 @@ const common = pageConfigs(page => {
     },
 
     resolve: {
-      extensions: ['.js', '.scss', '.pegjs'],
+      extensions: ['.js', '.scss', '.pegjs', '.txt'],
       alias: {
         common: path.resolve(root, 'src', 'common'),
+        protected: path.resolve(root, 'src', 'common', 'protected'),
         tests: path.resolve(root, 'tests'),
       },
     },
@@ -49,6 +50,10 @@ const common = pageConfigs(page => {
           test: /\.pegjs$/,
           exclude: /node_modules/,
           use: 'pegjs-loader',
+        },
+        {
+          test: /\.txt$/,
+          use: 'raw-loader',
         },
       ],
     },
