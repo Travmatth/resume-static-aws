@@ -5,7 +5,7 @@ const path = require('path');
 const s3 = require('s3');
 const s3Opts = require('../aws.js');
 
-var client = s3.createClient({
+const client = s3.createClient({
   s3Options: {
     accessKeyId: s3Opts.ACCESS_KEY_ID,
     secretAccessKey: s3Opts.SECRET_ACCESS_KEY,
@@ -17,7 +17,7 @@ var client = s3.createClient({
   },
 });
 
-var params = {
+const params = {
   localDir: path.resolve('dist'),
   deleteRemoved: true, // default false, whether to remove s3 objects
   // that have no corresponding local file.
@@ -30,6 +30,6 @@ var params = {
   },
 };
 
-var uploader = client.uploadDir(params);
+const uploader = client.uploadDir(params);
 uploader.on('error', err => console.error('Unable to sync:', err.stack));
 uploader.on('end', () => console.log('Done Uploading'));
