@@ -14,7 +14,8 @@
     "build:dev": "NODE_ENV=development webpack -d --config build/webpack.config.dev.babel.js --bail",
     "deploy": "yarn run build:prod && ./tools/deploy.js",
     "build:parser": "pegjs src/calculator/arithmetic.pegjs",
-    "coverage": "yarn test -- --coverage"
+    "coverage": "yarn test -- --coverage",
+		"coveralls": "cat tests/coverage/lcov.info | coveralls --verbose"
   },
   "repository": {
     "type": "git",
@@ -46,6 +47,7 @@
     "babel-preset-stage-0": "^6.16.0",
     "babel-register": "^6.18.0",
     "clean-webpack-plugin": "^0.1.16",
+    "coveralls": "^2.13.1",
     "css-loader": "^0.26.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "fetch-jsonp": "^1.1.1",
