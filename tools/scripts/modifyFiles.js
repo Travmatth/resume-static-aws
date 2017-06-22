@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const beginning = 0;
+const increment = 1;
 const projectFiles = [];
 
 const intendedProjectFile = file => {
@@ -33,23 +35,23 @@ const recurse = (src, depth) => {
   );
   const files = root.filter(file => fs.statSync(path.join(src, file)).isFile());
 
-  if (files && depth != 0) {
+  if (files && depth !== beginning) {
     for (let file of files) {
-      if (intendedProjectFile(file)) projectFiles.push(src + '/' + file);
+      if (intendedProjectFile(file)) projectFiles.push(`${src}/${file}`);
     }
   }
 
   if (dirs) {
     for (let dir of dirs) {
-      const desiredDir = depth === 0 && /^(src|tools)$/.test(dir);
-      const shouldRecurse = desiredDir || depth != 0;
+      const desiredDir = depth === beginning && /^(src|tools)$/.test(dir);
+      const shouldRecurse = desiredDir || depth != beginning;
       const name = src === '.' ? dir : src + '/' + dir;
-      if (shouldRecurse) recurse(name, depth + 1);
+      if (shouldRecurse) recurse(name, depth + increment);
     }
   }
 };
 
 if (require.main === module) {
-  recurse('.', 0);
+  recurse('.', beginning);
   write(projectFiles);
 }
