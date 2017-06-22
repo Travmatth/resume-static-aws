@@ -2,7 +2,7 @@
 import { keyPressHandler } from './Handlers';
 import { eventType } from 'common/js/utils';
 
-if (document !== undefined) {
+if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
     const outputWindow: HTMLElement = (document.querySelector(
       'h2.window',

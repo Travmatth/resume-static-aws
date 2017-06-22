@@ -22,7 +22,7 @@ import {
   restartGameHandler,
 } from './Handlers';
 
-if (document !== undefined) {
+if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
     const game = new Game();
     const { createDocumentFragment } = document;

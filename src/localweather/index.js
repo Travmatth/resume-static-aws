@@ -2,7 +2,7 @@
 import { toggleTempChangeHandler, getWeatherHandler } from './Handlers';
 import { eventType } from 'common/js/utils';
 
-if (document !== undefined) {
+if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
     const toggles = document.querySelectorAll('.measurement');
     const header = document.querySelector('.heading');

@@ -1,7 +1,7 @@
 /* @flow */
 import { fetchQuoteHandler } from './Handlers';
 
-if (document !== undefined) {
+if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
     const container = ((document.getElementById('quotebox'): any): HTMLElement);
     const tweet = ((document.querySelector('.tweet'): any): HTMLElement);

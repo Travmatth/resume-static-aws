@@ -7,7 +7,7 @@ import {
   randomHandler,
 } from './Handlers';
 
-if (document !== undefined) {
+if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
     const query: Array<string> = [];
 

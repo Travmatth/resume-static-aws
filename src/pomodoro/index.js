@@ -9,7 +9,7 @@ import {
 import { stopTimer, startTimer, State, Phase } from './Models';
 import { eventType, scale } from 'common/js/utils';
 
-if (document !== undefined) {
+if (typeof document !== 'undefined') {
   const timeLimit = scale(1);
   const timer = { work: timeLimit, rest: timeLimit };
   const game = {
