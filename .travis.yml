@@ -6,6 +6,7 @@ script:
 - yarn test
 after_success:
 - yarn run coverage
+- yarn run coveralls
 before_install:
 - export TZ=America/New_York
 - openssl aes-256-cbc -K $encrypted_6f617f732ba3_key -iv $encrypted_6f617f732ba3_iv
