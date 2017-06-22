@@ -42,10 +42,10 @@ const recurse = (src, depth) => {
   }
 
   if (dirs) {
-    for (let dir of dirs) {
+    for (const dir of dirs) {
       const desiredDir = depth === beginning && /^(src|tools)$/.test(dir);
-      const shouldRecurse = desiredDir || depth != beginning;
-      const name = src === '.' ? dir : src + '/' + dir;
+      const shouldRecurse = desiredDir || depth !== beginning;
+      const name = src === '.' ? dir : `${src}/${dir}`;
       if (shouldRecurse) recurse(name, depth + increment);
     }
   }
