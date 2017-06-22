@@ -36,7 +36,7 @@ const recurse = (src, depth) => {
   const files = root.filter(file => fs.statSync(path.join(src, file)).isFile());
 
   if (files && depth !== beginning) {
-    for (let file of files) {
+    for (const file of files) {
       if (intendedProjectFile(file)) projectFiles.push(`${src}/${file}`);
     }
   }
