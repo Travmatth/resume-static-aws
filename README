@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.org/Travmatth/resume-static-aws.svg?branch=master)](https://travis-ci.org/Travmatth/resume-static-aws)[![Coverage Status](https://coveralls.io/repos/github/Travmatth/resume-static-aws/badge.svg)](https://coveralls.io/github/Travmatth/resume-static-aws)
