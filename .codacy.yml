@@ -1,0 +1,3 @@
+exclude_paths:
+        - flow-typed/**/*
+        - src/calculator/Parser/arithmetic.js
