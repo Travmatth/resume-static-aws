@@ -7,5 +7,6 @@ script:
 after_success:
 - yarn run coverage
 - yarn run coveralls
+- yarn run codacy
 before_install:
 - export TZ=America/New_York
