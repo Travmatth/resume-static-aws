@@ -1,1 +1,2 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/efed509f812e4ae98d9ab5700d66524d)](https://www.codacy.com/app/Travmatth/resume-static-aws?utm_source=github.com&utm_medium=referral&utm_content=Travmatth/resume-static-aws&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/Travmatth/resume-static-aws.svg?branch=master)](https://travis-ci.org/Travmatth/resume-static-aws)[![Coverage Status](https://coveralls.io/repos/github/Travmatth/resume-static-aws/badge.svg)](https://coveralls.io/github/Travmatth/resume-static-aws)
