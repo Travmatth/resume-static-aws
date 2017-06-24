@@ -45,7 +45,7 @@ if (typeof document !== 'undefined') {
       'timer-btn',
     ): any): HTMLButtonElement);
     const circleDisplay = ((document.getElementById(
-      'container',
+      'timer',
     ): any): HTMLElement);
 
     const set = setFill(circleDisplay);

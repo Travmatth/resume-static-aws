@@ -6,8 +6,8 @@ const pages = [
   //'calculator/index',
   //'localweather/index',
   // Commented out for compilation perf during dev
-  'pomodoro/index',
-  //'randomquote/index',
+  //'pomodoro/index',
+  'randomquote/index',
   //'simon/index',
   //'tictactoe/index',
   //'twitchtv/index',
