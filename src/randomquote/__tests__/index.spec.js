@@ -19,7 +19,7 @@ describe('RandomQuote page', () => {
   });
 
   it('should have a button to fetch next quote', () => {
-    dispatch(document.querySelector('.refresh'), 'click');
+    dispatch(document.querySelector('#refresh'), 'click');
     //$FlowIgnore
     expect(Handlers.fetchQuoteHandlerCallback).toHaveBeenCalled();
   });

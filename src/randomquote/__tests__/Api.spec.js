@@ -1,22 +1,26 @@
 import { fetchQuote, createLink } from '../Api';
 import { exampleResponse } from './mockdata';
 import { json } from 'tests/utils';
+import fetchJsonp from 'fetch-jsonp';
+
+jest.mock('fetch-jsonp', () => require('jest-fetch-mock'));
 
 const quote =
   'When you see a man of worth, think of how you may emulate him. ' +
   'When you see one who is unworthy, examine yourself.  ';
 
-const author = 'Confucius ';
+const author = 'Confucius';
 
 describe('RandomQuote Api', () => {
   it('fetchQuote should return quote and author', async () => {
-    fetch.mockResponseOnce(JSON.stringify(exampleResponse), { status: 200 });
-    expect(await fetchQuote()).toEqual({ quote, author });
+    fetch.mockResponseOnce(json(exampleResponse), { status: 200 });
+    expect(await fetchQuote()).toEqual({ quote, author, error: false });
   });
 
-  it('fetchQuote should return null on errors', async () => {
+  it('fetchQuote should return error on errors', async () => {
     fetch.mockResponseOnce(json({}), { status: 404 });
-    expect(await fetchQuote()).toBe(null);
+    const { error, quote, author } = await fetchQuote();
+    expect(error).not.toBe(null);
   });
 
   it('createLink should create a url given a quote and author', () => {
