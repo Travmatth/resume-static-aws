@@ -4,7 +4,5 @@ block heading
 	link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
 
 block content
-	include common/pug/nav.pug
-
-	main
-		section
+	section.hero.is-info.is-large
+		include common/pug/nav.pug

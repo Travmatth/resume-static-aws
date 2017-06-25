@@ -31,6 +31,7 @@
   "dependencies": {
     "babel-polyfill": "^6.16.0",
     "babel-runtime": "^6.18.0",
+    "bulma": "^0.4.2",
     "extendable-error-class": "^0.1.1"
   },
   "devDependencies": {

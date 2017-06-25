@@ -1,7 +1,7 @@
 /* @flow */
 
 import common from './common';
-import pageConfigs from './directory';
+import { pageConfigs } from './directory';
 import webpack from 'webpack';
 import merge from 'webpack-merge';
 import autoprefixer from 'autoprefixer';

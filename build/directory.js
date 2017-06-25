@@ -7,7 +7,7 @@ const pages = [
   //'localweather/index',
   // Commented out for compilation perf during dev
   //'pomodoro/index',
-  'randomquote/index',
+  //'randomquote/index',
   //'simon/index',
   //'tictactoe/index',
   //'twitchtv/index',
@@ -21,4 +21,4 @@ const pageConfigs = (configure: string => Object) => {
   }, {});
 };
 
-export default pageConfigs;
+export { pageConfigs };

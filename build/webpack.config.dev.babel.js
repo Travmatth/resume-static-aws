@@ -3,7 +3,7 @@
 import webpack from 'webpack';
 import common from './common';
 import merge from 'webpack-merge';
-import pageConfigs from './directory';
+import { pageConfigs } from './directory';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import FlowStatusWebpackPlugin from 'flow-status-webpack-plugin';
 
