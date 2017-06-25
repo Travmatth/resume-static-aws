@@ -10,3 +10,5 @@ html
 	body(ontouchstart='')
 		div.shell
 			block content
+		if (htmlWebpackPlugin)
+			script(src=htmlWebpackPlugin.files.js[0])

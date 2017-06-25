@@ -2,7 +2,6 @@ extends ../common/pug/layout
 
 block heading
 	if (htmlWebpackPlugin)
-		script(src=htmlWebpackPlugin.files.chunks['wikiviewer/index'].entry)
 		link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
 
 block content

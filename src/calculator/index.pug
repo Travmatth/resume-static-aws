@@ -2,7 +2,6 @@ extends ../common/pug/layout
 
 block heading
 	if (htmlWebpackPlugin)
-		script(src=htmlWebpackPlugin.files.js[0])
 		link(href=`${htmlWebpackPlugin.files.css[0]}` rel="stylesheet" type="text/css")
 
 block content
