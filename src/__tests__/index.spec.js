@@ -1,7 +1,7 @@
 /* @flow */
 
 import { dispatch } from 'tests/utils';
-import * as Register from 'common/js/utils';
+import * as utils from 'common/js/utils';
 
 jest.mock('common/js/utils', () => ({
   registerToggle: jest.fn(),
@@ -16,6 +16,6 @@ describe('Home index page', () => {
 
   it('page should register toggle handler', () => {
     dispatch(document.getElementById('projects-btn'), 'click');
-    expect(Register.registerToggle).toHaveBeenCalled();
+    expect(utils.registerToggle).toHaveBeenCalled();
   });
 });

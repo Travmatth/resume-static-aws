@@ -16,7 +16,6 @@ import {
   registerToggle,
 } from '../js/utils';
 
-//49,54,62,68
 describe('Shared utility code', () => {
   it('registerToggle should set a toggle on dropdown element', () => {
     document.body.innerHTML = `
