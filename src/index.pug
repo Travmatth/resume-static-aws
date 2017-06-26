@@ -4,5 +4,102 @@ block heading
 	link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
 
 block content
-	section.hero.is-info.is-large
-		include common/pug/nav.pug
+	section.hero.is-info.is-fullheight
+		div.hero-head
+			header.nav
+				div.container
+					div.nav-left.nav-menu
+						a.nav-item.is-active Home
+					div.nav-center.nav-menu
+						a.nav-item Blog
+						a#projects-btn.nav-item Projects
+
+			div
+				header.nav
+					div.container.is-fullwidth
+						nav.tabs.is-boxed.is-fullwidth.control-height
+							div.container.dropdown
+								ul
+									li: a calculator
+									li: a weather
+									li: a pomodoro
+									li: a quote
+									li: a simon
+									li: a tic-tac-toe
+									li: a twitch
+									li: a wiki
+
+		div.hero-body
+			div.container.has-text-centered
+				h1.title Travis Matthews
+				h2.subtitle developer
+
+		div.hero-foot
+			nav.tabs.is-boxed.is-fullwidth
+				div.container
+					ul
+						li.is-active: a Story
+						li: a Work
+						li: a Languages
+						li: a Skills
+						li: a Interests
+
+	section#story.hero.is-fullheight
+		div.hero-head
+			div.container
+				header.nav
+					div.nav-right
+						div.button.is-small Back To Top
+		div.hero-body
+			div.container
+				div.card
+					div.card-content
+						p.title.centered-text Story
+
+	section#work.hero.is-fullheight
+		div.hero-head
+			div.container
+				header.nav
+					div.nav-right
+						div.button.is-small Back To Top
+		div.hero-body
+			div.container
+				div.card
+					div.card-content
+						p.title.centered-text Work
+
+	section#languages.hero.is-fullheight
+		div.hero-head
+			div.container
+				header.nav
+					div.nav-right
+						div.button.is-small Back To Top
+		div.hero-body
+			div.container
+				div.card
+					div.card-content
+						p.title.centered-text Languages
+
+	section#skills.hero.is-fullheight
+		div.hero-head
+			div.container
+				header.nav
+					div.nav-right
+						div.button.is-small Back To Top
+		div.hero-body
+			div.container
+				div.card
+					div.card-content
+						p.title.centered-text Skills
+
+	section#interests.hero.is-fullheight
+		div.hero-head
+			div.container
+				header.nav
+					div.nav-right
+						div.button.is-small Back To Top
+		div.hero-body
+			div.container
+				div.card
+					div.card-content
+						p.title.centered-text Interests
