@@ -1,7 +1,8 @@
 extends common/pug/layout
 
 block heading
-	link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
+	if (htmlWebpackPlugin)
+		link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
 
 block content
 	section.hero.is-info.is-fullheight

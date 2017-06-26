@@ -81,6 +81,12 @@ const checkHeaders = (response: Response) => {
 
 const eventType = () => ('ontouchstart' in window ? 'touchstart' : 'click');
 
+//https://github.com/jgthms/bulma/issues/192
+const registerToggle = (button, target) =>
+  button.addEventListener(eventType(), () => {
+    target.classList.toggle('is-open');
+  });
+
 export {
   checkForNegativeZero,
   eventType,
@@ -94,4 +100,5 @@ export {
   appendSuffix,
   dateString,
   convertFahrenheitToCelsius,
+  registerToggle,
 };

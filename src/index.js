@@ -1,13 +1,9 @@
 /* @flow */
+import { registerToggle } from 'common/js/utils';
 
-//https://github.com/jgthms/bulma/issues/192
-const registerNavDropdown = () => {
+document.addEventListener('DOMContentLoaded', () => {
   const button = document.getElementById('projects-btn');
-  const dropdown = document.querySelector('.dropdown');
+  const target = document.querySelector('.dropdown');
 
-  button.addEventListener('click', () => {
-    dropdown.classList.toggle('is-open');
-  });
-};
-
-document.addEventListener('DOMContentLoaded', registerNavDropdown);
+  registerToggle(button, target);
+});
