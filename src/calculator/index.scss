@@ -4,11 +4,13 @@
 .window {
 	background-color: gray;
 	min-height: $size-1;
-	width: 98%;
 }
 
-.keypad {
+.app * {
+	margin: 0;
+	padding: 0 !important;
 }
 
-@media screen and (min-width: 768px) {
-}
+.keypad {}
+
+//@media screen and (min-width: _) {}
