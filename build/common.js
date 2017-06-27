@@ -6,6 +6,7 @@ import { multiCompiler } from './directory';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { StatsWriterPlugin } from 'webpack-stats-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const root = process.cwd();
 
@@ -34,14 +35,6 @@ const common = multiCompiler(page => ({
   module: {
     rules: [
       {
-        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000&mimetype=application/font-woff',
-      },
-      {
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader',
-      },
-      {
         test: /\.js$/,
         use: 'babel-loader',
         exclude: /node_modules/,
@@ -52,13 +45,34 @@ const common = multiCompiler(page => ({
         use: 'pug-loader',
       },
       {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'postcss-loader', 'sass-loader'],
+        }),
+      },
+      {
         test: /\.pegjs$/,
         exclude: /node_modules/,
         use: 'pegjs-loader',
       },
       {
+        test: /\.(mp3|wav)$/,
+        exclude: /node_modules/,
+        use: 'file-loader',
+      },
+      {
         test: /\.txt$/,
         use: 'raw-loader',
+      },
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'url-loader?limit=10000&mimetype=application/font-woff',
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file-loader',
       },
     ],
   },

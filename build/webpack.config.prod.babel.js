@@ -10,24 +10,6 @@ import BabiliPlugin from 'babili-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 
 const configs = multiCompiler(page => ({
-  module: {
-    rules: [
-      {
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'postcss-loader', 'sass-loader'],
-        }),
-      },
-      {
-        test: /\.(mp3|wav)$/,
-        exclude: /node_modules/,
-        use: 'file-loader',
-      },
-    ],
-  },
-
   plugins: [
     new ExtractTextPlugin('[name].[hash].css'),
     new PurifyCSSPlugin({
