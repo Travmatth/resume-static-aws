@@ -1,0 +1,45 @@
+.fixed {
+	position: fixed !important;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1;
+}
+
+.fixed * {
+	background-color: rgba(0, 0, 0, 0) !important;
+}
+
+$small-icon: 120px;
+
+.hero.is-info .nav {
+	box-shadow: none;
+}
+
+.blur {
+	background: rgba(0,0,0,0.3) !important;
+}
+
+.control-height {
+	min-height: $size-1;
+}
+
+.hero .nav {
+	box-shadow: none;
+}
+
+.centered-text {
+	text-align: center;
+}
+
+.dropdown {
+	display: none;
+	left: 0;
+	//position: absolute;
+  //top: 100%;
+  //z-index: 1000;
+}
+
+.dropdown.is-open {
+  display: block;
+}

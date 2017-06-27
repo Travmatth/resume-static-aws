@@ -6,29 +6,7 @@ block heading
 
 block content
 	section.hero.is-info.is-fullheight
-		div.hero-head.fixed
-			header.nav
-				div.container.blur
-					div.nav-left.nav-menu
-						a.nav-item.is-active Home
-					div.nav-center.nav-menu
-						a.nav-item Blog
-						a#projects-btn.nav-item Projects
-
-			div
-				header.nav
-					div.container.is-fullwidth
-						nav.tabs.is-boxed.is-fullwidth.control-height
-							div.container.dropdown.blur
-								ul
-									li: a calculator
-									li: a weather
-									li: a pomodoro
-									li: a quote
-									li: a simon
-									li: a tic-tac-toe
-									li: a twitch
-									li: a wiki
+		include common/pug/nav.pug
 
 		div.hero-body
 			div.container.has-text-centered
