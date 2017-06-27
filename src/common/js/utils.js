@@ -81,8 +81,10 @@ const checkHeaders = (response: Response) => {
 
 const eventType = () => ('ontouchstart' in window ? 'touchstart' : 'click');
 
-const registerToggle = (button, target) => {
-  // Show scroll buttons if projects button is overflowing
+const registerToggle = () => {
+  const button = document.getElementById('projects-btn');
+  const target = document.querySelector('.dropdown');
+
   button.addEventListener(eventType(), () => {
     target.classList.toggle('is-open');
   });
