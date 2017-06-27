@@ -50,6 +50,7 @@
     "babili-webpack-plugin": "^0.1.2",
     "clean-webpack-plugin": "^0.1.16",
     "codacy-coverage": "^2.0.2",
+    "compression-webpack-plugin": "^0.4.0",
     "coveralls": "^2.13.1",
     "css-loader": "^0.26.0",
     "extract-text-webpack-plugin": "^2.1.0",

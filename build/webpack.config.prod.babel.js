@@ -7,6 +7,7 @@ import autoprefixer from 'autoprefixer';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import PurifyCSSPlugin from 'purifycss-webpack';
 import BabiliPlugin from 'babili-webpack-plugin';
+import CompressionPlugin from 'compression-webpack-plugin';
 
 const configs = multiCompiler(page => ({
   module: {
@@ -35,6 +36,7 @@ const configs = multiCompiler(page => ({
       verbose: true,
     }),
     new BabiliPlugin(),
+    new CompressionPlugin(),
   ],
 
   output: {

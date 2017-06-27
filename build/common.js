@@ -65,9 +65,6 @@ const common = multiCompiler(page => ({
 
   plugins: [
     new CleanWebpackPlugin('dist'),
-    // Ignore flow files in local directories
-    // new webpack.IgnorePlugin(/\.flow$/),
-    // Write out stats file to build directory.
     new StatsWriterPlugin(),
     new HtmlWebpackPlugin({
       inject: false,
