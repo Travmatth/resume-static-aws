@@ -1,6 +1,8 @@
 /* @flow */
 import { registerToggle } from 'common/js/utils';
 
-document.addEventListener('DOMContentLoaded', () => {
-  registerToggle();
-});
+if (typeof document !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', () => {
+    registerToggle();
+  });
+}
