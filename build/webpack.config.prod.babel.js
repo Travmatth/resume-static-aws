@@ -6,6 +6,7 @@ import webpack from 'webpack';
 import merge from 'webpack-merge';
 import autoprefixer from 'autoprefixer';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import PurifyCSSPlugin from 'purifycss-webpack';
 
 const newConfigs = pageConfigs(page => {
   return {
@@ -29,6 +30,11 @@ const newConfigs = pageConfigs(page => {
 
     plugins: [
       new ExtractTextPlugin('[name].[hash].css'),
+      new PurifyCSSPlugin({
+        paths: [`src/${page}.pug`],
+        minimize: true,
+        verbose: true,
+      }),
       new webpack.optimize.UglifyJsPlugin(),
     ],
 
