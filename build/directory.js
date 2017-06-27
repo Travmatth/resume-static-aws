@@ -4,7 +4,7 @@
 const pages = [
   'index',
   //'blog/index',
-  //'calculator/index',
+  'calculator/index',
   //'localweather/index',
   //'pomodoro/index',
   //'randomquote/index',

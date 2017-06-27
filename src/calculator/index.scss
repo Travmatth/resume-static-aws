@@ -1,0 +1,15 @@
+@import "../common/scss/_all.scss";
+@import "../common/scss/_nav.scss";
+
+.is-8 {
+	background-color: $blue;
+}
+
+h2 {
+	background-color: $yellow;
+	min-height: $size-1;
+}
+
+.keypad {
+	background-color: $green;
+}

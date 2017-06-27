@@ -5,57 +5,55 @@ block heading
 		link(href=`${htmlWebpackPlugin.files.css[0]}` rel="stylesheet" type="text/css")
 
 block content
-	include ../common/pug/nav.pug
-	section
-		h2.window
-		div.keypad
-			div.advanced
-				// row one
-				div.functions
-					button(data-key='SIN') SIN
-					button(data-key='COS') COS
-					button(data-key='TAN') TAN
-					button(data-key='LOG') LOG
+	section.section.hero.is-fullheight
+		include ../common/pug/nav.pug
+		div.hero-body
+			div.container.is-fullwidth
+				div.columns.is-mobile
+					div.column.is-10.is-offset-1
+						h2.window.title
+						div.keypad.tile.is-ancestor.is-vertical
+							div.tile.is-parent.is-12.columns.is-hidden-mobile
+								button.button.column(data-key='SIN') SIN
+								button.button.column(data-key='COS') COS
+								button.button.column(data-key='TAN') TAN
+								button.button.column(data-key='LOG') LOG
 
-				// row two
-				div.constants
-					button(data-key='E') E
-					button(data-key='PI') PI
-					button(data-key='LN2') LN2
-					button(data-key='RAND') RAND
+							div.tile.is-parent.is-12.columns.is-hidden-mobile
+								button.button.column(data-key='E') E
+								button.button.column(data-key='PI') PI
+								button.button.column(data-key='LN2') LN2
+								button.button.column(data-key='RAND') RAND
 
-			div.basic
-				// row one
-				div.filler
-				button(data-key='delete') delete
+							div.tile.is-parent.is-12.columns.is-mobile
+								button.button.column(data-key='delete') delete
 
-				// row two
-				button(data-key='(') (
-				button(data-key=')') )
-				button(data-key='^') ^
-				button(data-key='/') /
+							div.tile.is-parent.is-12.columns.is-mobile
+								button.button.column(data-key='(') (
+								button.button.column(data-key=')') )
+								button.button.column(data-key='^') ^
+								button.button.column(data-key='/') /
 
-				// row three
-				button(data-key='7') 7
-				button(data-key='8') 8
-				button(data-key='9') 9
-				button(data-key='*') *
+							div.tile.is-parent.is-12.columns.is-mobile
+								button.button.column(data-key='7') 7
+								button.button.column(data-key='8') 8
+								button.button.column(data-key='9') 9
+								button.button.column(data-key='*') *
 
-				// row four
-				button(data-key='4') 4
-				button(data-key='5') 5
-				button(data-key='6') 6
-				button(data-key='+') +
+							div.tile.is-parent.is-12.columns.is-mobile
+								button.button.column(data-key='4') 4
+								button.button.column(data-key='5') 5
+								button.button.column(data-key='6') 6
+								button.button.column(data-key='+') +
 
-				// row five
-				button(data-key='1') 1
-				button(data-key='2') 2
-				button(data-key='3') 3
-				button(data-key='-') -
+							div.tile.is-parent.is-12.columns.is-mobile
+								button.button.column(data-key='1') 1
+								button.button.column(data-key='2') 2
+								button.button.column(data-key='3') 3
+								button.button.column(data-key='-') -
 
-				// row six
-				button(data-key='.') .
-				button(data-key='0') 0
-				button(data-key='=') =
-				button(data-key='clear') c
-			div.tip Please rotate screen to landscape for full layout
+							div.tile.is-parent.is-12.columns.is-mobile
+								button.button.column(data-key='.') .
+								button.button.column(data-key='0') 0
+								button.button.column(data-key='=') =
+								button.button.column.i(data-key='clear') c
