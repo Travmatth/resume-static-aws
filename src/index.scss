@@ -71,14 +71,16 @@
 	}
 }
 
-.horizontal-scroll {
-	overflow-x: scroll;
-	width: 100%;
+.fixed {
+	position: fixed !important;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1;
+}
 
-	& a.nav-item {
-		max-height: 50px;
-		width: 25vw;
-	}
+.fixed * {
+	background-color: rgba(0, 0, 0, 0) !important;
 }
 
 $small-icon: 120px;
@@ -87,10 +89,8 @@ $small-icon: 120px;
 	box-shadow: none;
 }
 
-li a {
-	& > * {
-		background: rgba(0,0,0,0.3);
-	}
+.blur {
+	background: rgba(0,0,0,0.3) !important;
 }
 
 .control-height {
