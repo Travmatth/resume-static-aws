@@ -7,6 +7,7 @@ import merge from 'webpack-merge';
 import autoprefixer from 'autoprefixer';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import PurifyCSSPlugin from 'purifycss-webpack';
+import BabiliPlugin from 'babili-webpack-plugin';
 
 const newConfigs = pageConfigs(page => {
   return {
@@ -35,7 +36,7 @@ const newConfigs = pageConfigs(page => {
         minimize: true,
         verbose: true,
       }),
-      new webpack.optimize.UglifyJsPlugin(),
+      new BabiliPlugin(),
     ],
 
     output: {

@@ -8,7 +8,6 @@
       "targets": {
         "browsers": ["> 5% in US"]
       },
-      "uglify": true,
       "modules": false,
       "loose": true
     }],
