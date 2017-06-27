@@ -32,7 +32,8 @@
     "babel-polyfill": "^6.16.0",
     "babel-runtime": "^6.18.0",
     "bulma": "^0.4.2",
-    "extendable-error-class": "^0.1.1"
+    "extendable-error-class": "^0.1.1",
+    "font-awesome": "^4.7.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.3",
@@ -55,7 +56,7 @@
     "extract-text-webpack-plugin": "^2.1.0",
     "fetch-jsonp": "^1.1.1",
     "fetch-mock": "^5.8.0",
-    "file-loader": "^0.11.1",
+    "file-loader": "^0.11.2",
     "flow-bin": "^0.42.0",
     "flow-status-webpack-plugin": "^0.1.7",
     "html-webpack-plugin": "^2.24.1",
@@ -78,6 +79,7 @@
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "svgo": "^0.7.1",
+    "url-loader": "^0.5.9",
     "webpack": "^2.4.1",
     "webpack-dev-server": "^2.4.4",
     "webpack-merge": "^4.1.0",
