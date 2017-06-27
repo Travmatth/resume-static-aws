@@ -81,15 +81,6 @@ const checkHeaders = (response: Response) => {
 
 const eventType = () => ('ontouchstart' in window ? 'touchstart' : 'click');
 
-const registerToggle = () => {
-  const button = document.getElementById('projects-btn');
-  const target = document.querySelector('.dropdown');
-
-  button.addEventListener(eventType(), () => {
-    target.classList.toggle('is-open');
-  });
-};
-
 export {
   checkForNegativeZero,
   eventType,
@@ -103,5 +94,4 @@ export {
   appendSuffix,
   dateString,
   convertFahrenheitToCelsius,
-  registerToggle,
 };

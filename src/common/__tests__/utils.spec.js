@@ -13,26 +13,9 @@ import {
   shrink,
   scale,
   checkForNegativeZero,
-  registerToggle,
 } from '../js/utils';
 
 describe('Shared utility code', () => {
-  it('registerToggle should set a toggle on dropdown element', () => {
-    document.body.innerHTML = `
-      <body>
-        <p id="projects-btn"></p>
-        <p class="dropdown"></p>
-      </body>
-    `;
-    const button = document.getElementById('projects-btn');
-    const target = document.querySelector('.dropdown');
-
-    registerToggle(button, target);
-    dispatch(button, 'click');
-
-    expect(target.classList.contains('is-open')).toBe(true);
-  });
-
   it('checkForNegativeZero returns 0 if input is -0', () => {
     expect(Object.is(checkForNegativeZero(-0), +0)).toBe(true);
   });
