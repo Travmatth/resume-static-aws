@@ -1,15 +1,14 @@
 @import "../common/scss/_all.scss";
 @import "../common/scss/_nav.scss";
 
-.is-8 {
-	background-color: $blue;
-}
-
-h2 {
-	background-color: $yellow;
+.window {
+	background-color: gray;
 	min-height: $size-1;
+	width: 98%;
 }
 
 .keypad {
-	background-color: $green;
+}
+
+@media screen and (min-width: 768px) {
 }
