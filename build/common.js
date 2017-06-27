@@ -19,7 +19,6 @@ const common = pageConfigs(page => {
 
     entry: {
       [page]: [
-        'babel-polyfill',
         path.resolve(root, `./src/${page}.js`),
         path.resolve(root, `src/${page}.scss`),
       ],

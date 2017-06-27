@@ -4,7 +4,14 @@
     "transform-flow-strip-types"
   ],
   "presets": [
-    ["es2015", { "modules": false }],
-    "stage-0"
+    ["env", {
+      "targets": {
+        "browsers": ["> 5% in US"]
+      },
+      "uglify": true,
+      "modules": false,
+      "loose": true
+    }],
+    "stage-3"
   ]
 }
