@@ -34,14 +34,14 @@ const getWeatherHandler = (
   const resource: string = serialize(endpoint, params);
 
   // Call API, update dom
-  try {
-    const weather: Weather = await fetchWeather(resource);
+  let weather: ?Weather;
+  weather = await fetchWeather(resource);
+
+  if (weather) {
     const { forecasts, city } = weather;
     const temperatures = forecasts.map(elem => elem.temp);
     if (header) header.textContent = city;
     if (cells) updateTableRows(cells, forecasts, 'fahrenheit');
-  } catch (error) {
-    console.error('error', error);
   }
 };
 
@@ -65,6 +65,8 @@ const updateTableRows = (
   let index = 0;
   let node = nodes.item(index);
   let forecast = results[index];
+  console.log(nodes, results);
+  document.debug_nodes = nodes;
 
   while (node && forecast) {
     /* Populate children cells according to template:

@@ -2,6 +2,12 @@
 
 import { dispatch } from 'tests/utils';
 import * as Handlers from '../Handlers';
+import * as handlers from 'common/js/handlers';
+import { glyphs } from '../Models';
+
+jest.mock('common/js/handlers', () => ({
+  registerToggle: jest.fn(),
+}));
 
 jest.mock('../Handlers', () => {
   const module = {};
@@ -21,6 +27,11 @@ describe('Localweather App', () => {
     global.navigator.geolocation = {};
     global.navigator.geolocation.getCurrentPosition = jest.fn();
     ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
+  });
+
+  it('page should register toggle handler', () => {
+    dispatch(document.getElementById('projects-btn'), 'click');
+    expect(handlers.registerToggle).toHaveBeenCalled();
   });
 
   it('should call getCurrentPosition to handler on DOMContentLoaded', () => {

@@ -4,8 +4,8 @@
 const pages = [
   'index',
   //'blog/index',
-  'calculator/index',
-  //'localweather/index',
+  //'calculator/index',
+  'localweather/index',
   //'pomodoro/index',
   //'randomquote/index',
   //'simon/index',
