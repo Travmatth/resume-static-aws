@@ -81,6 +81,8 @@ const checkHeaders = (response: Response) => {
 
 const eventType = () => ('ontouchstart' in window ? 'touchstart' : 'click');
 
+const trim = (str: string) => str.replace(/^\s+|\s+$/g, '');
+
 export {
   checkForNegativeZero,
   eventType,
@@ -94,4 +96,5 @@ export {
   appendSuffix,
   dateString,
   convertFahrenheitToCelsius,
+  trim,
 };

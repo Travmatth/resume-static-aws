@@ -13,9 +13,15 @@ import {
   shrink,
   scale,
   checkForNegativeZero,
+  trim,
 } from '../js/utils';
 
 describe('Shared utility code', () => {
+  it('trim should remove newline characters', () => {
+    const raw = '\ntest\n';
+    expect(trim(raw)).toBe('test');
+  });
+
   it('checkForNegativeZero returns 0 if input is -0', () => {
     expect(Object.is(checkForNegativeZero(-0), +0)).toBe(true);
   });
