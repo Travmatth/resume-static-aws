@@ -1,6 +1,7 @@
 /* @flow */
 import { dispatch } from 'tests/utils';
 import * as Pomodoro from '../Handlers';
+import * as handlers from 'common/js/handlers';
 
 jest.mock('../Handlers', () => {
   const module = {};
@@ -16,11 +17,19 @@ jest.mock('../Handlers', () => {
   return module;
 });
 
+jest.mock('common/js/handlers', () => ({
+  registerToggle: jest.fn(),
+}));
+
 describe('Pomodoro page', () => {
   beforeEach(() => {
     ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
     require('../index.js');
     dispatch(document, 'DOMContentLoaded');
+  });
+
+  it('page should register toggle handler', async () => {
+    expect(handlers.registerToggle).toHaveBeenCalled();
   });
 
   it('should have a listener able to increment work count', () => {

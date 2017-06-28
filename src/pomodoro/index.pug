@@ -5,24 +5,36 @@ block heading
 		link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
 
 block content
-	include ../common/pug/nav.pug
-	section.view
-		div.container
-			div.app
-				div.rest
-					button#rest-dec -
-					h3#rest-counter 1
-					button#rest-inc +
-					h3 Rest
-				div.work
-					button#work-dec -
-					h3#work-counter 1
-					button#work-inc +
-					h3 Work
-				div#timer
-					div.first
-					div.second
-						h1#time 0:0.00
-					div.third
-						button#timer-btn start
-						button#reset-btn reset
+	section.hero.is-fullheight
+		include ../common/pug/nav.pug
+		div.hero-body.columns
+			div.column
+				div.columns.is-mobile
+					div.column.is-6.is-offset-3
+							div.columns.is-mobile
+								div.column.is-6.is-paddingless
+									div.level.is-mobile.is-marginless
+										button#rest-dec.level-item.is-inverted.is-outlined -
+										h3#rest-counter.level-item 1
+										button#rest-inc.level-item.is-inverted.is-outlined +
+									div.level
+										h3.level-item Rest
+								div.column.is-6.is-paddingless
+									div.level.is-mobile.is-marginless
+										button#work-dec.level-item.is-inverted.is-outlined -
+										h3#work-counter.level-item 1
+										button#work-inc.level-item.is-inverted.is-outlined +
+									div.level
+										h3.level-item Work
+				div.level
+					div.level-item
+						div.level
+							div.level-item
+								div#timer
+									div.level.push-down
+										div.level-item
+											h1#time 0:0.00
+									div.level.push-down
+										div.level-item
+											button#timer-btn.is-inverted.is-outlined start
+											button#reset-btn.is-inverted.is-outlined reset

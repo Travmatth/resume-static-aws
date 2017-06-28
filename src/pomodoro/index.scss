@@ -1,0 +1,17 @@
+@import "../common/scss/_all.scss";
+@import "../common/scss/_nav.scss";
+
+#timer {
+	border-radius: 50%;
+	border: solid black;
+	width: 50vh;
+	height: 50vh;
+}
+
+.push-down {
+	margin-top: 30%;
+}
+
+button {
+	width: fit-content;
+}
