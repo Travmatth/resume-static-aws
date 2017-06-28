@@ -10,6 +10,7 @@ import {
   updateTableRows,
   toggleTempChangeHandler,
   tempScale,
+  fetchHandler,
 } from '../Handlers';
 import { openweatherApiParams, endpoint } from '../Models';
 import contentLoadedListener from '../index';
@@ -24,7 +25,19 @@ describe('Localweather Handlers', () => {
   });
 
   beforeEach(() => {
+    global.navigator = global.navigator || {};
+    global.navigator.geolocation = {};
+    global.navigator.geolocation.getCurrentPosition = jest.fn();
     ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
+  });
+
+  it('fetchHandler should call getCurrentPosition', () => {
+    const header = document.querySelector('.heading');
+    const cells = document.querySelectorAll('.cell');
+    const tempToggles = ((document.querySelectorAll('input'): any): NodeList<>);
+
+    fetchHandler(header, cells, tempToggles)();
+    expect(global.navigator.geolocation.getCurrentPosition).toHaveBeenCalled();
   });
 
   it('updateTableRows() populates given DOM element w/ correct data', async () => {
@@ -40,9 +53,10 @@ describe('Localweather Handlers', () => {
     const dayElement = cell.children[0].textContent;
     const timeElement = cell.children[1].textContent;
     const temperatureElement = Number(cell.children[2].textContent);
-    const imgElement = (cell.children[3].children[0]: any).src;
+    const imgElement = (cell.children[3].children[0].children[0]: any).src;
     const descriptionElement = cell.children[4].textContent;
 
+    expect(cell.classList.contains('hide')).toBe(false);
     expect(day).toBe(dayElement);
     expect(time).toBe(timeElement);
     expect(temp.celsius).toBe(temperatureElement);

@@ -1,3 +1,23 @@
 @import "../common/scss/_all.scss";
 @import "../common/scss/_nav.scss";
 
+//div.container.is-fullwidth * {
+	//padding: 0;
+	//margin: 0
+//}
+
+.shift-down {
+	margin-top: 20px;
+}
+
+input {
+	margin-right: 5px;
+}
+
+.fahrenheit {
+	margin-left: 20px;
+}
+
+table * {
+	text-align: center !important;
+}

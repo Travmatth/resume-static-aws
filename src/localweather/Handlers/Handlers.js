@@ -22,6 +22,11 @@ import {
 import OPEN_WEATHER_APPID from 'protected/localweather.key';
 import { endpoint, openweatherApiParams } from '../Models';
 
+const fetchHandler = (header, cells, tempToggles) => (_: Event) => {
+  const getWeather = getWeatherHandler(header, cells, tempToggles);
+  navigator.geolocation.getCurrentPosition(getWeather);
+};
+
 // Mocking fetch during dev
 //import * as MOCK from './mockdata';
 const getWeatherHandler = (
@@ -56,7 +61,6 @@ const getWeatherHandler = (
  * @param  { Array<Forecasts> } results the parsed weather forecasts
  * @return { void } void
  */
-//TODO: store temperatures in dataset attr
 const updateTableRows = (
   nodes: NodeList<HTMLElement>,
   results: Array<Daily>,
@@ -65,7 +69,7 @@ const updateTableRows = (
   let index = 0;
   let node = nodes.item(index);
   let forecast = results[index];
-  console.log(nodes, results);
+  //$TODO: scaffolding
   document.debug_nodes = nodes;
 
   while (node && forecast) {
@@ -91,11 +95,15 @@ const updateTableRows = (
       ? `${temp.celsius}`
       : `${temp.fahrenheit}`;
 
-    ((node.children[3].children[0]: any): HTMLImageElement).src = icon;
+    ((node.children[3].children[0].children[
+      0
+    ]: any): HTMLImageElement).src = icon;
 
     node.children[4].textContent = description;
 
-    if (node.className === 'hide') node.className.replace(/hide/, 'show');
+    node.classList.toggle('hide');
+    node.classList.toggle('show');
+    //if (node.className === 'hide') node.className.replace(/hide/, 'show');
 
     // Finally, point to next element in source arrays
     index += 1;
@@ -106,7 +114,6 @@ const updateTableRows = (
 
 //TODO: figure out failing test, rewrite -> store temp in dataset
 const toggleTempChangeHandler = (nodes: NodeList<HTMLElement>) => (
-  //temperatures: ?Array<DailyTemperature>,
   event: Event,
 ) => {
   let index = 0;
@@ -134,4 +141,5 @@ export {
   getWeatherHandler,
   updateTableRows,
   toggleTempChangeHandler,
+  fetchHandler,
 };

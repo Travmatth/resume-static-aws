@@ -58,13 +58,9 @@ const fetchWeather = async (url: string): Promise<Weather> => {
   return await fetchJsonp(url, opts)
     .then(checkHeaders)
     .then(processWeather)
-    .then(p => {
-      console.log(p);
-      return p;
-    })
     .catch(error => {
-      console.error('fetchJsonp failed', error);
-      throw error;
+      //console.error('fetchJsonp failed', error);
+      return null;
     });
 };
 
