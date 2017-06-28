@@ -78,6 +78,9 @@ const common = multiCompiler(page => ({
   },
 
   plugins: [
+    new webpack.ProvidePlugin({
+      regeneratorRuntime: 'babel-runtime/regenerator',
+    }),
     new CleanWebpackPlugin('dist'),
     new StatsWriterPlugin(),
     new HtmlWebpackPlugin({
