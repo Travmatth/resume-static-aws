@@ -22,9 +22,6 @@ jest.mock('../Handlers', () => {
 
 describe('Localweather App', () => {
   beforeEach(() => {
-    //global.navigator = global.navigator || {};
-    //global.navigator.geolocation = {};
-    //global.navigator.geolocation.getCurrentPosition = jest.fn();
     ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
 
     require('../index');
@@ -36,7 +33,6 @@ describe('Localweather App', () => {
   });
 
   it('page should register toggle handler', async () => {
-    dispatch('#projects-btn', 'click');
     expect(handlers.registerToggle).toHaveBeenCalled();
   });
 
