@@ -10,7 +10,6 @@
 #red {
 	background-color: $red;
 	border-top-left-radius: 100%;
-	border-bottom-right-radius: -100%;
 }
 
 #yellow {
@@ -32,9 +31,6 @@
 	position: absolute;
 	width: 50vh;
 	height: 50vh;
-
-	& .menu {
-	}
 }
 
 .menu {
@@ -57,7 +53,25 @@
 	width: 50vh;
 }
 
+.menu-layout {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.one,
+.five{
+	width: 100%;
+	height: fit-content;
+}
+
+.two,
+.three,
+.four {
+	width: 25%;
+}
+
 @media screen and (max-width: 722px) {
-	.menu {
-	}
+	.menu {}
 }
