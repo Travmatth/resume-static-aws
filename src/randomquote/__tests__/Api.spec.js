@@ -14,7 +14,7 @@ const author = 'Confucius';
 describe('RandomQuote Api', () => {
   it('fetchQuote should return quote and author', async () => {
     fetch.mockResponseOnce(json(exampleResponse), { status: 200 });
-    expect(await fetchQuote()).toEqual({ quote, author, error: false });
+    expect(await fetchQuote()).toEqual({ quote, author, error: null });
   });
 
   it('fetchQuote should return error on errors', async () => {

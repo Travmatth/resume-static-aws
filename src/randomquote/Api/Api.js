@@ -8,14 +8,14 @@ const fetchQuote = () => {
   return fetch(proxyUrl)
     .then(checkHeaders)
     .then(response => ({
-      error: false,
+      error: null,
       quote: response.quoteText,
       author: response.quoteAuthor || 'Author Unknown',
     }))
     .catch(error => ({
       error,
-      quote: '',
-      author: '',
+      quote: null,
+      author: null,
     }));
 };
 

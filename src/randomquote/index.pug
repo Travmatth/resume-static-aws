@@ -5,14 +5,23 @@ block heading
 		link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
 
 block content
-	div.box
-		div#quotebox
-			div.quote In quoting others, we cite ourselves.
-			div.author Julio Cortazar
-		div.addendum
-			div.attribution
-				| API by:
-				a(href="http://forismatic.com/en/") forismatic
-				a.tweet(href="")
-					include Static/Twitter_Logo_Blue.svg
-		button#refresh Refresh
+	section.hero.is-fullheight
+		include ../common/pug/nav.pug
+		section.hero-body
+			div.container
+				div.columns
+					div.column.is-8.is-offset-2
+						div#quotebox.box
+							div.title.quote In quoting others, we cite ourselves.
+							div.subtitle.is-pulled-right.author Julio Cortazar
+						div.column.is-8.is-offset-2
+							div.level.is-mobile
+								div.level-item
+									div.attribution
+										| API by:
+										a(href="http://forismatic.com/en/") forismatic
+									div.level-item
+										a.icon.tweet(href="")
+											include Static/Twitter_Logo_Blue.svg
+									div.level-item
+										button#refresh.is-outlined.is-inverted Refresh
