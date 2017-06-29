@@ -8,9 +8,11 @@ import {
   powerHandler,
   ColorHandler,
 } from './Handlers';
+import { registerToggle } from 'common/js/handlers';
 
 if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
+    registerToggle();
     const clock = { id: null };
     const timer = new Timer();
     const simon = new Simon();

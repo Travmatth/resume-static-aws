@@ -1,0 +1,63 @@
+@import "../common/scss/_all.scss";
+@import "../common/scss/_nav.scss";
+
+#red,
+#yellow,
+#green,
+#blue {
+}
+
+#red {
+	background-color: $red;
+	border-top-left-radius: 100%;
+	border-bottom-right-radius: -100%;
+}
+
+#yellow {
+	background-color: $yellow;
+	border-top-right-radius: 100%;
+}
+
+#green {
+	background-color: $green;
+	border-bottom-left-radius: 100%;
+}
+
+#blue {
+	background-color: $blue;
+	border-bottom-right-radius: 100%;
+}
+
+.over {
+	position: absolute;
+	width: 50vh;
+	height: 50vh;
+
+	& .menu {
+	}
+}
+
+.menu {
+	background-color: $white;
+	border-radius: 50%;
+	border: solid black;
+	height: 25vh;
+	max-height: 25vh;
+	width: 25vh;
+	max-width: 25vh;
+	position: absolute;
+	top: 12.5vh;
+	left: 12.5vh;
+}
+
+.circle {
+	border-radius: 50%;
+	border: solid black;
+	height: 50vh;
+	width: 50vh;
+}
+
+@media screen and (max-width: 722px) {
+	.menu {
+	}
+}

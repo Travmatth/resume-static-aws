@@ -3,6 +3,11 @@
 import { dispatch } from 'tests/utils';
 import * as Handlers from '../Handlers';
 import * as Models from '../Models';
+import * as handlers from 'common/js/handlers';
+
+jest.mock('common/js/handlers', () => ({
+  registerToggle: jest.fn(),
+}));
 
 jest.mock('../Models', () => ({
   Simon: class Simon {},
@@ -35,6 +40,10 @@ describe('Simon page', () => {
     ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
     require('../index.js');
     dispatch(document, 'DOMContentLoaded');
+  });
+
+  it('page should register toggle handler', async () => {
+    expect(handlers.registerToggle).toHaveBeenCalled();
   });
 
   it('should have listener on power button', () => {

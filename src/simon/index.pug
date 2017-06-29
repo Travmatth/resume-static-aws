@@ -5,9 +5,17 @@ block heading
 		link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
 
 block content
-	button#power
-	button#strict
-	button#red
-	button#yellow
-	button#green
-	button#blue
+	section.hero.is-fullheight
+		include ../common/pug/nav.pug
+		div.hero-body
+			div.level.container
+				div.level-item
+					div.circle.columns.is-multiline.is-mobile
+						div.is-marginless.over
+							div.menu
+								button.is-half#power Power
+								button.is-half#strict Strict
+						div.column.is-half#red
+						div.column.is-half#yellow
+						div.column.is-half#green
+						div.column.is-half#blue
