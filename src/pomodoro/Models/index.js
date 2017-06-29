@@ -34,6 +34,7 @@ const startTimer = (
       timerNode.textContent = parseTimeToText(max);
       game.phase = game.phase === Phase.work ? Phase.rest : Phase.work;
       stopTimer(startBtn, game, set);
+      startBtn.textContent = 'start';
     }
   }, 10);
 
