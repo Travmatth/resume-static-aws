@@ -8,8 +8,8 @@ const pages = [
   //'localweather/index',
   //'pomodoro/index',
   //'randomquote/index',
-  'simon/index',
-  //'tictactoe/index',
+  //'simon/index',
+  'tictactoe/index',
   //'twitchtv/index',
   //'wikiviewer/index',
 ];
