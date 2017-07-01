@@ -5,4 +5,102 @@ block heading
 		link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
 
 block content
-	div#root
+	section.hero
+		include ../common/pug/nav.pug
+		div.hero-body.main
+			div#start.scene.card.columns.is-mobile.is-multiline
+
+				div.column.is-6
+					div.level
+						div.level-item
+							button.select-btn X
+
+				div.column.is-6
+					div.level
+						div.level-item
+							button.select-btn O
+
+				div.column.is-12
+					div.level
+						div.level-item
+							button.start Start
+
+			div#play.scene.board.hidden
+				div.columns.is-mobile.is-multiline
+
+					div.column.is-4.game-tile
+						div.level
+							div.level-item
+								div.tile
+
+					div.column.is-4.game-tile
+						div.level
+							div.level-item
+								div.tile
+
+					div.column.is-4.game-tile
+						div.level
+							div.level-item
+								div.tile
+
+					div.column.is-4.game-tile
+						div.level
+							div.level-item
+								div.tile
+
+					div.column.is-4.game-tile
+						div.level
+							div.level-item
+								div.tile
+
+					div.column.is-4.game-tile
+						div.level
+							div.level-item
+								div.tile
+
+					div.column.is-4.game-tile
+						div.level
+							div.level-item
+								div.tile
+
+					div.column.is-4.game-tile
+						div.level
+							div.level-item
+								div.tile
+
+					div.column.is-4.game-tile
+						div.level
+							div.level-item
+								div.tile
+
+				div
+					div.level
+						div.level-item
+							button#undo.button.is-outlined.is-danger Undo Move
+
+			div#score.scene.card.is-fullwidth.menu.hidden
+				div.columns.is-mobile.is-multiline.expands
+
+					div.column.is-6
+						div.level
+							div.level-item
+								div.box.fit X
+								div Score:
+								div#x-score.score 0
+
+					div.column.is-6
+						div.level
+							div.level-item
+								div.box.fit O
+								div Score:
+								div#o-score.score 0
+
+					div.column.is-6
+						div.level
+							div.level-item
+								button#restart.button.is-primary.is-outlined  Restart
+
+					div.column.is-6
+						div.level
+							div.level-item
+								button#reset.button.is-outlined.is-warning Reset

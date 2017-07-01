@@ -7,6 +7,7 @@ import {
   rollbackHandler,
   chooseTurnHandler,
 } from './Manager';
+import { showScene, update } from './helpers';
 
 export {
   makeAction,
@@ -16,4 +17,6 @@ export {
   startGameHandler,
   rollbackHandler,
   chooseTurnHandler,
+  showScene,
+  update,
 };

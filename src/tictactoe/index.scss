@@ -1,0 +1,11 @@
+@import "../common/scss/_all.scss";
+@import "../common/scss/_nav.scss";
+
+.main {
+	margin-top: 20vh;
+}
+
+.hidden {
+	display: none;
+	visibility: hidden;
+}

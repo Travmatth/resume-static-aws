@@ -1,5 +1,11 @@
 /* @flow */
 export const Side = { X: 'X', O: 'O' };
+export const scenes = {
+  start: 'start',
+  play: 'play',
+  score: 'score',
+};
+
 export type Sides = $Keys<typeof Side> | null;
 export type ScoreCard = {| X: number, O: number |};
 export type WinningBoard = Array<Array<boolean>>;

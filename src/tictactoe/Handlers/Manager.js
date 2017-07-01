@@ -1,10 +1,10 @@
 /* @flow */
 import { Game } from '../Models';
-import type { Update, HTMLGameSquare, GameGrid } from '../tictactoe.types';
-import { Side } from '../tictactoe.types';
+import type { HTMLGameSquare, GameGrid } from '../tictactoe.types';
+import { scenes, Side } from '../tictactoe.types';
 
 const delay = 500; //ms
-// Since update callbacks accept Array<string>, can overwrite game grid w/ ''
+// Since refresh callbacks accept Array<string>, can overwrite game grid w/ ''
 const blank = ['', '', '', '', '', '', '', '', ''];
 
 const makeAction = (elem: HTMLGameSquare, player: $Keys<typeof Side>) => {
@@ -17,7 +17,7 @@ const makeAction = (elem: HTMLGameSquare, player: $Keys<typeof Side>) => {
   }: GameGrid);
 };
 
-const playerAction = (game: Game, update: Update, end: () => void) => (
+const playerAction = (game: Game, refresh: () => void, show: () => void) => (
   e: Event,
 ) => {
   if (!game.canMove()) return;
@@ -29,22 +29,21 @@ const playerAction = (game: Game, update: Update, end: () => void) => (
 
   setTimeout(() => {
     // process Player move
-    update(game.current());
+    refresh(game.current());
     game.endPlayerMove();
     if (game.isOver()) {
       game.restart();
-      end();
+      show(scenes.score);
       return;
     }
 
     // simulate opponent move
     setTimeout(() => {
       game.simulateMove();
-      update(game.current());
+      refresh(game.current());
       if (game.isOver()) {
         game.restart();
-        end();
-        return;
+        show(scenes.score);
       } else {
         game.startPlayerMove();
       }
@@ -53,44 +52,44 @@ const playerAction = (game: Game, update: Update, end: () => void) => (
 };
 
 // Pressed in the score view to switch views: score -> start
-const resetGameHandler = (game: Game, reset: () => void) => (e: Event) => {
+const resetGameHandler = (game: Game, show: () => void) => (e: Event) => {
   game.restart();
-  reset();
+  show(scenes.start);
 };
 
 // restartGame is responsible for restarting the game
 // if the player is first turn, should only restart game
 // else player is second turn, should reset grid and perform first move
-const restartGameHandler = (game: Game, update: Update) => (e: Event) => {
+const restartGameHandler = (game: Game, refresh: () => void) => (e: Event) => {
   game.restart();
-  update(blank);
+  refresh(blank);
   if (game.player() === Side.O) {
     game.simulateFirstMove();
-    update(game.current());
+    refresh(game.current());
   }
 };
 
 const startGameHandler = (
   game: Game,
-  update: Update,
-  transition: () => void,
+  refresh: () => void,
+  show: () => void,
 ) => (e: Event) => {
   // Clear previous state of Game view, if any
-  update(blank);
+  refresh(blank);
   // swap Game View into DOM
-  transition();
+  show(scenes.play);
   if (game.player() === Side.O) {
     setTimeout(() => {
       game.simulateFirstMove();
-      update(game.current());
+      refresh(game.current());
       game.startPlayerMove();
     }, delay);
   }
 };
 
-const rollbackHandler = (game: Game, update: Update) => (e: Event) => {
+const rollbackHandler = (game: Game, refresh: () => void) => (e: Event) => {
   game.rollback();
-  update(game.current());
+  refresh(game.current());
 };
 
 const chooseTurnHandler = (game: Game) => (e: Event) => {

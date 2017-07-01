@@ -1,23 +1,19 @@
 /* @flow */
 
-import {
-  render,
-  update,
-  createStartView,
-  createPlayView,
-  createScoreView,
-} from './Views';
-
 import { Game } from './Models';
-
+import { Side, scenes } from './tictactoe.types';
+import { eventType } from 'common/js/utils';
 import {
-  //Starting View
+  // Helpers
+  showScene,
+  update,
+  // Starting View
   startGameHandler,
   chooseTurnHandler,
-  //Game View
+  // Game View
   playerAction,
   rollbackHandler,
-  //Score View
+  // Score View
   resetGameHandler,
   restartGameHandler,
 } from './Handlers';
@@ -25,46 +21,47 @@ import {
 if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
     const game = new Game();
-    const { createDocumentFragment } = document;
+    const type = eventType();
+    const rowLength = 3;
+    let tile: HTMLElement;
+    const tiles = document.querySelectorAll('.game-tile');
+    const refresh = update(tiles);
 
-    // responsible for holding the view currently being shown
-    const root = ((document.getElementById('root'): any): HTMLElement);
-    // document fragments contain the elements assoc. w/ each view
-    const start = document.createDocumentFragment();
-    const play = document.createDocumentFragment();
-    const score = document.createDocumentFragment();
+    // Start View Setup
+    document.querySelectorAll('.select-btn').forEach(el => {
+      if (!el.dataset) el.dataset = {};
 
-    // trigger transition btw views
-    const resetTransition = render(root, score, start);
-    const startTransition = render(root, start, play);
-    const endTransition = render(root, play, score);
+      el.dataset.glyph = el.textContent.includes('X') ? Side.X : Side.O;
 
-    // Starting View Handlers
-    const startHandler = startGameHandler(game, update(play), startTransition);
-    const chooseHandler = chooseTurnHandler(game);
-    // Game View Handlers
-    const playerHandler = playerAction(game, update(play), endTransition);
-    const rollback = rollbackHandler(game, update(play));
-    // Score View Handlers
-    const resetHandler = resetGameHandler(game, resetTransition);
-    const restartHandler = restartGameHandler(game, update(play));
+      el.addEventListener('click', chooseTurnHandler(game));
+    });
 
-    // populate fragments with needed elements
-    const startViewFragment = createStartView(
-      start,
-      startHandler,
-      chooseHandler,
-    );
-    const playViewFragment = createPlayView(play, playerHandler, rollback);
-    const scoreViewFragment = createScoreView(
-      score,
-      restartHandler,
-      resetHandler,
-      resetTransition,
-      game,
-    );
+    const start = startGameHandler(game, refresh, showScene);
+    document.querySelector('.start').addEventListener(type, start);
 
-    // Start scenes by binding the first view to the root container
-    render(root, null, startViewFragment)();
+    // Game View Setup
+    for (let x of Array(3).keys()) {
+      for (let y of Array(3).keys()) {
+        tile = tiles.item(x * rowLength + y);
+        if (!tile.dataset) tile.dataset = {};
+
+        tile.dataset.x = `${x}`;
+        tile.dataset.y = `${y}`;
+
+        const action = playerAction(game, refresh, showScene);
+        tile.addEventListener(type, action);
+      }
+    }
+
+    document
+      .querySelector('#undo')
+      .addEventListener(type, rollbackHandler(game, refresh));
+
+    // Score View Setup
+    document.querySelector('#restart', restartGameHandler(game, showScene));
+    document.querySelector('#reset', resetGameHandler(game, showScene));
+
+    // Start scenes by making first visible
+    showScene(scenes.start);
   });
 }
