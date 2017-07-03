@@ -1,11 +1,34 @@
 /* @flow */
 import { Game, genScoreCard, createGrid } from '../Models';
 import type { GameBoard, GameGrid } from '../tictactoe.types';
+import { Side } from '../tictactoe.types';
+import { blank } from '../Handlers';
 
 describe('TicTacToe Game', () => {
   let game: Game;
 
-  beforeEach(() => (game = new Game()));
+  beforeEach(() => game = new Game());
+
+  it('resetScores should set X and O scores to 0', () => {
+    game.state.score[Side.X] = 1;
+    game.state.score[Side.O] = 1;
+
+    game.resetScores();
+
+    expect(game.getScore(Side.X)).toBe(0);
+    expect(game.getScore(Side.O)).toBe(0);
+  });
+
+  it('canTakeSquare returns true if requested square is available', () => {
+    const gameGrid = { x: 0, y: 0, player: Side.X };
+    expect(game.canTakeSquare(gameGrid)).toBe(true);
+  });
+
+  it('canTakeSquare returns false if requested square is unavailable', () => {
+    const gameGrid = { x: 0, y: 0, player: Side.X };
+    game.takeTurn(gameGrid);
+    expect(game.canTakeSquare(gameGrid)).toBe(false);
+  });
 
   it('instantiates with correct default state', () => {
     expect(game.state.input).toBe(false);
@@ -15,6 +38,15 @@ describe('TicTacToe Game', () => {
     expect(game.state.finished).toBe(false);
     expect(game.state.grid).toEqual(createGrid());
     expect(game.state.score).toEqual(genScoreCard());
+  });
+
+  it('rollback should move back 2 states', () => {
+    game.takeTurn({ x: 0, y: 0, player: 'X' });
+    game.simulateMove();
+    game.rollback();
+
+    expect(game.state.history.length).toBe(0);
+    expect(game.current()).toEqual(blank);
   });
 
   it('getScore return score of given player', () => {
@@ -68,12 +100,6 @@ describe('TicTacToe Game', () => {
   it('chooseSide should set player', () => {
     game.chooseSide('O');
     expect(game.state.player).toBe('O');
-  });
-
-  it('rollback should reset grid to last state', () => {
-    game.takeTurn({ x: 0, y: 0, player: null });
-    game.rollback();
-    expect(game.current()[0]).toBe('');
   });
 
   it('takeTurn should reject move if player !== turn', () => {

@@ -1,11 +1,63 @@
 @import "../common/scss/_all.scss";
 @import "../common/scss/_nav.scss";
 
+#start {
+	height: 40vh;
+	margin-left: 0;
+	& * {
+		height: 100%;
+	}
+}
+
+.select-btn {
+	width: 100%;
+}
+
 .main {
-	margin-top: 20vh;
+	margin-top: 15vh;
 }
 
 .hidden {
-	display: none;
+	display: none !important;
 	visibility: hidden;
+}
+
+.no-pointer-events {
+	pointer-events: none;
+	width: fit-content;
+}
+
+.tile {
+	text-align: center;
+	pointer-events: none;
+	width: fit-content;
+}
+
+.fit {
+	margin-right: 12px;
+	margin-bottom: 0 !important;
+}
+
+.game-tile {
+	display: flex;
+	justify-content: center;
+
+	&:nth-child(even) {
+		background-color: $grey-lighter;
+		min-width: $size-2;
+		min-height: 15vh;
+		border: solid black 1px;
+		border-collapse: true;
+	}
+}
+
+.game-grid {
+	border: solid black 1px;
+}
+
+@media screen and (min-width: $desktop) {
+	.scene {
+		width: 60vw;
+		margin: 0 auto !important;
+	}
 }

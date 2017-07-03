@@ -17,6 +17,7 @@ import type {
 import { Side } from '../tictactoe.types';
 
 const genScoreCard = (): ScoreCard => ({ X: 0, O: 0 });
+const rowLength = 3;
 
 class Game {
   state: GameState;
@@ -37,6 +38,10 @@ class Game {
     return this.state.score[glyph];
   }
 
+  canTakeSquare({ x, y }: GameGrid) {
+    return this.state.grid[x * rowLength + y].player === null ? true : false;
+  }
+
   canMove() {
     const { player, turn } = this.state;
     return player === turn;
@@ -44,6 +49,10 @@ class Game {
 
   player() {
     return this.state.player;
+  }
+
+  resetScores() {
+    this.update({ score: genScoreCard() });
   }
 
   restart() {
@@ -75,13 +84,13 @@ class Game {
   }
 
   rollback() {
-    const { history } = this.state;
-    if (history.length > 0) {
-      this.update({
-        history: history.slice(0, -1),
-        grid: history.pop(),
-      });
-    }
+    const { history, player, turn } = this.state;
+    if (history.length < 2) return;
+
+    this.update({
+      history: history.slice(0, -2),
+      grid: history[history.length - 2],
+    });
   }
 
   takeTurn(selected: GameGrid) {
@@ -147,7 +156,7 @@ class Game {
     const empty = grid.filter(cell => cell.player === null).length;
 
     // don't make move if game board is full
-    if (empty <= 1 || finished) {
+    if (empty < 1 || finished) {
       this.update({ finished: true });
       return serialize(grid);
     }

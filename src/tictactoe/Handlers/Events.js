@@ -1,13 +1,13 @@
-import type { Game } from '../Models';
+import { Side } from '../tictactoe.types';
 
-const updateScoreEvent = (view: DocumentFragment) => (
-  selector: string,
-  score: number,
-) =>
-  view
-    .querySelector(selector)
-    .dispatchEvent(new CustomEvent(updateEvent, { detail: score }));
+const updateScoreEvent = 'UPDATE_SCORE';
 
-const updateEvent = 'update';
+const dispatchUpdateScore = (glyph: $Keys<typeof Side>, score: number) =>
+  document.querySelector(`#${glyph}-score`).dispatchEvent(
+    new CustomEvent(updateScoreEvent, {
+      bubbles: false,
+      detail: score,
+    }),
+  );
 
-export { updateEvent, updateScoreEvent };
+export { updateScoreEvent, dispatchUpdateScore };

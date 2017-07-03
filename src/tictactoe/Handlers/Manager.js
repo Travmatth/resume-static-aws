@@ -1,5 +1,6 @@
 /* @flow */
 import { Game } from '../Models';
+import { dispatchUpdateScore } from './Events';
 import type { HTMLGameSquare, GameGrid } from '../tictactoe.types';
 import { scenes, Side } from '../tictactoe.types';
 
@@ -20,39 +21,46 @@ const makeAction = (elem: HTMLGameSquare, player: $Keys<typeof Side>) => {
 const playerAction = (game: Game, refresh: () => void, show: () => void) => (
   e: Event,
 ) => {
-  if (!game.canMove()) return;
-
   // Simulate Player move
   const turn = game.player();
   const action = makeAction(((e.target: any): HTMLGameSquare), turn);
-  game.takeTurn(action);
 
+  if (!game.canMove() || !game.canTakeSquare(action)) return;
+
+  // process Player move
+  game.takeTurn(action);
+  game.endPlayerMove();
+  refresh(game.current());
+
+  if (game.isOver()) {
+    dispatchUpdateScore(turn, game.getScore(turn));
+    game.restart();
+    show(scenes.score);
+    return;
+  }
+
+  // simulate opponent move
   setTimeout(() => {
-    // process Player move
+    game.simulateMove();
     refresh(game.current());
-    game.endPlayerMove();
+
     if (game.isOver()) {
+      const computer = turn === Side.X ? Side.O : Side.X;
+      dispatchUpdateScore(computer, game.getScore(computer));
       game.restart();
       show(scenes.score);
-      return;
+    } else {
+      game.startPlayerMove();
     }
-
-    // simulate opponent move
-    setTimeout(() => {
-      game.simulateMove();
-      refresh(game.current());
-      if (game.isOver()) {
-        game.restart();
-        show(scenes.score);
-      } else {
-        game.startPlayerMove();
-      }
-    }, delay);
   }, delay);
 };
 
 // Pressed in the score view to switch views: score -> start
 const resetGameHandler = (game: Game, show: () => void) => (e: Event) => {
+  e.preventDefault();
+  game.resetScores();
+  dispatchUpdateScore(Side.X, game.getScore(Side.X));
+  dispatchUpdateScore(Side.O, game.getScore(Side.O));
   game.restart();
   show(scenes.start);
 };
@@ -60,20 +68,33 @@ const resetGameHandler = (game: Game, show: () => void) => (e: Event) => {
 // restartGame is responsible for restarting the game
 // if the player is first turn, should only restart game
 // else player is second turn, should reset grid and perform first move
-const restartGameHandler = (game: Game, refresh: () => void) => (e: Event) => {
+const restartGameHandler = (
+  game: Game,
+  refresh: () => void,
+  show: () => void,
+) => (e: Event) => {
   game.restart();
   refresh(blank);
+  show(scenes.play);
   if (game.player() === Side.O) {
     game.simulateFirstMove();
     refresh(game.current());
   }
 };
 
-const startGameHandler = (
+const rollbackHandler = (game: Game, refresh: () => void) => (e: Event) => {
+  game.rollback();
+  refresh(game.current());
+};
+
+const chooseTurnHandler = (
   game: Game,
   refresh: () => void,
   show: () => void,
 ) => (e: Event) => {
+  const desired = ((e.target.dataset.glyph: any): $Keys<typeof Side>);
+  const previous = game.chooseSide(desired);
+
   // Clear previous state of Game view, if any
   refresh(blank);
   // swap Game View into DOM
@@ -87,22 +108,17 @@ const startGameHandler = (
   }
 };
 
-const rollbackHandler = (game: Game, refresh: () => void) => (e: Event) => {
-  game.rollback();
-  refresh(game.current());
-};
-
-const chooseTurnHandler = (game: Game) => (e: Event) => {
-  const desired = ((e.target.dataset.glyph: any): $Keys<typeof Side>);
-  const previous = game.chooseSide(desired);
+const updateScoreListener = ({ target, detail }: CustomEvent) => {
+  target.textContent = `${detail}`;
 };
 
 export {
   playerAction,
   restartGameHandler,
   resetGameHandler,
-  startGameHandler,
   rollbackHandler,
   chooseTurnHandler,
   makeAction,
+  blank,
+  updateScoreListener,
 };

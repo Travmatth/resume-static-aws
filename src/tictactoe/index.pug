@@ -8,7 +8,7 @@ block content
 	section.hero
 		include ../common/pug/nav.pug
 		div.hero-body.main
-			div#start.scene.card.columns.is-mobile.is-multiline
+			div#start.hidden.scene.card.columns.is-mobile.is-multiline
 
 				div.column.is-6
 					div.level
@@ -20,57 +20,52 @@ block content
 						div.level-item
 							button.select-btn O
 
-				div.column.is-12
-					div.level
-						div.level-item
-							button.start Start
-
 			div#play.scene.board.hidden
-				div.columns.is-mobile.is-multiline
+				div.columns.is-mobile.is-multiline.game-grid
 
 					div.column.is-4.game-tile
-						div.level
-							div.level-item
+						div.level.no-pointer-events
+							div.level-item.no-pointer-events
 								div.tile
 
 					div.column.is-4.game-tile
-						div.level
-							div.level-item
+						div.level.no-pointer-events
+							div.level-item.no-pointer-events
 								div.tile
 
 					div.column.is-4.game-tile
-						div.level
-							div.level-item
+						div.level.no-pointer-events
+							div.level-item.no-pointer-events
 								div.tile
 
 					div.column.is-4.game-tile
-						div.level
-							div.level-item
+						div.level.no-pointer-events
+							div.level-item.no-pointer-events
 								div.tile
 
 					div.column.is-4.game-tile
-						div.level
-							div.level-item
+						div.level.no-pointer-events
+							div.level-item.no-pointer-events
 								div.tile
 
 					div.column.is-4.game-tile
-						div.level
-							div.level-item
+						div.level.no-pointer-events
+							div.level-item.no-pointer-events
 								div.tile
 
 					div.column.is-4.game-tile
-						div.level
-							div.level-item
+						div.level.no-pointer-events
+							div.level-item.no-pointer-events
 								div.tile
 
 					div.column.is-4.game-tile
-						div.level
-							div.level-item
+						div.level.no-pointer-events
+							div.level-item.no-pointer-events
 								div.tile
 
 					div.column.is-4.game-tile
-						div.level
-							div.level-item
+						div.level.no-pointer-events
+							div.level-item.no-pointer-events
 								div.tile
 
 				div
@@ -81,19 +76,19 @@ block content
 			div#score.scene.card.is-fullwidth.menu.hidden
 				div.columns.is-mobile.is-multiline.expands
 
-					div.column.is-6
+					div.column.is-6.is-12-mobile
 						div.level
 							div.level-item
 								div.box.fit X
 								div Score:
-								div#x-score.score 0
+								div#X-score.score 0
 
-					div.column.is-6
+					div.column.is-6.is-12-mobile
 						div.level
 							div.level-item
 								div.box.fit O
 								div Score:
-								div#o-score.score 0
+								div#O-score.score 0
 
 					div.column.is-6
 						div.level

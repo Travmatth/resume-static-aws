@@ -4,15 +4,82 @@ import {
   playerAction,
   restartGameHandler,
   resetGameHandler,
-  startGameHandler,
   rollbackHandler,
   chooseTurnHandler,
+  showScene,
+  update,
+  updateScoreListener,
 } from '../Handlers';
+import { Side, scenes } from '../tictactoe.types';
 import { Game } from '../Models';
 
 describe('TicTacToe Handlers', () => {
   let game: Game;
-  beforeEach(() => (game = new Game()));
+  beforeEach(() => game = new Game());
+
+  it('updateScoreListener should set element text', () => {
+    const event = (({
+      detail: 'test',
+      target: {
+        textContent: '',
+      },
+    }: any): CustomEvent);
+
+    updateScoreListener(event);
+
+    expect(event.target.textContent).toBe('test');
+  });
+
+  it('showScene should remove .hidden class from scene view when id is next', () => {
+    document.body.innerHTML = `
+      <div>
+        <div id="start" class="scene"></div>
+        <div id="play" class="scene"></div>
+      </div>
+    `;
+
+    showScene(scenes.start);
+
+    const classPresent = document
+      .querySelector('#start')
+      .classList.contains('hidden');
+    expect(classPresent).toBe(false);
+  });
+
+  it("showScene should add .hidden class to scene view when id isn't next", () => {
+    document.body.innerHTML = `
+      <div>
+        <div id="start" class="scene"></div>
+        <div id="play" class="scene"></div>
+      </div>
+    `;
+
+    showScene(scenes.start);
+
+    const classPresent = document
+      .querySelector('#play')
+      .classList.contains('hidden');
+    expect(classPresent).toBe(true);
+  });
+
+  it('update should iterate over squares and update their textContent', () => {
+    document.body.innerHTML = `
+      <div>
+        <div class="test"></div>
+        <div class="test"></div>
+        <div class="test"></div>
+      </div>
+    `;
+
+    const latest = ['a', 'b', 'c'];
+    update(document.querySelectorAll('.test'))(latest);
+
+    document
+      .querySelectorAll('.test')
+      .forEach((el: HTMLElement, i: number) =>
+        expect(el.textContent).toBe(latest[i]),
+      );
+  });
 
   it('makeAction should accpet GameSquare HTMLElement and return a GameGrid object', () => {
     const elem = document.createElement('div');
@@ -25,11 +92,32 @@ describe('TicTacToe Handlers', () => {
     expect(action).toEqual({ x: 1, y: 2, player: 'X' });
   });
 
-  it("playerAction returns a function that returns if player can't move", () => {
+  it('playerAction returns if player selects square that is unavailable', () => {
+    //$FlowIgnore
+    game.player = jest.fn();
+    //$FlowIgnore
+    game.takeTurn = jest.fn();
+    game.state.grid[0].player = Side.X;
+
+    const refresh = jest.fn();
+    const show = jest.fn();
+    const elem = document.createElement('div');
+    elem.dataset = {
+      x: '0',
+      y: '0',
+    };
+
+    // function under test
+    const action = playerAction(game, refresh, show)({ target: elem });
+
+    expect(game.takeTurn).not.toHaveBeenCalled();
+  });
+
+  it("playerAction returns immediately if player can't move", () => {
     //$FlowIgnore
     game.canMove = jest.fn(() => false);
     //$FlowIgnore
-    game.player = jest.fn();
+    game.takeTurn = jest.fn();
 
     const update = jest.fn();
     const end = jest.fn();
@@ -42,7 +130,7 @@ describe('TicTacToe Handlers', () => {
     // function under test
     const action = playerAction(game, update, end)({ target: elem });
 
-    expect(game.player).not.toHaveBeenCalled();
+    expect(game.takeTurn).not.toHaveBeenCalled();
   });
 
   it('playerAction returns a function that moves both player and computer after staggered timeouts', () => {
@@ -82,7 +170,6 @@ describe('TicTacToe Handlers', () => {
     expect(game.takeTurn).toHaveBeenCalledWith({ x: 0, y: 0, player: 'X' });
 
     // player move
-    jest.runTimersToTime(500);
     expect(game.endPlayerMove).toHaveBeenCalled();
     expect(game.isOver).toHaveBeenCalled();
     expect(update).toHaveBeenCalledWith('a');
@@ -90,7 +177,7 @@ describe('TicTacToe Handlers', () => {
     update.mockClear();
 
     // computer move
-    jest.runTimersToTime(1000);
+    jest.runTimersToTime(500);
     expect(game.simulateMove).toHaveBeenCalled();
     expect(update).toHaveBeenCalledWith('b');
     expect(game.startPlayerMove).toHaveBeenCalled();
@@ -101,6 +188,8 @@ describe('TicTacToe Handlers', () => {
   });
 
   it('playerAction returns a function that ends & restarts game if player has won', () => {
+    document.body.innerHTML = require('../index.pug');
+
     //$FlowIgnore
     game.restart = jest.fn();
     //$FlowIgnore
@@ -134,7 +223,7 @@ describe('TicTacToe Handlers', () => {
     expect(game.isOver).toHaveBeenCalled();
     expect(game.restart).toHaveBeenCalled();
     expect(update).toHaveBeenCalledWith('a');
-    expect(end).toHaveBeenCalledWith();
+    expect(end).toHaveBeenCalled();
 
     // cleanup
     //$FlowIgnore
@@ -142,6 +231,7 @@ describe('TicTacToe Handlers', () => {
   });
 
   it('playerAction returns a function that ends & restarts game if computer has won', () => {
+    document.body.innerHTML = require('../index.pug');
     //$FlowIgnore
     game.restart = jest.fn();
     //$FlowIgnore
@@ -163,9 +253,9 @@ describe('TicTacToe Handlers', () => {
       .mockImplementationOnce(() => 'a')
       .mockImplementationOnce(() => 'b');
 
-    const spy = jest.spyOn(game, 'player');
+    const player = jest.spyOn(game, 'player');
     const update = jest.fn();
-    const end = jest.fn();
+    const show = jest.fn();
     const elem = document.createElement('div');
     elem.dataset = {
       x: '0',
@@ -173,14 +263,14 @@ describe('TicTacToe Handlers', () => {
     };
 
     // function under test
-    const action = playerAction(game, update, end)({ target: elem });
+    const action = playerAction(game, update, show)({ target: elem });
 
     // pre-timer actions
-    expect(spy).toHaveBeenCalled();
+    expect(player).toHaveBeenCalled();
     expect(game.takeTurn).toHaveBeenCalledWith({ x: 0, y: 0, player: 'X' });
 
     // player move
-    jest.runTimersToTime(500);
+    //jest.runTimersToTime(500);
     expect(update).toHaveBeenCalledWith('a');
     expect(game.endPlayerMove).toHaveBeenCalled();
     expect(game.isOver).toHaveBeenCalled();
@@ -188,15 +278,15 @@ describe('TicTacToe Handlers', () => {
     update.mockClear();
 
     // computer move
-    jest.runTimersToTime(1000);
+    jest.runTimersToTime(500);
     expect(game.simulateMove).toHaveBeenCalled();
     expect(update).toHaveBeenCalledWith('b');
     expect(game.restart).toHaveBeenCalled();
-    expect(end).toHaveBeenCalledWith();
+    expect(show).toHaveBeenCalled();
 
     // cleanup
     //$FlowIgnore
-    spy.mockRestore();
+    player.mockRestore();
   });
 
   it("restartGameHandler should restart game, update game when player is 'X'", () => {
@@ -207,8 +297,9 @@ describe('TicTacToe Handlers', () => {
     //$FlowIgnore
     game.simulateFirstMove = jest.fn();
     const update = jest.fn();
+    const show = jest.fn();
 
-    restartGameHandler(game, update)();
+    restartGameHandler(game, update, show)();
 
     expect(game.restart).toHaveBeenCalled();
     expect(update).toHaveBeenCalledTimes(1);
@@ -221,9 +312,10 @@ describe('TicTacToe Handlers', () => {
     game.player = jest.fn(() => 'O');
     //$FlowIgnore
     game.simulateFirstMove = jest.fn();
+    const show = jest.fn();
     const update = jest.fn();
 
-    restartGameHandler(game, update)();
+    restartGameHandler(game, update, show)();
 
     expect(game.restart).toHaveBeenCalled();
     expect(game.simulateFirstMove).toHaveBeenCalled();
@@ -240,40 +332,6 @@ describe('TicTacToe Handlers', () => {
     expect(game.restart).toHaveBeenCalled();
   });
 
-  it("startGameHandler should clear grid and trigger view transition when player is 'X'", () => {
-    //$FlowIgnore
-    game.player = jest.fn(() => 'X');
-    const update = jest.fn();
-    const transition = jest.fn();
-
-    startGameHandler(game, update, transition)();
-
-    expect(update).toHaveBeenCalled();
-    expect(transition).toHaveBeenCalled();
-  });
-
-  it("startGameHandler should clear grid, trigger view transition, simulate move, update, and allow player input when player is 'O'", () => {
-    //$FlowIgnore
-    game.player = jest.fn(() => 'O');
-    //$FlowIgnore
-    game.simulateFirstMove = jest.fn();
-    //$FlowIgnore
-    game.startPlayerMove = jest.fn();
-    const update = jest.fn();
-    const transition = jest.fn();
-
-    startGameHandler(game, update, transition)();
-
-    expect(update).toHaveBeenCalledTimes(1);
-    expect(transition).toHaveBeenCalled();
-
-    jest.runTimersToTime(500);
-
-    expect(update).toHaveBeenCalledTimes(2);
-    expect(game.simulateFirstMove).toHaveBeenCalled();
-    expect(game.startPlayerMove).toHaveBeenCalled();
-  });
-
   it('rollbackHandler should rollback game state and update grid', () => {
     //$FlowIgnore
     game.rollback = jest.fn();
@@ -285,12 +343,51 @@ describe('TicTacToe Handlers', () => {
     expect(update).toHaveBeenCalled();
   });
 
-  it('chooseTurnHandler extract desired side from HTMLElement and use it to set game side', () => {
+  it("chooseTurnHandler extract desired side from HTMLElement and use it to set game side, should clear grid, trigger view transition, simulate move, update, and allow player input when player is 'O'", () => {
+    //$FlowIgnore
+    game.player = jest.fn(() => 'O');
+    //$FlowIgnore
+    game.simulateFirstMove = jest.fn();
+    //$FlowIgnore
+    game.startPlayerMove = jest.fn();
     //$FlowIgnore
     game.chooseSide = jest.fn();
+    const refresh = jest.fn();
+    const show = jest.fn();
 
-    chooseTurnHandler(game)({ target: { dataset: { glyph: 'X' } } });
+    chooseTurnHandler(game, refresh, show)({
+      target: { dataset: { glyph: 'X' } },
+    });
 
     expect(game.chooseSide).toHaveBeenCalledWith('X');
+
+    expect(refresh).toHaveBeenCalledTimes(1);
+    expect(show).toHaveBeenCalled();
+
+    jest.runTimersToTime(500);
+
+    expect(refresh).toHaveBeenCalledTimes(2);
+    expect(game.simulateFirstMove).toHaveBeenCalled();
+    expect(game.startPlayerMove).toHaveBeenCalled();
+  });
+
+  it("chooseTurnHandler extract desired side from HTMLElement and use it to set game side, clear grid and trigger view transition when player is 'X'", () => {
+    //$FlowIgnore
+    game.simulateFirstMove = jest.fn();
+    //$FlowIgnore
+    game.startPlayerMove = jest.fn();
+    //$FlowIgnore
+    game.chooseSide = jest.fn();
+    const refresh = jest.fn();
+    const show = jest.fn();
+
+    chooseTurnHandler(game, refresh, show)({
+      target: { dataset: { glyph: 'X' } },
+    });
+
+    expect(game.chooseSide).toHaveBeenCalledWith('X');
+
+    expect(refresh).toHaveBeenCalledTimes(1);
+    expect(show).toHaveBeenCalled();
   });
 });
