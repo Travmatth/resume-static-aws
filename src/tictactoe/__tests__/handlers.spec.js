@@ -327,7 +327,8 @@ describe('TicTacToe Handlers', () => {
     game.restart = jest.fn();
     const reset = jest.fn();
 
-    resetGameHandler(game, reset)();
+    const event = (({ preventDefault: jest.fn() }: any): Event);
+    resetGameHandler(game, reset)(event);
 
     expect(game.restart).toHaveBeenCalled();
   });

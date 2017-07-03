@@ -9,8 +9,7 @@ const update = (squares: NodeList<HTMLElement>) => (latest: Array<string>) =>
   );
 
 // Responsible for replacing views on the root container
-const showScene = (next: $Keys<typeof scenes>) => {
-  console.trace();
+const showScene = (next: $Keys<typeof scenes>) =>
   document
     .querySelectorAll('.scene')
     .forEach(
@@ -19,6 +18,5 @@ const showScene = (next: $Keys<typeof scenes>) => {
           ? el.classList.toggle('hidden', false)
           : el.classList.toggle('hidden', true)),
     );
-};
 
 export { showScene, update };
