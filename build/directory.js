@@ -14,11 +14,10 @@ const pages = [
   //'wikiviewer/index',
 ];
 
-const multiCompiler = (configure: string => Object) => {
-  return pages.reduce((keyedConfig, page) => {
+const multiCompiler = (configure: string => Object) =>
+  pages.reduce((keyedConfig, page) => {
     keyedConfig[page] = configure(page);
     return keyedConfig;
   }, {});
-};
 
 export { multiCompiler };
