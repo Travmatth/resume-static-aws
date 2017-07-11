@@ -6,7 +6,10 @@ jest.mock('../Handlers', () => {
   const module = {};
 
   module.fetchHandlerCallback = jest.fn();
-  module.fetchHandler = module.fetchHandlerCallback;
+  module.fetchHandler = jest.fn(() => module.fetchHandlerCallback);
+
+  module.toggleFilterCallback = jest.fn();
+  module.toggleFilter = jest.fn(() => module.toggleFilterCallback);
 
   return module;
 });
@@ -18,8 +21,25 @@ describe('TwitchTV page', () => {
     dispatch(document, 'DOMContentLoaded');
   });
 
+  afterEach(() => jest.clearAllMocks());
+
+  it('should have filter all button', () => {
+    dispatch(document.querySelector('#filter-all'), 'click');
+    expect(Handlers.toggleFilterCallback).toHaveBeenCalledTimes(1);
+  });
+
+  it('should have filter online button', () => {
+    dispatch(document.querySelector('#filter-online'), 'click');
+    expect(Handlers.toggleFilterCallback).toHaveBeenCalledTimes(1);
+  });
+
+  it('should have filter offline button', () => {
+    dispatch(document.querySelector('#filter-offline'), 'click');
+    expect(Handlers.toggleFilterCallback).toHaveBeenCalledTimes(1);
+  });
+
   it('should have a fetch button', () => {
-    dispatch(document.querySelector('button'), 'click');
+    dispatch(document.querySelector('.fetch-streams'), 'click');
     expect(Handlers.fetchHandlerCallback).toHaveBeenCalled();
   });
 });

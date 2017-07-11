@@ -1,0 +1,63 @@
+@import "../common/scss/_all.scss";
+@import "../common/scss/_nav.scss";
+
+.hidden {
+	display: none;
+	visibility: hidden;
+}
+
+.shift-down {
+	margin-top: 15vh;
+}
+
+.fetch-streams {
+	text-align: center;
+}
+
+.tile-container {
+	padding-top: 100px;
+	min-height: 160px;
+}
+
+.fit-content-height {
+	min-height: 24px;
+	height: fit-content;
+}
+
+.remove-margin {
+	margin: 0 auto !important;
+}
+
+.center {
+	position: relative;
+	width: fit-content;
+	height: 100%;
+
+	& > figure {
+		position: absolute;
+		top: 50%;
+		height: 48px;
+	}
+}
+
+.spacer {
+	margin: 0 2px 0 2px;
+}
+
+li {
+	margin: 10px 0 10px 0;
+}
+
+h1 {
+	font-size: 1.75rem !important;
+}
+
+h1,
+h2 {
+	margin-top: 14px !important;
+}
+
+img {
+	max-height: 320px;
+}
+

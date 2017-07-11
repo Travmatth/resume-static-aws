@@ -12,10 +12,14 @@
   },
   "transform": {
     "^.+\\.js?$": "babel-jest",
-    ".*\\.pug$": "<rootDir>/tests/preprocessor.js"
+    ".*\\.pug$": "<rootDir>/tests/preprocessors/pug-transform.js",
+    ".*\\.html$": "<rootDir>/tests/preprocessors/html-transform.js"
   },
   "moduleFileExtensions": ["js"],
-  "moduleDirectories": ["<rootDir>/node_modules", "<rootDir>/src"],
+  "moduleDirectories": [
+		"<rootDir>/node_modules",
+		"<rootDir>/src"
+	],
   "coverageDirectory": "<rootDir>/tests/coverage",
   "coveragePathIgnorePatterns": [
     "calculator/Parser",

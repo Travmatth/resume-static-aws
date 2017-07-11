@@ -85,10 +85,10 @@ export const nonexistentOrOfflineUserStream = (user: string) => ({
 //      -H 'Client-ID: ${TWITCH_TV_API_KEY}' \
 //      -X GET https://api.twitch.tv/kraken/streams/${:channel}
 export const onlineUserStreamCall = (user: string): UserStream => ({
-  _links: {
-    channel: `https://api.twitch.tv/kraken/channels/${user}`,
-    self: `https://api.twitch.tv/kraken/streams/${user}`,
-  },
+  //_links: {
+  //channel: `https://api.twitch.tv/kraken/channels/${user}`,
+  //self: `https://api.twitch.tv/kraken/streams/${user}`,
+  //},
   stream: {
     game: 'StarCraft II: Heart of the Swarm',
     viewers: 2123,

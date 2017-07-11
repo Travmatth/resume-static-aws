@@ -106,7 +106,7 @@ describe('TwitchTV Api', () => {
       status: 200,
     }: any): Response);
 
-    expect(await classifyResponse(response)).toBe(onlineUser);
+    expect(await classifyResponse(response)).toBe(onlineUser.stream);
   });
 
   it('classifyResponse can return emptyStream if user is nonexistent', async () => {
@@ -151,50 +151,22 @@ describe('TwitchTV Api', () => {
       'RobotCaleb',
       'OgamingSC2',
     ];
-    const offlineStreams = ['comster404', 'cretetion', 'storbeck', 'habathcx'];
-    const nonexistentStreams = ['brunofin', 'ESL_SC2'];
 
-    //all streamers requires only 1 api call, to fetch all streams
-    const res = json(allStreamsCall);
-    fetch.mockResponseOnce(res);
-    const allStreamers = allStreamsCall['streams'];
+    const offlineStreams = ['comster404'];
 
-    //online streamers require only 1 api call, to fetch their stream
-    let onlineStreamers = [];
-    onlineStreams.map(user => {
-      let online = onlineUserStreamCall(user);
-      fetch.mockResponseOnce(json(online));
-      onlineStreamers.push(online);
-    });
+    fetch.mockResponses(
+      [json(onlineUserStreamCall('freecodecamp')), { status: 200 }],
+      [json(onlineUserStreamCall('noobs2ninjas')), { status: 200 }],
+      [json(onlineUserStreamCall('RobotCaleb')), { status: 200 }],
+      [json(onlineUserStreamCall('OgamingSC2')), { status: 200 }],
+      [json(nonexistentOrOfflineUserStream('comster404')), { status: 200 }],
+      [json(validUser('comster404')), { status: 200 }],
+    );
 
-    //offline streamers require 2 api calls, to fetch their stream & valid user
-    let offlineStreamers = [];
-    offlineStreams.map(user => {
-      const res = nonexistentOrOfflineUserStream(user);
-      fetch.mockResponseOnce(json(res));
-      fetch.mockResponseOnce(json(validUser(user)));
-
-      offlineStreamers.push(createEmptyStream(true, user));
-    });
-
-    //offline streamers require 2 api calls
-    let nonexistentStreamers = [];
-    nonexistentStreams.map(user => {
-      const res = nonexistentOrOfflineUserStream(user);
-
-      // fetch stream
-      fetch.mockResponseOnce(json(res));
-      // nonexistent user
-      fetch.mockResponseOnce(json(nonexistentUser(user)));
-
-      nonexistentStreamers.push(createEmptyStream(false, user));
-    });
-
-    expect(await fetchAllProfiles(users)).toEqual([
-      ...allStreamers,
-      ...onlineStreamers,
-      ...offlineStreamers,
-      ...nonexistentStreamers,
+    const streamers = [...onlineStreams, ...offlineStreams];
+    expect(await fetchAllProfiles(streamers)).toEqual([
+      ...onlineStreams.map(user => onlineUserStreamCall(user).stream),
+      ...offlineStreams.map(user => createEmptyStream(true, user)),
     ]);
   });
 

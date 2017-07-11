@@ -1,2 +1,7 @@
-import { fetchHandler, removeChildren } from './Handlers';
-export { fetchHandler, removeChildren };
+import {
+  toggleFilter,
+  filterHandler,
+  fetchHandler,
+  removeChildren,
+} from './Handlers';
+export { toggleFilter, filterHandler, fetchHandler, removeChildren };

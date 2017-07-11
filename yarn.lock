@@ -2761,6 +2761,13 @@ es6-symbol@3, es6-symbol@^3.0.2, es6-symbol@~3.1:
     d "~0.1.1"
     es5-ext "~0.10.11"
 
+es6-templates@^0.2.2:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/es6-templates/-/es6-templates-0.2.3.tgz#5cb9ac9fb1ded6eb1239342b81d792bbb4078ee4"
+  dependencies:
+    recast "~0.11.12"
+    through "~2.3.6"
+
 escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
@@ -3469,7 +3476,17 @@ html-entities@^1.2.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-1.2.1.tgz#0df29351f0721163515dfb9e5543e5f6eed5162f"
 
-html-minifier@^3.1.0:
+html-loader@^0.4.5:
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/html-loader/-/html-loader-0.4.5.tgz#5fbcd87cd63a5c49a7fce2fe56f425e05729c68c"
+  dependencies:
+    es6-templates "^0.2.2"
+    fastparse "^1.1.1"
+    html-minifier "^3.0.1"
+    loader-utils "^1.0.2"
+    object-assign "^4.1.0"
+
+html-minifier@^3.0.1, html-minifier@^3.1.0:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/html-minifier/-/html-minifier-3.2.3.tgz#d2ff536e24d95726c332493d8f77d84dbed85372"
   dependencies:
@@ -6007,7 +6024,7 @@ readable-stream@1.0:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@^2.0.0, "readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.2.2, readable-stream@^2.2.6:
+readable-stream@^2.0.0, readable-stream@^2.2.2, readable-stream@^2.2.6:
   version "2.2.9"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.2.9.tgz#cf78ec6f4a6d1eb43d26488cac97f042e74b7fc8"
   dependencies:
@@ -6019,7 +6036,7 @@ readable-stream@^2.0.0, "readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.
     string_decoder "~1.0.0"
     util-deprecate "~1.0.1"
 
-readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.1.5:
+"readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.1.5:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.2.2.tgz#a9e6fec3c7dda85f8bb1b3ba7028604556fc825e"
   dependencies:
@@ -6061,7 +6078,7 @@ recast@0.10.33, recast@^0.10.10:
     private "~0.1.5"
     source-map "~0.5.0"
 
-recast@^0.11.11, recast@^0.11.17:
+recast@^0.11.11, recast@^0.11.17, recast@~0.11.12:
   version "0.11.23"
   resolved "https://registry.yarnpkg.com/recast/-/recast-0.11.23.tgz#451fd3004ab1e4df9b4e4b66376b2a21912462d3"
   dependencies:
@@ -6309,7 +6326,13 @@ right-align@^0.1.1:
   dependencies:
     align-text "^0.1.1"
 
-rimraf@2, rimraf@^2.6.1:
+rimraf@2, rimraf@~2.5.1, rimraf@~2.5.4:
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.5.4.tgz#96800093cbf1a0c86bd95b4625467535c29dfa04"
+  dependencies:
+    glob "^7.0.5"
+
+rimraf@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.1.tgz#c2338ec643df7a1b7fe5c54fa86f57428a55f33d"
   dependencies:
@@ -6318,12 +6341,6 @@ rimraf@2, rimraf@^2.6.1:
 rimraf@~2.2.6, rimraf@~2.2.8:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
-
-rimraf@~2.5.1, rimraf@~2.5.4:
-  version "2.5.4"
-  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.5.4.tgz#96800093cbf1a0c86bd95b4625467535c29dfa04"
-  dependencies:
-    glob "^7.0.5"
 
 ripemd160@^1.0.0:
   version "1.0.1"
@@ -6898,7 +6915,7 @@ through2@^2.0.0:
     readable-stream "^2.1.5"
     xtend "~4.0.1"
 
-through@^2.3.6, through@~2.3.8:
+through@^2.3.6, through@~2.3.6, through@~2.3.8:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
 

@@ -5,6 +5,22 @@ block heading
 		link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
 
 block content
-	div.centered-flexbox
-		button.fetch-streams Fetch Current Streams
-		ul
+	section.hero
+		include ../common/pug/nav.pug
+
+		div.hero-body.shift-down
+			div.columns
+				div.column.is-10.is-offset-1
+					div.level
+						div.level-left
+							div.level-item
+								button.button.is-outlined.is-primary.fetch-streams Fetch Current Streams
+						div.level-right
+							div.level-item
+								button.button#filter-all.is-outlined.is-info.spacer All
+								button.button#filter-online.is-outlined.is-info.spacer Online
+								button.button#filter-offline.is-outlined.is-info.spacer Offline
+
+			div.columns
+				div.column.is-10.is-offset-1
+					ul.twitch-table

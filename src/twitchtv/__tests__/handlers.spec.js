@@ -1,6 +1,7 @@
 /* @flow */
-import { removeChildren, fetchHandler } from '../Handlers';
+import { removeChildren, fetchHandler, toggleFilter } from '../Handlers';
 import { fetchAllProfiles } from '../Api';
+import { dispatch } from 'tests/utils';
 
 jest.mock('../Api', () => ({
   fetchAllProfiles: () =>
@@ -13,6 +14,7 @@ jest.mock('../Api', () => ({
           logo: 'logo1',
           url: 'url1',
           display_name: 'display_name1',
+          status: 'status',
         },
       },
       {
@@ -23,12 +25,47 @@ jest.mock('../Api', () => ({
           logo: 'logo2',
           url: 'url2',
           display_name: 'display_name2',
+          status: 'status',
         },
       },
     ]),
 }));
 
 describe('TwitchTV Handlers', () => {
+  it('toggleFilter should dispatch filter-event on given element', async () => {
+    document.body.innerHTML = `
+      <li></li>
+      <li></li>
+    `;
+
+    document.querySelectorAll('li').forEach(el => {
+      el.dispatchEvent = jest.fn();
+      el.dataset = {
+        status: 'online',
+      };
+    });
+
+    toggleFilter('all')();
+
+    expect(
+      document.querySelector('li').dispatchEvent.mock.calls[0][0].detail.status,
+    ).toBe('all');
+  });
+
+  it('filterHandler should toggle .hidden class according to next status', async () => {
+    const node = document.createElement('ul');
+    await fetchHandler(node)();
+
+    const li1 = node.querySelector('li:nth-of-type(1)');
+    const li2 = node.querySelector('li:nth-of-type(2)');
+
+    dispatch(li1, 'filter-event', { detail: { status: 'offline' } });
+    dispatch(li2, 'filter-event', { detail: { status: 'offline' } });
+
+    expect(li1.classList.contains('hidden')).toBe(true);
+    expect(li2.classList.contains('hidden')).toBe(false);
+  });
+
   it('removeChildren should strip children from element', () => {
     const node1 = document.createElement('div');
     node1.appendChild(document.createElement('div'));
@@ -36,41 +73,54 @@ describe('TwitchTV Handlers', () => {
     expect(node1.children.length).toBe(0);
   });
 
-  it('fetchHandler should call api and populate elements', async () => {
+  it('list elements should listen for filter-event', async () => {
     const node = document.createElement('ul');
-    node.appendChild(document.createElement('div'));
     await fetchHandler(node)();
 
-    expect(node.children.length).toBe(2);
+    const li = node.querySelector('li:nth-of-type(1)');
+    dispatch(li, 'filter-event', { detail: { status: 'offline' } });
 
-    const img = ((node.children[0].children[0]: any): HTMLImageElement);
-    const a = ((node.children[0].children[1]
-      .children[0]: any): HTMLAnchorElement);
-    const link = node.children[0].children[1];
-    const viewers = node.children[0].children[2];
-    const game = node.children[0].children[3];
+    expect(li.classList.contains('hidden')).toBe(true);
+  });
 
-    expect(node.children[0].className).toBe('twitch-online');
+  it('fetchHandler should add filter-level data-attribute to list elements', async () => {
+    const node = document.createElement('ul');
+    await fetchHandler(node)();
+
+    const firstLi = node.querySelector('li:nth-of-type(1)');
+    const secondLi = node.querySelector('li:nth-of-type(2)');
+
+    expect(firstLi.dataset.status).toBe('online');
+    expect(secondLi.dataset.status).toBe('offline');
+  });
+
+  it('fetchHandler should remove children elements if present', async () => {
+    const node = document.createElement('ul');
+    const child = document.createElement('li');
+    child.textContent = 'test';
+    node.appendChild(child);
+
+    await fetchHandler(node)();
+
+    expect(node.querySelector('li')).not.toBe('test');
+  });
+
+  it('fetchHandler should call api and populate elements', async () => {
+    const node = document.createElement('ul');
+    await fetchHandler(node)();
+
+    const img = node.querySelector('img');
+    const a = node.querySelector('a');
+    const h2 = node.querySelector('h2');
+    const p = node.querySelector('p');
 
     expect(img.src).toBe('logo1');
-    expect(img.height).toBe(50);
-    expect(img.width).toBe(50);
-    expect(img.className).toBe('img');
 
     expect(a.href).toBe('url1');
     expect(a.textContent).toBe('display_name1');
 
-    expect(link.className).toBe('link');
+    expect(h2.textContent).toBe('game1');
 
-    expect(viewers.className).toBe('viewers');
-    expect(viewers.textContent).toBe('viewers1');
-
-    expect(game.className).toBe('game');
-    expect(game.textContent).toBe('game1');
-
-    const empty = node.children[1];
-
-    expect(empty.textContent).toBe('_id2');
-    expect(empty.className).toBe('twitch-offline');
+    expect(p.textContent).toBe('status');
   });
 });

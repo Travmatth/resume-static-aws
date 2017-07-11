@@ -1,10 +1,11 @@
 /* @flow */
 import type { Stream, UserStream } from '../twitchtv.types';
 
-const createEmptyStream = (reason: boolean, user: string): Stream =>
-  Object.assign(emptyStream, {
+const createEmptyStream = (reason: boolean, user: string): Stream => {
+  return Object.assign({}, emptyStream, {
     _id: reason === true ? `${user} is offline` : `${user} is not a streamer`,
   });
+};
 
 const extractUserName = (user: UserStream): string => {
   return user['_links']['self'].split('/').slice(-1)[0];
