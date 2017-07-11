@@ -59,6 +59,7 @@
     "file-loader": "^0.11.2",
     "flow-bin": "^0.42.0",
     "flow-status-webpack-plugin": "^0.1.7",
+    "html-loader": "^0.4.5",
     "html-webpack-plugin": "^2.24.1",
     "jest": "19.0.2",
     "jest-codemods": "^0.10.0",

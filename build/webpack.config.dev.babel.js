@@ -9,6 +9,23 @@ import FlowStatusWebpackPlugin from 'flow-status-webpack-plugin';
 const configs = multiCompiler(page => ({
   devtool: 'cheap-eval-source-map',
 
+  module: {
+    rules: [
+      {
+        test: /\.html$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'html-loader',
+            options: {
+              minimize: false,
+            },
+          },
+        ],
+      },
+    ],
+  },
+
   devServer: {
     stats: {
       chunks: false,
@@ -17,8 +34,8 @@ const configs = multiCompiler(page => ({
 
   plugins: [
     new FlowStatusWebpackPlugin({
-      onSuccess: stdout => console.log(stdout),
-      onError: stdout => console.log(stdout),
+      onSuccess: msg => console.log(msg),
+      onError: msg => console.log(msg),
     }),
     new ExtractTextPlugin('[name].css'),
   ],

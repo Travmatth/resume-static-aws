@@ -24,7 +24,7 @@ const common = multiCompiler(page => ({
   },
 
   resolve: {
-    extensions: ['.js', '.scss', '.pegjs', '.txt'],
+    extensions: ['.js', '.scss', '.pegjs', '.txt', '.html', '.png'],
     alias: {
       common: path.resolve(root, 'src', 'common'),
       protected: path.resolve(root, 'src', 'common', 'protected'),
@@ -71,8 +71,15 @@ const common = multiCompiler(page => ({
         loader: 'url-loader?limit=10000&mimetype=application/font-woff',
       },
       {
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader',
+      },
+      {
+        test: /\.png$/,
+        loader: 'url-loader',
+        options: {
+          limit: 300,
+        },
       },
     ],
   },
