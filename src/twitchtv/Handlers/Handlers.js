@@ -70,6 +70,9 @@ const fetchHandler = (list: HTMLULElement) => async (_: Event) => {
         },
       } = streamer;
 
+      li
+        .querySelector('.tile-container')
+        .classList.toggle('tile-container', false);
       h2.textContent = game;
       paragraph.textContent = status;
 
