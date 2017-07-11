@@ -9,7 +9,7 @@ import type {
 } from '../twitchtv.types';
 
 import TWITCH_TV_API_KEY from 'protected/twitch.key';
-import { serialize } from 'common/js/utils';
+import { serialize, trim } from 'common/js/utils';
 import {
   users,
   streamsUrl,
@@ -21,7 +21,7 @@ import {
 
 const headers = new Headers({
   Accept: 'application/vnd.twitchtv.v3+json',
-  'Client-ID': TWITCH_TV_API_KEY,
+  'Client-ID': trim(TWITCH_TV_API_KEY),
 });
 
 const options = { headers, method: 'GET', mode: 'cors' };
@@ -44,8 +44,11 @@ const handleNullStream = async (body: UserStream): Promise<Stream> => {
   // additional call to channel route is needed to determine which case
   const user = extractUserName(body);
 
-  if (await verifyUser(user)) return createEmptyStream(true, user);
-  else return createEmptyStream(false, user);
+  if (await verifyUser(user)) {
+    return createEmptyStream(true, user);
+  } else {
+    return createEmptyStream(false, user);
+  }
 };
 
 /**
@@ -65,9 +68,9 @@ const classifyResponse = async (
   if (body.hasOwnProperty('streams')) {
     return ((body: any): AllStreams).streams;
   } else if (((body: any): Stream).stream) {
-    return ((body: any): Stream);
+    return ((body: any).stream: Stream);
   } else {
-    return handleNullStream(((body: any): UserStream));
+    return await handleNullStream(((body: any): UserStream));
   }
 };
 
@@ -97,6 +100,7 @@ const agglomerate = (userResponses: Array<PossiblyNestedStreams>) => {
       return result;
     }
   }, []);
+
   return ((responses: any): Array<Stream>);
 };
 

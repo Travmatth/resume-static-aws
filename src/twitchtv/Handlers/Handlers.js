@@ -1,11 +1,41 @@
 import type { Stream } from '../twitchtv.types';
 import { fetchAllProfiles } from '../Api';
 import { users } from '../Models';
+import { trim } from 'common/js/utils';
+
+const FILTER_EVENT = 'filter-event';
 
 const removeChildren = (list: HTMLUListElement) => {
   while (list.lastChild) {
     list.removeChild(list.lastChild);
   }
+};
+
+const toggleFilter = (filterEvent: 'all' | 'online' | 'offline') => () =>
+  document.querySelectorAll('li').forEach(el =>
+    el.dispatchEvent(
+      new CustomEvent(FILTER_EVENT, {
+        bubbles: true,
+        detail: {
+          status: filterEvent,
+        },
+      }),
+    ),
+  );
+
+/**
+ * filterHandler should display element if status is 'all' or matches
+ * elements type, add .hidden otherwise
+ * @param {CustomEvent} event - event dispatched to listener, contains a status detail
+ */
+const filterHandler = (event: Event) => {
+  const { target, detail: { status: nextStatus } } = event;
+  const { dataset: { status: type } } = target;
+
+  const t = true;
+  nextStatus === 'all' || nextStatus === type
+    ? target.classList.toggle('hidden', false)
+    : target.classList.toggle('hidden', true);
 };
 
 const fetchHandler = (list: HTMLULElement) => async (_: Event) => {
@@ -16,43 +46,50 @@ const fetchHandler = (list: HTMLULElement) => async (_: Event) => {
 
   streamers.map((streamer: Stream) => {
     const li = document.createElement('li');
+    li.innerHTML = require('../Assets/tile.html');
+    if (!li.dataset) li.dataset = {};
+    li.addEventListener(FILTER_EVENT, filterHandler);
 
     //_id === number || `${user} is offline`
     const isOnline = typeof streamer._id === 'number';
+    const paragraph = li.querySelector('p');
+    const a = li.querySelector('a');
+    const h2 = li.querySelector('h2');
 
     if (isOnline) {
-      const imgSize = 50;
-      const { _id, game, viewers, channel } = streamer;
-      li.className = 'twitch-online';
+      const {
+        game,
+        channel: {
+          status,
+          profile_banner,
+          video_banner,
+          url,
+          banner,
+          logo,
+          display_name,
+        },
+      } = streamer;
 
-      const img = document.createElement('img');
-      img.src = channel.logo;
-      img.height = imgSize;
-      img.width = imgSize;
-      img.className = 'img';
-      li.appendChild(img);
+      h2.textContent = game;
+      paragraph.textContent = status;
 
-      const a = document.createElement('a');
-      a.href = channel.url;
-      a.textContent = channel.display_name;
+      const img = li.querySelector('img');
+      const error = ({ target: el }: Event) =>
+        el.src = require('../Assets/Twitch_Black_RGB');
 
-      const link = document.createElement('div');
-      link.className = 'link';
-      link.appendChild(a);
-      li.appendChild(link);
+      img.onerror = error;
+      img.src = profile_banner || video_banner || banner || logo;
 
-      const viewersNode = document.createElement('div');
-      viewersNode.textContent = viewers;
-      viewersNode.className = 'viewers';
-      li.appendChild(viewersNode);
-
-      const gameNode = document.createElement('div');
-      gameNode.textContent = game;
-      gameNode.className = 'game';
-      li.appendChild(gameNode);
+      a.href = url;
+      a.textContent = display_name;
+      li.dataset.status = 'online';
     } else {
-      li.textContent = streamer._id;
-      li.className = 'twitch-offline';
+      li.querySelector('.columns').remove();
+      a.remove();
+      h2.remove();
+
+      paragraph.textContent = streamer._id;
+      li.dataset.status = 'offline';
     }
 
     nodes.appendChild(li);
@@ -61,4 +98,4 @@ const fetchHandler = (list: HTMLULElement) => async (_: Event) => {
   list.appendChild(nodes);
 };
 
-export { fetchHandler, removeChildren };
+export { fetchHandler, removeChildren, filterHandler, toggleFilter };
