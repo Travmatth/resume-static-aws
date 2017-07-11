@@ -18,12 +18,9 @@ import {
   updateScoreEvent,
   updateScoreListener,
 } from './Handlers';
-import { registerToggle } from 'common/js/handlers';
 
 if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
-    registerToggle();
-
     const game = new Game();
     const type = eventType();
     const rowLength = 3;

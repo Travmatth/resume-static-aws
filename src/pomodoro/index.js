@@ -6,7 +6,6 @@ import {
   resetHandler,
   setFill,
 } from './Handlers';
-import { registerToggle } from 'common/js/handlers';
 import { stopTimer, startTimer, State, Phase } from './Models';
 import { eventType, scale } from 'common/js/utils';
 
@@ -20,7 +19,6 @@ if (typeof document !== 'undefined') {
   };
 
   document.addEventListener('DOMContentLoaded', () => {
-    registerToggle();
     const timerDisplay = ((document.getElementById('time'): any): HTMLElement);
     const restDisplay = ((document.getElementById(
       'rest-counter',

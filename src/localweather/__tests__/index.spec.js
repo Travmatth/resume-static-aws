@@ -2,12 +2,7 @@
 
 import { dispatch } from 'tests/utils';
 import * as Handlers from '../Handlers';
-import * as handlers from 'common/js/handlers';
 import { glyphs } from '../Models';
-
-jest.mock('common/js/handlers', () => ({
-  registerToggle: jest.fn(),
-}));
 
 jest.mock('../Handlers', () => {
   const module = {};
@@ -30,10 +25,6 @@ describe('Localweather App', () => {
 
   afterEach(() => {
     jest.resetModules();
-  });
-
-  it('page should register toggle handler', async () => {
-    expect(handlers.registerToggle).toHaveBeenCalled();
   });
 
   it('should call fetchHandler on fetch click', () => {

@@ -1,11 +1,6 @@
 /* @flow */
 import * as Handlers from '../Handlers';
 import { dispatch } from 'tests/utils';
-import * as handlers from 'common/js/handlers';
-
-jest.mock('common/js/handlers', () => ({
-  registerToggle: jest.fn(),
-}));
 
 jest.mock('../Handlers', () => {
   const module = {};
@@ -38,10 +33,6 @@ describe('TicTacToe page', () => {
     ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
     require('../index.js');
     dispatch(document, 'DOMContentLoaded');
-  });
-
-  it('page should register toggle handler', async () => {
-    expect(handlers.registerToggle).toHaveBeenCalled();
   });
 
   describe('Start View', () => {

@@ -4,10 +4,6 @@ import { dispatch } from 'tests/utils';
 import * as handlers from 'common/js/handlers';
 import { glyphs } from '../Models';
 
-jest.mock('common/js/handlers', () => ({
-  registerToggle: jest.fn(),
-}));
-
 jest.mock('../Handlers', () => {
   const module = {};
 
@@ -29,11 +25,6 @@ describe('Calculator index', () => {
 
   //$FlowIgnore
   afterEach(() => Handlers.keyPressHandlerCallback.mockReset());
-
-  it('page should register toggle handler', () => {
-    dispatch(document.getElementById('projects-btn'), 'click');
-    expect(handlers.registerToggle).toHaveBeenCalled();
-  });
 
   it('calculator buttons should be responsive to click events', () => {
     glyphs.forEach((glyph: string) => {

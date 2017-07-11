@@ -1,12 +1,9 @@
 /* @flow */
 import { toggleTempChangeHandler, fetchHandler } from './Handlers';
 import { eventType } from 'common/js/utils';
-import { registerToggle } from 'common/js/handlers';
 
 if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
-    registerToggle();
-
     const toggles = document.querySelectorAll('.measurement');
     const header = document.querySelector('.heading');
     const cells = document.querySelectorAll('.cell');
