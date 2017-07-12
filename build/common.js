@@ -19,8 +19,8 @@ const common = multiCompiler(page => ({
   entry: {
     [page]: [
       path.resolve(root, 'src', 'common', 'js', 'entry.js'),
-      path.resolve(root, `./src/${page}.js`),
-      path.resolve(root, `src/${page}.scss`),
+      path.resolve(root, 'src', `${page}.js`),
+      path.resolve(root, 'src', `${page}.scss`),
     ],
   },
 
