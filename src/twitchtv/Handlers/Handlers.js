@@ -1,15 +1,9 @@
 import type { Stream } from '../twitchtv.types';
 import { fetchAllProfiles } from '../Api';
 import { users } from '../Models';
-import { trim } from 'common/js/utils';
+import { trim, removeChildren } from 'common/js/utils';
 
 const FILTER_EVENT = 'filter-event';
-
-const removeChildren = (list: HTMLUListElement) => {
-  while (list.lastChild) {
-    list.removeChild(list.lastChild);
-  }
-};
 
 const toggleFilter = (filterEvent: 'all' | 'online' | 'offline') => () =>
   document.querySelectorAll('li').forEach(el =>

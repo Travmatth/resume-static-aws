@@ -2,6 +2,12 @@
 import { week, month } from './constants';
 import ExtendableError from 'extendable-error-class';
 
+const removeChildren = (el: HTMLElement) => {
+  while (el.lastChild) {
+    el.removeChild(el.lastChild);
+  }
+};
+
 //insert npm joke here
 const padLeft = (number: string, columns: number) => {
   while (number.length < columns) {
@@ -97,4 +103,5 @@ export {
   dateString,
   convertFahrenheitToCelsius,
   trim,
+  removeChildren,
 };
