@@ -10,8 +10,8 @@ const pages = [
   //'randomquote/index',
   //'simon/index',
   //'tictactoe/index',
-  'twitchtv/index',
-  //'wikiviewer/index',
+  //'twitchtv/index',
+  'wikiviewer/index',
 ];
 
 const multiCompiler = (configure: string => Object) =>
