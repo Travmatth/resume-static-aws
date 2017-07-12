@@ -10,20 +10,20 @@ const headers = new Headers({
 const url =
   'https://us-central1-gcf-randomquote-proxy.cloudfunctions.net/gcf-wiki-proxy';
 
-const search = (query: Array<string>): Promise<?Array<WikiPage>> => {
-  if (query.length === 0) return Promise.resolve(null);
+const search = (query: ?string): Promise<Array<WikiPage>> => {
+  if (!query && query.length === 0) return Promise.resolve([]);
+
+  params['gsrsearch'] = query;
   const opts = {
     headers,
     method: 'POST',
     body: serialize(endpoint, params),
   };
 
-  params['gsrsearch'] = query.join('');
-  //return fetch(serialize(endpoint, params))
   return fetch(url, opts)
     .then(checkHeaders)
     .then(processWikis)
-    .catch(err => null);
+    .catch(err => []);
 };
 
 const processWikis = ({ query: { pages } }: WikiSearchResult) => {

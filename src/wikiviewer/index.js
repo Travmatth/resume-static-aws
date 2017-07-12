@@ -1,38 +1,22 @@
 /* @flow */
 
-import {
-  keypressHandler,
-  typeHandler,
-  searchHandler,
-  randomHandler,
-} from './Handlers';
+import { keypressHandler, searchHandler, randomHandler } from './Handlers';
+import { eventType } from 'common/js/utils';
 
-if (typeof document !== 'undefined') {
+if (typeof document !== 'undefined')
   document.addEventListener('DOMContentLoaded', () => {
-    const query: Array<string> = [];
-
-    const search = ((document.getElementById(
+    const searchBtn = ((document.getElementById(
       'search-btn',
     ): any): HTMLButtonElement);
-    const random = ((document.getElementById(
+    const randomBtn = ((document.getElementById(
       'random-btn',
     ): any): HTMLButtonElement);
-    const searchText = ((document.getElementById(
-      'search-text',
-    ): any): HTMLInputElement);
 
-    // Each Result has it's own heading
-    const headings = ((document.querySelectorAll(
-      'div.heading',
-    ): any): HTMLCollection<HTMLElement>);
-    // Each Result has it's own paragraph
-    const paragraphs = ((document.getElementsByTagName(
-      'p',
-    ): any): HTMLCollection<HTMLParagraphElement>);
+    const input = document.querySelector('input');
+    // Anchor point for appending the result tiles
+    const node = document.querySelector('#content');
 
-    searchText.onkeypress = keypressHandler(query, headings, paragraphs);
-    searchText.onchange = typeHandler(query);
-    search.onclick = searchHandler(query, headings, paragraphs);
-    random.onclick = randomHandler(window);
+    input.onkeypress = keypressHandler(node);
+    randomBtn.addEventListener(eventType(), randomHandler(window));
+    searchBtn.addEventListener(eventType(), searchHandler(node));
   });
-}

@@ -9,58 +9,14 @@ block content
 	section.hero
 		include ../common/pug/nav.pug
 		div.hero-body.shift-down
-			div.view
-			div.center-panel
-				input#search-text
-				button#search-btn Search
-				button#random-btn Random
-			div.result-container
-				div.heading
-					h1 Boss Corporation
-					h2 view on Wikipedia
-				p Boss is a manufacturer of effects pedals for electric guitar and bass guitar.
-			div.result-container
-				div.heading
-					h1
-					h2
-				p
-			div.result-container
-				div.heading
-					h1
-					h2
-				p
-			div.result-container
-				div.heading
-					h1
-					h2
-				p
-			div.result-container
-				div.heading
-					h1
-					h2
-				p
-			div.result-container
-				div.heading
-					h1
-					h2
-				p
-			div.result-container
-				div.heading
-					h1
-					h2
-				p
-			div.result-container
-				div.heading
-					h1
-					h2
-				p
-			div.result-container
-				div.heading
-					h1
-					h2
-				p
-			div.result-container
-				div.heading
-					h1
-					h2
-				p
+			div.columns
+				div.column.is-10.is-offset-1
+					div#center-panel.columns
+						div.column
+							input#search-text
+						div.column.is-narrow
+							div#center-panel.level
+								div.level-item
+									button#search-btn Search
+									button#random-btn Random
+			div#content.columns.is-mobile.is-multiline

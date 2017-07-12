@@ -2,68 +2,47 @@
 
 import type { Headings, Paragraphs, Searches } from '../wikiviewer.types';
 import { search } from '../Api';
+import { removeChildren } from 'common/js/utils';
 
-const updateDOM = (
-  searches: Searches,
-  headings: Headings,
-  paragraphs: Paragraphs,
-) => {
-  if (searches) {
-    let node, result, imgNode;
+const updateDOM = (searches: Searches, node: HTMLElement) => {
+  if (node.children.length !== 0) removeChildren(node);
 
-    for (var i = 0; i < searches.length; i++) {
-      if (!(headings[i] && paragraphs[i])) break;
+  searches.forEach((wiki: WikiPage) => {
+    const result = document.createElement('div');
+    result.classList.add('card', 'column', 'is-10', 'is-offset-1');
+    result.innerHTML = require('../Assets/tile.html');
 
-      let wiki = searches[i];
-      const page = `https://en.wikipedia.org/?curid=${wiki.pageid}`;
-      const paragraph = wiki.extract.replace(
-        /may refer to:/,
-        'disambiguation page.',
-      );
+    const page = `https://en.wikipedia.org/?curid=${wiki.pageid}`;
 
-      headings[i].children[0].textContent = wiki.title;
-      ((headings[i].children[1]: any): HTMLAnchorElement).href = page;
-      paragraphs[i].textContent = paragraph;
-    }
-  }
+    const a = result.querySelector('a');
+    a.textContent = wiki.title;
+    a.href = page;
+
+    result.querySelector('p').textContent = wiki.extract.replace(
+      /may refer to:/,
+      'disambiguation page.',
+    );
+
+    node.appendChild(result);
+  });
 };
 
-const randomHandler = (win: window) => {
-  return () => (win.location = 'https://en.wikipedia.org/wiki/Special:Random');
+const randomHandler = (win: window) => () =>
+  win.location = 'https://en.wikipedia.org/wiki/Special:Random';
+
+const searchHandler = (node: HTMLElement) => () =>
+  refreshResults(getQuery(), node);
+
+const refreshResults = async (query: Array<string>, node: HTMLElement) => {
+  const results = await search(query);
+  updateDOM(results, node);
 };
 
-const searchHandler = (
-  query: Array<string>,
-  headings: Headings,
-  paragraphs: Paragraphs,
-) => {
-  return () => refreshResults(query, headings, paragraphs);
+const keypressHandler = (node: HTMLElement) => async (event: Event) => {
+  if (event.key === 'Enter') refreshResults(getQuery(), node);
 };
 
-const refreshResults = async (
-  query: Array<string>,
-  headings: Headings,
-  paragraphs: Paragraphs,
-) => {
-  const searches = await search(query);
-  updateDOM(searches, headings, paragraphs);
-};
-
-const keypressHandler = (
-  query: Array<string>,
-  headings: Headings,
-  paragraphs: Paragraphs,
-) => async (event: Event) => {
-  if (event.key === 'Enter') {
-    refreshResults(query, headings, paragraphs);
-  } else if (event.key === 'Backspace' && query.length > 0) {
-    query = query.splice(-1, 1);
-  }
-};
-
-const typeHandler = (query: Array<string>) => (event: Event) => {
-  query.push(((event.target: any): HTMLInputElement).value);
-};
+const getQuery = () => document.querySelector('input').value;
 
 export {
   updateDOM,
@@ -71,5 +50,4 @@ export {
   searchHandler,
   refreshResults,
   keypressHandler,
-  typeHandler,
 };

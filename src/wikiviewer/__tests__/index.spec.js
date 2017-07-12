@@ -16,9 +16,6 @@ jest.mock('../Handlers', () => {
   modules.randomHandlerCallback = jest.fn();
   modules.randomHandler = () => modules.randomHandlerCallback;
 
-  modules.typeHandlerCallback = jest.fn();
-  modules.typeHandler = () => modules.typeHandlerCallback;
-
   return modules;
 });
 
@@ -43,12 +40,6 @@ describe('WikiViewer DOM', () => {
     );
     //$FlowIgnore
     expect(Handlers.keypressHandlerCallback).toHaveBeenCalled();
-  });
-
-  it('searchText should have an onchange handler', () => {
-    dispatch(document.getElementById('search-text'), 'change');
-    //$FlowIgnore
-    expect(Handlers.typeHandlerCallback).toHaveBeenCalled();
   });
 
   it('search should have a click handler', () => {

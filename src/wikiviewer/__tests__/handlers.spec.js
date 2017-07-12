@@ -1,7 +1,6 @@
 /* @flow */
 
 import {
-  typeHandler,
   randomHandler,
   searchHandler,
   keypressHandler,
@@ -28,12 +27,6 @@ describe('WikiViewer Handlers', () => {
     jest.clearAllMocks();
   });
 
-  it('typeHandler should update query with event targets value', () => {
-    const query = [];
-    typeHandler(query)((({ target: { value: 'a' } }: any): Event));
-    expect(query).toEqual(['a']);
-  });
-
   it('randomHandler should change window location', () => {
     const win = { location: '' };
     randomHandler(win)();
@@ -41,25 +34,27 @@ describe('WikiViewer Handlers', () => {
   });
 
   it('searchHandler should call refreshResults and updateDOM', async () => {
-    const query = ['foo'];
-    const paragraphs = ((document.querySelectorAll('p'): any): Paragraphs);
-    const headings = ((document.querySelectorAll(
-      'div.heading',
-    ): any): Headings);
+    const node = document.createElement('div');
 
-    await searchHandler(query, headings, paragraphs)();
-    expect(((document.body: any): HTMLElement).outerHTML).toMatchSnapshot();
+    await searchHandler(node)();
+
+    const a = node.querySelector('a');
+    const p = node.querySelector('p');
+    expect(a.textContent).toBe('Big Boss');
+    expect(a.href).toBe('https://en.wikipedia.org/?curid=11937256');
+    expect(p.textContent).toBe('Big Boss disambiguation page.');
   });
 
   it('refreshResults should call updateDOM with results of search', async () => {
-    const query = ['foo'];
-    const paragraphs = ((document.querySelectorAll('p'): any): Paragraphs);
-    const headings = ((document.querySelectorAll(
-      'div.heading',
-    ): any): Headings);
+    const node = document.createElement('div');
 
-    await searchHandler(query, headings, paragraphs)();
-    expect(((document.body: any): HTMLElement).outerHTML).toMatchSnapshot();
+    await searchHandler(node)();
+
+    const a = node.querySelector('a');
+    const p = node.querySelector('p');
+    expect(a.textContent).toBe('Big Boss');
+    expect(a.href).toBe('https://en.wikipedia.org/?curid=11937256');
+    expect(p.textContent).toBe('Big Boss disambiguation page.');
   });
 
   it("keyPressHandler should call refreshResults on 'Enter' key", async () => {
@@ -75,29 +70,24 @@ describe('WikiViewer Handlers', () => {
     expect(((document.body: any): HTMLElement).outerHTML).toMatchSnapshot();
   });
 
-  it("keyPressHandler should drop elements of query on 'Backspace' key", async () => {
-    const paragraphs = ((document.querySelectorAll('p'): any): Paragraphs);
-    const headings = ((document.querySelectorAll(
-      'div.heading',
-    ): any): Headings);
-    const query = [];
-    const type = typeHandler(query);
-    type((({ target: { value: 'a' } }: any): Event));
-    type((({ target: { value: 'b' } }: any): Event));
-
-    const handler = keypressHandler(query, headings, paragraphs);
-    await handler((({ key: 'Backspace' }: any): Event));
-
-    expect(query).toEqual(['a']);
+  it('updateDOM should create elements with returned data', async () => {
+    const node = document.createElement('div');
+    updateDOM(wikis.slice(0, 1), node);
+    const a = node.querySelector('a');
+    const p = node.querySelector('p');
+    expect(a.textContent).toBe('Big Boss');
+    expect(a.href).toBe('https://en.wikipedia.org/?curid=11937256');
+    expect(p.textContent).toBe('Big Boss disambiguation page.');
   });
 
-  it('updateDOM should populate given elements with returned data', async () => {
-    const paragraphs = ((document.querySelectorAll('p'): any): Paragraphs);
-    const headings = ((document.querySelectorAll(
-      'div.heading',
-    ): any): Headings);
+  it('updateDOM should remove previously attached elements', async () => {
+    const node = document.createElement('div');
+    const node2 = document.createElement('div');
+    node2.textContent = 'test';
+    node.appendChild(node2);
 
-    await updateDOM(wikis, headings, paragraphs);
-    expect(((document.body: any): HTMLElement).outerHTML).toMatchSnapshot();
+    updateDOM(wikis.slice(0, 1), node);
+
+    expect(node.children[0].textContent).not.toBe('test');
   });
 });

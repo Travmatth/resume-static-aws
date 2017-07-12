@@ -1,6 +1,21 @@
 @import "../common/scss/_all.scss";
 @import "../common/scss/_nav.scss";
 
+button:hover {
+	//border-left: 3px solid $primary;
+	font-size: $size-7;
+}
+
+.pull-right-desktop {}
+
+.card {
+	margin: 2px 0 2px 0;
+
+	&:hover {
+		border-left: 3px solid $primary;
+	}
+}
+
 .shift-down {
 	margin-top: 15vh;
 }
@@ -9,3 +24,21 @@ input {
 	border: solid 1px black;
 }
 
+a {
+	text-decoration: underline;
+	&:hover {
+		color: $primary;
+	}
+}
+
+.baseline {
+	align-items: baseline;
+}
+
+.center-panel {
+	background-color: blue;
+}
+
+input {
+	width: 100%;
+}
