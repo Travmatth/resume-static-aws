@@ -1,6 +1,6 @@
 import type { Stream } from '../twitchtv.types';
 import { fetchAllProfiles } from '../Api';
-import { users } from '../Models';
+import { USERS } from '../Models';
 import { trim, removeChildren } from 'common/js/utils';
 
 const FILTER_EVENT = 'filter-event';
@@ -26,7 +26,6 @@ const filterHandler = (event: Event) => {
   const { target, detail: { status: nextStatus } } = event;
   const { dataset: { status: type } } = target;
 
-  const t = true;
   nextStatus === 'all' || nextStatus === type
     ? target.classList.toggle('hidden', false)
     : target.classList.toggle('hidden', true);
@@ -36,21 +35,19 @@ const fetchHandler = (list: HTMLULElement) => async (_: Event) => {
   if (list.children.length !== 0) removeChildren(list);
 
   const nodes = document.createDocumentFragment();
-  const streamers = await fetchAllProfiles(users);
+  const streamers = await fetchAllProfiles(USERS);
 
-  streamers.map((streamer: Stream) => {
+  streamers.map((streamer: PossibleStream) => {
     const li = document.createElement('li');
     li.innerHTML = require('../Assets/tile.html');
     if (!li.dataset) li.dataset = {};
     li.addEventListener(FILTER_EVENT, filterHandler);
 
-    //_id === number || `${user} is offline`
-    const isOnline = typeof streamer._id === 'number';
     const paragraph = li.querySelector('p');
     const a = li.querySelector('a');
     const h2 = li.querySelector('h2');
 
-    if (isOnline) {
+    if (!streamer.error) {
       const {
         game,
         channel: {
@@ -62,7 +59,7 @@ const fetchHandler = (list: HTMLULElement) => async (_: Event) => {
           logo,
           display_name,
         },
-      } = streamer;
+      } = streamer.stream;
 
       li
         .querySelector('.tile-container')
@@ -85,7 +82,7 @@ const fetchHandler = (list: HTMLULElement) => async (_: Event) => {
       a.remove();
       h2.remove();
 
-      paragraph.textContent = streamer._id;
+      paragraph.textContent = streamer.status;
       li.dataset.status = 'offline';
     }
 

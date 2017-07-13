@@ -90,12 +90,17 @@ export type AllStreams = {
 
 export type UndeterminedStreamType = Stream | AllStreams;
 
-export type PossiblyNestedStreams = Stream | Array<Stream> | null;
+export type PossiblyNestedStreams = PossibleStream
+  | Array<PossibleStream>
+  | null;
 
 declare type Link = {
   self: string,
   channel: string,
 };
+
+export type PossibleStream = { error: true, | status: string }
+  | { error: false, stream: Stream }
 
 export type UserStream = {
   'stream': ?Stream,

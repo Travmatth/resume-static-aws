@@ -6,18 +6,12 @@ import type {
   AllStreams,
   UndeterminedStreamType,
   PossiblyNestedStreams,
+  PossibleStream,
 } from '../twitchtv.types';
 
 import TWITCH_TV_API_KEY from 'protected/twitch.key';
 import { serialize, trim } from 'common/js/utils';
-import {
-  users,
-  streamsUrl,
-  userUrl,
-  emptyStream,
-  createEmptyStream,
-  extractUserName,
-} from '../Models';
+import { STREAMS_URL, USER_URL, extractUserName } from '../Models';
 
 const headers = new Headers({
   Accept: 'application/vnd.twitchtv.v3+json',
@@ -27,7 +21,7 @@ const headers = new Headers({
 const options = { headers, method: 'GET', mode: 'cors' };
 
 const verifyUser = async (user: string): Promise<boolean> => {
-  const endpoint = userUrl + user;
+  const endpoint = USER_URL + user;
 
   return fetch(
     new Request(endpoint, options),
@@ -38,22 +32,20 @@ const verifyUser = async (user: string): Promise<boolean> => {
   });
 };
 
-const handleNullStream = async (body: UserStream): Promise<Stream> => {
+const handleNullStream = async (body: UserStream): Promise<string> => {
   // If stream is null this could either be due to:
-  // a nonexistent user || an offline user
+  // nonexistent user || an offline user
   // additional call to channel route is needed to determine which case
   const user = extractUserName(body);
 
-  if (await verifyUser(user)) {
-    return createEmptyStream(true, user);
-  } else {
-    return createEmptyStream(false, user);
-  }
+  return (await verifyUser(user))
+    ? `${user} is offline`
+    : `${user} is not a streamer`;
 };
 
 /**
- * Accepts the Response object from fetch, classifies response and returns
- * a User object
+ * Accepts the Response object from fetch,
+ * classifies response and returns User object
  */
 const classifyResponse = async (
   response: Response,
@@ -62,15 +54,17 @@ const classifyResponse = async (
     console.error('Invalid response to GET stream request', response);
     return null;
   }
-
   const body = ((await response.json(): any): UndeterminedStreamType);
 
   if (body.hasOwnProperty('streams')) {
-    return ((body: any): AllStreams).streams;
+    const streams = ((body: any): AllStreams).streams;
+    return streams.map(stream => ({ error: false, stream }));
   } else if (((body: any): Stream).stream) {
-    return ((body: any).stream: Stream);
+    const stream = ((body: any).stream: Stream);
+    return { error: false, stream };
   } else {
-    return await handleNullStream(((body: any): UserStream));
+    const status = await handleNullStream(((body: any): UserStream));
+    return { error: true, status };
   }
 };
 
@@ -78,10 +72,12 @@ const classifyResponse = async (
  * fetchAllProfiles returns an array of promised normalized user objects
  * @type {Function}
  */
-const fetchAllProfiles = (users: Array<string>): Promise<Array<Stream>> => {
+const fetchAllProfiles = (
+  users: Array<string>,
+): Promise<Array<PossibleStream>> => {
   // call TwitchTV api, return normalized user object
   const task = (user: string): Promise<PossiblyNestedStreams> => {
-    const endpoint = streamsUrl + user;
+    const endpoint = STREAMS_URL + user;
 
     return fetch(new Request(endpoint, options)).then(classifyResponse);
   };

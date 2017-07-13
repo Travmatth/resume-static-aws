@@ -7,26 +7,22 @@ jest.mock('../Api', () => ({
   fetchAllProfiles: () =>
     Promise.resolve([
       {
-        _id: 1,
-        game: 'game1',
-        viewers: 'viewers1',
-        channel: {
-          logo: 'logo1',
-          url: 'url1',
-          display_name: 'display_name1',
-          status: 'status',
+        error: false,
+        stream: {
+          _id: 1,
+          game: 'game1',
+          viewers: 'viewers1',
+          channel: {
+            logo: 'logo1',
+            url: 'url1',
+            display_name: 'display_name1',
+            status: 'status',
+          },
         },
       },
       {
-        _id: '_id2',
-        game: 'game2',
-        viewers: 'viewers2',
-        channel: {
-          logo: 'logo2',
-          url: 'url2',
-          display_name: 'display_name2',
-          status: 'status',
-        },
+        error: true,
+        status: '',
       },
     ]),
 }));

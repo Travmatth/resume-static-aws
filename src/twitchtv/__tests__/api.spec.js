@@ -19,14 +19,7 @@ import type {
   PossiblyNestedStreams,
 } from '../twitchtv.types';
 import TWITCH_TV_API_KEY from 'protected/localweather.key';
-import {
-  userUrl,
-  users,
-  streamsUrl,
-  emptyStream,
-  createEmptyStream,
-  extractUserName,
-} from '../Models';
+import { userUrl, users, streamsUrl, extractUserName } from '../Models';
 
 import {
   verifyUser,
@@ -61,21 +54,21 @@ describe('TwitchTV Api', () => {
     expect(exists).toBe(true);
   });
 
-  it('handleNullStream should return emptyStream if user is offline', async () => {
+  it('handleNullStream should return status if user is offline', async () => {
     const user = 'test_channel';
     fetch.mockResponseOnce(json({ body: onlineUserChannel(user) }));
 
     const stream = await handleNullStream(nonexistentOrOfflineUserStream(user));
-    expect(stream._id).toBe(`${user} is offline`);
+    expect(stream).toBe(`${user} is offline`);
   });
 
-  it('handleNullStream should return emptyStream if user is nonexistent', async () => {
+  it('handleNullStream should return status if user is nonexistent', async () => {
     const user = 'brunofin';
     const body = nonexistentUser(user);
     fetch.mockResponseOnce(json(body));
 
     const stream = await handleNullStream(nonexistentOrOfflineUserStream(user));
-    expect(stream._id).toBe(`${user} is not a streamer`);
+    expect(stream).toBe(`${user} is not a streamer`);
   });
 
   it('classifyResponse should return null if 404 response', async () => {
@@ -85,7 +78,6 @@ describe('TwitchTV Api', () => {
   });
 
   it('classifyResponse can return allStreams', async () => {
-    // const user = "brunofin"
     const response = (({
       json() {
         return allStreamsCall;
@@ -93,12 +85,15 @@ describe('TwitchTV Api', () => {
       status: 200,
     }: any): Response);
 
-    expect(await classifyResponse(response)).toBe(allStreamsCall.streams);
+    const expected = allStreamsCall.streams.map(stream => ({
+      error: false,
+      stream,
+    }));
+    expect(await classifyResponse(response)).toEqual(expected);
   });
 
   it('classifyResponse can return Stream', async () => {
-    const user = 'freecodecamp';
-    const onlineUser = onlineUserStreamCall(user);
+    const onlineUser = onlineUserStreamCall('freecodecamp');
     const response = (({
       json() {
         return onlineUser;
@@ -106,10 +101,13 @@ describe('TwitchTV Api', () => {
       status: 200,
     }: any): Response);
 
-    expect(await classifyResponse(response)).toBe(onlineUser.stream);
+    expect(await classifyResponse(response)).toEqual({
+      error: false,
+      stream: onlineUser.stream,
+    });
   });
 
-  it('classifyResponse can return emptyStream if user is nonexistent', async () => {
+  it('classifyResponse can return error object if user is nonexistent', async () => {
     const user = 'brunofin';
     const body = json({ ...nonexistentUser(user) });
     fetch.mockResponseOnce(body, { status: 404 });
@@ -122,12 +120,13 @@ describe('TwitchTV Api', () => {
       status: 200,
     }: any): Response);
 
-    expect(await classifyResponse(response)).toEqual(
-      Object.assign({}, emptyStream, { _id: `${user} is not a streamer` }),
-    );
+    expect(await classifyResponse(response)).toEqual({
+      error: true,
+      status: `${user} is not a streamer`,
+    });
   });
 
-  it('classifyResponse can return emptyStream if user is offline', async () => {
+  it('classifyResponse can return error stream if user is offline', async () => {
     const user = 'OgamingSC2';
     const body = json({ ...validUser(user) });
     fetch.mockResponseOnce(body, { status: 404 });
@@ -139,9 +138,10 @@ describe('TwitchTV Api', () => {
       status: 200,
     }: any): Response);
 
-    expect(await classifyResponse(response)).toEqual(
-      Object.assign({}, emptyStream, { _id: `${user} is not a streamer` }),
-    );
+    expect(await classifyResponse(response)).toEqual({
+      error: true,
+      status: `${user} is not a streamer`,
+    });
   });
 
   it('fetchAllProfiles should return Array<Promise<Stream>>', async () => {
@@ -165,8 +165,14 @@ describe('TwitchTV Api', () => {
 
     const streamers = [...onlineStreams, ...offlineStreams];
     expect(await fetchAllProfiles(streamers)).toEqual([
-      ...onlineStreams.map(user => onlineUserStreamCall(user).stream),
-      ...offlineStreams.map(user => createEmptyStream(true, user)),
+      ...onlineStreams.map(user => ({
+        error: false,
+        stream: onlineUserStreamCall(user).stream,
+      })),
+      ...offlineStreams.map(user => ({
+        error: true,
+        status: `${user} is offline`,
+      })),
     ]);
   });
 
