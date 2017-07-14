@@ -14,9 +14,30 @@ import {
   playerHasWon,
 } from './Board';
 
-import { Game, genScoreCard } from './Game';
+import {
+  game,
+  genScoreCard,
+  getScore,
+  canTakeSquare,
+  canMove,
+  player,
+  resetScores,
+  current,
+  restart,
+  isOver,
+  markWinner,
+  chooseSide,
+  rollback,
+  takeTurn,
+  startPlayerMove,
+  endPlayerMove,
+  simulateFirstMove,
+  simulateMove,
+  ROW_LENGTH,
+} from './Game';
 
 export {
+  // Board
   ascending,
   descending,
   makeHistory,
@@ -29,6 +50,24 @@ export {
   playerHasWonDiagonal,
   checkDiagonal,
   playerHasWon,
+  // Game
+  game,
   genScoreCard,
-  Game,
+  getScore,
+  canTakeSquare,
+  canMove,
+  player,
+  resetScores,
+  current,
+  restart,
+  isOver,
+  markWinner,
+  chooseSide,
+  rollback,
+  takeTurn,
+  startPlayerMove,
+  endPlayerMove,
+  simulateFirstMove,
+  simulateMove,
+  ROW_LENGTH,
 };

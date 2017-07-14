@@ -9,8 +9,8 @@ const pages = [
   //'pomodoro/index',
   //'randomquote/index',
   //'simon/index',
-  //'tictactoe/index',
-  'twitchtv/index',
+  'tictactoe/index',
+  //'twitchtv/index',
   //'wikiviewer/index',
 ];
 

@@ -1,6 +1,6 @@
 /* @flow */
 
-import { Game } from './Models';
+import { game, ROW_LENGTH } from './Models';
 import { Side, scenes } from './tictactoe.types';
 import { eventType } from 'common/js/utils';
 import {
@@ -21,9 +21,7 @@ import {
 
 if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
-    const game = new Game();
     const type = eventType();
-    const rowLength = 3;
 
     let gameTile: HTMLElement;
     const gameTiles = document.querySelectorAll('.game-tile');
@@ -39,7 +37,7 @@ if (typeof document !== 'undefined') {
     // Play View Setup
     for (let x of Array(3).keys()) {
       for (let y of Array(3).keys()) {
-        gameTile = gameTiles.item(x * rowLength + y);
+        gameTile = gameTiles.item(x * ROW_LENGTH + y);
         if (!gameTile.dataset) gameTile.dataset = {};
 
         gameTile.dataset.x = `${x}`;

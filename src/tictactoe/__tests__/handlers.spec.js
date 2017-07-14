@@ -1,5 +1,6 @@
 /* @flow */
 import {
+  blank,
   makeAction,
   playerAction,
   restartGameHandler,
@@ -11,11 +12,48 @@ import {
   updateScoreListener,
 } from '../Handlers';
 import { Side, scenes } from '../tictactoe.types';
-import { Game } from '../Models';
+import {
+  game,
+  createGrid,
+  genScoreCard,
+  takeTurn,
+  current,
+  move,
+  ROW_LENGTH,
+} from '../Models';
 
+const draw = [
+  Side.X,
+  Side.O,
+  Side.X,
+  Side.O,
+  Side.X,
+  Side.X,
+  Side.O,
+  Side.X,
+  Side.O,
+];
+
+const fillBoard = (game: GameState, limit: number) => {
+  for (let x of Array(3).keys()) {
+    for (let y of Array(3).keys()) {
+      const tile = x * ROW_LENGTH + y;
+      if (tile <= limit)
+        game.grid = move(game.grid, { x, y, player: draw[tile] });
+    }
+  }
+};
+
+let state: GameState;
 describe('TicTacToe Handlers', () => {
-  let game: Game;
-  beforeEach(() => game = new Game());
+  beforeEach(() => {
+    state = Object.assign(
+      {},
+      game,
+      { grid: createGrid() },
+      { score: genScoreCard() },
+    );
+  });
 
   it('updateScoreListener should set element text', () => {
     const event = (({
@@ -88,16 +126,13 @@ describe('TicTacToe Handlers', () => {
       y: '2',
     };
 
-    const action = makeAction(elem, 'X');
-    expect(action).toEqual({ x: 1, y: 2, player: 'X' });
+    const action = makeAction(elem, Side.X);
+    expect(action).toEqual({ x: 1, y: 2, player: Side.X });
   });
 
   it('playerAction returns if player selects square that is unavailable', () => {
-    //$FlowIgnore
-    game.player = jest.fn();
-    //$FlowIgnore
-    game.takeTurn = jest.fn();
-    game.state.grid[0].player = Side.X;
+    document.body.innerHTML = require('../index.pug');
+    fillBoard(state, 1);
 
     const refresh = jest.fn();
     const show = jest.fn();
@@ -108,259 +143,265 @@ describe('TicTacToe Handlers', () => {
     };
 
     // function under test
-    const action = playerAction(game, refresh, show)({ target: elem });
+    playerAction(state, refresh, show)({ target: elem });
 
-    expect(game.takeTurn).not.toHaveBeenCalled();
+    expect(refresh).not.toHaveBeenCalled();
   });
 
   it("playerAction returns immediately if player can't move", () => {
-    //$FlowIgnore
-    game.canMove = jest.fn(() => false);
-    //$FlowIgnore
-    game.takeTurn = jest.fn();
+    document.body.innerHTML = require('../index.pug');
+    fillBoard(state, 8);
 
-    const update = jest.fn();
-    const end = jest.fn();
+    const refresh = jest.fn();
+    const show = jest.fn();
     const elem = document.createElement('div');
     elem.dataset = {
-      x: '0',
-      y: '0',
+      x: '1',
+      y: '2',
     };
 
     // function under test
-    const action = playerAction(game, update, end)({ target: elem });
+    playerAction(state, refresh, show)({ target: elem });
 
-    expect(game.takeTurn).not.toHaveBeenCalled();
+    expect(refresh).not.toHaveBeenCalled();
   });
 
   it('playerAction returns a function that moves both player and computer after staggered timeouts', () => {
-    //$FlowIgnore
-    game.restart = jest.fn();
-    //$FlowIgnore
-    game.takeTurn = jest.fn();
-    //$FlowIgnore
-    game.simulateMove = jest.fn();
-    //$FlowIgnore
-    game.endPlayerMove = jest.fn();
-    //$FlowIgnore
-    game.isOver = jest.fn(() => false);
-    //$FlowIgnore
-    game.startPlayerMove = jest.fn();
-    //$FlowIgnore
-    game.current = jest
-      .fn()
-      .mockImplementationOnce(() => 'a')
-      .mockImplementationOnce(() => 'b');
+    document.body.innerHTML = require('../index.pug');
+    fillBoard(state, 4);
 
-    const spy = jest.spyOn(game, 'player');
-    const update = jest.fn();
-    const end = jest.fn();
+    const refresh = jest.fn();
+    const refreshCalls = refresh.mock.calls;
+    const show = jest.fn();
     const elem = document.createElement('div');
-
     elem.dataset = {
-      x: '0',
-      y: '0',
+      x: '1',
+      y: '2',
     };
 
     // function under test
-    const action = playerAction(game, update, end)({ target: elem });
+    const action = playerAction(state, refresh, show)({ target: elem });
 
     // pre-timer actions
-    expect(spy).toHaveBeenCalled();
-    expect(game.takeTurn).toHaveBeenCalledWith({ x: 0, y: 0, player: 'X' });
+    const postPlayerBoardState = [
+      Side.X,
+      Side.O,
+      Side.X,
+      Side.O,
+      Side.X,
+      Side.X,
+      '',
+      '',
+      '',
+    ];
 
     // player move
-    expect(game.endPlayerMove).toHaveBeenCalled();
-    expect(game.isOver).toHaveBeenCalled();
-    expect(update).toHaveBeenCalledWith('a');
-
-    update.mockClear();
+    expect(refreshCalls[0][0]).toEqual(postPlayerBoardState);
+    expect(state.history.length).not.toBe(0);
+    expect(show).not.toHaveBeenCalled();
 
     // computer move
-    jest.runTimersToTime(500);
-    expect(game.simulateMove).toHaveBeenCalled();
-    expect(update).toHaveBeenCalledWith('b');
-    expect(game.startPlayerMove).toHaveBeenCalled();
+    const postComputerBoardState = [
+      Side.X,
+      Side.O,
+      Side.X,
+      Side.O,
+      Side.X,
+      Side.X,
+      Side.O,
+      '',
+      '',
+    ];
 
-    // cleanup
-    //$FlowIgnore
-    spy.mockRestore();
+    jest.runTimersToTime(500);
+    expect(refreshCalls[1][0]).toEqual(postComputerBoardState);
+    expect(state.input).toBe(true);
   });
 
   it('playerAction returns a function that ends & restarts game if player has won', () => {
     document.body.innerHTML = require('../index.pug');
+    fillBoard(state, 5);
 
-    //$FlowIgnore
-    game.restart = jest.fn();
-    //$FlowIgnore
-    game.takeTurn = jest.fn();
-    //$FlowIgnore
-    game.endPlayerMove = jest.fn();
-    //$FlowIgnore
-    game.isOver = jest.fn(() => true);
-    //$FlowIgnore
-    game.current = jest.fn().mockImplementationOnce(() => 'a');
-
-    const spy = jest.spyOn(game, 'player');
-    const update = jest.fn();
-    const end = jest.fn();
+    const refresh = jest.fn();
+    const refreshCalls = refresh.mock.calls;
+    const show = jest.fn();
     const elem = document.createElement('div');
     elem.dataset = {
-      x: '0',
+      x: '2',
       y: '0',
     };
 
     // function under test
-    const action = playerAction(game, update, end)({ target: elem });
+    const action = playerAction(state, refresh, show)({ target: elem });
 
     // pre-timer actions
-    expect(spy).toHaveBeenCalled();
-    expect(game.takeTurn).toHaveBeenCalledWith({ x: 0, y: 0, player: 'X' });
+    const postPlayerBoardState = [
+      Side.X,
+      Side.O,
+      Side.X,
+      Side.O,
+      Side.X,
+      Side.X,
+      Side.X,
+      '',
+      '',
+    ];
+
+    expect(refreshCalls[0][0]).toEqual(postPlayerBoardState);
+    expect(state.input).toBe(true);
 
     // player move
-    jest.runTimersToTime(500);
-    expect(game.endPlayerMove).toHaveBeenCalled();
-    expect(game.isOver).toHaveBeenCalled();
-    expect(game.restart).toHaveBeenCalled();
-    expect(update).toHaveBeenCalledWith('a');
-    expect(end).toHaveBeenCalled();
+    expect(state.history).toEqual([]);
+    expect(show).toHaveBeenCalled();
 
-    // cleanup
-    //$FlowIgnore
-    spy.mockRestore();
+    // computer move
+    const postComputerBoardState = [
+      Side.X,
+      Side.O,
+      Side.X,
+      Side.O,
+      Side.X,
+      Side.X,
+      Side.O,
+      Side.X,
+      Side.O,
+    ];
+
+    jest.runTimersToTime(500);
+    // ensure computer has not moved
+    expect(state.history.length).toBe(0);
   });
 
   it('playerAction returns a function that ends & restarts game if computer has won', () => {
     document.body.innerHTML = require('../index.pug');
-    //$FlowIgnore
-    game.restart = jest.fn();
-    //$FlowIgnore
-    game.takeTurn = jest.fn();
-    //$FlowIgnore
-    game.simulateMove = jest.fn();
-    //$FlowIgnore
-    game.endPlayerMove = jest.fn();
-    //$FlowIgnore
-    game.isOver = jest
-      .fn()
-      .mockImplementationOnce(() => false)
-      .mockImplementationOnce(() => true);
-    //$FlowIgnore
-    game.startPlayerMove = jest.fn();
-    //$FlowIgnore
-    game.current = jest
-      .fn()
-      .mockImplementationOnce(() => 'a')
-      .mockImplementationOnce(() => 'b');
+    fillBoard(state, 6);
 
-    const player = jest.spyOn(game, 'player');
-    const update = jest.fn();
+    const refresh = jest.fn();
+    const refreshCalls = refresh.mock.calls;
     const show = jest.fn();
     const elem = document.createElement('div');
     elem.dataset = {
-      x: '0',
-      y: '0',
+      x: '2',
+      y: '1',
     };
 
     // function under test
-    const action = playerAction(game, update, show)({ target: elem });
+    const action = playerAction(state, refresh, show)({ target: elem });
 
     // pre-timer actions
-    expect(player).toHaveBeenCalled();
-    expect(game.takeTurn).toHaveBeenCalledWith({ x: 0, y: 0, player: 'X' });
+    const postPlayerBoardState = [
+      Side.X,
+      Side.O,
+      Side.X,
+      Side.O,
+      Side.X,
+      Side.X,
+      Side.O,
+      Side.X,
+      '',
+    ];
+
+    expect(refreshCalls[0][0]).toEqual(postPlayerBoardState);
+    expect(state.input).toBe(false);
 
     // player move
-    //jest.runTimersToTime(500);
-    expect(update).toHaveBeenCalledWith('a');
-    expect(game.endPlayerMove).toHaveBeenCalled();
-    expect(game.isOver).toHaveBeenCalled();
-
-    update.mockClear();
+    expect(state.history).not.toEqual([]);
 
     // computer move
+    const postComputerBoardState = [
+      Side.X,
+      Side.O,
+      Side.X,
+      Side.O,
+      Side.X,
+      Side.X,
+      Side.O,
+      Side.X,
+      Side.O,
+    ];
+
     jest.runTimersToTime(500);
-    expect(game.simulateMove).toHaveBeenCalled();
-    expect(update).toHaveBeenCalledWith('b');
-    expect(game.restart).toHaveBeenCalled();
+    expect(refreshCalls[1][0]).toEqual(postComputerBoardState);
+    expect(state.history.length).toBe(0);
     expect(show).toHaveBeenCalled();
-
-    // cleanup
-    //$FlowIgnore
-    player.mockRestore();
   });
 
-  it("restartGameHandler should restart game, update game when player is 'X'", () => {
-    //$FlowIgnore
-    game.restart = jest.fn();
-    //$FlowIgnore
-    game.player = jest.fn(() => 'X');
-    //$FlowIgnore
-    game.simulateFirstMove = jest.fn();
-    const update = jest.fn();
+  it('restartGameHandler should restart game, update game when player is Side.X', () => {
+    takeTurn(state, { x: 0, y: 0, player: Side.X });
+    takeTurn(state, { x: 1, y: 0, player: Side.X });
+    takeTurn(state, { x: 2, y: 0, player: Side.X });
+
+    state.player = Side.X;
+    state.input = false;
+
     const show = jest.fn();
+    const update = jest.fn();
 
-    restartGameHandler(game, update, show)();
+    restartGameHandler(state, update, show)();
 
-    expect(game.restart).toHaveBeenCalled();
     expect(update).toHaveBeenCalledTimes(1);
+    expect(state.input).toBe(true);
+    expect(state.history.length).toBe(0);
+    expect(state.turn).toBe(Side.X);
   });
 
-  it("restartGameHandler should restart game, update game, and simulate first move when player is 'X'", () => {
-    //$FlowIgnore
-    game.restart = jest.fn();
-    //$FlowIgnore
-    game.player = jest.fn(() => 'O');
-    //$FlowIgnore
-    game.simulateFirstMove = jest.fn();
+  it('restartGameHandler should restart game, update game, and simulate first move when player is Side.X', () => {
+    takeTurn(state, { x: 0, y: 0, player: Side.X });
+    takeTurn(state, { x: 1, y: 0, player: Side.X });
+    takeTurn(state, { x: 2, y: 0, player: Side.X });
+
+    state.player = Side.O;
+    state.turn = Side.O;
+    state.input = false;
+
     const show = jest.fn();
     const update = jest.fn();
 
-    restartGameHandler(game, update, show)();
+    restartGameHandler(state, update, show)();
 
-    expect(game.restart).toHaveBeenCalled();
-    expect(game.simulateFirstMove).toHaveBeenCalled();
     expect(update).toHaveBeenCalledTimes(2);
+    expect(state.input).toBe(true);
+    expect(state.history.length).toBe(1);
+    expect(state.turn).toBe(Side.O);
   });
 
   it('resetGameHandler should restart game and trigger reset', () => {
-    //$FlowIgnore
-    game.restart = jest.fn();
+    state.score[Side.X] += 1;
+    state.turn = Side.O;
+
+    document.body.innerHTML = `
+      <div id="X-score"></div>
+      <div id="O-score"></div>
+    `;
     const reset = jest.fn();
 
     const event = (({ preventDefault: jest.fn() }: any): Event);
-    resetGameHandler(game, reset)(event);
+    resetGameHandler(state, reset)(event);
 
-    expect(game.restart).toHaveBeenCalled();
+    expect(game.score[Side.X]).toBe(0);
+    expect(state.turn).toBe(Side.X);
   });
 
   it('rollbackHandler should rollback game state and update grid', () => {
-    //$FlowIgnore
-    game.rollback = jest.fn();
+    takeTurn(state, { x: 0, y: 0, player: Side.X });
     const update = jest.fn();
 
-    rollbackHandler(game, update)();
+    rollbackHandler(state, update)();
 
-    expect(game.rollback).toHaveBeenCalled();
+    expect(state.history.length).toBe(0);
+    expect(current(state)).toEqual(blank);
     expect(update).toHaveBeenCalled();
   });
 
-  it("chooseTurnHandler extract desired side from HTMLElement and use it to set game side, should clear grid, trigger view transition, simulate move, update, and allow player input when player is 'O'", () => {
-    //$FlowIgnore
-    game.player = jest.fn(() => 'O');
-    //$FlowIgnore
-    game.simulateFirstMove = jest.fn();
-    //$FlowIgnore
-    game.startPlayerMove = jest.fn();
-    //$FlowIgnore
-    game.chooseSide = jest.fn();
+  it('chooseTurnHandler extract desired side from HTMLElement and use it to set game side, should clear grid, trigger view transition, simulate move, update, and allow player input when player is Side.O', () => {
     const refresh = jest.fn();
     const show = jest.fn();
 
     chooseTurnHandler(game, refresh, show)({
-      target: { dataset: { glyph: 'X' } },
+      target: { dataset: { glyph: Side.O } },
     });
 
-    expect(game.chooseSide).toHaveBeenCalledWith('X');
+    expect(game.player).toBe(Side.O);
 
     expect(refresh).toHaveBeenCalledTimes(1);
     expect(show).toHaveBeenCalled();
@@ -368,25 +409,17 @@ describe('TicTacToe Handlers', () => {
     jest.runTimersToTime(500);
 
     expect(refresh).toHaveBeenCalledTimes(2);
-    expect(game.simulateFirstMove).toHaveBeenCalled();
-    expect(game.startPlayerMove).toHaveBeenCalled();
+    expect(game.grid[0].player).toBe(Side.X);
+    expect(game.input).toBe(true);
   });
 
-  it("chooseTurnHandler extract desired side from HTMLElement and use it to set game side, clear grid and trigger view transition when player is 'X'", () => {
-    //$FlowIgnore
-    game.simulateFirstMove = jest.fn();
-    //$FlowIgnore
-    game.startPlayerMove = jest.fn();
-    //$FlowIgnore
-    game.chooseSide = jest.fn();
+  it('chooseTurnHandler extract desired side from HTMLElement and use it to set game side, clear grid and trigger view transition when player is Side.X', () => {
     const refresh = jest.fn();
     const show = jest.fn();
 
-    chooseTurnHandler(game, refresh, show)({
-      target: { dataset: { glyph: 'X' } },
+    chooseTurnHandler(state, refresh, show)({
+      target: { dataset: { glyph: Side.X } },
     });
-
-    expect(game.chooseSide).toHaveBeenCalledWith('X');
 
     expect(refresh).toHaveBeenCalledTimes(1);
     expect(show).toHaveBeenCalled();
