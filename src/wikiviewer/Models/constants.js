@@ -1,8 +1,8 @@
 /* @flow */
 
-const endpoint = `https://en.wikipedia.org/w/api.php`;
+const ENDPOINT = `https://en.wikipedia.org/w/api.php`;
 
-const params = {
+const PARAMS = {
   format: 'json',
   action: 'query',
   generator: 'search',
@@ -17,4 +17,4 @@ const params = {
   redirects: 1,
 };
 
-export { endpoint, params };
+export { ENDPOINT, PARAMS };

@@ -20,7 +20,7 @@ import {
   convertFahrenheitToCelsius,
 } from 'common/js/utils';
 import OPEN_WEATHER_APPID from 'protected/localweather.key';
-import { endpoint, openweatherApiParams } from '../Models';
+import { ENDPOINT, OPENWEATHER_API_PARAMS } from '../Models';
 
 const fetchHandler = (header, cells, tempToggles) => (_: Event) => {
   const getWeather = getWeatherHandler(header, cells, tempToggles);
@@ -35,8 +35,8 @@ const getWeatherHandler = (
   tempToggles: ?NodeList<HTMLInputElement>,
 ) => async (location: Position) => {
   const { latitude, longitude } = location.coords;
-  const params = openweatherApiParams(latitude, longitude);
-  const resource: string = serialize(endpoint, params);
+  const params = OPENWEATHER_API_PARAMS(latitude, longitude);
+  const resource: string = serialize(ENDPOINT, params);
 
   // Call API, update dom
   let weather: ?Weather;

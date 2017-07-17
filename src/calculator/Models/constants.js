@@ -1,4 +1,4 @@
-const glyphs = [
+const GLYPHS = [
   'SIN',
   'COS',
   'TAN',
@@ -30,4 +30,4 @@ const glyphs = [
   'clear',
 ];
 
-export { glyphs };
+export { GLYPHS };

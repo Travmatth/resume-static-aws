@@ -12,7 +12,7 @@ import {
   tempScale,
   fetchHandler,
 } from '../Handlers';
-import { openweatherApiParams, endpoint } from '../Models';
+import { openweatherApiParams } from '../Models';
 import contentLoadedListener from '../index';
 
 import fetchJsonp from 'fetch-jsonp';

@@ -1,5 +1,5 @@
 /* @flow */
 
-import { endpoint, openweatherApiParams } from './constants';
+import { ENDPOINT, OPENWEATHER_API_PARAMS } from './constants';
 
-export { endpoint, openweatherApiParams };
+export { ENDPOINT, OPENWEATHER_API_PARAMS };

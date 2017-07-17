@@ -1,6 +1,6 @@
 /* @flow */
 
-import { endpoint, params } from '../Models';
+import { ENDPOINT, PARAMS } from '../Models';
 import type { WikiSearchResult, WikiPage } from '../wikiviewer.types';
 import { serialize, ResponseError, checkHeaders } from 'common/js/utils';
 
@@ -13,11 +13,11 @@ const url =
 const search = (query: ?string): Promise<Array<WikiPage>> => {
   if (!query && query.length === 0) return Promise.resolve([]);
 
-  params['gsrsearch'] = query;
+  PARAMS['gsrsearch'] = query;
   const opts = {
     headers,
     method: 'POST',
-    body: serialize(endpoint, params),
+    body: serialize(ENDPOINT, PARAMS),
   };
 
   return fetch(url, opts)

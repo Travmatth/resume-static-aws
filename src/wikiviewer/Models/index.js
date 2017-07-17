@@ -1,5 +1,5 @@
 /* @flow */
 
-import { endpoint, params } from './constants';
+import { ENDPOINT, PARAMS } from './constants';
 
-export { endpoint, params };
+export { ENDPOINT, PARAMS };

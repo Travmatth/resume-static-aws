@@ -2,7 +2,6 @@
 
 import { dispatch } from 'tests/utils';
 import * as Handlers from '../Handlers';
-import { glyphs } from '../Models';
 
 jest.mock('../Handlers', () => {
   const module = {};

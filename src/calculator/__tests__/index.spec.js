@@ -2,7 +2,7 @@
 import * as Handlers from '../Handlers';
 import { dispatch } from 'tests/utils';
 import * as handlers from 'common/js/handlers';
-import { glyphs } from '../Models';
+import { GLYPHS } from '../Models';
 
 jest.mock('../Handlers', () => {
   const module = {};
@@ -27,7 +27,7 @@ describe('Calculator index', () => {
   afterEach(() => Handlers.keyPressHandlerCallback.mockReset());
 
   it('calculator buttons should be responsive to click events', () => {
-    glyphs.forEach((glyph: string) => {
+    GLYPHS.forEach((glyph: string) => {
       dispatch(`button[data-key="${glyph}"]`, 'click');
     });
 
@@ -36,7 +36,7 @@ describe('Calculator index', () => {
   });
 
   it('calculator buttons should be responsive to touchstart events', () => {
-    glyphs.forEach((glyph: string) => {
+    GLYPHS.forEach((glyph: string) => {
       dispatch(`button[data-key="${glyph}"]`, 'click');
     });
     //$FlowIgnore

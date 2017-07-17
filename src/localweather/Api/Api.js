@@ -20,7 +20,7 @@ import {
 
 import fetchJsonp from 'fetch-jsonp';
 import { checkHeaders } from 'common/js/utils';
-import { endpoint, openweatherApiParams } from '../Models';
+import { openweatherApiParams } from '../Models';
 import OPEN_WEATHER_APPID from 'protected/localweather.key';
 
 const fetchWeather = async (url: string): Promise<Weather> => {
