@@ -2,9 +2,9 @@
 
 import { parseTimeToText } from 'common/js/utils';
 
-const Phase = { work: 'work', rest: 'rest' };
+const PHASE = { WORK: 'WORK', REST: 'REST' };
 
-const State = { STOPPED: 'STOPPED', RUNNING: 'RUNNING' };
+const STATE = { STOPPED: 'STOPPED', RUNNING: 'RUNNING' };
 
 const stopTimer = (game: Game) => {
   if (game.id) game.id = clearInterval(game.id);
@@ -14,28 +14,32 @@ const startTimer = (
   timerNode: HTMLElement,
   startBtn: HTMLButtonElement,
   circleNode: HTMLElement,
-  starttime: number,
   timer: Timer,
   game: Game,
   set: number => {},
 ) =>
   game.id = setInterval(() => {
-    const max = timer[game.phase];
-    const elapsed = Date.now() - starttime;
+    const timeLimit = timer[game.phase];
+    const now = Date.now();
+    const elapsed = now - game.last;
+    game.last = now;
+    game.current += elapsed;
 
-    set(elapsed / max * 100);
+    set(game.current / timeLimit * 100);
 
-    if (elapsed < max) {
+    if (game.current < timeLimit) {
       // If time has not run out yet, set displayed time
-      timerNode.textContent = parseTimeToText(elapsed);
+      timerNode.textContent = parseTimeToText(game.current);
       startBtn.textContent = 'stop';
     } else {
       // If time is out, set final timerNode, clear timer, shift phase
-      timerNode.textContent = parseTimeToText(max);
-      game.phase = game.phase === Phase.work ? Phase.rest : Phase.work;
-      stopTimer(startBtn, game, set);
+      timerNode.textContent = parseTimeToText(timeLimit);
+      game.phase = game.phase === PHASE.WORK ? PHASE.REST : PHASE.WORK;
+      stopTimer(game);
       startBtn.textContent = 'start';
+      game.current = 0;
+      game.state = STATE.STOPPED;
     }
   }, 10);
 
-export { State, Phase, stopTimer, startTimer };
+export { STATE, PHASE, stopTimer, startTimer };

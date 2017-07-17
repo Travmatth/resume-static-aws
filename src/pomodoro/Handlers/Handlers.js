@@ -1,6 +1,6 @@
 /* @flow */
 
-import { State, Phase, startTimer, stopTimer } from '../Models';
+import { STATE, PHASE, startTimer, stopTimer } from '../Models';
 import type { Timer, Game } from '../pomodoro.types';
 import { parseTimeToText, scale, shrink } from 'common/js/utils';
 
@@ -11,7 +11,7 @@ const setFill = (node: HTMLElement) => (fill: number) =>
 const stepperHandler = (
   node: HTMLElement,
   direction: 'inc' | 'dec',
-  counter: $Keys<typeof Phase>,
+  counter: $Keys<typeof PHASE>,
   timer: Timer,
 ) => (_: Event) => {
   const timeLimit = timer[counter] + scale(direction === 'inc' ? 1 : -1);
@@ -32,11 +32,12 @@ const toggleHandler = (
 ) => (e: Event) => {
   startBtn.textContent = startBtn.textContent === 'start' ? 'stop' : 'start';
 
-  if (game.state === State.STOPPED) {
-    game.state = State.RUNNING;
-    start(timerDisplay, startBtn, circleDisplay, Date.now(), timer, game, set);
+  if (game.state === STATE.STOPPED) {
+    game.state = STATE.RUNNING;
+    game.last = Date.now();
+    start(timerDisplay, startBtn, circleDisplay, timer, game, set);
   } else {
-    game.state = State.STOPPED;
+    game.state = STATE.STOPPED;
     stop(game);
   }
 };
@@ -49,7 +50,8 @@ const resetHandler = (
   game: Game,
 ) => (_: Event) => {
   if (startBtn.textContent === 'stop') startBtn.textContent = 'start';
-  game.state = State.STOPPED;
+  game.state = STATE.STOPPED;
+  game.current = 0;
   stopTimer(game);
   //toggleOff((({}: any): Event));
   timerNode.textContent = '0:0.00';

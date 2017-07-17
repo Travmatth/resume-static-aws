@@ -6,16 +6,17 @@ import {
   resetHandler,
   setFill,
 } from './Handlers';
-import { stopTimer, startTimer, State, Phase } from './Models';
+import { stopTimer, startTimer, STATE, PHASE } from './Models';
 import { eventType, scale } from 'common/js/utils';
 
 if (typeof document !== 'undefined') {
   const timeLimit = scale(1);
-  const timer = { work: timeLimit, rest: timeLimit };
+  const timer = { WORK: timeLimit, REST: timeLimit };
   const game = {
     id: null,
-    phase: Phase.work,
-    state: State.STOPPED,
+    phase: PHASE.WORK,
+    state: STATE.STOPPED,
+    current: 0,
   };
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -67,19 +68,19 @@ if (typeof document !== 'undefined') {
 
     incWorkBtn.addEventListener(
       eventType(),
-      stepperHandler(workDisplay, 'inc', Phase.work, timer),
+      stepperHandler(workDisplay, 'inc', PHASE.WORK, timer),
     );
     decWorkBtn.addEventListener(
       eventType(),
-      stepperHandler(workDisplay, 'dec', Phase.work, timer),
+      stepperHandler(workDisplay, 'dec', PHASE.WORK, timer),
     );
     incRestBtn.addEventListener(
       eventType(),
-      stepperHandler(restDisplay, 'inc', Phase.rest, timer),
+      stepperHandler(restDisplay, 'inc', PHASE.REST, timer),
     );
     decRestBtn.addEventListener(
       eventType(),
-      stepperHandler(restDisplay, 'dec', Phase.rest, timer),
+      stepperHandler(restDisplay, 'dec', PHASE.REST, timer),
     );
   });
 }

@@ -9,73 +9,67 @@ import {
   resetHandler,
 } from '../Handlers';
 import { scale } from 'common/js/utils';
-import { State, Phase } from '../Models';
+import { STATE, PHASE } from '../Models';
 import type { Timer } from '../pomodoro.types';
 
+let base = 1496006730873;
 //$FlowIgnore
-Date.now = jest
-  .fn()
-  .mockImplementationOnce(() => 1496006730873)
-  .mockImplementationOnce(() => 1496006730883)
-  .mockImplementationOnce(() => 1496006730893)
-  .mockImplementationOnce(() => 1496006730903)
-  .mockImplementationOnce(() => 1496006730913)
-  .mockImplementationOnce(() => 1496006730923)
-  .mockImplementationOnce(() => 1496006730933)
-  .mockImplementationOnce(() => 1496006730943)
-  .mockImplementationOnce(() => 1496006730953)
-  .mockImplementationOnce(() => 1496006730963)
-  .mockImplementationOnce(() => 1496006730973);
+Date.now = jest.fn().mockImplementation(() => {
+  base += 10;
+  return base;
+});
+
+let timer: Timer;
+let game: Game;
+let node: HTMLElement;
+let timerBtn: HTMLButtonElement;
 
 describe('Pomodoro Handlers', () => {
-  let timer: Timer;
-  let game: Game;
-  let node: HTMLElement;
-  let timerBtn: HTMLButtonElement;
-
   beforeEach(() => {
     jest.clearAllMocks();
-    timer = { work: scale(1), rest: scale(1) };
-    game = { id: null, state: State.RUNNING, phase: Phase.work };
+    timer = { WORK: scale(1), REST: scale(1) };
+    game = { id: null, state: STATE.RUNNING, phase: PHASE.WORK };
     node = document.createElement('div');
     timerBtn = document.createElement('button');
   });
 
   it('stepperHandler should return function that can increment rest', () => {
-    const step = stepperHandler(node, 'inc', Phase.rest, timer);
+    const step = stepperHandler(node, 'inc', PHASE.REST, timer);
     step((({}: any): Event));
-    expect(timer.rest).toBe(120000);
+    expect(timer.REST).toBe(120000);
   });
 
   it('stepperHandler should return function that can decrement rest', () => {
-    stepperHandler(node, 'inc', Phase.work, timer)((({}: any): Event));
-    stepperHandler(node, 'dec', Phase.rest, timer)((({}: any): Event));
-    expect(timer.rest).toBe(0);
+    stepperHandler(node, 'inc', PHASE.WORK, timer)((({}: any): Event));
+    stepperHandler(node, 'dec', PHASE.REST, timer)((({}: any): Event));
+    expect(timer.REST).toBe(0);
   });
 
   it('stepperHandler should return function that can increment work', () => {
-    stepperHandler(node, 'inc', Phase.work, timer)((({}: any): Event));
-    expect(timer.work).toBe(120000);
+    stepperHandler(node, 'inc', PHASE.WORK, timer)((({}: any): Event));
+    expect(timer.WORK).toBe(120000);
   });
 
   it('stepperHandler should return function that can decrement work', () => {
-    stepperHandler(node, 'dec', Phase.work, timer)((({}: any): Event));
-    expect(timer.work).toBe(0);
+    stepperHandler(node, 'dec', PHASE.WORK, timer)((({}: any): Event));
+    expect(timer.WORK).toBe(0);
   });
 
-  it('stepperHandler should return function that can decrement work without going negavtive', () => {
-    stepperHandler(node, 'dec', Phase.work, timer)((({}: any): Event));
-    stepperHandler(node, 'dec', Phase.work, timer)((({}: any): Event));
-    expect(timer.work).toBe(0);
+  it('stepperHandler should return function that can decrement work without going negative', () => {
+    const stepper = stepperHandler(node, 'dec', PHASE.WORK, timer);
+    stepper((({}: any): Event));
+    stepper((({}: any): Event));
+
+    expect(timer.WORK).toBe(0);
   });
 
   it('returned stepperHandler function can increment HTMLElement counter', () => {
-    stepperHandler(node, 'inc', Phase.work, timer)((({}: any): Event));
+    stepperHandler(node, 'inc', PHASE.WORK, timer)((({}: any): Event));
     expect(node.textContent).toBe(`${2}`);
   });
 
   it('returned stepperHandler function can decrement HTMLElement counter', () => {
-    stepperHandler(node, 'dec', Phase.work, timer)((({}: any): Event));
+    stepperHandler(node, 'dec', PHASE.WORK, timer)((({}: any): Event));
     expect(node.textContent).toBe(`${0}`);
   });
 
