@@ -6,11 +6,11 @@ const pages = [
   //'blog/index',
   //'calculator/index',
   //'localweather/index',
-  'pomodoro/index',
+  //'pomodoro/index',
   //'randomquote/index',
   //'simon/index',
   //'tictactoe/index',
-  //'twitchtv/index',
+  'twitchtv/index',
   //'wikiviewer/index',
 ];
 
