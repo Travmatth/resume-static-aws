@@ -1,11 +1,11 @@
 /* @flow */
-import { LogicUnit } from '../Models';
+import { Calculator } from '../Models';
 
 let expr, infix;
 
 describe('Calculator Model', () => {
   beforeEach(() => {
-    expr = new LogicUnit();
+    expr = new Calculator();
     infix = [];
   });
 

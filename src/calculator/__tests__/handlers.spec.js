@@ -65,7 +65,7 @@ describe('Calculator Handlers', () => {
     expect(win.textContent).toBe('test');
   });
 
-  it('refreshHandler should update  outputWindow textContent with LogicUnit if null | undefined message', () => {
+  it('refreshHandler should update  outputWindow textContent with Calculator if null | undefined message', () => {
     const refresh = refreshHandler(win);
 
     keyPressHandler(win)(press('1'));

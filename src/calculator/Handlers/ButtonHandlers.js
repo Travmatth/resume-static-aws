@@ -1,8 +1,8 @@
 /* @flow */
 
-import { LogicUnit } from '../Models';
+import { Calculator } from '../Models';
 
-const logic = new LogicUnit();
+const logic = new Calculator();
 
 const refreshHandler = (outputWindow: ?HTMLElement) => (msg: ?string): void => {
   if (outputWindow) outputWindow.textContent = msg || logic.getExpression();

@@ -1,4 +1,4 @@
 /* @flow */
-import LogicUnit from './LogicUnit';
+import Calculator from './Calculator';
 import { GLYPHS } from './constants';
-export { LogicUnit, GLYPHS };
+export { Calculator, GLYPHS };
