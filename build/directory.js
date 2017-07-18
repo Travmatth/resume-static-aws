@@ -2,15 +2,15 @@
 
 // Commented out for compilation perf during dev
 const pages = [
-  'index',
-  'calculator/index',
-  'localweather/index',
-  'pomodoro/index',
-  'randomquote/index',
-  'simon/index',
-  'tictactoe/index',
+  //'index',
+  //'calculator/index',
+  //'localweather/index',
+  //'pomodoro/index',
+  //'randomquote/index',
+  //'simon/index',
+  //'tictactoe/index',
   'twitchtv/index',
-  'wikiviewer/index',
+  //'wikiviewer/index',
 ];
 
 const multiCompiler = (configure: string => Object) =>

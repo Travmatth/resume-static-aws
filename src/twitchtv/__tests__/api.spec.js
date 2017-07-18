@@ -19,7 +19,7 @@ import type {
   PossiblyNestedStreams,
 } from '../twitchtv.types';
 import TWITCH_TV_API_KEY from 'protected/localweather.key';
-import { userUrl, users, streamsUrl, extractUserName } from '../Models';
+import * as Models from '../Models';
 
 import {
   verifyUser,
@@ -28,6 +28,15 @@ import {
   fetchAllProfiles,
   agglomerate,
 } from '../Api';
+
+jest.mock('../Models', () => ({
+  ...require.requireActual('../Models'),
+  ONLINE_STREAMS: ['freecodecamp', 'noobs2ninjas', 'RobotCaleb', 'OgamingSC2'],
+  OFFLINE_STREAMS: ['comster404'],
+  get USERS() {
+    return [...this.ONLINE_STREAMS, ...this.OFFLINE_STREAMS];
+  },
+}));
 
 describe('TwitchTV Api', () => {
   afterEach(() => fetch.resetMocks());
@@ -145,15 +154,6 @@ describe('TwitchTV Api', () => {
   });
 
   it('fetchAllProfiles should return Array<Promise<Stream>>', async () => {
-    const onlineStreams = [
-      'freecodecamp',
-      'noobs2ninjas',
-      'RobotCaleb',
-      'OgamingSC2',
-    ];
-
-    const offlineStreams = ['comster404'];
-
     fetch.mockResponses(
       [json(onlineUserStreamCall('freecodecamp')), { status: 200 }],
       [json(onlineUserStreamCall('noobs2ninjas')), { status: 200 }],
@@ -163,13 +163,12 @@ describe('TwitchTV Api', () => {
       [json(validUser('comster404')), { status: 200 }],
     );
 
-    const streamers = [...onlineStreams, ...offlineStreams];
-    expect(await fetchAllProfiles(streamers)).toEqual([
-      ...onlineStreams.map(user => ({
+    expect(await fetchAllProfiles()).toEqual([
+      ...Models.ONLINE_STREAMS.map(user => ({
         error: false,
         stream: onlineUserStreamCall(user).stream,
       })),
-      ...offlineStreams.map(user => ({
+      ...Models.OFFLINE_STREAMS.map(user => ({
         error: true,
         status: `${user} is offline`,
       })),

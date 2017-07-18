@@ -1,6 +1,5 @@
 import type { Stream } from '../twitchtv.types';
 import { fetchAllProfiles } from '../Api';
-import { USERS } from '../Models';
 import { trim, removeChildren } from 'common/js/utils';
 
 const FILTER_EVENT = 'filter-event';
@@ -35,7 +34,7 @@ const fetchHandler = (list: HTMLULElement) => async (_: Event) => {
   if (list.children.length !== 0) removeChildren(list);
 
   const nodes = document.createDocumentFragment();
-  const streamers = await fetchAllProfiles(USERS);
+  const streamers = await fetchAllProfiles();
 
   streamers.map((streamer: PossibleStream) => {
     const li = document.createElement('li');
@@ -47,6 +46,7 @@ const fetchHandler = (list: HTMLULElement) => async (_: Event) => {
     const a = li.querySelector('a');
     const h2 = li.querySelector('h2');
 
+    // Create online player tile
     if (!streamer.error) {
       const {
         game,
@@ -77,6 +77,8 @@ const fetchHandler = (list: HTMLULElement) => async (_: Event) => {
       a.href = url;
       a.textContent = display_name;
       li.dataset.status = 'online';
+
+      // Create offline player tile
     } else {
       li.querySelector('.columns').remove();
       a.remove();

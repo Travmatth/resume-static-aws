@@ -11,7 +11,7 @@ import type {
 
 import TWITCH_TV_API_KEY from 'protected/twitch.key';
 import { serialize, trim } from 'common/js/utils';
-import { STREAMS_URL, USER_URL, extractUserName } from '../Models';
+import { STREAMS_URL, USERS_URL, USERS, extractUserName } from '../Models';
 
 const headers = new Headers({
   Accept: 'application/vnd.twitchtv.v3+json',
@@ -21,7 +21,7 @@ const headers = new Headers({
 const options = { headers, method: 'GET', mode: 'cors' };
 
 const verifyUser = async (user: string): Promise<boolean> => {
-  const endpoint = USER_URL + user;
+  const endpoint = USERS_URL + user;
 
   return fetch(
     new Request(endpoint, options),
@@ -68,13 +68,7 @@ const classifyResponse = async (
   }
 };
 
-/**
- * fetchAllProfiles returns an array of promised normalized user objects
- * @type {Function}
- */
-const fetchAllProfiles = (
-  users: Array<string>,
-): Promise<Array<PossibleStream>> => {
+const fetchAllProfiles = (): Promise<Array<PossibleStream>> => {
   // call TwitchTV api, return normalized user object
   const task = (user: string): Promise<PossiblyNestedStreams> => {
     const endpoint = STREAMS_URL + user;
@@ -82,7 +76,7 @@ const fetchAllProfiles = (
     return fetch(new Request(endpoint, options)).then(classifyResponse);
   };
 
-  return Promise.all([...users.map(task)]).then(agglomerate);
+  return Promise.all([...USERS.map(task)]).then(agglomerate);
 };
 
 const agglomerate = (userResponses: Array<PossiblyNestedStreams>) => {
