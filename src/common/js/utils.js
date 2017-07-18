@@ -81,7 +81,8 @@ const convertFahrenheitToCelsius = (temp: number) =>
   checkForNegativeZero(Math.round((temp - 32) * 5 / 9));
 
 const checkHeaders = (response: Response) => {
-  if (response.status >= 400) throw new ResponseError('fetch failed', response);
+  if (response.status !== 200)
+    throw new ResponseError('fetch failed', response);
   return ((response.json(): any): Promise<any>);
 };
 
