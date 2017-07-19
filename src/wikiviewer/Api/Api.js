@@ -3,12 +3,11 @@
 import { ENDPOINT, PARAMS } from '../Models';
 import type { WikiSearchResult, WikiPage } from '../wikiviewer.types';
 import { serialize, ResponseError, checkHeaders } from 'common/js/utils';
+import { WIKI_PROXY } from 'common/protected/proxies';
 
 const headers = new Headers({
   'Content-Type': 'text/plain',
 });
-const url =
-  'https://us-central1-gcf-randomquote-proxy.cloudfunctions.net/gcf-wiki-proxy';
 
 const search = (query: ?string): Promise<Array<WikiPage>> => {
   if (!query && query.length === 0) return Promise.resolve([]);
@@ -20,7 +19,7 @@ const search = (query: ?string): Promise<Array<WikiPage>> => {
     body: serialize(ENDPOINT, PARAMS),
   };
 
-  return fetch(url, opts)
+  return fetch(WIKI_PROXY, opts)
     .then(checkHeaders)
     .then(processWikis)
     .catch(err => []);

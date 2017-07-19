@@ -1,11 +1,11 @@
 /* @flow */
 import fetchJsonp from 'fetch-jsonp';
-import proxyUrl from 'protected/randomquote';
+import { RANDOMQUOTE_PROXY } from 'protected/proxies';
 import { serialize, json, checkHeaders } from 'common/js/utils';
 
 const fetchQuote = () => {
   //Proxying call to avoid jsonp && CORS restrictions
-  return fetch(proxyUrl)
+  return fetch(RANDOMQUOTE_PROXY)
     .then(checkHeaders)
     .then(response => ({
       error: null,
