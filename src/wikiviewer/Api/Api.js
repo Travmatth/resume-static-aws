@@ -3,7 +3,7 @@
 import { ENDPOINT, PARAMS } from '../Models';
 import type { WikiSearchResult, WikiPage } from '../wikiviewer.types';
 import { serialize, ResponseError, checkHeaders } from 'common/js/utils';
-import { WIKI_PROXY } from 'common/protected/proxies';
+import { WIKI_PROXY } from 'protected/proxies';
 
 const headers = new Headers({
   'Content-Type': 'text/plain',
