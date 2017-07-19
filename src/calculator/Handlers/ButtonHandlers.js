@@ -1,41 +1,61 @@
 /* @flow */
-
 import { Calculator } from '../Models';
 
-const logic = new Calculator();
+const calculator = new Calculator();
 
-const refreshHandler = (outputWindow: ?HTMLElement) => (msg: ?string): void => {
-  if (outputWindow) outputWindow.textContent = msg || logic.getExpression();
+/* refreshHandler responsible for updating output window with given text
+ */
+const refreshHandler = (output: HTMLElement) => (msg: ?string) =>
+  output.textContent = msg || calculator.getExpression();
+
+/* dismissPopupHandler responsible toggling off .is-active on modal element
+ */
+const dismissPopupHandler = (element: HTMLElement) => (_: Event) =>
+  element.classList.toggle('is-active', false);
+
+/* displayPopup responsible toggling on .is-active and adding message to modal
+ */
+const displayPopup = (message: string) => {
+  document.querySelector('#error-modal').textContent = message;
+  document.querySelector('.modal').classList.toggle('is-active', true);
 };
 
-/* called when used selects a glyph */
+/* keyPressHandler responsible for calculator keypress and calling model
+ */
 const keyPressHandler = (outputWindow: HTMLElement) => (ev: Event): void => {
   const { key } = ev.target.dataset;
   const refresh = refreshHandler(outputWindow);
 
   switch (key) {
     case '=':
-      refresh(logic.compute());
+      try {
+        const message = calculator.compute();
+        refresh(message);
+      } catch (thrown) {
+        console.error(thrown);
+        displayPopup(thrown.message);
+      }
+
       break;
 
     case 'clear':
-      logic.clear();
+      calculator.clear();
       refresh();
 
       break;
 
     case 'delete':
-      logic.delete();
+      calculator.delete();
       refresh();
 
       break;
 
     default:
-      logic.update(key);
+      calculator.update(key);
       refresh();
 
       break;
   }
 };
 
-export { refreshHandler, keyPressHandler };
+export { refreshHandler, keyPressHandler, displayPopup, dismissPopupHandler };

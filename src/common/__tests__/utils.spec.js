@@ -14,6 +14,7 @@ import {
   scale,
   checkForNegativeZero,
   trim,
+  rand,
 } from '../js/utils';
 
 describe('Shared utility code', () => {
@@ -130,5 +131,12 @@ describe('Shared utility code', () => {
     window.ontouchstart = true;
 
     expect(eventType()).toBe('touchstart');
+  });
+
+  it('rand should return a random number within range', () => {
+    const num = rand(9);
+
+    expect(!isNaN(num)).toBe(true);
+    expect(num >= 0 && num <= 10).toBe(true);
   });
 });

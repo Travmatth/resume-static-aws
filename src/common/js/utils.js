@@ -90,6 +90,8 @@ const eventType = () => ('ontouchstart' in window ? 'touchstart' : 'click');
 
 const trim = (str: string) => str.replace(/^\s+|\s+$/g, '');
 
+const rand = (range: numer) => Math.floor(Math.random() * (range + 1));
+
 export {
   checkForNegativeZero,
   eventType,
@@ -105,4 +107,5 @@ export {
   convertFahrenheitToCelsius,
   trim,
   removeChildren,
+  rand,
 };

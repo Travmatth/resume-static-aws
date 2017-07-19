@@ -1,5 +1,10 @@
 /* @flow */
-import { keyPressHandler, refreshHandler } from '../Handlers';
+import {
+  keyPressHandler,
+  refreshHandler,
+  displayPopup,
+  dismissPopupHandler,
+} from '../Handlers';
 import { dispatch } from 'tests/utils';
 
 let win: HTMLElement;
@@ -18,6 +23,30 @@ describe('Calculator Handlers', () => {
     keyPressHandler(win)(press('delete'));
   });
 
+  it('dismissPopupHandler should toggle off .is-active on given element', () => {
+    const el = document.createElement('div');
+    el.classList.add('is-active');
+
+    dismissPopupHandler(el)();
+
+    expect(el.classList.contains('is-active')).toBe(false);
+  });
+
+  it('displayPopup should toggle .is-active on .modal element, and set given message as textContent on #error-modal', () => {
+    document.body.innerHTML = `
+      <div id="error-modal"></div>
+      <div class="modal"></div>
+    `;
+
+    displayPopup('test');
+
+    expect(document.querySelector('#error-modal').textContent).toBe('test');
+
+    expect(
+      document.querySelector('.modal').classList.contains('is-active'),
+    ).toBe(true);
+  });
+
   it('keyPressHandler should update state on number keys', () => {
     keyPressHandler(win)(press('1'));
     expect(win.textContent).toBe('1');
@@ -29,8 +58,12 @@ describe('Calculator Handlers', () => {
   });
 
   it("keyPressHandler should refresh window on '=' key", () => {
-    keyPressHandler(win)(press('='));
-    expect(win.textContent).toBe('Error');
+    const keypress = keyPressHandler(win);
+    keypress(press('1'));
+    keypress(press('+'));
+    keypress(press('1'));
+    keypress(press('='));
+    expect(win.textContent).toBe('2');
   });
 
   it("keyPressHandler should clear logic & refresh on 'clear' key", () => {
@@ -51,11 +84,18 @@ describe('Calculator Handlers', () => {
     expect(win.textContent).toBe('');
   });
 
-  it('refreshHandler should allow for a null outputWindow', () => {
-    const refresh = refreshHandler();
-    refresh();
+  it('keyPressHandler should catch error message on parser', () => {
+    document.body.innerHTML = `
+      <div id="error-modal"></div>
+      <div class="modal"></div>
+    `;
+    const errorMsg = 'Expected "(", [a-zA-Z], or real but "+" found.';
 
-    expect(win.textContent).toBe('');
+    const keypress = keyPressHandler(win);
+    keypress(press('+'));
+    keypress(press('='));
+
+    expect(document.querySelector('#error-modal').textContent).toBe(errorMsg);
   });
 
   it('refreshHandler should update outputWindow textContent with msg', () => {

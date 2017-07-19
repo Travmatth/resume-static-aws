@@ -9,6 +9,11 @@ block content
 		include ../common/pug/nav.pug
 		div.hero-body
 			div.container.is-fullwidth
+				div.modal
+					div.modal-background
+					div.modal-content
+						div#error-modal.box.has-text-centered
+					div.modal-close
 				div.columns.is-mobile
 					div.app.column.is-10.is-offset-1
 						h2.window.title.has-text-centered
@@ -56,5 +61,5 @@ block content
 								button.button.column(data-key='.') .
 								button.button.column(data-key='0') 0
 								button.button.column(data-key='=') =
-								button.button.column.i(data-key='clear') c
+								button.button.column(data-key='clear') c
 							h2.has-text-centered.subtitle.is-hidden-tablet Please visit on desktop for full experience

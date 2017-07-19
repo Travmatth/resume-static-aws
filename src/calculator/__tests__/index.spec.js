@@ -4,17 +4,17 @@ import { dispatch } from 'tests/utils';
 import * as handlers from 'common/js/handlers';
 import { GLYPHS } from '../Models';
 
-jest.mock('../Handlers', () => {
-  const module = {};
-
-  module.refreshHandlerCallback = jest.fn();
-  module.keyPressHandlerCallback = jest.fn();
-
-  module.refreshHandler = module.refreshHandlerCallback;
-  module.keyPressHandler = module.keyPressHandlerCallback;
-
-  return module;
-});
+jest.mock('../Handlers', () => ({
+  dismissPopupHandler: jest.fn(),
+  refreshHandlerCallback: jest.fn(),
+  keyPressHandlerCallback: jest.fn(),
+  get refreshHandler() {
+    return this.refreshHandlerCallback;
+  },
+  get keyPressHandler() {
+    return this.keyPressHandlerCallback;
+  },
+}));
 
 describe('Calculator index', () => {
   beforeEach(() => {

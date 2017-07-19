@@ -1,4 +1,10 @@
 /* @flow */
 
-import { keyPressHandler, refreshHandler } from './ButtonHandlers';
-export { keyPressHandler, refreshHandler };
+import {
+  displayPopup,
+  keyPressHandler,
+  refreshHandler,
+  dismissPopupHandler,
+} from './ButtonHandlers';
+
+export { displayPopup, keyPressHandler, refreshHandler, dismissPopupHandler };

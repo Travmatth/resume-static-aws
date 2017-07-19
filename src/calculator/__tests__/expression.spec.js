@@ -9,7 +9,6 @@ describe('Calculator Model', () => {
     infix = [];
   });
 
-  //UPDATING
   it('should be able to enter decimals', () => {
     expr.update('9');
     expr.update('.');
@@ -156,10 +155,11 @@ describe('Calculator Model', () => {
     expect(expr.getExpression()).toBe('0');
   });
 
-  it('should throw on badly formatted expression', () => {
-    expr.update('1');
-    expr.update('+');
-    expect(expr.compute()).toBe('Error');
+  it('RAND should compute correctly', () => {
+    expr.update('RAND');
+    const rand = expr.getExpression();
+    expect(!isNaN(rand)).toBe(true);
+    expect(rand <= 10 && rand >= 0).toBe(true);
   });
 
   it('delete should clear internal state', () => {
@@ -168,6 +168,4 @@ describe('Calculator Model', () => {
     expr.delete();
     expect(expr.getExpression()).toBe('');
   });
-
-  // lines 28,29,57,75
 });

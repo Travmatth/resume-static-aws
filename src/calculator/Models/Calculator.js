@@ -1,6 +1,7 @@
 /* @flow */
 
 import { arithmetic } from '../Parser';
+import { rand } from 'common/js/utils';
 
 const operators = new Set(['+', '-', '*', '/', '^']);
 const constants = { E: '2.718', PI: '3.14', LN2: '0.693' };
@@ -38,16 +39,10 @@ export default class Calculator {
     if (this.expression.length > 0) this.expression = [];
   }
 
-  compute(): void | string {
-    try {
-      const result = arithmetic.parse(this.expression.join(' '));
-      const parsed = parseFloat(result).toFixed(5).replace(/\.?0+$/, '');
-      this.expression = [parsed];
-    } catch (thrown) {
-      console.error(thrown);
-      window.alert(thrown.message);
-      return 'Error';
-    }
+  compute(): void {
+    const result = arithmetic.parse(this.expression.join(' '));
+    const parsed = parseFloat(result).toFixed(5).replace(/\.?0+$/, '');
+    this.expression = [parsed];
   }
 
   /* updates postfix with the value user enters */
@@ -65,28 +60,28 @@ export default class Calculator {
         this.expression.push(char);
       }
 
-      // If string is entered, it's either function | constant | decimal
+      // If string is entered, it can be: function | constant | decimal
       // Constants are added as a number, functions & decimals as a string
     } else {
       switch (char) {
         case '.':
           if (this.expression.length > 0)
             this.expression[this.expression.length - 1] = `${last}.`;
-          //TEST
           break;
 
         case 'RAND':
-          //TEST
+          this.expression.push(rand(9));
           break;
 
         default:
-          if (char in constants)
-            //TEST
+          if (char in constants) {
             this.expression.push(constants[char]);
-          else if (char === '(' || char === ')')
-            //TEST
+          } else if (char === '(' || char === ')') {
             this.expression.push(char);
-          else this.expression.push(!operators.has(char) ? char + '(' : char);
+          } else {
+            this.expression.push(!operators.has(char) ? char + '(' : char);
+          }
+
           break;
       }
     }
