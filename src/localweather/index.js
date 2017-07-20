@@ -1,24 +1,23 @@
 /* @flow */
-import { toggleTempChangeHandler, fetchHandler } from './Handlers';
+import { fetchHandler, dispatchToggleEvent } from './Handlers';
 import { eventType } from 'common/js/utils';
 
 if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
-    const toggles = document.querySelectorAll('.measurement');
-    const header = document.querySelector('.heading');
-    const cells = document.querySelectorAll('.cell');
-    const fetchBtn = document.querySelector('#fetch-btn');
-    const tempToggles = ((document.querySelectorAll('input'): any): NodeList<
-      HTMLInputElement
-    >);
-
     const type = eventType();
-    const toggle = toggleTempChangeHandler(toggles);
+    const span = document.querySelector('.heading');
+    const tbody = document.querySelector('tbody');
+    const table = document.querySelector('table');
 
-    tempToggles.forEach(elem => {
-      elem.addEventListener(type, toggle);
-    });
-    fetchBtn.addEventListener(type, fetchHandler(header, cells, tempToggles));
-    document.fetchBtn = fetchBtn;
+    // radio buttons should dispatch TOGGLE_EVENT to table cells on click
+    document
+      .querySelectorAll('input')
+      .forEach(elem =>
+        elem.addEventListener(type, dispatchToggleEvent(elem.dataset.type)),
+      );
+
+    document
+      .querySelector('#fetch-btn')
+      .addEventListener(type, fetchHandler(span, tbody, table));
   });
 }

@@ -1,17 +1,21 @@
 /* @flow */
 
 import {
-  tempScale,
-  getWeatherHandler,
-  updateTableRows,
-  toggleTempChangeHandler,
   fetchHandler,
+  weatherHandler,
+  updateTableRows,
+  TOGGLE_EVENT,
+  dispatchToggleEvent,
+  toggleMeasurement,
+  tempScale,
 } from './Handlers';
 
 export {
   fetchHandler,
-  tempScale,
-  getWeatherHandler,
+  weatherHandler,
   updateTableRows,
-  toggleTempChangeHandler,
+  TOGGLE_EVENT,
+  dispatchToggleEvent,
+  toggleMeasurement,
+  tempScale,
 };

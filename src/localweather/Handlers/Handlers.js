@@ -1,145 +1,123 @@
 /* @flow */
 
 import { fetchWeather } from '../Api';
+import type { Daily, Weather } from '../localweather.types';
 
-import type {
-  ApiParams,
-  Forecast,
-  DailyTemperature,
-  DailyForecast,
-  Daily,
-  Weather,
-  FiveDayForecast,
-} from '../localweather.types';
+/* fetchHandler dispatches a callback to browser geolocation
+ */
+//span: HTMLElement,
+//tbody: HTMLTableSectionElement,
+//table: HTMLTableElement
+const fetchHandler = (...elements) => (_: Event) =>
+  navigator.geolocation.getCurrentPosition(weatherHandler(...elements));
+//.getCurrentPosition(weatherHandler(span, tbody, table));
 
-import {
-  serialize,
-  dateString,
-  appendSuffix,
-  ResponseError,
-  convertFahrenheitToCelsius,
-} from 'common/js/utils';
-import OPEN_WEATHER_APPID from 'protected/localweather.key';
-import { ENDPOINT, OPENWEATHER_API_PARAMS } from '../Models';
-
-const fetchHandler = (header, cells, tempToggles) => (_: Event) => {
-  const getWeather = getWeatherHandler(header, cells, tempToggles);
-  navigator.geolocation.getCurrentPosition(getWeather);
-};
-
-// Mocking fetch during dev
-//import * as MOCK from './mockdata';
-const getWeatherHandler = (
-  header: ?HTMLElement,
-  cells: ?NodeList<HTMLElement>,
-  tempToggles: ?NodeList<HTMLInputElement>,
+/* weatherHandler uses browser geolocation coordinates
+ * to fetch weather and update the page's table
+ */
+const weatherHandler = (
+  span: HTMLElement,
+  tbody: HTMLTableSectionElement,
+  table: HTMLTableElement,
 ) => async (location: Position) => {
-  const { latitude, longitude } = location.coords;
-  const params = OPENWEATHER_API_PARAMS(latitude, longitude);
-  const resource: string = serialize(ENDPOINT, params);
+  const { coords } = location;
+  document.querySelector('.spinner').classList.toggle('hidden', false);
+  const weather = await fetchWeather(coords);
 
-  // Call API, update dom
-  let weather: ?Weather;
-  weather = await fetchWeather(resource);
-
-  if (weather) {
+  if (weather.error) {
+    console.error(weather.thrown);
+  } else {
     const { forecasts, city } = weather;
-    const temperatures = forecasts.map(elem => elem.temp);
-    if (header) header.textContent = city;
-    if (cells) updateTableRows(cells, forecasts, 'fahrenheit');
+    span.textContent = city;
+    document.querySelector('.spinner').classList.toggle('hidden', true);
+    updateTableRows(tbody, forecasts, 'fahrenheit', table);
   }
 };
 
-/*
-  DOM Interaction
-*/
-
-/**
- * updateTableRows fills in given table rows (each containing a dates weather info)
- * with the supplied information
- * @param  { NodeList<HTMLTableRowElement> } nodes the table row elements to be populated
- * @param  { Array<Forecasts> } results the parsed weather forecasts
- * @return { void } void
+/* updateTableRows uses fetched weather data to create tiles, append to tbody
  */
 const updateTableRows = (
-  nodes: NodeList<HTMLElement>,
+  tbody: HTMLTableSectionElement,
   results: Array<Daily>,
-  temperature: string,
-): void => {
-  let index = 0;
-  let node = nodes.item(index);
-  let forecast = results[index];
-  //$TODO: scaffolding
-  document.debug_nodes = nodes;
-
-  while (node && forecast) {
-    /* Populate children cells according to template:
-      tr.cell.hide
-        td.day
-        td.time
-        td.measurement
-        td.icon
-          img
-        td.weather
-    */
+  desired: 'fahrenheit' | 'celsius',
+  table: HTMLTableElement,
+) => {
+  /* tr.cell.hide
+      td.day
+      td.time
+      td.measurement
+      td.icon
+        img
+      td.weather
+  */
+  results.forEach((forecast: Daily) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = require('../Assets/tile.html');
     const { icon, temp, day, time, weather, description } = forecast;
 
-    node.children[0].textContent = day;
-    node.children[1].textContent = time;
+    const img = tr.querySelector('img');
+    const dayNode = tr.querySelector('.day');
+    const measureNode = tr.querySelector('.measurement');
+    const timeNode = tr.querySelector('.time');
+    const weatherNode = tr.querySelector('.weather');
 
-    if (!node.children[2].dataset) node.children[2].dataset = {};
-    node.children[2].dataset.celsius = temp.celsius;
-    node.children[2].dataset.fahrenheit = temp.fahrenheit;
+    img.src = icon;
+    dayNode.textContent = day;
+    timeNode.textContent = time;
+    weatherNode.textContent = description;
 
-    node.children[2].textContent = temperature === 'celsius'
+    if (!measureNode.dataset) measureNode.dataset = {};
+    measureNode.dataset.celsius = temp.celsius;
+    measureNode.dataset.fahrenheit = temp.fahrenheit;
+
+    measureNode.textContent = desired === 'celsius'
       ? `${temp.celsius}`
       : `${temp.fahrenheit}`;
+    measureNode.addEventListener(TOGGLE_EVENT, toggleMeasurement);
 
-    ((node.children[3].children[0].children[
-      0
-    ]: any): HTMLImageElement).src = icon;
+    tbody.appendChild(tr);
+  });
 
-    node.children[4].textContent = description;
-
-    node.classList.toggle('hide');
-    node.classList.toggle('show');
-    //if (node.className === 'hide') node.className.replace(/hide/, 'show');
-
-    // Finally, point to next element in source arrays
-    index += 1;
-    node = nodes.item(index);
-    forecast = results[index];
-  }
+  // Make table visible
+  table.classList.toggle('hidden', false);
 };
 
-//TODO: figure out failing test, rewrite -> store temp in dataset
-const toggleTempChangeHandler = (nodes: NodeList<HTMLElement>) => (
-  event: Event,
-) => {
-  let index = 0;
-  let node = nodes.item(index);
-  let desired = event.target.dataset.type === 'fahrenheit';
+const TOGGLE_EVENT = 'TOGGLE_EVENT';
 
-  while (node) {
-    node.textContent = node.dataset[desired ? 'fahrenheit' : 'celsius'];
+/* dispatchToggleEvent causes measurement cells to switch their displayed temp
+ */
+const dispatchToggleEvent = (measurement: 'fahrenheit' | 'celsius') => (
+  _: Event,
+) =>
+  document.querySelectorAll('.measurement').forEach(el => {
+    el.dispatchEvent(
+      new CustomEvent(TOGGLE_EVENT, {
+        detail: { measurement },
+      }),
+    );
+  });
 
-    index += 1;
-    node = nodes.item(index);
-  }
+/* toggleMeasurement switches targeted elements displayed temperature
+ */
+const toggleMeasurement = (event: Event) => {
+  const { target, detail: { measurement } } = event;
+  target.textContent = target.dataset[measurement];
 };
 
-// determine user preference in which temp scale temperature is with
-const tempScale = () => {
-  return ((document.querySelector('.celsius'): any): HTMLInputElement)
-    .checked === true
+/* tempScale determines desired temperature scale
+ */
+const tempScale = () =>
+  (((document.querySelector('.celsius'): any): HTMLInputElement).checked ===
+    true
     ? 'celsius'
-    : 'fahrenheit';
-};
+    : 'fahrenheit');
 
 export {
-  tempScale,
-  getWeatherHandler,
-  updateTableRows,
-  toggleTempChangeHandler,
   fetchHandler,
+  weatherHandler,
+  updateTableRows,
+  TOGGLE_EVENT,
+  dispatchToggleEvent,
+  toggleMeasurement,
+  tempScale,
 };
