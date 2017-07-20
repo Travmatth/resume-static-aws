@@ -72,6 +72,10 @@ const common = multiCompiler(page => ({
         loader: 'url-loader?limit=10000&mimetype=application/font-woff',
       },
       {
+        test: /\.(svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file-loader',
+      },
+      {
         test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader',
       },
