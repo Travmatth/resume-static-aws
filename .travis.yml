@@ -3,9 +3,9 @@ node_js:
 - '6.1.0'
 cache: yarn
 script:
-- yarn test
+- yarn test --runInBand
 after_success:
-- yarn run coverage
+- yarn run coverage --runInBand
 - yarn run coveralls
 - yarn run codacy
 before_install:
