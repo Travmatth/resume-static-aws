@@ -15,6 +15,7 @@
     "deploy": "yarn run build:prod && ./tools/deploy.js",
     "build:parser": "pegjs src/calculator/arithmetic.pegjs",
     "coverage": "yarn test -- --coverage",
+    "coveralls": "cat tests/coverage/lcov.info | coveralls --verbose",
     "codacy": "cat tests/coverage/lcov.info | ./node_modules/.bin/codacy-coverage -t \"${CODACY_API_KEY}\" --verbose"
   },
   "repository": {

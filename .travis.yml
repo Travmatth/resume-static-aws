@@ -9,6 +9,7 @@ script:
 - yarn test -- --runInBand
 after_success:
 - yarn run coverage -- --runInBand
+- yarn run coveralls
 - yarn run codacy
 before_install:
 - export TZ=America/New_York

@@ -82,7 +82,6 @@ const convertFahrenheitToCelsius = (temp: number) =>
 
 const checkHeaders = (response: Response) => {
   document.res = response;
-  debugger;
   if (response.status !== 200)
     throw new ResponseError('fetch failed', response);
   return ((response.json(): any): Promise<any>);
