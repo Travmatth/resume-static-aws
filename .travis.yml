@@ -3,7 +3,7 @@ node_js:
 - '6.1.0'
 cache: yarn
 script:
-- yarn test --runInBand
+- yarn test -- --runInBand
 after_success:
 - yarn run coverage -- --runInBand
 - yarn run coveralls
