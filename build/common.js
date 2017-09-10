@@ -2,7 +2,7 @@
 
 import path from 'path';
 import webpack from 'webpack';
-import { multiCompiler } from './directory';
+import { compile } from './directory';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { StatsWriterPlugin } from 'webpack-stats-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
@@ -10,7 +10,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const root = process.cwd();
 
-const common = multiCompiler(page => ({
+const common = compile(page => ({
   output: {
     publicPath: '/',
     path: path.resolve(root, 'dist'),

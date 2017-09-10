@@ -3,44 +3,81 @@
 import { fetchWeather } from '../Api';
 import type { Daily, Weather } from '../localweather.types';
 
+const showScene = (
+  error: HTMLElement,
+  spinner: HTMLElement,
+  table: HTMLTableElement,
+) => (scene: 'loading' | 'error' | 'table') => {
+  let spinnerHidden, errorHidden, tableHidden;
+
+  switch (scene) {
+    case 'loading':
+      spinnerHidden = false;
+      errorHidden = true;
+      tableHidden = true;
+      break;
+
+    case 'error':
+      spinnerHidden = true;
+      errorHidden = false;
+      tableHidden = true;
+      break;
+
+    case 'table':
+      spinnerHidden = true;
+      errorHidden = true;
+      tableHidden = false;
+      break;
+
+    default:
+      spinnerHidden = true;
+      errorHidden = true;
+      tableHidden = true;
+      break;
+  }
+
+  spinner.classList.toggle('hidden', spinnerHidden);
+  table.classList.toggle('hidden', tableHidden);
+  error.classList.toggle('hidden', errorHidden);
+};
+
 /* fetchHandler dispatches a callback to browser geolocation
  */
-//span: HTMLElement,
-//tbody: HTMLTableSectionElement,
-//table: HTMLTableElement
-const fetchHandler = (...elements) => (_: Event) =>
-  navigator.geolocation.getCurrentPosition(weatherHandler(...elements));
-//.getCurrentPosition(weatherHandler(span, tbody, table));
+const fetchHandler = (show: () => void, ...elements) => (_: Event) => {
+  // toggle loading animation
+  show('loading');
+
+  navigator.geolocation.getCurrentPosition(weatherHandler(show, ...elements));
+};
 
 /* weatherHandler uses browser geolocation coordinates
  * to fetch weather and update the page's table
  */
 const weatherHandler = (
+  show: () => void,
   span: HTMLElement,
   tbody: HTMLTableSectionElement,
-  table: HTMLTableElement,
 ) => async (location: Position) => {
   const { coords } = location;
-  document.querySelector('.spinner').classList.toggle('hidden', false);
   const weather = await fetchWeather(coords);
 
   if (weather.error) {
     console.error(weather.thrown);
+    show('error');
   } else {
     const { forecasts, city } = weather;
     span.textContent = city;
-    document.querySelector('.spinner').classList.toggle('hidden', true);
-    updateTableRows(tbody, forecasts, 'fahrenheit', table);
+    updateTableRows('fahrenheit', tbody, forecasts, show);
   }
 };
 
 /* updateTableRows uses fetched weather data to create tiles, append to tbody
  */
 const updateTableRows = (
-  tbody: HTMLTableSectionElement,
-  results: Array<Daily>,
   desired: 'fahrenheit' | 'celsius',
-  table: HTMLTableElement,
+  tbody: HTMLTableSectionElement,
+  forecasts: Array<Daily>,
+  show: () => void,
 ) => {
   /* tr.cell.hide
       td.day
@@ -50,7 +87,7 @@ const updateTableRows = (
         img
       td.weather
   */
-  results.forEach((forecast: Daily) => {
+  forecasts.forEach((forecast: Daily) => {
     const tr = document.createElement('tr');
     tr.innerHTML = require('../Assets/tile.html');
     const { icon, temp, day, time, weather, description } = forecast;
@@ -79,7 +116,7 @@ const updateTableRows = (
   });
 
   // Make table visible
-  table.classList.toggle('hidden', false);
+  show('table');
 };
 
 const TOGGLE_EVENT = 'TOGGLE_EVENT';
@@ -113,6 +150,7 @@ const tempScale = () =>
     : 'fahrenheit');
 
 export {
+  showScene,
   fetchHandler,
   weatherHandler,
   updateTableRows,

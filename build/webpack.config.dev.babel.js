@@ -2,11 +2,11 @@
 
 import common from './common';
 import merge from 'webpack-merge';
-import { multiCompiler } from './directory';
+import { compile } from './directory';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import FlowStatusWebpackPlugin from 'flow-status-webpack-plugin';
 
-const configs = multiCompiler(page => ({
+const configs = compile(page => ({
   devtool: 'cheap-eval-source-map',
 
   module: {
@@ -34,8 +34,8 @@ const configs = multiCompiler(page => ({
 
   plugins: [
     new FlowStatusWebpackPlugin({
-      onSuccess: msg => console.log(msg),
-      onError: msg => console.log(msg),
+      onSuccess: message => console.log(message),
+      onError: message => console.log(message),
     }),
     new ExtractTextPlugin('[name].css'),
   ],

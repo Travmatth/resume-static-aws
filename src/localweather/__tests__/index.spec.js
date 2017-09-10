@@ -6,17 +6,24 @@ import * as Handlers from '../Handlers';
 jest.mock('../Handlers', () => {
   const module = {};
 
-  module.toggleTempChangeHandlerCallback = jest.fn();
-  module.toggleTempChangeHandler = jest.fn(
-    () => module.toggleTempChangeHandlerCallback,
+  module.showScene = jest.fn();
+  module.dispatchToggleEventCallback = jest.fn();
+  module.dispatchToggleEvent = jest.fn(
+    () => module.dispatchToggleEventCallback,
   );
-  module.fetchHandler = jest.fn();
+  module.fetchHandlerCallback = jest.fn();
+  module.fetchHandler = jest.fn(() => module.fetchHandlerCallback);
+
   return module;
 });
 
 describe('Localweather App', () => {
   beforeEach(() => {
     ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
+    document.querySelectorAll('input').forEach(el => {
+      el.dataset = {};
+      el.dataset.type = 'celsius';
+    });
 
     require('../index');
     dispatch(document, 'DOMContentLoaded');
@@ -26,9 +33,9 @@ describe('Localweather App', () => {
     jest.resetModules();
   });
 
-  it('should call fetchHandler on fetch click', () => {
+  it('should call fetchHandler on fetch button click', () => {
     dispatch('#fetch-btn', 'click');
-    expect(Handlers.fetchHandler).toHaveBeenCalled();
+    expect(Handlers.fetchHandlerCallback).toHaveBeenCalled();
   });
 
   it('should set event listeners on temperature radio buttons', () => {
@@ -36,8 +43,8 @@ describe('Localweather App', () => {
 
     buttons.forEach(btn => dispatch(btn, 'click'));
 
-    expect(Handlers.toggleTempChangeHandler).toHaveBeenCalled();
+    expect(Handlers.dispatchToggleEvent).toHaveBeenCalled();
     //$FlowIgnore
-    expect(Handlers.toggleTempChangeHandlerCallback).toHaveBeenCalledTimes(2);
+    expect(Handlers.dispatchToggleEventCallback).toHaveBeenCalledTimes(2);
   });
 });

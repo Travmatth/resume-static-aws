@@ -1,17 +1,21 @@
 @import "../common/scss/_all.scss";
 @import "../common/scss/_nav.scss";
 
+input {
+	margin-right: 5px;
+}
+
+.heading {
+	width: fit-content;
+}
+
 .hidden {
-	//display: none;
+	display: none !important;
 	visibility: hidden;
 }
 
 .shift-down {
 	margin-top: 20px;
-}
-
-input {
-	margin-right: 5px;
 }
 
 .fahrenheit {

@@ -2,7 +2,7 @@
 
 // Commented out for compilation perf during dev
 const pages = [
-  //'index',
+  'index',
   //'calculator/index',
   'localweather/index',
   //'pomodoro/index',
@@ -13,10 +13,10 @@ const pages = [
   //'wikiviewer/index',
 ];
 
-const multiCompiler = (configure: string => Object) =>
+const compile = (configure: string => Object) =>
   pages.reduce((keyedConfig, page) => {
     keyedConfig[page] = configure(page);
     return keyedConfig;
   }, {});
 
-export { multiCompiler };
+export { compile };

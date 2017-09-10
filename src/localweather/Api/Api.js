@@ -59,7 +59,7 @@ const processForecasts = (outlook: Forecast): DailyForecast => ({
   snow: (outlook.snow && outlook.snow['3h']) || 0,
   description: (outlook.weather[0] && outlook.weather[0].description) || '',
   weather: (outlook.weather[0] && outlook.weather[0].main) || '',
-  cloud: (outlook.clouds && outlook.clouds.all) || '',
+  cloud: (outlook.clouds && outlook.clouds.all) || 0,
   temp: {
     celsius: convertFahrenheitToCelsius(outlook.main.temp),
     fahrenheit: (outlook.main && outlook.main.temp) || '',

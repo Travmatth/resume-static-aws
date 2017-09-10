@@ -1,6 +1,7 @@
 /* @flow */
 
 import {
+  showScene,
   fetchHandler,
   weatherHandler,
   updateTableRows,
@@ -11,6 +12,7 @@ import {
 } from './Handlers';
 
 export {
+  showScene,
   fetchHandler,
   weatherHandler,
   updateTableRows,

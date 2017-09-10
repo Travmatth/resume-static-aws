@@ -7,11 +7,14 @@ block heading
 block content
 	section.section.hero
 		include ../common/pug/nav.pug
+
 		div.hero-body.is-fullwidth
 			div.container.shift-down
 				div.columns
 					div.column
-						span: h1#fetch-btn.heading.title.has-text-centered.is-4 Fetch
+						div.level
+							div.level-item
+								span: h1#fetch-btn.button.heading.has-text-centered.is-4 Get Weather
 					div.column
 						div.tabs.is-centered
 							ul
@@ -23,6 +26,9 @@ block content
 									|fahrenheit
 
 		div.container
+			div.columns.error.hidden
+				div.level
+					div.level-item An error has occurred. Please check your internet connection and try again
 			div.columns.spinner.hidden
 				img.column.is-6.is-offset-3(src=require('./Assets/spinner.svg'), style="margin: 10vh auto 0 auto;")
 			table.table.hidden

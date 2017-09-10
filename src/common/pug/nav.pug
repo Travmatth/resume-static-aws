@@ -2,10 +2,10 @@ div.hero-head.fixed
 	header.nav
 		div.container.blur
 			div.nav-left.nav-menu
-				a.nav-item.is-active Home
+				a(href='/').nav-item.is-active Home
 			div.nav-center.nav-menu
-				a.nav-item Blog
 				a#projects-btn.nav-item Projects
+				a.nav-item Blog
 
 	div
 		header.nav
@@ -13,11 +13,11 @@ div.hero-head.fixed
 				nav.tabs.is-boxed.full
 					div.container.dropdown.full.is-fullwidth.container
 						ul
-							li.blur.is-marginless: a calculator
-							li.blur.is-marginless: a weather
-							li.blur.is-marginless: a pomodoro
-							li.blur.is-marginless: a quote
-							li.blur.is-marginless: a simon
-							li.blur.is-marginless: a tic-tac-toe
-							li.blur.is-marginless: a twitch
-							li.blur.is-marginless: a wiki
+							li.blur.is-marginless: a(href='/calculator') calculator
+							li.blur.is-marginless: a(href='/localweather') weather
+							li.blur.is-marginless: a(href='/pomodoro') pomodoro
+							li.blur.is-marginless: a(href='/randomquote') quote
+							li.blur.is-marginless: a(href='/simon') simon
+							li.blur.is-marginless: a(href='/tictactoe') tic-tac-toe
+							li.blur.is-marginless: a(href='/twitchtv') twitch
+							li.blur.is-marginless: a(href='/wikiviewer') wiki

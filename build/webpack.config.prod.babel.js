@@ -3,13 +3,13 @@
 import common from './common';
 import merge from 'webpack-merge';
 import autoprefixer from 'autoprefixer';
-import { multiCompiler } from './directory';
+import { compile } from './directory';
 import PurifyCSSPlugin from 'purifycss-webpack';
 import BabiliPlugin from 'babili-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
-const configs = multiCompiler(page => ({
+const configs = compile(page => ({
   module: {
     rules: [
       {
@@ -35,7 +35,6 @@ const configs = multiCompiler(page => ({
       verbose: true,
     }),
     new BabiliPlugin(),
-    new CompressionPlugin(),
   ],
 
   output: {

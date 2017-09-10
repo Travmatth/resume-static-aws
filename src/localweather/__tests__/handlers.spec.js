@@ -6,11 +6,14 @@ import { json } from 'tests/utils';
 import OPEN_WEATHER_APPID from 'protected/localweather.key';
 
 import {
-  getWeatherHandler,
+  showScene,
+  weatherHandler,
   updateTableRows,
-  toggleTempChangeHandler,
+  toggleMeasurement,
   tempScale,
   fetchHandler,
+  TOGGLE_EVENT,
+  dispatchToggleEvent,
 } from '../Handlers';
 import { openweatherApiParams } from '../Models';
 import contentLoadedListener from '../index';
@@ -31,25 +34,76 @@ describe('Localweather Handlers', () => {
     ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
   });
 
-  it('fetchHandler should call getCurrentPosition', () => {
+  it('showScene should display loading element scene', () => {
+    const error = document.createElement('div');
+    const spinner = document.createElement('div');
+    const table = document.createElement('div');
+
+    showScene(error, spinner, table)('loading');
+
+    expect(spinner.classList.contains('hidden')).toBe(false);
+    expect(error.classList.contains('hidden')).toBe(true);
+    expect(table.classList.contains('hidden')).toBe(true);
+  });
+
+  it('showScene should display error element scene', () => {
+    const error = document.createElement('div');
+    const spinner = document.createElement('div');
+    const table = document.createElement('div');
+
+    showScene(error, spinner, table)('error');
+
+    expect(spinner.classList.contains('hidden')).toBe(true);
+    expect(error.classList.contains('hidden')).toBe(false);
+    expect(table.classList.contains('hidden')).toBe(true);
+  });
+
+  it('showScene should display table element scene', () => {
+    const error = document.createElement('div');
+    const spinner = document.createElement('div');
+    const table = document.createElement('div');
+
+    showScene(error, spinner, table)('table');
+
+    expect(spinner.classList.contains('hidden')).toBe(true);
+    expect(error.classList.contains('hidden')).toBe(true);
+    expect(table.classList.contains('hidden')).toBe(false);
+  });
+
+  it('showScene should default to hiding all', () => {
+    const error = document.createElement('div');
+    const spinner = document.createElement('div');
+    const table = document.createElement('div');
+
+    showScene(error, spinner, table)();
+
+    expect(spinner.classList.contains('hidden')).toBe(true);
+    expect(error.classList.contains('hidden')).toBe(true);
+    expect(table.classList.contains('hidden')).toBe(true);
+  });
+
+  it('fetchHandler should toggle spinner and call getCurrentPosition', () => {
+    const show = jest.fn();
     const header = document.querySelector('.heading');
     const cells = document.querySelectorAll('.cell');
     const tempToggles = ((document.querySelectorAll('input'): any): NodeList<>);
 
-    fetchHandler(header, cells, tempToggles)();
+    fetchHandler(show, header, cells, tempToggles)();
+    expect(show).toHaveBeenCalledWith('loading');
     expect(global.navigator.geolocation.getCurrentPosition).toHaveBeenCalled();
   });
 
   it('updateTableRows() populates given DOM element w/ correct data', async () => {
-    const cells = ((document.body: any): HTMLElement).querySelectorAll('.cell');
+    const show = jest.fn();
+    const tbody = document.createElement('tbody');
     const forecasts = [data.forecasts[0]];
 
     // Populate cells
-    updateTableRows(cells, forecasts, 'celsius');
+    updateTableRows('celsius', tbody, forecasts, show);
 
     const { icon, temp, day, time, weather, description } = forecasts[0];
 
-    const cell = cells.item(0);
+    const cell = tbody.children[0];
     const dayElement = cell.children[0].textContent;
     const timeElement = cell.children[1].textContent;
     const temperatureElement = Number(cell.children[2].textContent);
@@ -62,66 +116,67 @@ describe('Localweather Handlers', () => {
     expect(temp.celsius).toBe(temperatureElement);
     expect(icon).toBe(imgElement);
     expect(description).toBe(descriptionElement);
+    expect(show).toHaveBeenCalledWith('table');
   });
 
   it('updateTableRows should store temperature data in nodes dataset', async () => {
-    const cells = ((document.body: any): HTMLElement).querySelectorAll('.cell');
+    const show = jest.fn();
     const forecasts = [data.forecasts[0]];
-
     const { temp } = forecasts[0];
-    // Populate cells
-    updateTableRows(cells, forecasts, 'celsius');
+    const tbody = document.createElement('tbody');
 
-    const temperatureElement = cells.item(0).children[2];
+    // Populate cells
+    updateTableRows('celsius', tbody, forecasts, show);
+    const temperatureElement = tbody.children[0].children[2];
 
     expect(temp.celsius).toBe(temperatureElement.dataset.celsius);
     expect(temp.fahrenheit).toBe(temperatureElement.dataset.fahrenheit);
   });
 
-  it('getWeatherHandler should catch error if fetchWeather throws', async () => {
+  it('weatherHandler should catch error if fetchWeather throws', async () => {
     fetch.mockResponseOnce(json({}), { status: 404 });
+    const show = jest.fn();
+    const tbody = document.querySelector('tbody');
+    const span = document.createElement('span');
 
-    const node: HTMLElement = (document.querySelector('.measurement'): any);
-    const nodes = document.querySelectorAll('.measurement');
-
-    const cells = document.querySelectorAll('.cell');
-    const getWeather = getWeatherHandler(
-      ((document.querySelectorAll('.heading'): any): HTMLElement),
-      cells,
-      document.querySelectorAll('input'),
-    );
+    const getWeather = weatherHandler(show, span, tbody);
 
     await getWeather(
       (({ coords: { latitude: 0, longitude: 0 } }: any): Position),
     );
 
-    expect(node.textContent).toBe('');
+    expect(show).toHaveBeenCalledWith('error');
   });
 
   it('tempScale should return state of radio buttons', () => {
     expect(tempScale()).toBe('fahrenheit');
   });
 
-  it('toggleTempChange should switch temperature scale', async () => {
-    fetch.mockResponseOnce(json(response), { status: 200 });
-    const node: HTMLElement = (document.querySelector('.measurement'): any);
-    const nodes = document.querySelectorAll('.measurement');
+  it('toggleMeasurement should switch temperature scale', async () => {
+    const target = document.createElement('div');
+    target.dataset = {
+      fahrenheit: 0,
+      celsius: 1,
+    };
 
-    const cells = document.querySelectorAll('.cell');
-    const getWeather = getWeatherHandler(
-      ((document: any): Document).querySelector('.heading'),
-      cells,
-      document.querySelectorAll('input'),
-    );
+    const event = (({
+      target,
+      detail: { measurement: 'celsius' },
+    }: any): Event);
 
-    await getWeather(
-      (({ coords: { latitude: 0, longitude: 0 } }: any): Position),
-    );
+    toggleMeasurement(event);
 
-    expect(node.textContent).toBe('28.74');
-    const toggleTempChange = toggleTempChangeHandler(nodes);
-    const event = (({ target: { dataset: { type: 'celsius' } } }: any): Event);
-    toggleTempChange(event);
-    expect(node.textContent).toBe('-2');
+    expect(target.textContent).toBe('1');
+  });
+
+  it('dispatchToggleEvent should dispatch TOGGLE_EVENT on elements', () => {
+    const listener = jest.fn();
+    document.body.innerHTML = '<div class="measurement"></div>';
+    document
+      .querySelector('.measurement')
+      .addEventListener(TOGGLE_EVENT, listener);
+
+    dispatchToggleEvent('celsius')();
+    expect(listener).toHaveBeenCalledTimes(1);
   });
 });
