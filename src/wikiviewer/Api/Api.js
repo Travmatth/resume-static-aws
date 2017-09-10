@@ -10,9 +10,8 @@ const headers = new Headers({
 });
 
 const search = (query: ?string): Promise<Array<WikiPage>> => {
-  if (!query && query.length === 0) return Promise.resolve([]);
-
   PARAMS['gsrsearch'] = query;
+
   const opts = {
     headers,
     method: 'POST',
@@ -22,7 +21,10 @@ const search = (query: ?string): Promise<Array<WikiPage>> => {
   return fetch(WIKI_PROXY, opts)
     .then(checkHeaders)
     .then(processWikis)
-    .catch(err => []);
+    .catch(message => {
+      console.error(message);
+      return null;
+    });
 };
 
 const processWikis = ({ query: { pages } }: WikiSearchResult) => {

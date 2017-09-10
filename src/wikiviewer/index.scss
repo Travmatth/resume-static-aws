@@ -1,6 +1,15 @@
 @import "../common/scss/_all.scss";
 @import "../common/scss/_nav.scss";
 
+.hidden {
+	display: none !important;
+	visibility: hidden !important;
+}
+
+.bottom-spacing {
+	margin-bottom: 17px !important;
+}
+
 button:hover {
 	//border-left: 3px solid $primary;
 	font-size: $size-7;

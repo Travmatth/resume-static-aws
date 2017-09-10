@@ -30,6 +30,7 @@ const common = compile(page => ({
       common: path.resolve(root, 'src', 'common'),
       protected: path.resolve(root, 'src', 'common', 'protected'),
       tests: path.resolve(root, 'tests'),
+      assets: path.resolve(root, 'assets'),
     },
   },
 

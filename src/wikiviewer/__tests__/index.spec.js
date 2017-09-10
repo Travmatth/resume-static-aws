@@ -7,6 +7,9 @@ import { dispatch } from 'tests/utils';
 jest.mock('../Handlers', () => {
   const modules = {};
 
+  modules.showScene = jest.fn();
+  modules.showScene = () => modules.showSceneCallback;
+
   modules.searchHandlerCallback = jest.fn();
   modules.searchHandler = () => modules.searchHandlerCallback;
 

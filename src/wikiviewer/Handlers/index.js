@@ -6,6 +6,7 @@ import {
   refreshResults,
   keypressHandler,
   typeHandler,
+  showScene,
 } from './WikiViewer';
 
 export {
@@ -15,4 +16,5 @@ export {
   refreshResults,
   keypressHandler,
   typeHandler,
+  showScene,
 };

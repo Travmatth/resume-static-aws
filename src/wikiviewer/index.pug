@@ -13,10 +13,17 @@ block content
 				div.column.is-10.is-offset-1
 					div#center-panel.columns
 						div.column
-							input#search-text
+							input#search-text.has-text-centered
 						div.column.is-narrow
 							div#center-panel.level
 								div.level-item
 									button#search-btn Search
 									button#random-btn Random
-			div#content.columns.is-mobile.is-multiline
+			div.columns.error.hidden
+				div.column
+					div.level
+						div.level-item
+							div An Error has occurred. Please check your internet connection and try again
+			div.columns.spinner.hidden
+				img.column.is-6.is-offset-3(src=require('assets/spinner.svg'), style="margin: 10vh auto 0 auto;")
+			div#content.columns.is-mobile.is-multiline.hidden

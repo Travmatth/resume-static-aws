@@ -21,13 +21,9 @@ describe('WikiViewer Api', () => {
     expect(returned).toEqual(expected);
   });
 
-  it('search should return [] on empty query', async () => {
-    expect(await search('')).toEqual([]);
-  });
-
-  it('search should return [] on fetch error', async () => {
+  it('search should return null on fetch error', async () => {
     fetch.mockResponseOnce(json(exampleWikipediaSearch), { status: 404 });
-    expect(await search(['foo'])).toEqual([]);
+    expect(await search(['foo'])).toEqual(null);
   });
 
   it('processWikis should normalize nested json into array', () => {

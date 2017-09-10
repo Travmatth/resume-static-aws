@@ -1,45 +1,8 @@
 /* @flow */
 
 import { fetchWeather } from '../Api';
+import { removeChildren } from 'common/js/utils';
 import type { Daily, Weather } from '../localweather.types';
-
-const showScene = (
-  error: HTMLElement,
-  spinner: HTMLElement,
-  table: HTMLTableElement,
-) => (scene: 'loading' | 'error' | 'table') => {
-  let spinnerHidden, errorHidden, tableHidden;
-
-  switch (scene) {
-    case 'loading':
-      spinnerHidden = false;
-      errorHidden = true;
-      tableHidden = true;
-      break;
-
-    case 'error':
-      spinnerHidden = true;
-      errorHidden = false;
-      tableHidden = true;
-      break;
-
-    case 'table':
-      spinnerHidden = true;
-      errorHidden = true;
-      tableHidden = false;
-      break;
-
-    default:
-      spinnerHidden = true;
-      errorHidden = true;
-      tableHidden = true;
-      break;
-  }
-
-  spinner.classList.toggle('hidden', spinnerHidden);
-  table.classList.toggle('hidden', tableHidden);
-  error.classList.toggle('hidden', errorHidden);
-};
 
 /* fetchHandler dispatches a callback to browser geolocation
  */
@@ -79,6 +42,9 @@ const updateTableRows = (
   forecasts: Array<Daily>,
   show: () => void,
 ) => {
+  removeChildren(tbody);
+  const fragment = document.createDocumentFragment();
+
   /* tr.cell.hide
       td.day
       td.time
@@ -112,10 +78,11 @@ const updateTableRows = (
       : `${temp.fahrenheit}`;
     measureNode.addEventListener(TOGGLE_EVENT, toggleMeasurement);
 
-    tbody.appendChild(tr);
+    fragment.appendChild(tr);
   });
 
   // Make table visible
+  tbody.appendChild(fragment);
   show('table');
 };
 
@@ -148,6 +115,46 @@ const tempScale = () =>
     true
     ? 'celsius'
     : 'fahrenheit');
+
+/* showScene manages display of different fetching states
+ */
+const showScene = (
+  error: HTMLElement,
+  spinner: HTMLElement,
+  table: HTMLTableElement,
+) => (scene: 'loading' | 'error' | 'table') => {
+  let spinnerHidden, errorHidden, tableHidden;
+
+  switch (scene) {
+    case 'loading':
+      spinnerHidden = false;
+      errorHidden = true;
+      tableHidden = true;
+      break;
+
+    case 'error':
+      spinnerHidden = true;
+      errorHidden = false;
+      tableHidden = true;
+      break;
+
+    case 'table':
+      spinnerHidden = true;
+      errorHidden = true;
+      tableHidden = false;
+      break;
+
+    default:
+      spinnerHidden = true;
+      errorHidden = true;
+      tableHidden = true;
+      break;
+  }
+
+  spinner.classList.toggle('hidden', spinnerHidden);
+  table.classList.toggle('hidden', tableHidden);
+  error.classList.toggle('hidden', errorHidden);
+};
 
 export {
   showScene,
