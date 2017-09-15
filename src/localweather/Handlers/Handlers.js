@@ -1,7 +1,7 @@
 /* @flow */
 
 import { fetchWeather } from '../Api';
-import { removeChildren } from 'common/js/utils';
+import { removeChildren, timedFetch } from 'common/js/utils';
 import type { Daily, Weather } from '../localweather.types';
 
 /* fetchHandler dispatches a callback to browser geolocation

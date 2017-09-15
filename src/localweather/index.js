@@ -10,9 +10,7 @@ if (typeof document !== 'undefined') {
     const tbody = document.querySelector('tbody');
     const span = document.querySelector('.heading');
     const spinner = document.querySelector('.spinner');
-    const error = document.querySelector('.error');
-
-    const show = showScene(error, spinner, table);
+    const err = document.querySelector('.error');
 
     // radio buttons should dispatch TOGGLE_EVENT to table cells on click
     document.querySelectorAll('input').forEach(elem => {
@@ -20,7 +18,7 @@ if (typeof document !== 'undefined') {
     });
 
     // fetch button accesses browser geolocation & calls api
-    const handler = fetchHandler(show, span, tbody);
+    const handler = fetchHandler(showScene(err, spinner, table), span, tbody);
     document.querySelector('#fetch-btn').addEventListener(type, handler);
   });
 }

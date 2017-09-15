@@ -2,12 +2,15 @@
 
 import { ENDPOINT, PARAMS } from '../Models';
 import type { WikiSearchResult, WikiPage } from '../wikiviewer.types';
-import { serialize, ResponseError, checkHeaders } from 'common/js/utils';
 import { WIKI_PROXY } from 'protected/proxies';
+import {
+  serialize,
+  ResponseError,
+  checkHeaders,
+  timedFetch,
+} from 'common/js/utils';
 
-const headers = new Headers({
-  'Content-Type': 'text/plain',
-});
+const headers = new Headers({ 'Content-Type': 'text/plain' });
 
 const search = (query: ?string): Promise<Array<WikiPage>> => {
   PARAMS['gsrsearch'] = query;
@@ -18,7 +21,7 @@ const search = (query: ?string): Promise<Array<WikiPage>> => {
     body: serialize(ENDPOINT, PARAMS),
   };
 
-  return fetch(WIKI_PROXY, opts)
+  return timedFetch(fetch(WIKI_PROXY, opts), 5000)
     .then(checkHeaders)
     .then(processWikis)
     .catch(message => {

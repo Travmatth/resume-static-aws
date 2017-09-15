@@ -22,6 +22,7 @@ const fetchOpts = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
+  timeout: 5000,
 };
 
 /* fetchWeather uses given Coordinates to fetch weather data
