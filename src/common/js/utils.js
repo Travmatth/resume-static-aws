@@ -93,6 +93,25 @@ const trim = (str: string) => str.replace(/^\s+|\s+$/g, '');
 
 const rand = (range: numer) => Math.floor(Math.random() * (range + 1));
 
+const timedFetch = (promise: Promise<any>, ms: number) =>
+  new Promise((resolve, reject) => {
+    const id = setTimeout(() => {
+      clearTimeout(id);
+      reject(new Error('timeout'));
+    }, ms);
+
+    promise.then(
+      response => {
+        clearTimeout(id);
+        resolve(response);
+      },
+      error => {
+        clearTimeout(id);
+        reject(error);
+      },
+    );
+  });
+
 export {
   checkForNegativeZero,
   eventType,
@@ -109,4 +128,5 @@ export {
   trim,
   removeChildren,
   rand,
+  timedFetch,
 };

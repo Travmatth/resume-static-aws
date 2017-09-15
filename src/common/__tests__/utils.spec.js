@@ -15,6 +15,7 @@ import {
   checkForNegativeZero,
   trim,
   rand,
+  timedFetch,
 } from '../js/utils';
 
 describe('Shared utility code', () => {
@@ -138,5 +139,46 @@ describe('Shared utility code', () => {
 
     expect(!isNaN(num)).toBe(true);
     expect(num >= 0 && num <= 10).toBe(true);
+  });
+
+  it('timedFetch should resolve when request is fulfilled within time limit', async () => {
+    await timedFetch(Promise.resolve(), 1000);
+    expect(setTimeout).toHaveBeenCalled();
+    expect(clearTimeout).toHaveBeenCalled();
+  });
+
+  it('timedFetch should reject when request is fulfilled outside time limit', async () => {
+    try {
+      const nonresolvingPromise = new Promise(() => {});
+      const promise = timedFetch(nonresolvingPromise, 1000);
+      jest.runAllTimers();
+      await promise;
+    } catch (e) {
+      expect(e.message).toBe('timeout');
+    }
+
+    expect(setTimeout).toHaveBeenCalled();
+    expect(clearTimeout).toHaveBeenCalled();
+    /*
+    // This code will work on jest 20+, can impl once upgraded
+    expect.assertions(1);
+    await (timedFetch()).rejects.toEqual(); // equal what??
+     */
+  });
+
+  it('timedFetch should reject when request is not fulfilled', async () => {
+    try {
+      await timedFetch(Promise.reject('stub'), 1000);
+    } catch (e) {
+      expect(e).toBe('stub');
+    }
+
+    expect(setTimeout).toHaveBeenCalled();
+    expect(clearTimeout).toHaveBeenCalled();
+    /*
+    // This code will work on jest 20+, can impl once upgraded
+    expect.assertions(1);
+    await (timedFetch()).rejects.toEqual(); // equal what??
+     */
   });
 });
