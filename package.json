@@ -13,7 +13,7 @@
     "build:prod": "NODE_ENV=production webpack -p --config build/webpack.config.prod.babel.js --bail",
     "build:dev": "NODE_ENV=development webpack -d --config build/webpack.config.dev.babel.js --bail",
     "deploy": "yarn run build:prod && ./tools/deploy.js",
-    "build:parser": "pegjs src/calculator/arithmetic.pegjs",
+    "build:parser": "pegjs src/calculator/Parser/arithmetic.pegjs",
     "coverage": "yarn test -- --coverage",
     "coveralls": "cat tests/coverage/lcov.info | coveralls --verbose",
     "codacy": "cat tests/coverage/lcov.info | ./node_modules/.bin/codacy-coverage -t \"${CODACY_API_KEY}\" --verbose"

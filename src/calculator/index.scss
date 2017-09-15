@@ -11,6 +11,26 @@
 	padding: 0 !important;
 }
 
-.keypad {}
+//@media screen and (min-width: $tablet) {
+	//.app {
+		//width: 50vw !important;
+	//}
+//}
 
-//@media screen and (min-width: _) {}
+//@media screen and (max-width: $desktop) {
+	//.app {
+		//width: 50vw !important;
+	//}
+//}
+
+//@media screen and (min-width: $widescreen) {
+	//.app {
+		//width: 50vw !important;
+	//}
+//}
+
+//@media screen and (min-width: $fullhd) {
+	//.app {
+		//width: 50vw !important;
+	//}
+//}

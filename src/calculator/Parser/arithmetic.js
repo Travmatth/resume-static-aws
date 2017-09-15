@@ -4,6 +4,8 @@
  * http://pegjs.org/
  */
 
+'use strict';
+
 function peg$subclass(child, parent) {
   function ctor() {
     this.constructor = child;
@@ -608,26 +610,38 @@ function peg$parse(input, options) {
   }
 
   function peg$parsePower() {
-    var s0, s1, s2, s3;
+    var s0, s1, s2, s3, s4, s5;
 
     s0 = peg$currPos;
     s1 = peg$parseFactor();
     if (s1 !== peg$FAILED) {
-      if (input.charCodeAt(peg$currPos) === 94) {
-        s2 = peg$c10;
-        peg$currPos++;
-      } else {
-        s2 = peg$FAILED;
-        if (peg$silentFails === 0) {
-          peg$fail(peg$c11);
-        }
-      }
+      s2 = peg$parse_();
       if (s2 !== peg$FAILED) {
-        s3 = peg$parseFactor();
+        if (input.charCodeAt(peg$currPos) === 94) {
+          s3 = peg$c10;
+          peg$currPos++;
+        } else {
+          s3 = peg$FAILED;
+          if (peg$silentFails === 0) {
+            peg$fail(peg$c11);
+          }
+        }
         if (s3 !== peg$FAILED) {
-          peg$savedPos = s0;
-          s1 = peg$c12(s1, s3);
-          s0 = s1;
+          s4 = peg$parse_();
+          if (s4 !== peg$FAILED) {
+            s5 = peg$parseFactor();
+            if (s5 !== peg$FAILED) {
+              peg$savedPos = s0;
+              s1 = peg$c12(s1, s5);
+              s0 = s1;
+            } else {
+              peg$currPos = s0;
+              s0 = peg$FAILED;
+            }
+          } else {
+            peg$currPos = s0;
+            s0 = peg$FAILED;
+          }
         } else {
           peg$currPos = s0;
           s0 = peg$FAILED;

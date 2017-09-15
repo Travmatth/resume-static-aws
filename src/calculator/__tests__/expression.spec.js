@@ -88,6 +88,14 @@ describe('Calculator Model', () => {
     expect(expr.getExpression()).toBe('2');
   });
 
+  it('3 ^ 3 should work', () => {
+    expr.update('3');
+    expr.update('^');
+    expr.update('3');
+    expr.compute();
+    expect(expr.getExpression()).toBe('27');
+  });
+
   it('6 / 3 * (4 - 6) + 5 should work', () => {
     expr.update('6');
     expr.update('/');
