@@ -4,13 +4,13 @@
 const pages = [
   'index',
   //'calculator/index',
-  //'localweather/index',
+  'localweather/index',
   //'pomodoro/index',
-  //'randomquote/index',
+  'randomquote/index',
   //'simon/index',
   //'tictactoe/index',
   'twitchtv/index',
-  //'wikiviewer/index',
+  'wikiviewer/index',
 ];
 
 const compile = (configure: string => Object) =>

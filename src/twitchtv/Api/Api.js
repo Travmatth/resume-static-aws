@@ -9,7 +9,7 @@ import type {
   PossibleStream,
 } from '../twitchtv.types';
 import TWITCH_TV_API_KEY from 'protected/twitch.key';
-import { serialize, trim, checkHeaders, timedFetch } from 'common/js/utils';
+import { serialize, trim, checkHeaders, withTimeout } from 'common/js/utils';
 import { STREAMS_URL, USERS_URL, USERS, extractUserName } from '../Models';
 
 const headers = new Headers({
@@ -59,7 +59,7 @@ const classify = async (response: Response): Promise<PossiblyNestedStreams> => {
 };
 
 const fetchProfile = (user: string): Promise<PossiblyNestedStreams> =>
-  timedFetch(fetch(new Request(STREAMS_URL + user, options)), 5000)
+  withTimeout(fetch(new Request(STREAMS_URL + user, options)), 5000)
     .then(classify)
     .catch(message => console.log(message) || null);
 

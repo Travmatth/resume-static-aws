@@ -39,6 +39,7 @@ const fetchWeather = async (coords: Coordinates): Promise<Weather> => {
     .then(res => res.json())
     .then(processWeather)
     .catch(thrown => ({
+      city: 'GET WEATHER',
       error: true,
       thrown,
     }));

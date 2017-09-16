@@ -1,7 +1,7 @@
 /* @flow */
 
 import { fetchWeather } from '../Api';
-import { removeChildren, timedFetch } from 'common/js/utils';
+import { removeChildren, withTimeout } from 'common/js/utils';
 import type { Daily, Weather } from '../localweather.types';
 
 /* fetchHandler dispatches a callback to browser geolocation
@@ -21,16 +21,14 @@ const weatherHandler = (
   span: HTMLElement,
   tbody: HTMLTableSectionElement,
 ) => async (location: Position) => {
-  const { coords } = location;
-  const weather = await fetchWeather(coords);
-
-  if (weather.error) {
-    console.error(weather.thrown);
-    show('error');
-  } else {
+  try {
+    const weather = await withTimeout(fetchWeather(location.coords), 5000);
     const { forecasts, city } = weather;
     span.textContent = city;
     updateTableRows('fahrenheit', tbody, forecasts, show);
+  } catch (error) {
+    console.error(error);
+    show('error');
   }
 };
 

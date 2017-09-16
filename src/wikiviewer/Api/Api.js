@@ -7,7 +7,7 @@ import {
   serialize,
   ResponseError,
   checkHeaders,
-  timedFetch,
+  withTimeout,
 } from 'common/js/utils';
 
 const headers = new Headers({ 'Content-Type': 'text/plain' });
@@ -21,7 +21,7 @@ const search = (query: ?string): Promise<Array<WikiPage>> => {
     body: serialize(ENDPOINT, PARAMS),
   };
 
-  return timedFetch(fetch(WIKI_PROXY, opts), 5000)
+  return withTimeout(fetch(WIKI_PROXY, opts), 5000)
     .then(checkHeaders)
     .then(processWikis)
     .catch(message => {
