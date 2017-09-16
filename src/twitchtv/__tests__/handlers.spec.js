@@ -1,5 +1,10 @@
 /* @flow */
-import { removeChildren, fetchHandler, toggleFilter } from '../Handlers';
+import {
+  removeChildren,
+  fetchHandler,
+  toggleFilter,
+  showScene,
+} from '../Handlers';
 import { fetchAllProfiles } from '../Api';
 import { dispatch } from 'tests/utils';
 
@@ -27,7 +32,19 @@ jest.mock('../Api', () => ({
     ]),
 }));
 
+let show;
+let spinner;
+let profiles;
+let error;
+
 describe('TwitchTV Handlers', () => {
+  beforeEach(() => {
+    show = jest.fn();
+    spinner = document.createElement('div');
+    profiles = document.createElement('div');
+    error = document.createElement('div');
+  });
+
   it('toggleFilter should dispatch filter-event on given element', async () => {
     document.body.innerHTML = `
       <li></li>
@@ -43,14 +60,50 @@ describe('TwitchTV Handlers', () => {
 
     toggleFilter('all')();
 
-    expect(
-      document.querySelector('li').dispatchEvent.mock.calls[0][0].detail.status,
-    ).toBe('all');
+    const spy = document.querySelector('li').dispatchEvent;
+
+    expect(spy.mock.calls[0][0].detail.status).toBe('all');
+  });
+
+  it('showScene should set loading state correctly', () => {
+    show = showScene(spinner, error, profiles);
+    show('loading');
+
+    expect(spinner.classList.contains('hidden')).toBe(false);
+    expect(profiles.classList.contains('hidden')).toBe(true);
+    expect(error.classList.contains('hidden')).toBe(true);
+  });
+
+  it('showScene should set profiles state correctly', () => {
+    show = showScene(spinner, error, profiles);
+    show('profiles');
+
+    expect(spinner.classList.contains('hidden')).toBe(true);
+    expect(profiles.classList.contains('hidden')).toBe(false);
+    expect(error.classList.contains('hidden')).toBe(true);
+  });
+
+  it('showScene should set error state correctly', () => {
+    show = showScene(spinner, error, profiles);
+    show('error');
+
+    expect(spinner.classList.contains('hidden')).toBe(true);
+    expect(profiles.classList.contains('hidden')).toBe(true);
+    expect(error.classList.contains('hidden')).toBe(false);
+  });
+
+  it('showScene should default to hiding all elements', () => {
+    show = showScene(spinner, error, profiles);
+    show('');
+
+    expect(spinner.classList.contains('hidden')).toBe(true);
+    expect(profiles.classList.contains('hidden')).toBe(true);
+    expect(error.classList.contains('hidden')).toBe(true);
   });
 
   it('filterHandler should toggle .hidden class according to next status', async () => {
     const node = document.createElement('ul');
-    await fetchHandler(node)();
+    await fetchHandler(node, show)();
 
     const li1 = node.querySelector('li:nth-of-type(1)');
     const li2 = node.querySelector('li:nth-of-type(2)');
@@ -71,7 +124,7 @@ describe('TwitchTV Handlers', () => {
 
   it('list elements should listen for filter-event', async () => {
     const node = document.createElement('ul');
-    await fetchHandler(node)();
+    await fetchHandler(node, show)();
 
     const li = node.querySelector('li:nth-of-type(1)');
     dispatch(li, 'filter-event', { detail: { status: 'offline' } });
@@ -81,7 +134,7 @@ describe('TwitchTV Handlers', () => {
 
   it('fetchHandler should add filter-level data-attribute to list elements', async () => {
     const node = document.createElement('ul');
-    await fetchHandler(node)();
+    await fetchHandler(node, show)();
 
     const firstLi = node.querySelector('li:nth-of-type(1)');
     const secondLi = node.querySelector('li:nth-of-type(2)');
@@ -96,20 +149,22 @@ describe('TwitchTV Handlers', () => {
     child.textContent = 'test';
     node.appendChild(child);
 
-    await fetchHandler(node)();
+    await fetchHandler(node, show)();
 
     expect(node.querySelector('li')).not.toBe('test');
   });
 
   it('fetchHandler should call api and populate elements', async () => {
     const node = document.createElement('ul');
-    await fetchHandler(node)();
+    await fetchHandler(node, show)();
 
     const img = node.querySelector('img');
     const a = node.querySelector('a');
     const h2 = node.querySelector('h2');
     const p = node.querySelector('p');
 
+    expect(show.mock.calls[0][0]).toBe('loading');
+    expect(show.mock.calls[1][0]).toBe('profiles');
     expect(img.src).toBe('logo1');
 
     expect(a.href).toBe('url1');

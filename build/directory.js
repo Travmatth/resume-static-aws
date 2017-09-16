@@ -9,7 +9,7 @@ const pages = [
   //'randomquote/index',
   //'simon/index',
   //'tictactoe/index',
-  //'twitchtv/index',
+  'twitchtv/index',
   //'wikiviewer/index',
 ];
 

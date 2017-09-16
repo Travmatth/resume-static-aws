@@ -2,15 +2,17 @@
 import {
   verifyUser,
   handleNullStream,
-  classifyResponse,
+  classify,
   fetchAllProfiles,
+  fetchProfile,
   agglomerate,
 } from './Api';
 
 export {
   verifyUser,
   handleNullStream,
-  classifyResponse,
+  classify,
   fetchAllProfiles,
+  fetchProfile,
   agglomerate,
 };

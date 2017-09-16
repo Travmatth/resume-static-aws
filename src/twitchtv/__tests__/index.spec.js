@@ -11,6 +11,9 @@ jest.mock('../Handlers', () => {
   module.toggleFilterCallback = jest.fn();
   module.toggleFilter = jest.fn(() => module.toggleFilterCallback);
 
+  module.showSceneCallback = jest.fn();
+  module.showScene = jest.fn(() => module.showSceneCallback);
+
   return module;
 });
 

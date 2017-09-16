@@ -8,9 +8,8 @@ import type {
   PossiblyNestedStreams,
   PossibleStream,
 } from '../twitchtv.types';
-
 import TWITCH_TV_API_KEY from 'protected/twitch.key';
-import { serialize, trim } from 'common/js/utils';
+import { serialize, trim, checkHeaders, timedFetch } from 'common/js/utils';
 import { STREAMS_URL, USERS_URL, USERS, extractUserName } from '../Models';
 
 const headers = new Headers({
@@ -20,19 +19,16 @@ const headers = new Headers({
 
 const options = { headers, method: 'GET', mode: 'cors' };
 
-const verifyUser = async (user: string): Promise<boolean> => {
-  const endpoint = USERS_URL + user;
-
-  return fetch(
-    new Request(endpoint, options),
+const verifyUser = async (user: string) =>
+  fetch(
+    new Request(USERS_URL + user, options),
   ).then(async (response: Response) => {
     const res = await response.json();
     if (response.status >= 400 || res.hasOwnProperty('error')) return false;
     return true;
   });
-};
 
-const handleNullStream = async (body: UserStream): Promise<string> => {
+const handleNullStream = async (body: UserStream) => {
   // If stream is null this could either be due to:
   // nonexistent user || an offline user
   // additional call to channel route is needed to determine which case
@@ -43,13 +39,7 @@ const handleNullStream = async (body: UserStream): Promise<string> => {
     : `${user} is not a streamer`;
 };
 
-/**
- * Accepts the Response object from fetch,
- * classifies response and returns User object
- */
-const classifyResponse = async (
-  response: Response,
-): Promise<PossiblyNestedStreams> => {
+const classify = async (response: Response): Promise<PossiblyNestedStreams> => {
   if (response.status >= 400) {
     console.error('Invalid response to GET stream request', response);
     return null;
@@ -68,36 +58,37 @@ const classifyResponse = async (
   }
 };
 
-const fetchAllProfiles = (): Promise<Array<PossibleStream>> => {
-  // call TwitchTV api, return normalized user object
-  const task = (user: string): Promise<PossiblyNestedStreams> => {
-    const endpoint = STREAMS_URL + user;
+const fetchProfile = (user: string): Promise<PossiblyNestedStreams> =>
+  timedFetch(fetch(new Request(STREAMS_URL + user, options)), 5000)
+    .then(classify)
+    .catch(message => console.log(message) || null);
 
-    return fetch(new Request(endpoint, options)).then(classifyResponse);
-  };
+const fetchAllProfiles = (): Promise<Array<PossibleStream>> =>
+  Promise.all([...USERS.map(fetchProfile)]).then(agglomerate);
 
-  return Promise.all([...USERS.map(task)]).then(agglomerate);
-};
-
-const agglomerate = (userResponses: Array<PossiblyNestedStreams>) => {
-  const responses = userResponses.reduce((result, current) => {
+const agglomerate = (responses: Array<PossiblyNestedStreams>): Array<Stream> =>
+  ((responses.reduce((result, current, index, array) => {
     if (current === null) {
-      return result;
+      // If all network request fails, should move to error state
+      const firstItem = index === array.length - 1;
+      if (firstItem && array.every(el => el === null)) {
+        throw new Error('offline');
+      } else {
+        return result;
+      }
     } else if (Array.isArray(current)) {
       return result.concat(current);
     } else {
       result.push(current);
       return result;
     }
-  }, []);
-
-  return ((responses: any): Array<Stream>);
-};
+  }, []): any): Array<Stream>);
 
 export {
   verifyUser,
   handleNullStream,
-  classifyResponse,
+  classify,
+  fetchProfile,
   fetchAllProfiles,
   agglomerate,
 };

@@ -23,4 +23,8 @@ block content
 
 			div.columns
 				div.column.is-10.is-offset-1
-					ul.twitch-table
+					ul.twitch-table.hidden
+					div.error.hidden
+						div.has-text-centered An error has occurred. Please check your internet connection and try again
+					div.columns.spinner.hidden
+						img.column.is-6.is-offset-3(src=require('assets/spinner.svg'), style="margin: 10vh auto 0 auto;")

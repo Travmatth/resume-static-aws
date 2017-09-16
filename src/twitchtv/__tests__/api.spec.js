@@ -22,9 +22,10 @@ import TWITCH_TV_API_KEY from 'protected/localweather.key';
 import * as Models from '../Models';
 
 import {
+  fetchProfile,
   verifyUser,
   handleNullStream,
-  classifyResponse,
+  classify,
   fetchAllProfiles,
   agglomerate,
 } from '../Api';
@@ -80,13 +81,11 @@ describe('TwitchTV Api', () => {
     expect(stream).toBe(`${user} is not a streamer`);
   });
 
-  it('classifyResponse should return null if 404 response', async () => {
-    expect(await classifyResponse((({ status: 404 }: any): Response))).toBe(
-      null,
-    );
+  it('classify should return null if 404 response', async () => {
+    expect(await classify((({ status: 404 }: any): Response))).toBe(null);
   });
 
-  it('classifyResponse can return allStreams', async () => {
+  it('classify can return allStreams', async () => {
     const response = (({
       json() {
         return allStreamsCall;
@@ -98,10 +97,10 @@ describe('TwitchTV Api', () => {
       error: false,
       stream,
     }));
-    expect(await classifyResponse(response)).toEqual(expected);
+    expect(await classify(response)).toEqual(expected);
   });
 
-  it('classifyResponse can return Stream', async () => {
+  it('classify can return Stream', async () => {
     const onlineUser = onlineUserStreamCall('freecodecamp');
     const response = (({
       json() {
@@ -110,13 +109,13 @@ describe('TwitchTV Api', () => {
       status: 200,
     }: any): Response);
 
-    expect(await classifyResponse(response)).toEqual({
+    expect(await classify(response)).toEqual({
       error: false,
       stream: onlineUser.stream,
     });
   });
 
-  it('classifyResponse can return error object if user is nonexistent', async () => {
+  it('classify can return error object if user is nonexistent', async () => {
     const user = 'brunofin';
     const body = json({ ...nonexistentUser(user) });
     fetch.mockResponseOnce(body, { status: 404 });
@@ -129,13 +128,13 @@ describe('TwitchTV Api', () => {
       status: 200,
     }: any): Response);
 
-    expect(await classifyResponse(response)).toEqual({
+    expect(await classify(response)).toEqual({
       error: true,
       status: `${user} is not a streamer`,
     });
   });
 
-  it('classifyResponse can return error stream if user is offline', async () => {
+  it('classify can return error stream if user is offline', async () => {
     const user = 'OgamingSC2';
     const body = json({ ...validUser(user) });
     fetch.mockResponseOnce(body, { status: 404 });
@@ -147,7 +146,7 @@ describe('TwitchTV Api', () => {
       status: 200,
     }: any): Response);
 
-    expect(await classifyResponse(response)).toEqual({
+    expect(await classify(response)).toEqual({
       error: true,
       status: `${user} is not a streamer`,
     });

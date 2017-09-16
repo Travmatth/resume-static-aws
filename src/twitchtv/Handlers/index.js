@@ -3,5 +3,6 @@ import {
   filterHandler,
   fetchHandler,
   removeChildren,
+  showScene,
 } from './Handlers';
-export { toggleFilter, filterHandler, fetchHandler, removeChildren };
+export { toggleFilter, filterHandler, fetchHandler, removeChildren, showScene };

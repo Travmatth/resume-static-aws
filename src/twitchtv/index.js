@@ -1,27 +1,38 @@
 /* @flow */
-import { fetchHandler, toggleFilter } from './Handlers';
+import { fetchHandler, toggleFilter, showScene } from './Handlers';
 
-if (typeof document !== 'undefined') {
+if (typeof document !== 'undefined')
   document.addEventListener('DOMContentLoaded', () => {
-    const fetchStreams = ((document.querySelector(
-      '.fetch-streams',
-    ): any): HTMLButtonElement);
-    const all = ((document.querySelector(
-      '#filter-all',
-    ): any): HTMLButtonElement);
-    const online = ((document.querySelector(
-      '#filter-online',
-    ): any): HTMLButtonElement);
-    const offline = ((document.querySelector(
-      '#filter-offline',
-    ): any): HTMLButtonElement);
+    // mount point for streamers tiles
+    const table = document.querySelector('.twitch-table');
 
-    fetchStreams.addEventListener(
-      'click',
-      fetchHandler(document.querySelector('ul.twitch-table')),
-    );
-    all.addEventListener('click', toggleFilter('all'));
-    online.addEventListener('click', toggleFilter('online'));
-    offline.addEventListener('click', toggleFilter('offline'));
+    // manage fetching and display of streamer tiles
+    document
+      .querySelector('.fetch-streams')
+      .addEventListener(
+        'click',
+        fetchHandler(
+          table,
+          showScene(
+            document.querySelector('.spinner'),
+            document.querySelector('.error'),
+            table,
+          ),
+        ),
+      );
+
+    // manage displaying of streamer tiles
+    document
+      .querySelector('#filter-all')
+      .addEventListener('click', toggleFilter('all'));
+
+    // manage displaying of online streamer tiles
+    document
+      .querySelector('#filter-online')
+      .addEventListener('click', toggleFilter('online'));
+
+    // manage displaying of offline streamer tiles
+    document
+      .querySelector('#filter-offline')
+      .addEventListener('click', toggleFilter('offline'));
   });
-}
