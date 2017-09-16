@@ -8,7 +8,7 @@ import {
   toggleHandler,
   resetHandler,
 } from '../Handlers';
-import { scale } from 'common/js/utils';
+import { scaleIntToMinutes } from 'common/js/utils';
 import { STATE, PHASE } from '../Models';
 import type { Timer } from '../pomodoro.types';
 
@@ -27,7 +27,7 @@ let timerBtn: HTMLButtonElement;
 describe('Pomodoro Handlers', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    timer = { WORK: scale(1), REST: scale(1) };
+    timer = { WORK: scaleIntToMinutes(1), REST: scaleIntToMinutes(1) };
     game = { id: null, state: STATE.RUNNING, phase: PHASE.WORK };
     node = document.createElement('div');
     timerBtn = document.createElement('button');

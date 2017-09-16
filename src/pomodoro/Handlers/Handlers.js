@@ -2,7 +2,11 @@
 
 import { STATE, PHASE, startTimer, stopTimer } from '../Models';
 import type { Timer, Game } from '../pomodoro.types';
-import { parseTimeToText, scale, shrink } from 'common/js/utils';
+import {
+  parseTimeToText,
+  scaleIntToMinutes,
+  shrinkMinutesToInt,
+} from 'common/js/utils';
 
 const setFill = (node: HTMLElement) => (fill: number) =>
   node.style.backgroundImage = `linear-gradient(0deg, black ${fill}%, transparent 0%)`;
@@ -14,9 +18,10 @@ const stepperHandler = (
   counter: $Keys<typeof PHASE>,
   timer: Timer,
 ) => (_: Event) => {
-  const timeLimit = timer[counter] + scale(direction === 'inc' ? 1 : -1);
+  const delta = scaleIntToMinutes(direction === 'inc' ? 1 : -1);
+  const timeLimit = timer[counter] + delta;
   timer[counter] = Math.max(timeLimit, 0);
-  node.textContent = shrink(timer[counter]);
+  node.textContent = shrinkMinutesToInt(timer[counter]);
 };
 
 // returns func triggered by press on start/stop timer, adjust timer node

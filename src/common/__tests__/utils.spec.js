@@ -10,8 +10,8 @@ import {
   appendSuffix,
   convertFahrenheitToCelsius,
   checkHeaders,
-  shrink,
-  scale,
+  shrinkMinutesToInt,
+  scaleIntToMinutes,
   checkForNegativeZero,
   trim,
   rand,
@@ -48,12 +48,12 @@ describe('Shared utility code', () => {
     }
   });
 
-  it('scale should convert from int -> ms', () => {
-    expect(scale(1)).toBe(60000);
+  it('scaleIntToMinutes should convert from int -> ms', () => {
+    expect(scaleIntToMinutes(1)).toBe(60000);
   });
 
-  it('shrink should convert from ms -> int', () => {
-    expect(shrink(60000)).toBe(1);
+  it('shrinkMinutesToInt should convert from ms -> int', () => {
+    expect(shrinkMinutesToInt(60000)).toBe(1);
   });
 
   it('parseTimeToText should do so', () => {

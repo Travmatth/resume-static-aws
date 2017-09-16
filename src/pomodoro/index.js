@@ -7,10 +7,10 @@ import {
   setFill,
 } from './Handlers';
 import { stopTimer, startTimer, STATE, PHASE } from './Models';
-import { eventType, scale } from 'common/js/utils';
+import { eventType, scaleIntToMinutes } from 'common/js/utils';
 
 if (typeof document !== 'undefined') {
-  const timeLimit = scale(1);
+  const timeLimit = scaleIntToMinutes(1);
   const timer = { WORK: timeLimit, REST: timeLimit };
   const game = {
     id: null,

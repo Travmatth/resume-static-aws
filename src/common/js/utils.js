@@ -1,5 +1,5 @@
 /* @flow */
-import { week, month } from './constants';
+import { WEEK, MONTH } from './constants';
 import ExtendableError from 'extendable-error-class';
 
 const removeChildren = (el: HTMLElement) => {
@@ -27,9 +27,11 @@ const parseTimeToText = (elapsedTime: number) => {
 const SEC_IN_MINUTES = 60;
 const kSEC_IN_SECONDS = 1000;
 
-const scale = (val: number) => val * kSEC_IN_SECONDS * SEC_IN_MINUTES;
+const scaleIntToMinutes = (val: number) =>
+  val * kSEC_IN_SECONDS * SEC_IN_MINUTES;
 
-const shrink = (val: number) => val / kSEC_IN_SECONDS / SEC_IN_MINUTES;
+const shrinkMinutesToInt = (val: number) =>
+  val / kSEC_IN_SECONDS / SEC_IN_MINUTES;
 
 const serialize = (url: string, params: ?Object) => {
   const query = [];
@@ -68,8 +70,8 @@ const appendSuffix = (day: number) => {
 
 const dateString = (time: Date) => {
   return (
-    `${week[time.getDay()]}, ` +
-    `${month[time.getMonth()]} ` +
+    `${WEEK[time.getDay()]}, ` +
+    `${MONTH[time.getMonth()]} ` +
     `${appendSuffix(time.getDate())}`
   );
 };
@@ -118,8 +120,8 @@ export {
   checkHeaders,
   padLeft,
   parseTimeToText,
-  scale,
-  shrink,
+  scaleIntToMinutes,
+  shrinkMinutesToInt,
   serialize,
   ResponseError,
   appendSuffix,

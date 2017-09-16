@@ -1,6 +1,6 @@
 /* @flow */
 
-export const week = [
+const WEEK = [
   'Sunday',
   'Monday',
   'Tuesday',
@@ -8,19 +8,21 @@ export const week = [
   'Thursday',
   'Friday',
   'Saturday',
-]
+];
 
-export const month = [
- 'January',
- 'February',
- 'March',
- 'April',
- 'May',
- 'June',
- 'July',
- 'August',
- 'September',
- 'October',
- 'November',
- 'December',
-]
+const MONTH = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
+export { WEEK, MONTH };

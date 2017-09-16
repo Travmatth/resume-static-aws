@@ -2,7 +2,7 @@
 
 import { stopTimer, startTimer } from '../Models';
 
-import { scale } from 'common/js/utils';
+import { scaleIntToMinutes } from 'common/js/utils';
 import { STATE, PHASE } from '../Models';
 import type { Timer } from '../pomodoro.types';
 
@@ -24,7 +24,7 @@ let setFill: () => {};
 describe('Pomodoro Models', () => {
   beforeEach(() => {
     setFill = jest.fn();
-    timer = { WORK: scale(1), REST: scale(1) };
+    timer = { WORK: scaleIntToMinutes(1), REST: scaleIntToMinutes(1) };
     node = document.createElement('div');
     circle = document.createElement('div');
     startBtn = document.createElement('button');
