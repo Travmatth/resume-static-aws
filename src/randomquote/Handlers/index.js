@@ -1,3 +1,9 @@
 /* @flow */
-import { fetchQuoteHandler } from './RandomQuote';
-export { fetchQuoteHandler };
+import {
+  fetchQuoteHandler,
+  dismissError,
+  showError,
+  showScene,
+} from './RandomQuote';
+
+export { fetchQuoteHandler, dismissError, showError, showScene };

@@ -1,6 +1,15 @@
 @import "../common/scss/_all.scss";
 @import "../common/scss/_nav.scss";
 
+.quote {
+	max-width: 50vw;
+}
+
+.hidden {
+	visibility: hidden !important;
+	display: none !important;
+}
+
 a:first-of-type {
 	margin-left: 3px;
 }

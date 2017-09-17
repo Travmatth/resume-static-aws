@@ -2,26 +2,49 @@ extends ../common/pug/layout
 
 block heading
 	if (htmlWebpackPlugin)
-		link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
+		link(href=`${htmlWebpackPlugin.files.css}` rel='stylesheet' type='text/css')
 
 block content
 	section.hero.is-fullheight
 		include ../common/pug/nav.pug
+
 		section.hero-body
 			div.container
 				div.columns
 					div.column.is-8.is-offset-2
-						div#quotebox.box
-							div.title.quote In quoting others, we cite ourselves.
-							div.subtitle.is-pulled-right.author Julio Cortazar
-						div.column.is-8.is-offset-2
-							div.level.is-mobile
+
+						div.spinner.hidden
+							img.column.is-6.is-offset-3(src=require('assets/spinner.svg'), style='margin: 10vh auto 0 auto;')
+
+						div.quote-box.box
+							div.level
 								div.level-item
-									div.attribution
-										| API by:
-										a(href="http://forismatic.com/en/") forismatic
-									div.level-item
-										a.icon.tweet(href="")
-											include Assets/Twitter_Logo_Blue.svg
-									div.level-item
-										button#refresh.is-outlined.is-inverted Refresh
+									div.quote.title.quote In quoting others, we cite ourselves.
+
+							div.level
+								div.level-item
+									div.author.subtitle.is-pulled-right.author Julio Cortazar
+
+		section.hero-foot
+			div.column.is-12
+				div.level.is-mobile
+
+					div.level-item
+						div.attribution
+							| API by:
+							a(href='http://forismatic.com/en/') forismatic
+
+					div.level-item
+						a.icon.tweet(target='_blank', href='https://twitter.com/intent/tweet?hashtags=quotes&related=freecodecamp&text=%22In%20quoting%20others%2C%20we%20cite%20ourselves.%22%20~Julio%20Cortazar')
+							include Assets/Twitter_Logo_Blue.svg
+
+					div.level-item
+						div.attribution
+						div.level-item
+							button#refresh.is-outlined.is-inverted Refresh
+
+			div.modal
+				div.modal-background
+				div.modal-close.is-large
+				div.modal-content.box
+					div.has-text-centered An error has occurred. Please check your internet connection and try again.

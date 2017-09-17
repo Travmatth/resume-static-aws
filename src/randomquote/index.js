@@ -1,14 +1,39 @@
 /* @flow */
-import { fetchQuoteHandler } from './Handlers';
+import {
+  fetchQuoteHandler,
+  dismissError,
+  showError,
+  showScene,
+} from './Handlers';
+import { eventType } from 'common/js/utils';
 
-if (typeof document !== 'undefined') {
+const errorElements = ['.modal', '.modal-content', '.modal-close'];
+
+if (typeof document !== 'undefined')
   document.addEventListener('DOMContentLoaded', () => {
-    const container = ((document.getElementById('quotebox'): any): HTMLElement);
-    const tweet = ((document.querySelector('.tweet'): any): HTMLAnchorElement);
-    const nextQuote = fetchQuoteHandler(container, tweet);
-    ((document.getElementById('refresh'): any): HTMLElement).addEventListener(
-      'click',
-      nextQuote,
+    const type = eventType();
+    const errorModal = document.querySelector('.modal');
+    const dismiss = dismissError(errorModal);
+
+    const show = showScene(
+      document.querySelector('.quote-box'),
+      document.querySelector('.spinner'),
     );
+
+    errorElements.forEach(el =>
+      document.querySelector(el).addEventListener(type, dismiss),
+    );
+
+    document
+      .getElementById('refresh')
+      .addEventListener(
+        'click',
+        fetchQuoteHandler(
+          document.querySelector('.quote'),
+          document.querySelector('.author'),
+          document.querySelector('.tweet'),
+          showError(errorModal),
+          show,
+        ),
+      );
   });
-}

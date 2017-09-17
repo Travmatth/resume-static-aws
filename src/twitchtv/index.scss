@@ -2,8 +2,8 @@
 @import "../common/scss/_nav.scss";
 
 .hidden {
-	display: none;
-	visibility: hidden;
+	display: none !important;
+	visibility: hidden !important;
 }
 
 .shift-down {

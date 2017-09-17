@@ -8,6 +8,15 @@ jest.mock('../Handlers', () => {
   module.fetchQuoteHandlerCallback = jest.fn();
   module.fetchQuoteHandler = module.fetchQuoteHandlerCallback;
 
+  module.dismissErrorCallback = jest.fn();
+  module.dismissError = module.dismissErrorCallback;
+
+  module.showErrorCallback = jest.fn();
+  module.showError = module.showErrorCallback;
+
+  module.showSceneCallback = jest.fn();
+  module.showScene = module.showSceneCallback;
+
   return module;
 });
 
