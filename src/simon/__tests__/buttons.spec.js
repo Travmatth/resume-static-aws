@@ -1,13 +1,32 @@
 /* @flow */
 import * as TimerHandlers from '../Handlers/TimerHandler';
-import { Simon, Timer } from '../Models';
-import type { ColorHandler } from '../Handlers';
+import * as ColorHandlers from '../Handlers/ColorHandlers';
+import type { SoundManager } from '../Models';
+import type { TimerState, SimonState } from '../simon.types';
+import { timerState } from '../Models/Timer';
+import * as Simon from '../Models';
 import {
   powerHandler,
   strictHandler,
   scoreHandler,
   clickHandler,
 } from '../Handlers';
+
+jest.mock('../Models', () => ({
+  ...require.requireActual('../Models'),
+  getScore: jest.fn(),
+  hasPower: jest.fn(),
+  resetSimon: jest.fn(),
+  toggleState: jest.fn(),
+  hasPower: jest.fn(),
+  playerCanMove: jest.fn(),
+  setInput: jest.fn(),
+  move: jest.fn(),
+  hasFailedRound: jest.fn(),
+  hasWonRound: jest.fn(),
+  hasWonGame: jest.fn(),
+  isStrict: jest.fn(),
+}));
 
 jest.mock('../Handlers/TimerHandler', () => ({
   powerOn: jest.fn(),
@@ -16,87 +35,80 @@ jest.mock('../Handlers/TimerHandler', () => ({
   cancelTimer: jest.fn(),
 }));
 
+jest.mock('../Handlers/ColorHandlers', () => ({
+  showColor: jest.fn(),
+  hideColor: jest.fn(),
+  wonGame: jest.fn(),
+  wonRound: jest.fn(),
+  strictFail: jest.fn(),
+  restartRound: jest.fn(),
+  toggleStrict: jest.fn(),
+}));
+
+class Sounds {}
 const color = 'red';
 const ev = (({}: any): Event);
 
 describe('Simon Handlers', () => {
-  let simon: Simon;
-  let buttons: ColorHandler;
-  let timer: Timer;
+  let simon: SimonState;
+  let buttons: ColorButtons;
+  let timer: TimerState;
   let update: () => {};
+  let sounds: SoundManager;
+  let clock: { id: ?number };
 
   beforeEach(() => {
+    clock = { id: null };
     update = jest.fn();
-    simon = new Simon();
-    //$FlowIgnore
-    simon.toggleState = jest.fn();
-    //$FlowIgnore
-    simon.reset = jest.fn();
-    //$FlowIgnore
-    simon.end = jest.fn();
-    //$FlowIgnore
-    simon.toggleStrict = jest.fn();
-    //$FlowIgnore
-    simon.setInput = jest.fn();
-    //$FlowIgnore
-    simon.move = jest.fn();
-    //$FlowIgnore
-    simon.setInput = jest.fn();
+    timer = timerState();
 
-    buttons = (({}: any): ColorHandler);
-    //$FlowIgnore
-    buttons.showColor = jest.fn();
-    //$FlowIgnore
-    buttons.hideColor = jest.fn();
-    //$FlowIgnore
-    buttons.wonGame = jest.fn();
-    //$FlowIgnore
-    buttons.wonRound = jest.fn();
-    //$FlowIgnore
-    buttons.strictFail = jest.fn();
-    //$FlowIgnore
-    buttons.restartRound = jest.fn();
+    buttons = {
+      red: document.createElement('button'),
+      yellow: document.createElement('button'),
+      green: document.createElement('button'),
+      blue: document.createElement('button'),
+    };
 
-    timer = new Timer();
+    Object.keys(buttons).forEach(color => buttons[color].classList.add(color));
+
+    sounds = ((new Sounds(): any): SoundManager);
+    //$FlowIgnore
+    sounds.play = jest.fn();
+    //$FlowIgnore
+    sounds.pause = jest.fn();
   });
 
   it("powerHandler should start game if simon doesn't have power", () => {
-    //$FlowIgnore
-    simon.hasPower = jest.fn(() => false);
+    Simon.hasPower = Simon.hasPower.mockImplementationOnce(() => false);
 
-    const spy = jest.spyOn(simon, 'getScore');
-    const clock = { id: null };
+    //const spy = jest.spyOn(simon, 'getScore');
 
     powerHandler(update, buttons, simon, timer, clock)(ev);
 
-    expect(simon.toggleState).toHaveBeenCalled();
-    expect(simon.hasPower).toHaveBeenCalled();
-    expect(spy).toHaveBeenCalled();
-    expect(simon.reset).toHaveBeenCalled();
+    expect(Simon.resetSimon).toHaveBeenCalled();
     expect(update).toHaveBeenCalled();
+    expect(Simon.toggleState).toHaveBeenCalled();
+    expect(Simon.hasPower).toHaveBeenCalled();
+    expect(Simon.getScore).toHaveBeenCalled();
     expect(TimerHandlers.powerOn).toHaveBeenCalled();
   });
 
   it('powerHandler should end game if simon has power', () => {
     //$FlowIgnore
-    simon.hasPower = jest.fn(() => true);
-
-    const clock = { id: null };
+    Simon.hasPower = Simon.hasPower.mockImplementationOnce(() => true);
 
     powerHandler(update, buttons, simon, timer, clock)(ev);
 
-    expect(simon.toggleState).toHaveBeenCalled();
-    expect(simon.hasPower).toHaveBeenCalled();
-    expect(simon.end).toHaveBeenCalled();
+    expect(Simon.toggleState).toHaveBeenCalled();
+    expect(Simon.hasPower).toHaveBeenCalled();
     expect(update).toHaveBeenCalled();
     expect(TimerHandlers.powerOff).toHaveBeenCalled();
   });
 
   it('strictHandler should toggle simon strict mode', () => {
-    //$FlowIgnore
     strictHandler(simon)();
 
-    expect(simon.toggleStrict).toHaveBeenCalled();
+    expect(ColorHandlers.toggleStrict).toHaveBeenCalled();
   });
 
   it('scoreHandler should should set score in element textContent', () => {
@@ -107,117 +119,175 @@ describe('Simon Handlers', () => {
   });
 
   it('clickHandler should do nothing if player cannot move', () => {
-    const clock = { id: null };
+    Simon.playerCanMove = Simon.playerCanMove.mockImplementationOnce(
+      () => false,
+    );
 
-    //$FlowIgnore
-    simon.playerCanMove = jest.fn(() => false);
-
-    const click = clickHandler(color, buttons, update, simon, timer, clock)(ev);
+    const click = clickHandler(
+      color,
+      buttons,
+      update,
+      simon,
+      timer,
+      clock,
+      sounds,
+    )(ev);
 
     expect(click).toBe(false);
   });
 
   it('clickHandler should call setInput on correct move', () => {
-    const clock = { id: null };
-    //$FlowIgnore
-    simon.playerCanMove = jest.fn(() => true);
-    //$FlowIgnore
-    simon.hasFailedRound = jest.fn(() => false);
-    //$FlowIgnore
-    simon.hasWonRound = jest.fn(() => false);
-    //$FlowIgnore
-    simon.hasWonGame = jest.fn(() => false);
+    Simon.playerCanMove = Simon.playerCanMove.mockImplementationOnce(
+      () => true,
+    );
+    Simon.hasFailedRound = Simon.hasFailedRound.mockImplementationOnce(
+      () => false,
+    );
+    Simon.hasWonRound = Simon.hasWonRound.mockImplementationOnce(() => false);
+    Simon.hasWonGame = Simon.hasWonGame.mockImplementationOnce(() => false);
 
-    const click = clickHandler(color, buttons, update, simon, timer, clock)(ev);
+    const click = clickHandler(
+      color,
+      buttons,
+      update,
+      simon,
+      timer,
+      clock,
+      sounds,
+    )(ev);
 
     jest.runTimersToTime(1000);
 
-    expect(simon.setInput).toHaveBeenCalledTimes(2);
+    expect(Simon.setInput).toHaveBeenCalledTimes(2);
   });
 
   it('clickHandler should end and restart game if player has won', () => {
     //$FlowIgnore
-    simon.playerCanMove = jest.fn(() => true);
+    Simon.playerCanMove = Simon.playerCanMove.mockImplementationOnce(
+      () => true,
+    );
     //$FlowIgnore
-    simon.hasFailedRound = jest.fn(() => false);
+    Simon.hasFailedRound = Simon.hasFailedRound.mockImplementationOnce(
+      () => false,
+    );
     //$FlowIgnore
-    simon.hasWonRound = jest.fn(() => false);
+    Simon.hasWonRound = Simon.hasWonRound.mockImplementationOnce(() => false);
     //$FlowIgnore
-    simon.hasWonGame = jest.fn(() => true);
+    Simon.hasWonGame = Simon.hasWonGame.mockImplementationOnce(() => true);
 
-    const clock = { id: null };
-    const click = clickHandler(color, buttons, update, simon, timer, clock)(ev);
+    const click = clickHandler(
+      color,
+      buttons,
+      update,
+      simon,
+      timer,
+      clock,
+      sounds,
+    )(ev);
 
     jest.runTimersToTime(1000);
 
-    expect(buttons.wonGame).toHaveBeenCalled();
+    expect(ColorHandlers.wonGame).toHaveBeenCalled();
   });
 
   it('clickHandler should advance to next round if player has won current round', () => {
     const color = 'red';
 
     //$FlowIgnore
-    simon.playerCanMove = jest.fn(() => true);
+    Simon.playerCanMove = Simon.playerCanMove.mockImplementationOnce(
+      () => true,
+    );
     //$FlowIgnore
-    simon.move = jest.fn();
+    Simon.move = Simon.move.mockImplementationOnce();
     //$FlowIgnore
-    simon.setInput = jest.fn();
+    Simon.setInput = Simon.setInput.mockImplementationOnce();
     //$FlowIgnore
-    simon.hasFailedRound = jest.fn(() => false);
+    Simon.hasFailedRound = Simon.hasFailedRound.mockImplementationOnce(
+      () => false,
+    );
     //$FlowIgnore
-    simon.hasWonRound = jest.fn(() => true);
+    Simon.hasWonRound = Simon.hasWonRound.mockImplementationOnce(() => true);
     //$FlowIgnore
-    simon.hasWonGame = jest.fn(() => false);
+    Simon.hasWonGame = Simon.hasWonGame.mockImplementationOnce(() => false);
 
-    const clock = { id: null };
-    const click = clickHandler(color, buttons, update, simon, timer, clock)(ev);
+    const click = clickHandler(
+      color,
+      buttons,
+      update,
+      simon,
+      timer,
+      clock,
+      sounds,
+    )(ev);
 
     jest.runTimersToTime(1000);
 
     expect(TimerHandlers.cancelTimer).toHaveBeenCalled();
-    expect(buttons.wonRound).toHaveBeenCalled();
+    expect(ColorHandlers.wonRound).toHaveBeenCalled();
   });
 
   it('clickHandler should restart if player has lost current round in strict mode', () => {
-    const clock = { id: null };
+    //$FlowIgnore
+    Simon.playerCanMove = Simon.playerCanMove.mockImplementationOnce(
+      () => true,
+    );
+    //$FlowIgnore
+    Simon.isStrict = Simon.isStrict.mockImplementationOnce(() => true);
+    //$FlowIgnore
+    Simon.hasFailedRound = Simon.hasFailedRound.mockImplementationOnce(
+      () => true,
+    );
+    //$FlowIgnore
+    Simon.hasWonRound = Simon.hasWonRound.mockImplementationOnce(() => false);
+    //$FlowIgnore
+    Simon.hasWonGame = Simon.hasWonGame.mockImplementationOnce(() => false);
 
-    //$FlowIgnore
-    simon.playerCanMove = jest.fn(() => true);
-    //$FlowIgnore
-    simon.isStrict = jest.fn(() => true);
-    //$FlowIgnore
-    simon.hasFailedRound = jest.fn(() => true);
-    //$FlowIgnore
-    simon.hasWonRound = jest.fn(() => false);
-    //$FlowIgnore
-    simon.hasWonGame = jest.fn(() => false);
-
-    const click = clickHandler(color, buttons, update, simon, timer, clock)(ev);
+    const click = clickHandler(
+      color,
+      buttons,
+      update,
+      simon,
+      timer,
+      clock,
+      sounds,
+    )(ev);
 
     jest.runTimersToTime(1000);
 
     expect(TimerHandlers.cancelTimer).toHaveBeenCalled();
-    expect(buttons.strictFail).toHaveBeenCalled();
+    expect(ColorHandlers.strictFail).toHaveBeenCalled();
   });
 
   it('clickHandler should restart restart round if player has lost in regular mode', () => {
-    const clock = { id: null };
     //$FlowIgnore
-    simon.playerCanMove = jest.fn(() => true);
+    Simon.playerCanMove = Simon.playerCanMove.mockImplementationOnce(
+      () => true,
+    );
     //$FlowIgnore
-    simon.isStrict = jest.fn(() => false);
+    Simon.isStrict = Simon.isStrict.mockImplementationOnce(() => false);
     //$FlowIgnore
-    simon.hasFailedRound = jest.fn(() => true);
+    Simon.hasFailedRound = Simon.hasFailedRound.mockImplementationOnce(
+      () => true,
+    );
     //$FlowIgnore
-    simon.hasWonRound = jest.fn(() => false);
+    Simon.hasWonRound = Simon.hasWonRound.mockImplementationOnce(() => false);
     //$FlowIgnore
-    simon.hasWonGame = jest.fn(() => false);
+    Simon.hasWonGame = Simon.hasWonGame.mockImplementationOnce;
+    Simon.hasWonGame(() => false);
 
-    const click = clickHandler(color, buttons, update, simon, timer, clock)(ev);
+    const click = clickHandler(
+      color,
+      buttons,
+      update,
+      simon,
+      timer,
+      clock,
+      sounds,
+    )(ev);
 
     jest.runTimersToTime(1000);
 
     expect(TimerHandlers.cancelTimer).toHaveBeenCalled();
-    expect(buttons.restartRound).toHaveBeenCalled();
+    expect(ColorHandlers.restartRound).toHaveBeenCalled();
   });
 });

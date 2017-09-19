@@ -1,276 +1,306 @@
 /* @flow */
-import { Timer, Simon } from '../Models';
-import { delay } from '../Models';
+import '../Models';
 import type { ColorHandler } from '../Handlers';
+import type { SoundManager } from '../Models';
+import type { TimerState, SimonState } from '../simon.types';
+import {
+  timerState,
+  resetTimer,
+  increment,
+  decrement,
+  tick,
+} from '../Models/Timer';
+import { delay } from '../Models/GameCycle';
+import * as Simon from '../Models/Simon';
 
-class MockButtons {}
+jest.mock('../Models/Simon', () => ({
+  ...require.requireActual('../Models/Simon'),
+  showSequenceOver: jest.fn(),
+  //setInput: jest.fn(),
+  hasWonRound: jest.fn(),
+  hasWonGame: jest.fn(),
+  resetSimon: jest.fn(),
+}));
+
+class Sounds {}
 
 describe('Simon Game Timer Model', () => {
-  let timer: Timer;
-  let simon: Simon;
+  let simon: SimonState;
   let buttons: ColorHandler;
+  let sounds: SoundManager;
+  let state: TimerState;
 
   beforeEach(() => {
-    timer = new Timer();
-    simon = new Simon();
-    buttons = ((new MockButtons(): any): ColorHandler);
+    state = timerState();
+    simon = Simon.simonState();
+    sounds = ((new Sounds(): any): SoundManager);
+
+    //$FlowIgnore
+    sounds.play = jest.fn();
+    //$FlowIgnore
+    sounds.pause = jest.fn();
+
+    buttons = {
+      red: document.createElement('button'),
+      yellow: document.createElement('button'),
+      green: document.createElement('button'),
+      blue: document.createElement('button'),
+    };
+
+    Object.keys(buttons).forEach(color => buttons[color].classList.add(color));
   });
 
   it('reset should set current to zero', () => {
-    timer.current = 1;
-    timer.reset();
-    expect(timer.current).toBe(0);
+    state.current = 1;
+    resetTimer(state);
+    expect(state.current).toBe(0);
   });
 
   it('increment should increment current by 1', () => {
-    timer.increment();
-    expect(timer.current).toBe(1);
+    increment(state);
+    expect(state.current).toBe(1);
   });
 
   it('increment should increment current by given amount', () => {
-    timer.increment(2);
-    expect(timer.current).toBe(2);
+    increment(state, 2);
+    expect(state.current).toBe(2);
   });
 
   it('decrement should decrement current by 1', () => {
-    timer.current = 1;
-    timer.decrement();
-    expect(timer.current).toBe(0);
+    state.current = 1;
+    decrement(state);
+    expect(state.current).toBe(0);
   });
 
   it('decrement should decrement current by given amount', () => {
-    timer.current = 2;
-    timer.decrement(2);
-    expect(timer.current).toBe(0);
+    state.current = 2;
+    decrement(state, 2);
+    expect(state.current).toBe(0);
   });
 
   it('tick should reset if current step is impossibly low', () => {
-    const spy = jest.spyOn(timer, 'reset');
-    timer.current = -1;
-    timer.tick(simon, buttons);
+    state.current = -1;
+    tick(state, simon, sounds, buttons);
 
-    expect(spy).toHaveBeenCalled();
+    expect(state.current).toBe(0);
   });
 
   it('tick should reset if current step is impossibly high', () => {
-    const spy = jest.spyOn(timer, 'reset');
-    timer.current = 20;
-    timer.tick(simon, buttons);
+    state.current = 20;
+    tick(state, simon, sounds, buttons);
 
-    expect(spy).toHaveBeenCalled();
+    expect(state.current).toBe(0);
   });
 
   it('cycle: start should increment and show all buttons', () => {
-    //$FlowIgnore
-    buttons.showAll = jest.fn();
-
-    const { next, round, action } = timer.tick(simon, buttons);
+    const calls = [['red'], ['yellow'], ['blue'], ['green']];
+    const { next, round, action } = tick(state, simon, sounds, buttons);
     action();
 
     expect(next).toBe(true);
     expect(round).toBe(delay['start']);
-    expect(timer.current).toBe(1);
-    expect(buttons.showAll).toHaveBeenCalled();
+    expect(state.current).toBe(1);
+    expect(sounds.play.mock.calls).toEqual(calls);
   });
 
   it('cycle: end-start should increment and hide all buttons', () => {
-    timer.current = 1;
-    //$FlowIgnore
-    buttons.hideAll = jest.fn();
+    const calls = [['red'], ['yellow'], ['blue'], ['green']];
+    state.current = 1;
 
-    const { next, round, action } = timer.tick(simon, buttons);
+    const { next, round, action } = tick(state, simon, sounds, buttons);
     action();
 
     expect(next).toBe(true);
     expect(round).toBe(delay['end-start']);
-    expect(timer.current).toBe(2);
-    expect(buttons.hideAll).toHaveBeenCalled();
+    expect(state.current).toBe(2);
+    expect(sounds.pause.mock.calls).toEqual(calls);
   });
 
   it('cycle: show-sequence should increment', () => {
-    timer.current = 2;
+    state.current = 2;
 
-    const { next, round, action } = timer.tick(simon, buttons);
+    const { next, round, action } = tick(state, simon, sounds, buttons);
     action();
 
     expect(next).toBe(true);
     expect(round).toBe(delay['show-sequence']);
-    expect(timer.current).toBe(3);
+    expect(state.current).toBe(3);
   });
 
   it('cycle: show-step-pause should increment', () => {
-    timer.current = 3;
+    state.current = 3;
 
-    const { next, round, action } = timer.tick(simon, buttons);
+    const { next, round, action } = tick(state, simon, sounds, buttons);
     action();
 
     expect(next).toBe(true);
     expect(round).toBe(delay['show-step-pause']);
-    expect(timer.current).toBe(4);
+    expect(state.current).toBe(4);
   });
 
   it('cycle: show-step should increment and show specified color', () => {
-    timer.current = 4;
-    //$FlowIgnore
-    buttons.showColor = jest.fn();
+    simon.round = ['blue'];
+    const calls = [['blue']];
+    state.current = 4;
 
-    const { next, round, action } = timer.tick(simon, buttons);
+    const { next, round, action } = tick(state, simon, sounds, buttons);
     action();
 
     expect(next).toBe(true);
     expect(round).toBe(delay['show-step']);
-    expect(timer.current).toBe(5);
-    expect(buttons.showColor).toHaveBeenCalled();
+    expect(state.current).toBe(5);
+    expect(sounds.play.mock.calls).toEqual(calls);
   });
 
   it('cycle: hide-step should hide color, queue next color, and increment if sequence is over', () => {
-    timer.current = 5;
+    simon.round = ['blue'];
+    const calls = [['blue']];
+    state.current = 5;
     //$FlowIgnore
-    buttons.hideColor = jest.fn();
-    //$FlowIgnore
-    simon.showSequenceOver = jest.fn(() => true);
+    Simon.showSequenceOver = Simon.showSequenceOver.mockImplementationOnce(
+      () => true,
+    );
 
-    const { next, round, action } = timer.tick(simon, buttons);
+    const { next, round, action } = tick(state, simon, sounds, buttons);
     action();
 
     expect(next).toBe(true);
     expect(round).toBe(delay['hide-step']);
-    expect(timer.current).toBe(6);
-    expect(buttons.hideColor).toHaveBeenCalled();
+    expect(state.current).toBe(6);
+    expect(sounds.pause.mock.calls).toEqual(calls);
   });
 
   it('cycle: hide-step should hide color, queue next color, and decrement if sequence is over', () => {
-    timer.current = 5;
-    //$FlowIgnore
-    buttons.hideColor = jest.fn();
+    simon.round = ['blue'];
+    const calls = [['blue']];
+    state.current = 5;
     //$FlowIgnore
     simon.showSequenceOver = jest.fn(() => false);
 
-    const { next, round, action } = timer.tick(simon, buttons);
+    const { next, round, action } = tick(state, simon, sounds, buttons);
     action();
 
     expect(next).toBe(true);
     expect(round).toBe(delay['hide-step']);
-    expect(timer.current).toBe(3);
-    expect(buttons.hideColor).toHaveBeenCalled();
+    expect(state.current).toBe(3);
+    expect(sounds.pause.mock.calls).toEqual(calls);
   });
 
   it('cycle: hide-sequence should increment', () => {
-    timer.current = 6;
+    state.current = 6;
 
-    const { next, round, action } = timer.tick(simon, buttons);
+    const { next, round, action } = tick(state, simon, sounds, buttons);
     action();
 
     expect(next).toBe(true);
     expect(round).toBe(delay['hide-sequence']);
-    expect(timer.current).toBe(7);
+    expect(state.current).toBe(7);
   });
 
   it('cycle: start-input should increment and set simon input to true', () => {
-    timer.current = 7;
+    state.current = 7;
     //$FlowIgnore
-    simon.setInput = jest.fn();
     simon.round = ['red'];
 
-    const { next, round, action } = timer.tick(simon, buttons);
+    const { next, round, action } = tick(state, simon, sounds, buttons);
     action();
 
     expect(next).toBe(true);
     expect(round).toBe(simon.round.length * 2.5 * 1000);
-    expect(timer.current).toBe(8);
-    expect(simon.setInput).toHaveBeenCalledWith(true);
+    expect(state.current).toBe(8);
+    expect(simon.input).toBe(true);
   });
 
   it('cycle: end-input should set simon input to false and jump to successful-round if player has won round or game', () => {
-    timer.current = 8;
+    state.current = 8;
     //$FlowIgnore
-    simon.setInput = jest.fn();
+    Simon.hasWonRound = Simon.hasWonRound.mockImplementationOnce(() => true);
     //$FlowIgnore
-    simon.hasWonRound = jest.fn(() => true);
-    //$FlowIgnore
-    simon.hasWonGame = jest.fn(() => false);
+    Simon.hasWonGame = Simon.hasWonGame.mockImplementationOnce(() => false);
 
-    const { next, round, action } = timer.tick(simon, buttons);
+    const { next, round, action } = tick(state, simon, sounds, buttons);
     action();
 
     expect(next).toBe(true);
     expect(round).toBe(delay['end-input']);
-    expect(timer.current).toBe(10);
-    expect(simon.setInput).toHaveBeenCalledWith(false);
+    expect(state.current).toBe(10);
+    expect(simon.input).toBe(false);
   });
 
   it('cycle: end-input should set simon input to false and increment to failed-round if player has failed round or game', () => {
-    timer.current = 8;
+    state.current = 8;
     //$FlowIgnore
-    simon.setInput = jest.fn();
+    Simon.hasWonRound = Simon.hasWonRound.mockImplementationOnce(() => false);
     //$FlowIgnore
-    simon.hasWonRound = jest.fn(() => false);
-    //$FlowIgnore
-    simon.hasWonGame = jest.fn(() => false);
+    Simon.hasWonGame = Simon.hasWonGame.mockImplementationOnce(() => false);
 
-    const { next, round, action } = timer.tick(simon, buttons);
+    const { next, round, action } = tick(state, simon, sounds, buttons);
     action();
 
     expect(next).toBe(true);
     expect(round).toBe(delay['end-input']);
-    expect(timer.current).toBe(9);
-    expect(simon.setInput).toHaveBeenCalledWith(false);
+    expect(state.current).toBe(9);
+    expect(simon.input).toBe(false);
   });
 
   it('cycle: failed-round should start failed animation and jump to end', () => {
-    timer.current = 9;
-    //$FlowIgnore
-    buttons.failStart = jest.fn();
+    const calls = [['lost'], ['red'], ['yellow'], ['blue'], ['green']];
+    state.current = 9;
 
-    const { next, round, action } = timer.tick(simon, buttons);
+    const { next, round, action } = tick(state, simon, sounds, buttons);
     action();
 
     expect(next).toBe(true);
     expect(round).toBe(delay['failed-round']);
-    expect(timer.current).toBe(11);
-    expect(buttons.failStart).toHaveBeenCalled();
+    expect(state.current).toBe(11);
+    expect(sounds.play.mock.calls).toEqual(calls);
   });
 
   it('cycle: successful-round should start win animation and increment to end', () => {
-    timer.current = 10;
-    //$FlowIgnore
-    buttons.wonStart = jest.fn();
+    const calls = [['won'], ['red'], ['yellow'], ['blue'], ['green']];
+    state.current = 10;
 
-    const { next, round, action } = timer.tick(simon, buttons);
+    const { next, round, action } = tick(state, simon, sounds, buttons);
     action();
 
     expect(next).toBe(true);
     expect(round).toBe(delay['failed-round']);
-    expect(timer.current).toBe(11);
-    expect(buttons.wonStart).toHaveBeenCalled();
+    expect(state.current).toBe(11);
+    expect(sounds.play.mock.calls).toEqual(calls);
   });
 
   it('cycle: end should stop all animations and reset game and timer state', () => {
-    timer.current = 11;
-    const spy = jest.spyOn(timer, 'reset');
-    //$FlowIgnore
-    simon.reset = jest.fn();
-    //$FlowIgnore
-    buttons.wonEnd = jest.fn();
-    //$FlowIgnore
-    buttons.failEnd = jest.fn();
+    const calls = [
+      ['won'],
+      ['red'],
+      ['yellow'],
+      ['blue'],
+      ['green'],
+      ['lost'],
+      ['red'],
+      ['yellow'],
+      ['blue'],
+      ['green'],
+    ];
 
-    const { next, round, action } = timer.tick(simon, buttons);
+    state.current = 11;
+    //$FlowIgnore
+    Simon.resetSimon = Simon.resetSimon.mockImplementationOnce();
+
+    const { next, round, action } = tick(state, simon, sounds, buttons);
     action();
 
     expect(next).toBe(true);
     expect(round).toBe(delay['end']);
-    expect(timer.current).toBe(0);
-    expect(spy).toHaveBeenCalled();
-    expect(buttons.wonEnd).toHaveBeenCalled();
-    expect(buttons.failEnd).toHaveBeenCalled();
-    expect(simon.reset).toHaveBeenCalled();
+    expect(state.current).toBe(0);
+    expect(Simon.resetSimon).toHaveBeenCalled();
+    expect(sounds.pause.mock.calls).toEqual(calls);
   });
 
   it('timer should return default action if stage is not recognized', () => {
-    timer.current = 12;
+    state.current = 12;
 
-    const { next, round, action } = timer.tick(simon, buttons);
+    const { next, round, action } = tick(state, simon, sounds, buttons);
     action();
 
     expect(next).toBe(false);

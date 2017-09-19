@@ -1,6 +1,22 @@
 /* @flow */
 
-import ColorHandler from './ColorHandler';
+import {
+  COLORS,
+  flash,
+  wonStart,
+  wonEnd,
+  failEnd,
+  failStart,
+  wonGame,
+  wonRound,
+  strictFail,
+  restartRound,
+  showAll,
+  hideAll,
+  swapCss,
+  showColor,
+  hideColor,
+} from './ColorHandlers';
 import { cancelTimer, advance, powerOn, powerOff, fire } from './TimerHandler';
 import {
   clickHandler,
@@ -10,7 +26,21 @@ import {
 } from './ButtonHandlers';
 
 export {
-  ColorHandler,
+  COLORS,
+  flash,
+  wonStart,
+  wonEnd,
+  failEnd,
+  failStart,
+  wonGame,
+  wonRound,
+  strictFail,
+  restartRound,
+  showAll,
+  hideAll,
+  swapCss,
+  showColor,
+  hideColor,
   clickHandler,
   strictHandler,
   scoreHandler,

@@ -1,7 +1,53 @@
 /* @flow */
 import { delay, cycle } from './GameCycle';
 import SoundManager from './SoundManager';
-import Timer from './Timer';
-import { Simon, Colors } from './Simon';
+import { timerState, resetTimer, increment, decrement, tick } from './Timer';
+import {
+  COLORS,
+  simonState,
+  toggleState,
+  hasPower,
+  isStrict,
+  toggleStrict,
+  randomColor,
+  resetSimon,
+  setInput,
+  playerCanMove,
+  hasWonGame,
+  hasWonRound,
+  showSequenceOver,
+  getScore,
+  move,
+  currentColor,
+  nextColor,
+  hasFailedRound,
+} from './Simon';
 
-export { delay, Colors, cycle, SoundManager, Timer, Simon };
+export {
+  delay,
+  cycle,
+  SoundManager,
+  timerState,
+  resetSimon,
+  increment,
+  decrement,
+  tick,
+  COLORS,
+  simonState,
+  toggleState,
+  hasPower,
+  isStrict,
+  toggleStrict,
+  randomColor,
+  resetTimer,
+  setInput,
+  playerCanMove,
+  hasWonGame,
+  hasWonRound,
+  showSequenceOver,
+  getScore,
+  move,
+  currentColor,
+  nextColor,
+  hasFailedRound,
+};

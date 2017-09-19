@@ -1,12 +1,26 @@
 /* @flow */
-import { ColorHandler } from '../Handlers';
+import {
+  COLORS,
+  flash,
+  wonStart,
+  wonEnd,
+  failEnd,
+  failStart,
+  wonGame,
+  wonRound,
+  strictFail,
+  restartRound,
+  showAll,
+  hideAll,
+  swapCss,
+  showColor,
+  hideColor,
+} from '../Handlers';
 import type { SoundManager } from '../Models';
-import { Colors } from '../Models';
 
 class Sounds {}
 
-describe('Simon Colors', () => {
-  let color: ColorHandler;
+describe('Simon COLORS', () => {
   let buttons: { [string]: HTMLElement };
   let sounds: SoundManager;
 
@@ -25,156 +39,131 @@ describe('Simon Colors', () => {
     sounds.play = jest.fn();
     //$FlowIgnore
     sounds.pause = jest.fn();
-
-    color = new ColorHandler(buttons, sounds);
   });
 
   it('swapCss should toggle css classes on color elements', () => {
-    color.swapCss(Colors.red);
-    expect(buttons[Colors.red].className).toBe('light-red');
+    swapCss(COLORS.red, buttons);
+    expect(buttons[COLORS.red].className).toBe('light-red');
 
-    color.swapCss(Colors.red);
-    expect(buttons[Colors.red].className).toBe(Colors.red);
+    swapCss(COLORS.red, buttons);
+    expect(buttons[COLORS.red].className).toBe(COLORS.red);
   });
 
   it('showColor should play sound & toggle css', () => {
-    color.showColor(Colors.red);
+    showColor(COLORS.red, sounds, buttons);
     expect(sounds.play).toHaveBeenCalled();
-    expect(buttons[Colors.red].className).toBe('light-red');
+    expect(buttons[COLORS.red].className).toBe('light-red');
   });
 
   it('hideColor should stop sound & toggle css', () => {
-    color.showColor(Colors.red);
-    color.hideColor(Colors.red);
+    showColor(COLORS.red, sounds, buttons);
+    hideColor(COLORS.red, sounds, buttons);
 
     expect(sounds.pause).toHaveBeenCalled();
-    expect(buttons[Colors.red].className).toBe(Colors.red);
-  });
-
-  it('startSound should play sound', () => {
-    color.startSound(Colors.red);
-    expect(sounds.play).toHaveBeenCalled();
-  });
-
-  it('endSound should stop sound', () => {
-    color.endSound(Colors.red);
-    expect(sounds.pause).toHaveBeenCalled();
+    expect(buttons[COLORS.red].className).toBe(COLORS.red);
   });
 
   it('flash should display color & start sound, then end both', () => {
-    const showAll = jest.spyOn(color, 'showAll').mockImplementation(() => {});
-    const startSound = jest
-      .spyOn(color, 'startSound')
-      .mockImplementation(() => {});
-    const hideAll = jest.spyOn(color, 'hideAll').mockImplementation(() => {});
-    const endSound = jest.spyOn(color, 'endSound').mockImplementation(() => {});
     const resume = jest.fn();
+    const calls = [['red'], ['yellow'], ['blue'], ['green'], ['red']];
 
-    color.flash('red', resume);
+    flash('red', resume, sounds, buttons);
 
-    expect(showAll).toHaveBeenCalled();
-    expect(startSound).toHaveBeenCalled();
+    expect(sounds.play.mock.calls).toEqual(calls);
 
     jest.runTimersToTime(1000);
 
-    expect(hideAll).toHaveBeenCalled();
-    expect(endSound).toHaveBeenCalled();
+    expect(sounds.pause.mock.calls).toEqual(calls);
     expect(resume).toHaveBeenCalled();
   });
 
   it("wonGame should flash 'won'", () => {
     const resume = jest.fn();
-    const spy = jest.spyOn(color, 'flash').mockImplementation(() => {});
-    color.wonGame(resume);
+    const calls = [['red'], ['yellow'], ['blue'], ['green'], ['won']];
 
-    expect(spy).toHaveBeenCalled();
+    wonGame(resume, sounds, buttons);
+    jest.runTimersToTime(1000);
+
+    expect(sounds.play.mock.calls).toEqual(calls);
+    expect(sounds.pause.mock.calls).toEqual(calls);
+    expect(resume).toHaveBeenCalled();
   });
 
   it("wonRound should flash 'won'", () => {
     const resume = jest.fn();
-    const spy = jest.spyOn(color, 'flash').mockImplementation(() => {});
-    color.wonRound(resume);
+    const calls = [['red'], ['yellow'], ['blue'], ['green'], ['won']];
 
-    expect(spy).toHaveBeenCalled();
+    wonRound(resume, sounds, buttons);
+    jest.runTimersToTime(1000);
+
+    expect(sounds.play.mock.calls).toEqual(calls);
+    expect(sounds.pause.mock.calls).toEqual(calls);
+    expect(resume).toHaveBeenCalled();
   });
 
   it('wonStart should flash all colors, start won audio', () => {
-    //$FlowIgnore
-    color.startSound = jest.fn();
-    //$FlowIgnore
-    color.showAll = jest.fn();
+    wonStart(sounds, buttons);
+    jest.runTimersToTime(1000);
+    const calls = [['won'], ['red'], ['yellow'], ['blue'], ['green']];
 
-    color.wonStart();
-
-    expect(color.startSound).toHaveBeenCalledWith('won');
-    expect(color.showAll).toHaveBeenCalled();
+    expect(sounds.play.mock.calls).toEqual(calls);
   });
 
   it('wonEnd should flash all colors, start won audio', () => {
-    //$FlowIgnore
-    color.endSound = jest.fn();
-    //$FlowIgnore
-    color.hideAll = jest.fn();
+    wonEnd(sounds, buttons);
+    jest.runTimersToTime(1000);
+    const calls = [['won'], ['red'], ['yellow'], ['blue'], ['green']];
 
-    color.wonEnd();
-
-    expect(color.endSound).toHaveBeenCalledWith('won');
-    expect(color.hideAll).toHaveBeenCalled();
+    expect(sounds.pause.mock.calls).toEqual(calls);
   });
 
   it('failStart should flash all colors, start fail audio', () => {
-    //$FlowIgnore
-    color.startSound = jest.fn();
-    //$FlowIgnore
-    color.showAll = jest.fn();
+    failStart(sounds, buttons);
+    jest.runTimersToTime(1000);
+    const calls = [['lost'], ['red'], ['yellow'], ['blue'], ['green']];
 
-    color.failStart();
-
-    expect(color.startSound).toHaveBeenCalledWith('lost');
-    expect(color.showAll).toHaveBeenCalled();
+    expect(sounds.play.mock.calls).toEqual(calls);
   });
 
   it('failEnd should flash all colors, end fail audio', () => {
-    //$FlowIgnore
-    color.endSound = jest.fn();
-    //$FlowIgnore
-    color.hideAll = jest.fn();
+    failEnd(sounds, buttons);
+    jest.runTimersToTime(1000);
+    const calls = [['lost'], ['red'], ['yellow'], ['blue'], ['green']];
 
-    color.failEnd();
-
-    expect(color.endSound).toHaveBeenCalledWith('lost');
-    expect(color.hideAll).toHaveBeenCalled();
+    expect(sounds.pause.mock.calls).toEqual(calls);
   });
 
   it("strictFail should flash 'lost'", () => {
     const resume = jest.fn();
-    const spy = jest.spyOn(color, 'flash').mockImplementation(() => {});
-    color.strictFail(resume);
+    strictFail(resume, sounds, buttons);
+    jest.runTimersToTime(1000);
+    const calls = [['red'], ['yellow'], ['blue'], ['green'], ['lost']];
 
-    expect(spy).toHaveBeenCalled();
+    expect(sounds.play.mock.calls).toEqual(calls);
+    expect(sounds.pause.mock.calls).toEqual(calls);
   });
 
   it("restartRound should flash 'start'", () => {
     const resume = jest.fn();
-    const spy = jest.spyOn(color, 'flash').mockImplementation(() => {});
-    color.restartRound(resume);
+    restartRound(resume, sounds, buttons);
+    jest.runTimersToTime(1000);
+    const calls = [['red'], ['yellow'], ['blue'], ['green'], ['start']];
 
-    expect(spy).toHaveBeenCalled();
+    expect(sounds.play.mock.calls).toEqual(calls);
+    expect(sounds.pause.mock.calls).toEqual(calls);
   });
 
   it('showAll should flash all colors', () => {
-    //$FlowIgnore
-    color.showColor = jest.fn();
-    color.showAll();
+    const calls = [['red'], ['yellow'], ['blue'], ['green']];
+    showAll(sounds, buttons);
 
-    expect(color.showColor).toHaveBeenCalledTimes(4);
+    expect(sounds.play.mock.calls).toEqual(calls);
   });
 
   it('hideAll should hide all colors', () => {
-    //$FlowIgnore
-    color.hideColor = jest.fn();
-    color.hideAll();
+    const calls = [['red'], ['yellow'], ['blue'], ['green']];
+    hideAll(sounds, buttons);
 
-    expect(color.hideColor).toHaveBeenCalledTimes(4);
+    expect(sounds.pause.mock.calls).toEqual(calls);
   });
 });

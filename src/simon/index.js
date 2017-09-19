@@ -1,50 +1,46 @@
 /* @flow */
 
-import { Simon, Timer, SoundManager } from './Models';
+import { simonState, timerState, SoundManager } from './Models';
 import {
   clickHandler,
   strictHandler,
   scoreHandler,
   powerHandler,
-  ColorHandler,
 } from './Handlers';
 
-if (typeof document !== 'undefined') {
+if (typeof document !== 'undefined')
   document.addEventListener('DOMContentLoaded', () => {
     const clock = { id: null };
-    const timer = new Timer();
-    const simon = new Simon();
+    const timer = timerState();
+    const simon = simonState();
     const sounds = new SoundManager();
 
-    const strict = ((document.getElementById(
-      'strict',
-    ): any): HTMLButtonElement);
-    const power = ((document.getElementById('power'): any): HTMLButtonElement);
-    const score = ((document.getElementById('score'): any): HTMLElement);
-    // prettier-ignore
+    const buttons = {
+      red: document.getElementById('red'),
+      blue: document.getElementById('blue'),
+      green: document.getElementById('green'),
+      yellow: document.getElementById('yellow'),
+    };
 
-    const yellow = ((document.getElementById(
-      'yellow',
-    ): any): HTMLButtonElement);
-    const red = ((document.getElementById('red'): any): HTMLButtonElement);
-    const blue = ((document.getElementById('blue'): any): HTMLButtonElement);
-    const green = ((document.getElementById('green'): any): HTMLButtonElement);
+    const update = scoreHandler(document.getElementById('score-label'));
 
-    const updateScore = scoreHandler(score);
-    const buttons = { red, blue, green, yellow };
-    const colorButtons = new ColorHandler(buttons, sounds);
+    const power = powerHandler(update, buttons, simon, timer, clock, sounds);
+    document.getElementById('power').addEventListener('click', power);
 
-    power.addEventListener(
-      'click',
-      powerHandler(updateScore, colorButtons, simon, timer, clock),
-    );
-    strict.addEventListener('click', strictHandler(simon));
+    document
+      .getElementById('strict')
+      .addEventListener('click', strictHandler(simon));
 
     Object.keys(buttons).forEach(color => {
-      buttons[color].addEventListener(
-        'click',
-        clickHandler(color, colorButtons, updateScore, simon, timer, clock),
+      const click = clickHandler(
+        color,
+        buttons,
+        update,
+        simon,
+        timer,
+        clock,
+        sounds,
       );
+      buttons[color].addEventListener('click', click);
     });
   });
-}

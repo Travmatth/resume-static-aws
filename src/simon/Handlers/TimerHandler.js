@@ -1,60 +1,63 @@
 /* @flow */
 
-import type ColorHandler from './ColorHandler';
-import type { Simon, Timer } from '../Models';
-import { delay, cycle } from '../Models';
+import type { Simon, TimerState } from '../Models';
+import { delay, cycle, timerState, tick } from '../Models';
+import type { ColorKeys, ColorButtons } from '../simon.types';
 
-//const clock = { id: null };
-
-const cancelTimer = (clock: { id: null | number }) => {
+const cancelTimer = (clock: { id: null | number }) =>
   clock.id && clearTimeout(clock.id);
-};
 
-const powerOff = (clock: { id: null | number }) => {
-  cancelTimer(clock);
-};
+const powerOff = (clock: { id: null | number }) => cancelTimer(clock);
 
 const powerOn = (
   simon: Simon,
-  buttons: ColorHandler,
-  timer: Timer,
+  buttons: ColorButtons,
+  timer: TimerState,
   update: (number | string) => string,
   clock: { id: null | number },
-) => {
-  advance(simon, buttons, update, timer, clock);
-};
+  sounds: SoundManager,
+) => advance(simon, buttons, update, timer, clock, sounds);
 
 const advance = (
   simon: Simon,
-  buttons: ColorHandler,
+  buttons: ColorButtons,
   update: (number | string) => string | void,
-  timer: Timer,
+  timer: TimerState,
   clock: { id: null | number },
+  sounds: SoundManager,
 ) => {
   // ^property `next`. Property cannot be accessed on
   // possibly undefined value  `timer`
   // $FLowIgnore
-  const { next, round, action: nextAction } =
-    timer && timer.tick(simon, buttons, update);
+  const { next, round, action: nextAction } = tick(
+    timer,
+    simon,
+    sounds,
+    buttons,
+  );
   // $FLowIgnore
-  if (next) fire(round, buttons, nextAction, timer, simon, clock);
+  if (next) fire(round, buttons, nextAction, timer, simon, clock, sounds);
 };
 
 const fire = (
   roundLength: number,
-  buttons: ColorHandler,
+  buttons: ColorButtons,
   action: () => string | void,
-  timer: Timer,
+  timer: TimerState,
   simon: Simon,
   clock: { id: null | number },
+  sounds: SoundManager,
 ) => {
   action();
-  const timeout = () => {
-    const { next, round, action: nextAction } = timer.tick(simon, buttons);
-    if (next) fire(round, buttons, nextAction, timer, simon, clock);
-  };
-
-  clock.id = timer && setTimeout(timeout, roundLength);
+  clock.id = setTimeout(() => {
+    const { next, round, action: nextAction } = tick(
+      timer,
+      simon,
+      sounds,
+      buttons,
+    );
+    if (next) fire(round, buttons, nextAction, timer, simon, clock, sounds);
+  }, roundLength);
 };
 
 export { cancelTimer, advance, powerOn, powerOff, fire };
