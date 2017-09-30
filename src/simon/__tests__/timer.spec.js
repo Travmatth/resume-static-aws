@@ -1,4 +1,5 @@
 /* @flow */
+/* eslint-env jest */
 
 import * as Models from '../Models';
 import type { ColorHandler } from '../Handlers';

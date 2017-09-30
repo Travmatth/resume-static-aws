@@ -1,4 +1,5 @@
 /* @flow */
+/* eslint-env jest */
 
 import { search, checkHeaders, processWikis } from '../Api';
 import { ResponseError } from 'common/js/utils';

@@ -1,4 +1,6 @@
 /* @flow */
+/* eslint-env jest */
+
 import '../Models';
 import type { ColorHandler } from '../Handlers';
 import type { SoundManager } from '../Models';

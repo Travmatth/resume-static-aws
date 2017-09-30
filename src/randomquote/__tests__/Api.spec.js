@@ -1,3 +1,6 @@
+/* @flow */
+/* eslint-env jest */
+
 import { fetchQuote, createLink } from '../Api';
 import { exampleResponse } from './mockdata';
 import { json } from 'tests/utils';

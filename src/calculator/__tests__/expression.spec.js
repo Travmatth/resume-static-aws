@@ -1,4 +1,6 @@
 /* @flow */
+/* eslint-env jest */
+
 import { Calculator } from '../Models';
 
 let expr, infix;

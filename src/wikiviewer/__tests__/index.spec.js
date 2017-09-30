@@ -1,4 +1,5 @@
 /* @flow */
+/* eslint-env jest */
 
 import * as Handlers from '../Handlers';
 import { ResponseError } from 'common/js/utils';

@@ -1,4 +1,6 @@
 /* @flow */
+/* eslint-env jest */
+
 import {
   fetchQuoteHandler,
   showError,

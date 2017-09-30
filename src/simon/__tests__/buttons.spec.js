@@ -1,4 +1,6 @@
 /* @flow */
+/* eslint-env jest */
+
 import * as TimerHandlers from '../Handlers/TimerHandler';
 import * as ColorHandlers from '../Handlers/ColorHandlers';
 import type { SoundManager } from '../Models';

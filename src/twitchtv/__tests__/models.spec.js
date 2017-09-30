@@ -1,4 +1,5 @@
 /* @flow */
+/* eslint-env jest */
 
 import { nonexistentOrOfflineUserStream } from './mockdata';
 import { extractUserName } from '../Models';

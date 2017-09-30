@@ -1,4 +1,6 @@
 /* @flow */
+/* eslint-env jest */
+
 import {
   ascending,
   makeHistory,
@@ -17,7 +19,7 @@ import type { GameGrid, GameBoard } from '../tictactoe.types';
 describe('TicTacToe Board', () => {
   let grid: GameBoard;
 
-  beforeEach(() => (grid = createGrid()));
+  beforeEach(() => grid = createGrid());
 
   it('createGrid should create a 3x3 grid of game squares with null players', () => {
     const all = grid.reduce((result: boolean, gamegrid: GameGrid) => {

@@ -1,4 +1,6 @@
 /* @flow */
+/* eslint-env jest */
+
 import * as Handlers from '../Handlers';
 import { dispatch } from 'tests/utils';
 

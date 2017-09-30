@@ -1,4 +1,6 @@
 /* @flow */
+/* eslint-env jest */
+
 import { dispatch } from 'tests/utils';
 import * as Pomodoro from '../Handlers';
 
