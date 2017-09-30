@@ -87,7 +87,7 @@ describe('Localweather Handlers', () => {
     const show = jest.fn();
     const header = document.querySelector('.heading');
     const cells = document.querySelectorAll('.cell');
-    const tempToggles = ((document.querySelectorAll('input'): any): NodeList<>);
+    const tempToggles = document.querySelectorAll('input');
 
     fetchHandler(show, header, cells, tempToggles)();
     expect(show).toHaveBeenCalledWith('loading');
