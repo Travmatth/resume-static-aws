@@ -82,7 +82,7 @@ describe('Pomodoro Models', () => {
     expect(setFill.mock.calls[0][0]).toBeCloseTo(0.03);
   });
 
-  it("startTimer should set start button text to 'stop'", () => {
+  it('startTimer should set start button text to "stop"', () => {
     game.last = Date.now();
     startTimer(node, startBtn, circle, timer, game, setFill);
     jest.runTimersToTime(10);

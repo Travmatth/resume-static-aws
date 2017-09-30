@@ -1,6 +1,6 @@
 /* @flow */
 
-const ENDPOINT = `https://en.wikipedia.org/w/api.php`;
+const ENDPOINT = 'https://en.wikipedia.org/w/api.php';
 
 const PARAMS = {
   format: 'json',
