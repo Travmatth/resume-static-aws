@@ -1,5 +1,5 @@
 /* @flow */
-import { WEEK, MONTH } from './constants';
+import { MONTH, WEEK } from './constants';
 import ExtendableError from 'extendable-error-class';
 
 const removeChildren = (el: HTMLElement) => {
@@ -39,13 +39,10 @@ const serialize = (url: string, params: ?Object) => {
   if (params !== undefined) {
     url += '?';
 
-    for (var property in params) {
+    const encode = encodeURIComponent;
+    for (let property in params) {
       if (params.hasOwnProperty(property)) {
-        query.push(
-          encodeURIComponent(property) +
-            '=' +
-            encodeURIComponent(params[property]),
-        );
+        query.push(`${encode(property)}=${encode(params[property])}`);
       }
     }
   }
@@ -83,17 +80,16 @@ const convertFahrenheitToCelsius = (temp: number) =>
   checkForNegativeZero(Math.round((temp - 32) * 5 / 9));
 
 const checkHeaders = (response: Response) => {
-  document.res = response;
   if (response.status !== 200)
     throw new ResponseError('fetch failed', response);
-  return ((response.json(): any): Promise<any>);
+  return response.json();
 };
 
 const eventType = () => ('ontouchstart' in window ? 'touchstart' : 'click');
 
 const trim = (str: string) => str.replace(/^\s+|\s+$/g, '');
 
-const rand = (range: numer) => Math.floor(Math.random() * (range + 1));
+const rand = (range: number) => Math.floor(Math.random() * (range + 1));
 
 const DEFAULT_TIMEOUT = 5000;
 
