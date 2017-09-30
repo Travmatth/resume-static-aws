@@ -79,7 +79,7 @@ export default class Calculator {
           } else if (char === '(' || char === ')') {
             this.expression.push(char);
           } else {
-            this.expression.push(!operators.has(char) ? char + '(' : char);
+            this.expression.push(!operators.has(char) ? `${char}(` : char);
           }
 
           break;
