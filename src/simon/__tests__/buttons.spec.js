@@ -126,17 +126,9 @@ describe('Simon Handlers', () => {
       () => false,
     );
 
-    const click = clickHandler(
-      color,
-      buttons,
-      update,
-      simon,
-      timer,
-      clock,
-      sounds,
-    )(ev);
+    clickHandler(color, buttons, update, simon, timer, clock, sounds)(ev);
 
-    expect(click).toBe(false);
+    expect(Simon.setInput).not.toHaveBeenCalled();
   });
 
   it('clickHandler should call setInput on correct move', () => {
@@ -162,15 +154,7 @@ describe('Simon Handlers', () => {
       () => true,
     );
 
-    const click = clickHandler(
-      color,
-      buttons,
-      update,
-      simon,
-      timer,
-      clock,
-      sounds,
-    )(ev);
+    clickHandler(color, buttons, update, simon, timer, clock, sounds)(ev);
 
     expect(Simon.setInput).toHaveBeenCalledTimes(1);
     expect(ColorHandlers.showColor).toHaveBeenCalled();

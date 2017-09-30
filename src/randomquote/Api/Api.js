@@ -1,5 +1,5 @@
 /* @flow */
-import fetchJsonp from 'fetch-jsonp';
+
 import { RANDOMQUOTE_PROXY } from 'protected/proxies';
 import { serialize, checkHeaders, withTimeout } from 'common/js/utils';
 

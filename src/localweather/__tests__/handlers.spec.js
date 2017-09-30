@@ -1,8 +1,7 @@
 /* @flow */
 /* eslint-env jest */
 
-import { response, data, url } from './mockdata';
-import { serialize } from 'common/js/utils';
+import { data, url } from './mockdata';
 import { json } from 'tests/utils';
 
 import {
@@ -15,7 +14,6 @@ import {
   TOGGLE_EVENT,
   dispatchToggleEvent,
 } from '../Handlers';
-import { openweatherApiParams } from '../Models';
 
 import fetchJsonp from 'fetch-jsonp';
 

@@ -9,14 +9,12 @@ import {
   onlineUserStreamCall,
   nonexistentOrOfflineUserStream,
 } from './mockdata';
-import { serialize } from 'common/js/utils';
 import { json } from 'tests/utils';
 
 import type { Stream } from '../twitchtv.types';
 import * as Models from '../Models';
 
 import {
-  fetchProfile,
   verifyUser,
   handleNullStream,
   classify,

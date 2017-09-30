@@ -14,7 +14,7 @@ import {
 import fetchJsonp from 'fetch-jsonp';
 import { checkHeaders } from 'common/js/utils';
 import OPEN_WEATHER_APPID from 'protected/localweather.key';
-import { ENDPOINT, OPENWEATHER_API_PARAMS } from '../Models';
+import { ENDPOINT, openweatherApiParams } from '../Models';
 
 const fetchOpts = {
   method: 'GET',
@@ -67,7 +67,7 @@ const processWeather = (data: FiveDayForecast): Weather => ({
 
 const fetchWeather = async (coords: Coordinates): Promise<Weather> => {
   const { latitude: lat, longitude: lon } = coords;
-  const url: string = serialize(ENDPOINT, OPENWEATHER_API_PARAMS(lat, lon));
+  const url: string = serialize(ENDPOINT, openweatherApiParams(lat, lon));
 
   /* Request header field content-type is not allowed
        by Access-Control-Allow-Headers in preflight response.

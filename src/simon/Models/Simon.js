@@ -11,7 +11,7 @@ const COLORS = {
   green: 'green',
 };
 
-const simonState = (state: SimonState) => ({
+const simonState = () => ({
   COLORS,
   power: false,
   input: false,

@@ -1,6 +1,5 @@
 /* @flow */
 import {
-  genScoreCard,
   getScore,
   canTakeSquare,
   canMove,
@@ -9,7 +8,6 @@ import {
   current,
   restart,
   isOver,
-  markWinner,
   chooseSide,
   rollback,
   takeTurn,

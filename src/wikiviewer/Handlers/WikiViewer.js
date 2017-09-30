@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { Headings, Paragraphs, Searches } from '../wikiviewer.types';
+import type { Searches } from '../wikiviewer.types';
 import { search } from '../Api';
 import { removeChildren } from 'common/js/utils';
 

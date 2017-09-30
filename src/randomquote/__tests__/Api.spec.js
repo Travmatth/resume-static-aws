@@ -5,7 +5,6 @@ import { fetchQuote, createLink } from '../Api';
 import { exampleResponse } from './mockdata';
 import { json } from 'tests/utils';
 import fetchJsonp from 'fetch-jsonp';
-import { ResponseError } from 'common/js/utils';
 
 jest.mock('fetch-jsonp', () => require('jest-fetch-mock'));
 

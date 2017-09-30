@@ -2,7 +2,6 @@
 
 import type { ColorKeys, ColorButtons } from '../simon.types';
 import type { SoundManager } from '../Models';
-import { Colors } from '../Models';
 
 const COLORS = {
   red: 'red',
