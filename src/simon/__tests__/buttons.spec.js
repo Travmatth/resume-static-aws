@@ -18,7 +18,6 @@ import {
 jest.mock('../Models', () => ({
   ...require.requireActual('../Models'),
   getScore: jest.fn(),
-  hasPower: jest.fn(),
   resetSimon: jest.fn(),
   toggleState: jest.fn(),
   hasPower: jest.fn(),
@@ -29,7 +28,6 @@ jest.mock('../Models', () => ({
   hasWonRound: jest.fn(),
   hasWonGame: jest.fn(),
   isStrict: jest.fn(),
-  resetSimon: jest.fn(),
   toggleStrict: jest.fn(),
 }));
 
