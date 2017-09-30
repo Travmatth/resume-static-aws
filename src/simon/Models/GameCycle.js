@@ -10,8 +10,8 @@ const delay = {
   'hide-sequence': 0,
   'start-input': 1000,
   'end-input': 0,
-  'failed-round': 0,
-  'successful-round': 0,
+  'failed-round': 1000,
+  'successful-round': 1000,
   end: 0,
 };
 

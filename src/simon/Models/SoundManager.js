@@ -17,9 +17,9 @@ export default class SoundManager {
       blue: sound('blue.wav'),
       green: sound('green.wav'),
       yellow: sound('yellow.wav'),
-      won: sound('won.mp3'),
-      lost: sound('lost.mp3'),
-      start: sound('start.mp3'),
+      won: sound('won.wav'),
+      lost: sound('lost.wav'),
+      start: sound('start.wav'),
     };
   }
 

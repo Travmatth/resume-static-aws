@@ -6,20 +6,30 @@ import type { TimerState, SimonState } from '../simon.types';
 import {
   timerState,
   resetTimer,
-  increment,
-  decrement,
+  incrementGamePlayState,
+  decrementGamePlayState,
   tick,
 } from '../Models/Timer';
 import { delay } from '../Models/GameCycle';
 import * as Simon from '../Models/Simon';
+import * as ColorHandlers from '../Handlers/ColorHandlers';
+
+jest.mock('../Handlers/ColorHandlers', () => ({
+  ...require.requireActual('../Handlers/ColorHandlers'),
+  showAll: jest.fn(),
+}));
 
 jest.mock('../Models/Simon', () => ({
   ...require.requireActual('../Models/Simon'),
   showSequenceOver: jest.fn(),
-  //setInput: jest.fn(),
   hasWonRound: jest.fn(),
   hasWonGame: jest.fn(),
   resetSimon: jest.fn(),
+  nextRound: jest.fn(),
+  resetAttemptStep: jest.fn(),
+  hasFailedRound: jest.fn(),
+  isStrict: jest.fn(),
+  restartRound: jest.fn(),
 }));
 
 class Sounds {}
@@ -56,25 +66,25 @@ describe('Simon Game Timer Model', () => {
     expect(state.current).toBe(0);
   });
 
-  it('increment should increment current by 1', () => {
-    increment(state);
+  it('incrementGamePlayState should increment current by 1', () => {
+    incrementGamePlayState(state);
     expect(state.current).toBe(1);
   });
 
-  it('increment should increment current by given amount', () => {
-    increment(state, 2);
+  it('incrementGamePlayState should increment current by given amount', () => {
+    incrementGamePlayState(state, 2);
     expect(state.current).toBe(2);
   });
 
-  it('decrement should decrement current by 1', () => {
+  it('decrementGamePlayState should decrement current by 1', () => {
     state.current = 1;
-    decrement(state);
+    decrementGamePlayState(state);
     expect(state.current).toBe(0);
   });
 
-  it('decrement should decrement current by given amount', () => {
+  it('decrementGamePlayState should decrement current by given amount', () => {
     state.current = 2;
-    decrement(state, 2);
+    decrementGamePlayState(state, 2);
     expect(state.current).toBe(0);
   });
 
@@ -92,19 +102,16 @@ describe('Simon Game Timer Model', () => {
     expect(state.current).toBe(0);
   });
 
-  it('cycle: start should increment and show all buttons', () => {
-    const calls = [['red'], ['yellow'], ['blue'], ['green']];
+  it('cycle: start should increment', () => {
     const { next, round, action } = tick(state, simon, sounds, buttons);
     action();
 
     expect(next).toBe(true);
     expect(round).toBe(delay['start']);
     expect(state.current).toBe(1);
-    expect(sounds.play.mock.calls).toEqual(calls);
   });
 
   it('cycle: end-start should increment and hide all buttons', () => {
-    const calls = [['red'], ['yellow'], ['blue'], ['green']];
     state.current = 1;
 
     const { next, round, action } = tick(state, simon, sounds, buttons);
@@ -113,7 +120,6 @@ describe('Simon Game Timer Model', () => {
     expect(next).toBe(true);
     expect(round).toBe(delay['end-start']);
     expect(state.current).toBe(2);
-    expect(sounds.pause.mock.calls).toEqual(calls);
   });
 
   it('cycle: show-sequence should increment', () => {
@@ -206,12 +212,12 @@ describe('Simon Game Timer Model', () => {
     action();
 
     expect(next).toBe(true);
-    expect(round).toBe(simon.round.length * 2.5 * 1000);
+    expect(round).toBe(simon.round.length * 3 * 1000);
     expect(state.current).toBe(8);
     expect(simon.input).toBe(true);
   });
 
-  it('cycle: end-input should set simon input to false and jump to successful-round if player has won round or game', () => {
+  it('cycle: end-input should when round is won', () => {
     state.current = 8;
     //$FlowIgnore
     Simon.hasWonRound = Simon.hasWonRound.mockImplementationOnce(() => true);
@@ -223,28 +229,82 @@ describe('Simon Game Timer Model', () => {
 
     expect(next).toBe(true);
     expect(round).toBe(delay['end-input']);
-    expect(state.current).toBe(10);
-    expect(simon.input).toBe(false);
+    expect(Simon.nextRound).toHaveBeenCalled();
+    expect(Simon.resetAttemptStep).toHaveBeenCalled();
   });
 
-  it('cycle: end-input should set simon input to false and increment to failed-round if player has failed round or game', () => {
+  it('cycle: end-input should when round is won and game is over', () => {
     state.current = 8;
     //$FlowIgnore
-    Simon.hasWonRound = Simon.hasWonRound.mockImplementationOnce(() => false);
+    Simon.hasWonRound = Simon.hasWonRound.mockImplementationOnce(() => true);
     //$FlowIgnore
-    Simon.hasWonGame = Simon.hasWonGame.mockImplementationOnce(() => false);
+    Simon.hasWonGame = Simon.hasWonGame.mockImplementationOnce(() => true);
 
     const { next, round, action } = tick(state, simon, sounds, buttons);
     action();
 
     expect(next).toBe(true);
     expect(round).toBe(delay['end-input']);
-    expect(state.current).toBe(9);
-    expect(simon.input).toBe(false);
+    expect(Simon.resetAttemptStep).toHaveBeenCalled();
+    expect(Simon.resetSimon).toHaveBeenCalled();
+    expect(ColorHandlers.showAll).toHaveBeenCalled();
+  });
+
+  it('cycle: end-input should when round is lost', () => {
+    state.current = 8;
+    //$FlowIgnore
+    Simon.hasWonRound = Simon.hasWonRound.mockImplementationOnce(() => false);
+    //$FlowIgnore
+    Simon.hasFailedRound = Simon.hasFailedRound.mockImplementationOnce(
+      () => true,
+    );
+    Simon.isStrict = Simon.isStrict.mockImplementationOnce(() => false);
+
+    const { next, round, action } = tick(state, simon, sounds, buttons);
+    action();
+
+    expect(next).toBe(true);
+    expect(round).toBe(delay['end-input']);
+    expect(Simon.restartRound).toHaveBeenCalled();
+  });
+
+  it('cycle: end-input should when round is lost and game is strict', () => {
+    state.current = 8;
+    //$FlowIgnore
+    Simon.hasWonRound = Simon.hasWonRound.mockImplementationOnce(() => false);
+    //$FlowIgnore
+    Simon.hasFailedRound = Simon.hasFailedRound.mockImplementationOnce(
+      () => true,
+    );
+    Simon.isStrict = Simon.isStrict.mockImplementationOnce(() => true);
+
+    const { next, round, action } = tick(state, simon, sounds, buttons);
+    action();
+
+    expect(next).toBe(true);
+    expect(round).toBe(delay['end-input']);
+    expect(Simon.resetSimon).toHaveBeenCalled();
+    expect(sounds.play).toHaveBeenCalled();
+  });
+
+  it('cycle: end-input should when round is normal', () => {
+    state.current = 8;
+    //$FlowIgnore
+    Simon.hasWonRound = Simon.hasWonRound.mockImplementationOnce(() => false);
+    //$FlowIgnore
+    Simon.hasFailedRound = Simon.hasFailedRound.mockImplementationOnce(
+      () => false,
+    );
+
+    const { next, round, action } = tick(state, simon, sounds, buttons);
+    action();
+
+    expect(next).toBe(true);
+    expect(round).toBe(delay['end-input']);
+    expect(Simon.nextRound).toHaveBeenCalled();
   });
 
   it('cycle: failed-round should start failed animation and jump to end', () => {
-    const calls = [['lost'], ['red'], ['yellow'], ['blue'], ['green']];
     state.current = 9;
 
     const { next, round, action } = tick(state, simon, sounds, buttons);
@@ -253,11 +313,9 @@ describe('Simon Game Timer Model', () => {
     expect(next).toBe(true);
     expect(round).toBe(delay['failed-round']);
     expect(state.current).toBe(11);
-    expect(sounds.play.mock.calls).toEqual(calls);
   });
 
   it('cycle: successful-round should start win animation and increment to end', () => {
-    const calls = [['won'], ['red'], ['yellow'], ['blue'], ['green']];
     state.current = 10;
 
     const { next, round, action } = tick(state, simon, sounds, buttons);
@@ -266,23 +324,9 @@ describe('Simon Game Timer Model', () => {
     expect(next).toBe(true);
     expect(round).toBe(delay['failed-round']);
     expect(state.current).toBe(11);
-    expect(sounds.play.mock.calls).toEqual(calls);
   });
 
   it('cycle: end should stop all animations and reset game and timer state', () => {
-    const calls = [
-      ['won'],
-      ['red'],
-      ['yellow'],
-      ['blue'],
-      ['green'],
-      ['lost'],
-      ['red'],
-      ['yellow'],
-      ['blue'],
-      ['green'],
-    ];
-
     state.current = 11;
     //$FlowIgnore
     Simon.resetSimon = Simon.resetSimon.mockImplementationOnce();
@@ -294,7 +338,6 @@ describe('Simon Game Timer Model', () => {
     expect(round).toBe(delay['end']);
     expect(state.current).toBe(0);
     expect(Simon.resetSimon).toHaveBeenCalled();
-    expect(sounds.pause.mock.calls).toEqual(calls);
   });
 
   it('timer should return default action if stage is not recognized', () => {

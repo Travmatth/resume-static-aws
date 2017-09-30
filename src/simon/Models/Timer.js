@@ -1,25 +1,28 @@
 /* @flow */
 
 import {
-  currentColor,
-  nextColor,
+  currentGameplayColor,
+  nextGameplayColor,
   setInput,
   showSequenceOver,
+  nextRound,
+  resetSimon,
+  hasFailedRound,
   hasWonRound,
   hasWonGame,
-  resetSimon,
+  incrementScore,
+  resetAttemptStep,
+  isStrict,
+  restartRound,
 } from './Simon';
 import type { TimerState, SimonState } from '../simon.types';
 import { cycle, delay } from './GameCycle';
 import {
-  flash,
-  showAll,
-  hideAll,
   showColor,
   hideColor,
+  hideAll,
+  showAll,
   failStart,
-  wonStart,
-  wonEnd,
   failEnd,
 } from '../Handlers';
 
@@ -27,9 +30,11 @@ const timerState: TimerState = () => ({ current: 0, cycle });
 
 const resetTimer = (state: TimerState) => state.current = 0;
 
-const increment = (state: TimerState, val: number = 1) => state.current += val;
+const incrementGamePlayState = (state: TimerState, val: number = 1) =>
+  state.current += val;
 
-const decrement = (state: TimerState, val: number = 1) => state.current -= val;
+const decrementGamePlayState = (state: TimerState, val: number = 1) =>
+  state.current -= val;
 
 const tick = (
   state: TimerState,
@@ -52,10 +57,7 @@ const tick = (
         next: true,
         round: delay['start'],
         action: () => {
-          console.log('start: ', state.current, simon.round);
-          //debugger;
-          increment(state);
-          showAll(sounds, buttons);
+          incrementGamePlayState(state);
         },
       };
     // prettier-ignore
@@ -66,10 +68,7 @@ const tick = (
         next: true,
         round: delay['end-start'],
         action: () => {
-          console.log('end-start: ', state.current, simon.round);
-          //debugger;
-          increment(state);
-          hideAll(sounds, buttons);
+          incrementGamePlayState(state);
         },
       };
     // prettier-ignore
@@ -80,9 +79,7 @@ const tick = (
         next: true,
         round: delay['show-sequence'],
         action: () => {
-          console.log('show-sequence: ', state.current, simon.round);
-          //debugger;
-          increment(state);
+          incrementGamePlayState(state);
         },
       };
     // prettier-ignore
@@ -93,9 +90,7 @@ const tick = (
         next: true,
         round: delay['show-step-pause'],
         action: () => {
-          console.log('show-step-pause: ', state.current, simon.round);
-          //debugger;
-          increment(state);
+          incrementGamePlayState(state);
         },
       };
     // prettier-ignore
@@ -106,10 +101,8 @@ const tick = (
         next: true,
         round: delay['show-step'],
         action: () => {
-          console.log('show-step: ', state.current, simon.round);
-          //debugger;
-          increment(state);
-          showColor(currentColor(simon), sounds, buttons);
+          incrementGamePlayState(state);
+          showColor(currentGameplayColor(simon), sounds, buttons);
         },
       };
     // prettier-ignore
@@ -120,17 +113,14 @@ const tick = (
         next: true,
         round: delay['hide-step'],
         action: () => {
-          console.log('hide-step: ', state.current, simon.round);
-          //debugger;
-
-          debugger;
           if (showSequenceOver(simon)) {
-            increment(state);
+            incrementGamePlayState(state);
           } else {
-            decrement(state, 2);
+            decrementGamePlayState(state, 2);
           }
-          hideColor(currentColor(simon), sounds, buttons);
-          nextColor(simon);
+
+          hideColor(currentGameplayColor(simon), sounds, buttons);
+          nextGameplayColor(simon);
         },
       };
     // prettier-ignore
@@ -141,9 +131,7 @@ const tick = (
         next: true,
         round: delay['hide-sequence'],
         action: () => {
-          console.log('hide-sequence: ', state.current, simon.round);
-          //debugger;
-          increment(state);
+          incrementGamePlayState(state);
         },
       };
     // prettier-ignore
@@ -152,32 +140,50 @@ const tick = (
     case 'start-input':
       return {
         next: true,
-        round: simon.round.length * 2.5 * 1000,
+        round: simon.round.length * 3 * 1000,
         action: () => {
-          console.log('start-input: ', state.current, simon.round);
-          //debugger;
-          increment(state);
+          incrementGamePlayState(state);
           setInput(simon, true);
         },
       };
     // prettier-ignore
 
-    // advance[8] = f: (null|start-input) -> (successful-round|failed-round)
+    // advance[8] = f: (null|start-input) -> (failed-round|successful-round)
     case 'end-input':
       return {
         next: true,
         round: delay['end-input'],
         action: () => {
-          console.log('end-input: ', state.current, simon.round);
-          //debugger;
-          // If player has won, jump to successful-round
-          // else forward to failed-round
-          if (hasWonRound(simon) || hasWonGame(simon)) {
-            increment(state, 2);
+          incrementGamePlayState(state);
+
+          // If game won
+          if (hasWonRound(simon)) {
+            resetAttemptStep(simon);
+
+            // During game end
+            if (hasWonGame(simon)) {
+              resetSimon(simon);
+              showAll(sounds, buttons);
+            // During round end
+            } else {
+              nextRound(simon);
+            };
+
+          // If failure
+          } else if (hasFailedRound(simon)) {
+            // During strict game, should restart
+            if (isStrict(simon)) {
+              resetSimon(simon);
+              sounds.play('lost');
+            // During regular game, should restart round
+            } else {
+              restartRound(simon);
+            };
+
+          // If correct move, do nothing
           } else {
-            increment(state);
+            nextRound(simon);
           }
-          setInput(simon, false);
         },
       };
     // prettier-ignore
@@ -188,10 +194,8 @@ const tick = (
         next: true,
         round: delay['failed-round'],
         action: () => {
-          console.log('failed-round: ', state.current, simon.round);
           // jump to end
-          failStart(sounds, buttons);
-          increment(state, 2);
+          incrementGamePlayState(state, 2);
         },
       };
     // prettier-ignore
@@ -202,8 +206,7 @@ const tick = (
         next: true,
         round: delay['successful-round'],
         action: () => {
-          increment(state);
-          wonStart(sounds, buttons);
+          incrementGamePlayState(state);
         },
       };
     // prettier-ignore
@@ -215,9 +218,7 @@ const tick = (
         round: delay['end'],
         action: () => {
           resetTimer(state);
-          resetSimon(simon);
-          wonEnd(sounds, buttons)
-          failEnd(sounds, buttons)
+          hideAll(sounds, buttons);
         },
       };
     // prettier-ignore
@@ -232,4 +233,10 @@ const tick = (
   }
 };
 
-export { timerState, resetTimer, increment, decrement, tick };
+export {
+  timerState,
+  resetTimer,
+  incrementGamePlayState,
+  decrementGamePlayState,
+  tick,
+};

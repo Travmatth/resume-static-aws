@@ -2,6 +2,8 @@
 
 import type { ColorKeys, SimonState } from '../simon.types';
 
+const TOTAL_ROUNDS = 20;
+
 const COLORS = {
   red: 'red',
   yellow: 'yellow',
@@ -10,15 +12,15 @@ const COLORS = {
 };
 
 const simonState = (state: SimonState) => ({
-  input: false,
+  COLORS,
   power: false,
-  strict: false,
+  input: false,
   score: 0,
-  round: [],
-  colors: COLORS,
   failure: false,
-  step: 0,
-  attempt: [],
+  round: [],
+  gameplayStep: 0,
+  attemptStep: 0,
+  strict: false,
 });
 
 const toggleState = (state: SimonState) => state.power = !state.power;
@@ -29,63 +31,91 @@ const isStrict = ({ strict }: SimonState) => strict;
 
 const toggleStrict = (state: SimonState) => state.strict = !state.strict;
 
-const randomColor = (state: SimonState) => {
-  const rand = Math.floor(Math.random() * 4);
+const randomColor = () => {
+  const UPPER_BOUND = 4;
+  const rand = Math.floor(Math.random() * UPPER_BOUND);
   return Object.keys(COLORS)[rand];
 };
 
+const addGameplayColor = (state: SimonState) =>
+  Object.assign(state, {
+    round: state.round.concat(randomColor()),
+  });
+
 const resetSimon = (state: SimonState) =>
   Object.assign(state, {
-    failure: false,
     score: 0,
-    round: [randomColor(state)],
-    step: 0,
+    failure: false,
+    round: [randomColor()],
+    gameplayStep: 0,
+    attemptStep: 0,
   });
+
+const restartRound = (state: SimonState) =>
+  Object.assign(state, {
+    failure: false,
+    gameplayStep: 0,
+    attemptStep: 0,
+  });
+
+const nextRound = (state: SimonState) =>
+  Object.assign(state, {
+    failure: false,
+    round: state.round.concat(randomColor()),
+    gameplayStep: 0,
+  });
+
+const resetAttemptStep = (state: SimonState) => state.attemptStep = 0;
 
 const setInput = (state: SimonState, input: boolean) => state.input = input;
 
 const playerCanMove = ({ input }: SimonState) => input;
 
-const hasWonGame = ({ score }: SimonState) => score >= 20;
+const hasWonGame = ({ score }: SimonState) => score >= TOTAL_ROUNDS;
 
-const hasWonRound = ({ attempt, round }: SimonState) =>
-  attempt.length >= round.length;
+const hasWonRound = ({ attemptStep, round }: SimonState) =>
+  attemptStep >= round.length;
 
-const showSequenceOver = ({ step, round }: SimonState) =>
-  step >= round.length - 1;
+const showSequenceOver = ({ gameplayStep, round }: SimonState) =>
+  gameplayStep >= round.length - 1;
 
 const getScore = ({ score }: SimonState) => score;
 
-const move = (state: SimonState, color: ColorKeys) => {
-  let nextState;
-  if (state.round[state.step] === color) {
-    state.attempt.push(color);
-    state.step += 1;
-  } else if (state.strict) {
-    state.attempt = [];
+const recordPlayerAttempt = (state: SimonState, color: ColorKeys) => {
+  const { strict } = state;
+  if (state.round[state.attemptStep] === color) {
+    state.attemptStep += 1;
+    if (state.attemptStep >= state.round.length) {
+      incrementScore(state);
+      state.playerInputFinished = true;
+    }
+  } else if (strict) {
     state.round = [randomColor()];
     state.failure = true;
-    state.step = 0;
+    state.attemptStep = 0;
+    state.gameplayStep = 0;
   } else {
     state.failure = true;
-    state.step = 0;
+    state.attemptStep = 0;
+    state.gameplayStep = 0;
   }
 };
 
-const currentColor = ({ round, step }: SimonState) => round[step];
+const currentGameplayColor = ({ round, gameplayStep }: SimonState) =>
+  round[gameplayStep];
 
-const nextColor = (state: SimonState) => state.step += 1;
+const nextGameplayColor = (state: SimonState) => state.gameplayStep += 1;
 
-const hasFailedRound = ({ failure }: SimonState) => failure;
+const hasFailedRound = ({ failure, attemptStep, gameplayStep }: SimonState) =>
+  attemptStep < gameplayStep || failure;
+
+const incrementScore = (state: SimonState) => state.score += 1;
 
 export {
+  TOTAL_ROUNDS,
   COLORS,
   simonState,
-  toggleState,
-  hasPower,
-  isStrict,
-  toggleStrict,
-  randomColor,
+  addGameplayColor,
   resetSimon,
   setInput,
   playerCanMove,
@@ -93,8 +123,17 @@ export {
   hasWonRound,
   showSequenceOver,
   getScore,
-  move,
-  currentColor,
-  nextColor,
+  recordPlayerAttempt,
+  currentGameplayColor,
+  nextGameplayColor,
   hasFailedRound,
+  toggleState,
+  hasPower,
+  isStrict,
+  toggleStrict,
+  randomColor,
+  nextRound,
+  incrementScore,
+  resetAttemptStep,
+  restartRound,
 };

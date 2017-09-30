@@ -5,8 +5,9 @@ import * as Handlers from '../Handlers';
 import * as Models from '../Models';
 
 jest.mock('../Models', () => ({
-  Simon: class Simon {},
+  //Simon: class Simon {},
   timerState: () => ({}),
+  simonState: () => ({}),
   SoundManager: class SoundManager {},
 }));
 
@@ -24,6 +25,9 @@ jest.mock('../Handlers', () => {
 
   module.clickHandlerCallback = jest.fn();
   module.clickHandler = jest.fn(() => module.clickHandlerCallback);
+
+  module.startHandlerCallback = jest.fn();
+  module.startHandler = jest.fn(() => module.startHandlerCallback);
 
   return module;
 });

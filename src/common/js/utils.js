@@ -9,11 +9,11 @@ const removeChildren = (el: HTMLElement) => {
 };
 
 //insert npm joke here
-const padLeft = (number: string, columns: number) => {
-  while (number.length < columns) {
-    number = `0${number}`;
+const padLeft = (val: string, columns: number) => {
+  while (val.length < columns) {
+    val = `0${val}`;
   }
-  return number;
+  return val;
 };
 
 const parseTimeToText = (elapsedTime: number) => {

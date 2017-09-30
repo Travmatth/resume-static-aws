@@ -8,12 +8,13 @@ import {
   resetSimon,
   playerCanMove,
   setInput,
-  move,
-  hasFailedRound,
-  hasWonRound,
-  hasWonGame,
+  recordPlayerAttempt,
   isStrict,
   toggleStrict,
+  addGameplayColor,
+  incrementScore,
+  nextRound,
+  resetAttemptStep,
 } from '../Models';
 import type {
   ColorKeys,
@@ -22,34 +23,39 @@ import type {
   SimonState,
 } from '../simon.types';
 import { powerOn, powerOff, advance, cancelTimer } from './TimerHandler';
-import {
-  showColor,
-  hideColor,
-  wonGame,
-  wonRound,
-  restartRound,
-  strictFail,
-} from './ColorHandlers';
+import { showColor, hideColor } from './ColorHandlers';
 
-const powerHandler = (
+const toggleHandleAnimation = (event: Event) => {
+  const { target: { classList } } = event;
+  const current = classList.contains('is-off');
+  classList.toggle('is-off', !current);
+};
+
+const startHandler = (
   update: (number | string) => string,
   buttons: ColorButtons,
   simon: SimonState,
   timer: TimerState,
   clock: { id: null | number },
   sounds: SoundManager,
-) => (_: Event) => {
-  toggleState(simon);
+) => (event: Event) =>
+  hasPower(simon) && powerOn(simon, buttons, timer, update, clock, sounds);
 
+const powerHandler = (
+  simon: SimonState,
+  update: (number | string) => string,
+  clock: { id: null | number },
+) => (event: Event) => {
   if (!hasPower(simon)) {
-    const score = getScore(simon);
     resetSimon(simon);
-    update(score === 0 ? '--' : `${score}`);
-    powerOn(simon, buttons, timer, update, clock, sounds);
+    update(`${simon.score}`);
   } else {
     update('');
     powerOff(clock);
   }
+
+  toggleState(simon);
+  toggleHandleAnimation(event);
 };
 
 const strictHandler = (simon: SimonState) => (_: Event) => toggleStrict(simon);
@@ -66,49 +72,29 @@ const clickHandler = (
   clock: { id: null | number },
   sounds: SoundManager,
 ) => (_: Event) => {
-  if (!playerCanMove(simon)) return false;
+  if (!playerCanMove(simon)) {
+    console.error('Attempting move while player input disabled');
+    return false;
+  }
 
   // start player press animation
   setInput(simon, false);
   showColor(color, sounds, buttons);
 
-  move(simon, color);
+  recordPlayerAttempt(simon, color);
 
   // end player press animation after 1 second
   setTimeout(() => {
     hideColor(color, sounds, buttons);
-    update(getScore(simon));
-
-    const hasFailed = hasFailedRound(simon);
-    const hasWon = hasWonRound(simon);
-    if (hasFailed || hasWon) cancelTimer(clock);
-
-    const exec = () => advance(simon, buttons, update, timer, clock);
-    // If player has won game, end & restart
-    if (hasWonGame(simon)) {
-      // show won game animation
-      wonGame(exec, sounds, buttons);
-
-      // If player has won round, advance to next
-    } else if (hasWon) {
-      // show won round animation
-      wonRound(move, sounds, buttons);
-
-      // If failure during strict game, should restart
-    } else if (hasFailed && isStrict(simon)) {
-      // show strict fail animation
-      strictFail(move, sounds, buttons);
-
-      // If failure during regular game, should restart round
-    } else if (hasFailed) {
-      // show fail animation
-      restartRound(move, sounds, buttons);
-
-      // If correct move, do nothing
-    } else {
-      setInput(simon, true);
-    }
+    update(simon.score);
+    setInput(simon, true);
   }, 1000);
 };
 
-export { clickHandler, strictHandler, scoreHandler, powerHandler };
+export {
+  clickHandler,
+  strictHandler,
+  scoreHandler,
+  powerHandler,
+  startHandler,
+};

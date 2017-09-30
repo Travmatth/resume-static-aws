@@ -2,20 +2,16 @@
 
 import {
   COLORS,
-  flash,
   wonStart,
   wonEnd,
   failEnd,
   failStart,
-  wonGame,
-  wonRound,
-  strictFail,
-  restartRound,
   showAll,
   hideAll,
-  swapCss,
   showColor,
   hideColor,
+  showHighlight,
+  hideHighlight,
 } from './ColorHandlers';
 import { cancelTimer, advance, powerOn, powerOff, fire } from './TimerHandler';
 import {
@@ -23,22 +19,18 @@ import {
   strictHandler,
   scoreHandler,
   powerHandler,
+  startHandler,
 } from './ButtonHandlers';
 
 export {
+  startHandler,
   COLORS,
-  flash,
   wonStart,
   wonEnd,
   failEnd,
   failStart,
-  wonGame,
-  wonRound,
-  strictFail,
-  restartRound,
   showAll,
   hideAll,
-  swapCss,
   showColor,
   hideColor,
   clickHandler,

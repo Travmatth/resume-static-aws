@@ -6,6 +6,7 @@ import {
   strictHandler,
   scoreHandler,
   powerHandler,
+  startHandler,
 } from './Handlers';
 
 if (typeof document !== 'undefined')
@@ -24,8 +25,12 @@ if (typeof document !== 'undefined')
 
     const update = scoreHandler(document.getElementById('score-label'));
 
-    const power = powerHandler(update, buttons, simon, timer, clock, sounds);
-    document.getElementById('power').addEventListener('click', power);
+    const start = startHandler(update, buttons, simon, timer, clock, sounds);
+    document.getElementById('start').addEventListener('click', start);
+
+    document
+      .getElementById('power')
+      .addEventListener('click', powerHandler(simon, update, clock));
 
     document
       .getElementById('strict')
