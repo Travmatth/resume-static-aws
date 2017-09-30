@@ -7,7 +7,6 @@ import {
   showScene,
   dismissError,
 } from '../Handlers';
-import { dispatch } from 'tests/utils';
 import * as Api from '../Api';
 
 jest.mock('../Api', () => {

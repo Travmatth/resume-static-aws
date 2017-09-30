@@ -2,11 +2,7 @@
 
 import { STATE, PHASE, startTimer, stopTimer } from '../Models';
 import type { Timer, Game } from '../pomodoro.types';
-import {
-  parseTimeToText,
-  scaleIntToMinutes,
-  shrinkMinutesToInt,
-} from 'common/js/utils';
+import { scaleIntToMinutes, shrinkMinutesToInt } from 'common/js/utils';
 
 const setFill = (node: HTMLElement) => (fill: number) =>
   node.style.backgroundImage = `linear-gradient(0deg, black ${fill}%, transparent 0%)`;
@@ -34,7 +30,7 @@ const toggleHandler = (
   start: (HTMLElement, number, Timer, Game) => {},
   stop: Game => {},
   set: number => {},
-) => (e: Event) => {
+) => (_: Event) => {
   startBtn.textContent = startBtn.textContent === 'start' ? 'stop' : 'start';
 
   if (game.state === STATE.STOPPED) {

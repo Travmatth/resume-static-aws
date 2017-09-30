@@ -1,9 +1,8 @@
 /* @flow */
 /* eslint-env jest */
 
-import { search, checkHeaders, processWikis } from '../Api';
-import { ResponseError } from 'common/js/utils';
-import { dispatch, json } from 'tests/utils';
+import { search, processWikis } from '../Api';
+import { json } from 'tests/utils';
 import type { WikiPage, WikiSearchResult } from '../wikiviewer.types';
 import { wikis, exampleWikipediaSearch } from './wikiviewer.mockdata';
 

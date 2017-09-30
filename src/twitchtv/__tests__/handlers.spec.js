@@ -7,7 +7,7 @@ import {
   toggleFilter,
   showScene,
 } from '../Handlers';
-import { fetchAllProfiles } from '../Api';
+import * as Api from '../Api';
 import { dispatch } from 'tests/utils';
 
 jest.mock('../Api', () => ({

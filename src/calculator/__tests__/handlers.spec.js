@@ -7,7 +7,6 @@ import {
   displayPopup,
   dismissPopupHandler,
 } from '../Handlers';
-import { dispatch } from 'tests/utils';
 import type { Calculator } from '../Models';
 
 let calculator: Calculator;

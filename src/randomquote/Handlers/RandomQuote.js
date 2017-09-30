@@ -29,7 +29,7 @@ const showScene = (quoteBox: HTMLElement, spinner: HTMLElement) => (
 const dismissError = (modal: HTMLElement) => (_: Event) =>
   modal.classList.toggle('is-active', false);
 
-const showError = (modal: HTMLElement) => (message: string) =>
+const showError = (modal: HTMLElement) => (_: Event) =>
   modal.classList.toggle('is-active', true);
 
 const fetchQuoteHandler = (

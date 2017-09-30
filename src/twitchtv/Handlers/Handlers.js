@@ -1,6 +1,5 @@
-import type { Stream } from '../twitchtv.types';
 import { fetchAllProfiles, TWITCHTV_TIMEOUT } from '../Api';
-import { trim, removeChildren, withTimeout } from 'common/js/utils';
+import { removeChildren, withTimeout } from 'common/js/utils';
 
 const FILTER_EVENT = 'filter-event';
 

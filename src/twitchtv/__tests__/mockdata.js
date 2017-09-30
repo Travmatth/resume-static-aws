@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { NullUser, Channel, User, UserStream } from '../twitchtv.types';
+import type { NullUser, User, UserStream } from '../twitchtv.types';
 
 // curl -H 'Accept: application/vnd.twitchtv.v3+json' \
 //      -H 'Client-ID: ${TWITCH_TV_API_KEY}' \

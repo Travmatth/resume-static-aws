@@ -74,7 +74,7 @@ const fetchWeather = async (coords: Coordinates): Promise<Weather> => {
      using JSONP to bypass
   */
   return await fetchJsonp(url, fetchOpts)
-    .then(res => res.json())
+    .then(checkHeaders)
     .then(processWeather)
     .catch(thrown => ({
       city: 'GET WEATHER',

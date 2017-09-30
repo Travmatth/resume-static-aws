@@ -1,7 +1,7 @@
 /* @flow */
 import fetchJsonp from 'fetch-jsonp';
 import { RANDOMQUOTE_PROXY } from 'protected/proxies';
-import { serialize, json, checkHeaders, withTimeout } from 'common/js/utils';
+import { serialize, checkHeaders, withTimeout } from 'common/js/utils';
 
 const DEFAULT_TIMEOUT = 7500;
 

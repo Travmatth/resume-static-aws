@@ -3,12 +3,11 @@
 
 import { Calculator } from '../Models';
 
-let expr, infix;
+let expr;
 
 describe('Calculator Model', () => {
   beforeEach(() => {
     expr = new Calculator();
-    infix = [];
   });
 
   it('should be able to enter decimals', () => {

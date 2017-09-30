@@ -5,15 +5,9 @@ import {
   move,
   createGrid,
   playerHasWon,
-  playerHasWonDiagonal,
   serialize,
 } from './Board';
-import type {
-  GameBoard,
-  GameGrid,
-  GameState,
-  ScoreCard,
-} from '../tictactoe.types';
+import type { GameGrid, GameState, ScoreCard } from '../tictactoe.types';
 import { Side } from '../tictactoe.types';
 
 const ROW_LENGTH = 3;
@@ -61,7 +55,7 @@ const chooseSide = (game: GameState, desiredSide: $Keys<typeof Side>) =>
   game.player = desiredSide;
 
 const rollback = (game: GameState) => {
-  const { history, player, turn } = game;
+  const { history, turn } = game;
   if (history.length >= 2) {
     game.history = history.slice(0, -2);
     game.grid = history[history.length - 2];

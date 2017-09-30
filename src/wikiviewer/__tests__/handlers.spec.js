@@ -13,7 +13,7 @@ import * as Api from '../Api';
 import type { Headings, Paragraphs } from '../wikiviewer.types';
 import { ResponseError } from 'common/js/utils';
 import { dispatch, json } from 'tests/utils';
-import { wikis, exampleWikipediaSearch } from './wikiviewer.mockdata';
+import { wikis } from './wikiviewer.mockdata';
 
 jest.mock('../Api', () => ({
   search: () => require('./wikiviewer.mockdata').wikis,

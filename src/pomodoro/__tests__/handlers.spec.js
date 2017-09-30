@@ -4,8 +4,6 @@
 import {
   setFill,
   stepperHandler,
-  stopTimer,
-  startTimer,
   toggleHandler,
   resetHandler,
 } from '../Handlers';

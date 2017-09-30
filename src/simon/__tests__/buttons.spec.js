@@ -151,15 +151,7 @@ describe('Simon Handlers', () => {
     Simon.hasWonRound = Simon.hasWonRound.mockImplementationOnce(() => false);
     Simon.hasWonGame = Simon.hasWonGame.mockImplementationOnce(() => false);
 
-    const click = clickHandler(
-      color,
-      buttons,
-      update,
-      simon,
-      timer,
-      clock,
-      sounds,
-    )(ev);
+    clickHandler(color, buttons, update, simon, timer, clock, sounds)(ev);
 
     jest.runTimersToTime(1000);
 

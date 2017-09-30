@@ -19,7 +19,6 @@ import {
   recordPlayerAttempt,
   currentGameplayColor,
   nextGameplayColor,
-  nextColor,
   hasFailedRound,
   addGameplayColor,
   restartRound,
@@ -28,6 +27,7 @@ import {
 import { SimonState } from '../simon.types';
 
 let state: SimonState;
+const colors = new Set(Object.keys(COLORS));
 
 describe('Simon Game Model', () => {
   beforeEach(() => state = simonState());
@@ -74,12 +74,10 @@ describe('Simon Game Model', () => {
   });
 
   it('randomColor should return a color', () => {
-    const colors = new Set(Object.keys(COLORS));
     expect(colors.has(randomColor(state))).toBe(true);
   });
 
   it('resetSimon should modfy game state', () => {
-    const colors = new Set(Object.keys(COLORS));
     state.failure = true;
     state.score = 1;
     state.step = 1;
@@ -156,7 +154,6 @@ describe('Simon Game Model', () => {
   });
 
   it('recordPlayerAttempt should reset state if move is wrong and game is strict', () => {
-    const colors = new Set(Object.keys(COLORS));
     state.round = ['blue'];
     state.strict = true;
     recordPlayerAttempt(state, 'red');

@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { ColorKeys, Sound, ColorButtons } from '../simon.types';
+import type { ColorKeys, ColorButtons } from '../simon.types';
 import type { SoundManager } from '../Models';
 import { Colors } from '../Models';
 

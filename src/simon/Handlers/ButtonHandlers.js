@@ -4,17 +4,11 @@ import type { SoundManager } from '../Models';
 import {
   toggleState,
   hasPower,
-  getScore,
   resetSimon,
   playerCanMove,
   setInput,
   recordPlayerAttempt,
-  isStrict,
   toggleStrict,
-  addGameplayColor,
-  incrementScore,
-  nextRound,
-  resetAttemptStep,
 } from '../Models';
 import type {
   ColorKeys,
@@ -22,7 +16,7 @@ import type {
   TimerState,
   SimonState,
 } from '../simon.types';
-import { powerOn, powerOff, advance, cancelTimer } from './TimerHandler';
+import { powerOn, powerOff, cancelTimer } from './TimerHandler';
 import { showColor, hideColor } from './ColorHandlers';
 
 const SIMON_TIMEOUT = 1000;

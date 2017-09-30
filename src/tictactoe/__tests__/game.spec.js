@@ -22,7 +22,7 @@ import {
   simulateMove,
   createGrid,
 } from '../Models';
-import type { GameBoard, GameGrid } from '../tictactoe.types';
+import type { GameGrid } from '../tictactoe.types';
 import { Side } from '../tictactoe.types';
 import { blank } from '../Handlers';
 

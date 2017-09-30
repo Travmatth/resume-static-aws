@@ -2,9 +2,8 @@
 /* eslint-env jest */
 
 import { response, data, url } from './mockdata';
-import { ResponseError, serialize } from 'common/js/utils';
+import { serialize } from 'common/js/utils';
 import { json } from 'tests/utils';
-import OPEN_WEATHER_APPID from 'protected/localweather.key';
 
 import {
   showScene,
@@ -17,7 +16,6 @@ import {
   dispatchToggleEvent,
 } from '../Handlers';
 import { openweatherApiParams } from '../Models';
-import contentLoadedListener from '../index';
 
 import fetchJsonp from 'fetch-jsonp';
 

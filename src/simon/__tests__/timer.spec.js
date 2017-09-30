@@ -2,7 +2,6 @@
 /* eslint-env jest */
 
 import * as Models from '../Models';
-import type { ColorHandler } from '../Handlers';
 import type { TimerState, ColorButtons } from '../simon.types';
 import { cancelTimer, advance, powerOn, powerOff, fire } from '../Handlers';
 

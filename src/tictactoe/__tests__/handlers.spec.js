@@ -256,19 +256,6 @@ describe('TicTacToe Handlers', () => {
     expect(state.history).toEqual([]);
     expect(show).toHaveBeenCalled();
 
-    // computer move
-    const postComputerBoardState = [
-      Side.X,
-      Side.O,
-      Side.X,
-      Side.O,
-      Side.X,
-      Side.X,
-      Side.O,
-      Side.X,
-      Side.O,
-    ];
-
     jest.runTimersToTime(500);
     // ensure computer has not moved
     expect(state.history.length).toBe(0);
@@ -288,7 +275,7 @@ describe('TicTacToe Handlers', () => {
     };
 
     // function under test
-    const action = playerAction(state, refresh, show)({ target: elem });
+    playerAction(state, refresh, show)({ target: elem });
 
     // pre-timer actions
     const postPlayerBoardState = [

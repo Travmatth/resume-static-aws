@@ -3,12 +3,7 @@
 import { ENDPOINT, PARAMS } from '../Models';
 import type { WikiSearchResult, WikiPage } from '../wikiviewer.types';
 import { WIKI_PROXY } from 'protected/proxies';
-import {
-  serialize,
-  ResponseError,
-  checkHeaders,
-  withTimeout,
-} from 'common/js/utils';
+import { serialize, checkHeaders, withTimeout } from 'common/js/utils';
 
 const WIKI_TIMEOUT = 5000;
 

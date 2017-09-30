@@ -1,6 +1,5 @@
 /* @flow */
 import {
-  game,
   genScoreCard,
   getScore,
   canTakeSquare,
@@ -104,7 +103,7 @@ const restartGameHandler = (
 };
 
 const rollbackHandler = (game: GameState, refresh: () => void) => (
-  e: Event,
+  _: Event,
 ) => {
   rollback(game);
   refresh(current(game));
@@ -116,7 +115,7 @@ const chooseTurnHandler = (
   show: () => void,
 ) => (e: Event) => {
   const desired = ((e.target.dataset.glyph: any): $Keys<typeof Side>);
-  const previous = chooseSide(game, desired);
+  chooseSide(game, desired);
 
   // Clear previous state of Game view, if any
   refresh(blank);

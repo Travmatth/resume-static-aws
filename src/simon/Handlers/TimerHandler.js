@@ -1,8 +1,8 @@
 /* @flow */
 
 import type { Simon, TimerState } from '../Models';
-import { delay, cycle, timerState, tick } from '../Models';
-import type { ColorKeys, ColorButtons } from '../simon.types';
+import { cycle, timerState, tick } from '../Models';
+import type { ColorButtons } from '../simon.types';
 
 const fire = (
   roundLength: number,

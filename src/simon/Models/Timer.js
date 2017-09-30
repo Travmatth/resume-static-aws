@@ -10,21 +10,13 @@ import {
   hasFailedRound,
   hasWonRound,
   hasWonGame,
-  incrementScore,
   resetAttemptStep,
   isStrict,
   restartRound,
 } from './Simon';
 import type { TimerState, SimonState } from '../simon.types';
 import { cycle, delay } from './GameCycle';
-import {
-  showColor,
-  hideColor,
-  hideAll,
-  showAll,
-  failStart,
-  failEnd,
-} from '../Handlers';
+import { showColor, hideColor, hideAll, showAll } from '../Handlers';
 
 const timerState: TimerState = () => ({ current: 0, cycle });
 
