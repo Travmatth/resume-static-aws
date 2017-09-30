@@ -23,7 +23,7 @@ jest.mock('../Models', () => ({
   toggleState: jest.fn(),
   hasPower: jest.fn(),
   playerCanMove: jest.fn(),
-  setInput: jest.fn(() => console.trace()),
+  setInput: jest.fn(),
   recordPlayerAttempt: jest.fn(),
   hasFailedRound: jest.fn(),
   hasWonRound: jest.fn(),
