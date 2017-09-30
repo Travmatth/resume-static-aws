@@ -4,19 +4,26 @@ import type { Simon, TimerState } from '../Models';
 import { delay, cycle, timerState, tick } from '../Models';
 import type { ColorKeys, ColorButtons } from '../simon.types';
 
-const cancelTimer = (clock: { id: null | number }) =>
-  clock.id && clearTimeout(clock.id);
-
-const powerOff = (clock: { id: null | number }) => cancelTimer(clock);
-
-const powerOn = (
-  simon: Simon,
+const fire = (
+  roundLength: number,
   buttons: ColorButtons,
+  action: () => string | void,
   timer: TimerState,
-  update: (number | string) => string,
+  simon: Simon,
   clock: { id: null | number },
   sounds: SoundManager,
-) => advance(simon, buttons, update, timer, clock, sounds);
+) => {
+  action();
+  clock.id = setTimeout(() => {
+    const { next, round, action: nextAction } = tick(
+      timer,
+      simon,
+      sounds,
+      buttons,
+    );
+    if (next) fire(round, buttons, nextAction, timer, simon, clock, sounds);
+  }, roundLength);
+};
 
 const advance = (
   simon: Simon,
@@ -39,25 +46,18 @@ const advance = (
   if (next) fire(round, buttons, nextAction, timer, simon, clock, sounds);
 };
 
-const fire = (
-  roundLength: number,
-  buttons: ColorButtons,
-  action: () => string | void,
-  timer: TimerState,
+const powerOn = (
   simon: Simon,
+  buttons: ColorButtons,
+  timer: TimerState,
+  update: (number | string) => string,
   clock: { id: null | number },
   sounds: SoundManager,
-) => {
-  action();
-  clock.id = setTimeout(() => {
-    const { next, round, action: nextAction } = tick(
-      timer,
-      simon,
-      sounds,
-      buttons,
-    );
-    if (next) fire(round, buttons, nextAction, timer, simon, clock, sounds);
-  }, roundLength);
-};
+) => advance(simon, buttons, update, timer, clock, sounds);
+
+const powerOff = (clock: { id: null | number }) => cancelTimer(clock);
+
+const cancelTimer = (clock: { id: null | number }) =>
+  clock.id && clearTimeout(clock.id);
 
 export { cancelTimer, advance, powerOn, powerOff, fire };

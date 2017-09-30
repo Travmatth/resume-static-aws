@@ -2,12 +2,6 @@
 
 export type Paragraphs = HTMLCollection<HTMLParagraphElement>;
 export type Headings = HTMLCollection<HTMLElement>;
-export type Searches = ?Array<WikiPage>;
-
-export type WikiContinue = {
-  'gsroffset': 10,
-  'continue': 'gsroffset||',
-};
 
 export type WikiPage = {
   'pageid': number,
@@ -15,6 +9,13 @@ export type WikiPage = {
   'title': string,
   'index': number,
   'extract': string,
+};
+
+export type Searches = ?Array<WikiPage>;
+
+export type WikiContinue = {
+  'gsroffset': 10,
+  'continue': 'gsroffset||',
 };
 
 export type Limits = {

@@ -11,7 +11,13 @@ import {
 } from 'common/js/utils';
 
 const WIKI_TIMEOUT = 5000;
+
 const headers = new Headers({ 'Content-Type': 'text/plain' });
+
+const processWikis = ({ query: { pages } }: WikiSearchResult) => {
+  const { limits, ...wikis } = pages;
+  return Object.values(wikis);
+};
 
 const search = (query: ?string): Promise<Array<WikiPage>> => {
   PARAMS['gsrsearch'] = query;
@@ -29,11 +35,6 @@ const search = (query: ?string): Promise<Array<WikiPage>> => {
       console.error(message);
       return null;
     });
-};
-
-const processWikis = ({ query: { pages } }: WikiSearchResult) => {
-  const { limits, ...wikis } = pages;
-  return Object.values(wikis);
 };
 
 export { search, processWikis, WIKI_TIMEOUT };

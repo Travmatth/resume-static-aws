@@ -72,9 +72,6 @@ const updateDOM = (
 const randomHandler = (win: window) => () =>
   win.location = 'https://en.wikipedia.org/wiki/Special:Random';
 
-const searchHandler = (node: HTMLElement, show: ?string => void) => () =>
-  refreshResults(getQuery(), node, show);
-
 const refreshResults = async (
   query: Array<string>,
   node: HTMLElement,
@@ -90,13 +87,16 @@ const refreshResults = async (
   }
 };
 
+const searchHandler = (node: HTMLElement, show: ?string => void) => () =>
+  refreshResults(getQuery(), node, show);
+
+const getQuery = () => document.querySelector('input').value;
+
 const keypressHandler = (node: HTMLElement, show: ?string => void) => async (
   event: Event,
 ) => {
   if (event.key === 'Enter') refreshResults(getQuery(), node, show);
 };
-
-const getQuery = () => document.querySelector('input').value;
 
 export {
   updateDOM,

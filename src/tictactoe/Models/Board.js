@@ -1,9 +1,5 @@
 /* @flow */
 
-/**
- * createGrid creates an array of cell objects
- * @return {[Cell]} List of cell Maps; {x, y, player}
- */
 import type { GameGrid, WinningBoard, GameBoard } from '../tictactoe.types';
 import { Side } from '../tictactoe.types';
 
@@ -40,17 +36,6 @@ const makeHistory = (current: Array<GameGrid>, history: Array<GameBoard>) => {
   return next;
 };
 
-// export function hasColumnScore(grid, score) {}
-// export function hasDiagonalScore(grid, score) {}
-// export function optimalMove() {}
-
-/**
- * playerHasWonRow will check the given grid and return true if any
- * horizontal Row is a win for the given player
- * @param  {string} player [the player to check for horizontal wins]
- * @param  {grid}   grid   [grid in question]
- * @return {bool}          [whether player has a winning Row]
- */
 const playerHasWonRow = (player: $Keys<typeof Side>, grid: Array<GameGrid>) => {
   let hasWon = false;
 
@@ -65,13 +50,6 @@ const playerHasWonRow = (player: $Keys<typeof Side>, grid: Array<GameGrid>) => {
   return hasWon;
 };
 
-/**
- * playerHasWonColumn will check the given grid and return true if any
- * horizontal column is a win for the given player
- * @param  {string} player [the player to check for horizontal wins]
- * @param  {grid} grid   [grid in question]
- * @return {bool}        [whether player has a winning column]
- */
 const playerHasWonColumn = (
   player: $Keys<typeof Side>,
   grid: Array<GameGrid>,
@@ -87,22 +65,6 @@ const playerHasWonColumn = (
   }
 
   return hasWon;
-};
-
-/**
- * [playerHasWonDiagonal checks the board for winning combinations on diagonals]
- * @param  {string} player [the player to check for diagonal wins]
- * @param  {grid} grid   [grid in question]
- * @return {bool}        [whether player has a winning diagonal]
- */
-const playerHasWonDiagonal = (
-  player: $Keys<typeof Side>,
-  grid: Array<GameGrid>,
-) => {
-  return (
-    checkDiagonal(grid, ascending, player) ||
-    checkDiagonal(grid, descending, player)
-  );
 };
 
 const ascending: WinningBoard = [
@@ -131,12 +93,16 @@ const checkDiagonal = (
   return score >= 3;
 };
 
-/**
- * [playerHasWon checks the board to see if given player has won]
- * @param  {string} player [the player to check for wins]
- * @param  {grid} grid   [grid in question]
- * @return {bool}        [whether player has won]
- */
+const playerHasWonDiagonal = (
+  player: $Keys<typeof Side>,
+  grid: Array<GameGrid>,
+) => {
+  return (
+    checkDiagonal(grid, ascending, player) ||
+    checkDiagonal(grid, descending, player)
+  );
+};
+
 const playerHasWon = (player: $Keys<typeof Side>, grid: Array<GameGrid>) => {
   return (
     playerHasWonColumn(player, grid) ||

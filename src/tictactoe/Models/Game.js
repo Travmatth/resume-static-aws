@@ -106,13 +106,6 @@ const startPlayerMove = (game: GameState) => game.input = true;
 
 const endPlayerMove = (game: GameState) => game.input = false;
 
-const simulateFirstMove = (game: GameState, move = simulateMove) => {
-  game.turn = Side.X;
-  game.input = false;
-
-  move(game);
-};
-
 const simulateMove = (game: GameState) => {
   const { grid, history, turn, finished } = game;
 
@@ -143,6 +136,13 @@ const simulateMove = (game: GameState) => {
   // set rest of state
   game.turn = turn === Side.X ? Side.O : Side.X;
   game.finished = empty <= 1 || hasWon;
+};
+
+const simulateFirstMove = (game: GameState, move = simulateMove) => {
+  game.turn = Side.X;
+  game.input = false;
+
+  move(game);
 };
 
 export {

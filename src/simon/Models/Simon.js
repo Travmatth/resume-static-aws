@@ -81,6 +81,8 @@ const showSequenceOver = ({ gameplayStep, round }: SimonState) =>
 
 const getScore = ({ score }: SimonState) => score;
 
+const incrementScore = (state: SimonState) => state.score += 1;
+
 const recordPlayerAttempt = (state: SimonState, color: ColorKeys) => {
   const { strict } = state;
   if (state.round[state.attemptStep] === color) {
@@ -108,8 +110,6 @@ const nextGameplayColor = (state: SimonState) => state.gameplayStep += 1;
 
 const hasFailedRound = ({ failure, attemptStep, gameplayStep }: SimonState) =>
   attemptStep < gameplayStep || failure;
-
-const incrementScore = (state: SimonState) => state.score += 1;
 
 export {
   TOTAL_ROUNDS,

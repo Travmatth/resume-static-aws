@@ -65,9 +65,6 @@ const fetchProfile = (user: string): Promise<PossiblyNestedStreams> =>
     .then(classify)
     .catch(message => console.log(message) || null);
 
-const fetchAllProfiles = (): Promise<Array<PossibleStream>> =>
-  Promise.all([...USERS.map(fetchProfile)]).then(agglomerate);
-
 const agglomerate = (responses: Array<PossiblyNestedStreams>): Array<Stream> =>
   ((responses.reduce((result, current, index, array) => {
     if (current === null) {
@@ -85,6 +82,9 @@ const agglomerate = (responses: Array<PossiblyNestedStreams>): Array<Stream> =>
       return result;
     }
   }, []): any): Array<Stream>);
+
+const fetchAllProfiles = (): Promise<Array<PossibleStream>> =>
+  Promise.all([...USERS.map(fetchProfile)]).then(agglomerate);
 
 export {
   verifyUser,

@@ -4,36 +4,8 @@ import { fetchWeather } from '../Api';
 import { removeChildren, withTimeout } from 'common/js/utils';
 import type { Daily, Weather } from '../localweather.types';
 
-/* fetchHandler dispatches a callback to browser geolocation
- */
-const fetchHandler = (show: () => void, ...elements) => (_: Event) => {
-  // toggle loading animation
-  show('loading');
+const TOGGLE_EVENT = 'TOGGLE_EVENT';
 
-  navigator.geolocation.getCurrentPosition(weatherHandler(show, ...elements));
-};
-
-/* weatherHandler uses browser geolocation coordinates
- * to fetch weather and update the page's table
- */
-const weatherHandler = (
-  show: () => void,
-  span: HTMLElement,
-  tbody: HTMLTableSectionElement,
-) => async (location: Position) => {
-  try {
-    const weather = await withTimeout(fetchWeather(location.coords), 5000);
-    const { forecasts, city } = weather;
-    span.textContent = city;
-    updateTableRows('fahrenheit', tbody, forecasts, show);
-  } catch (error) {
-    console.error(error);
-    show('error');
-  }
-};
-
-/* updateTableRows uses fetched weather data to create tiles, append to tbody
- */
 const updateTableRows = (
   desired: 'fahrenheit' | 'celsius',
   tbody: HTMLTableSectionElement,
@@ -84,10 +56,22 @@ const updateTableRows = (
   show('table');
 };
 
-const TOGGLE_EVENT = 'TOGGLE_EVENT';
+const weatherHandler = (
+  show: () => void,
+  span: HTMLElement,
+  tbody: HTMLTableSectionElement,
+) => async (location: Position) => {
+  try {
+    const weather = await withTimeout(fetchWeather(location.coords), 5000);
+    const { forecasts, city } = weather;
+    span.textContent = city;
+    updateTableRows('fahrenheit', tbody, forecasts, show);
+  } catch (error) {
+    console.error(error);
+    show('error');
+  }
+};
 
-/* dispatchToggleEvent causes measurement cells to switch their displayed temp
- */
 const dispatchToggleEvent = (measurement: 'fahrenheit' | 'celsius') => (
   _: Event,
 ) =>
@@ -99,23 +83,17 @@ const dispatchToggleEvent = (measurement: 'fahrenheit' | 'celsius') => (
     );
   });
 
-/* toggleMeasurement switches targeted elements displayed temperature
- */
 const toggleMeasurement = (event: Event) => {
   const { target, detail: { measurement } } = event;
   target.textContent = target.dataset[measurement];
 };
 
-/* tempScale determines desired temperature scale
- */
 const tempScale = () =>
   (((document.querySelector('.celsius'): any): HTMLInputElement).checked ===
     true
     ? 'celsius'
     : 'fahrenheit');
 
-/* showScene manages display of different fetching states
- */
 const showScene = (
   error: HTMLElement,
   spinner: HTMLElement,
@@ -152,6 +130,12 @@ const showScene = (
   spinner.classList.toggle('hidden', spinnerHidden);
   table.classList.toggle('hidden', tableHidden);
   error.classList.toggle('hidden', errorHidden);
+};
+
+const fetchHandler = (show: () => void, ...elements) => (_: Event) => {
+  show('loading');
+
+  navigator.geolocation.getCurrentPosition(weatherHandler(show, ...elements));
 };
 
 export {
