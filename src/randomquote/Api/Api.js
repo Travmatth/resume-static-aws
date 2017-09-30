@@ -3,8 +3,10 @@ import fetchJsonp from 'fetch-jsonp';
 import { RANDOMQUOTE_PROXY } from 'protected/proxies';
 import { serialize, json, checkHeaders, withTimeout } from 'common/js/utils';
 
+const DEFAULT_TIMEOUT = 7500;
+
 //Proxying call to avoid jsonp && CORS restrictions
-const fetchQuote = (timeout: number = 7500) =>
+const fetchQuote = (timeout: number = DEFAULT_TIMEOUT) =>
   withTimeout(fetch(RANDOMQUOTE_PROXY), timeout)
     .then(checkHeaders)
     .then(response => ({
@@ -19,4 +21,4 @@ const createLink = (quote: string, author: string) =>
     text: `"${quote}" ~${author}`,
   });
 
-export { fetchQuote, createLink };
+export { fetchQuote, createLink, DEFAULT_TIMEOUT };

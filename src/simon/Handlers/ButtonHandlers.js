@@ -25,6 +25,8 @@ import type {
 import { powerOn, powerOff, advance, cancelTimer } from './TimerHandler';
 import { showColor, hideColor } from './ColorHandlers';
 
+const SIMON_TIMEOUT = 1000;
+
 const toggleHandleAnimation = (event: Event) => {
   const { target: { classList } } = event;
   const current = classList.contains('is-off');
@@ -88,10 +90,11 @@ const clickHandler = (
     hideColor(color, sounds, buttons);
     update(simon.score);
     setInput(simon, true);
-  }, 1000);
+  }, SIMON_TIMEOUT);
 };
 
 export {
+  SIMON_TIMEOUT,
   clickHandler,
   strictHandler,
   scoreHandler,

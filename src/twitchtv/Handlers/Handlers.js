@@ -1,5 +1,5 @@
 import type { Stream } from '../twitchtv.types';
-import { fetchAllProfiles } from '../Api';
+import { fetchAllProfiles, TWITCHTV_TIMEOUT } from '../Api';
 import { trim, removeChildren, withTimeout } from 'common/js/utils';
 
 const FILTER_EVENT = 'filter-event';
@@ -75,7 +75,7 @@ const fetchHandler = (table: HTMLULElement, show: ?string => void) => async (
   let streamers;
 
   try {
-    streamers = await withTimeout(fetchAllProfiles(), 5000);
+    streamers = await withTimeout(fetchAllProfiles(), TWITCHTV_TIMEOUT);
     streamers.map((streamer: PossibleStream) => {
       const li = document.createElement('li');
       li.innerHTML = require('../Assets/tile.html');

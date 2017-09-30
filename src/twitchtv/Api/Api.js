@@ -12,6 +12,8 @@ import TWITCH_TV_API_KEY from 'protected/twitch.key';
 import { serialize, trim, checkHeaders, withTimeout } from 'common/js/utils';
 import { STREAMS_URL, USERS_URL, USERS, extractUserName } from '../Models';
 
+const TWITCHTV_TIMEOUT = 5000;
+
 const headers = new Headers({
   Accept: 'application/vnd.twitchtv.v3+json',
   'Client-ID': trim(TWITCH_TV_API_KEY),
@@ -59,7 +61,7 @@ const classify = async (response: Response): Promise<PossiblyNestedStreams> => {
 };
 
 const fetchProfile = (user: string): Promise<PossiblyNestedStreams> =>
-  withTimeout(fetch(new Request(STREAMS_URL + user, options)), 5000)
+  withTimeout(fetch(new Request(STREAMS_URL + user, options)), TWITCHTV_TIMEOUT)
     .then(classify)
     .catch(message => console.log(message) || null);
 
@@ -91,4 +93,5 @@ export {
   fetchProfile,
   fetchAllProfiles,
   agglomerate,
+  TWITCHTV_TIMEOUT,
 };

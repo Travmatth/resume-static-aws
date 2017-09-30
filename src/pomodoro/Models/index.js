@@ -2,6 +2,8 @@
 
 import { parseTimeToText } from 'common/js/utils';
 
+const DELAY = 10;
+
 const PHASE = { WORK: 'WORK', REST: 'REST' };
 
 const STATE = { STOPPED: 'STOPPED', RUNNING: 'RUNNING' };
@@ -25,7 +27,8 @@ const startTimer = (
     game.last = now;
     game.current += elapsed;
 
-    set(game.current / timeLimit * 100);
+    const scale = 100;
+    set(game.current / timeLimit * scale);
 
     if (game.current < timeLimit) {
       // If time has not run out yet, set displayed time
@@ -40,6 +43,6 @@ const startTimer = (
       game.current = 0;
       game.state = STATE.STOPPED;
     }
-  }, 10);
+  }, DELAY);
 
 export { STATE, PHASE, stopTimer, startTimer };

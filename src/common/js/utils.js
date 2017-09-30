@@ -95,7 +95,9 @@ const trim = (str: string) => str.replace(/^\s+|\s+$/g, '');
 
 const rand = (range: numer) => Math.floor(Math.random() * (range + 1));
 
-const withTimeout = (promise: Promise<any>, ms: number = 5000) =>
+const DEFAULT_TIMEOUT = 5000;
+
+const withTimeout = (promise: Promise<any>, ms: number = DEFAULT_TIMEOUT) =>
   new Promise((resolve, reject) => {
     const id = setTimeout(() => {
       clearTimeout(id);
@@ -131,4 +133,5 @@ export {
   removeChildren,
   rand,
   withTimeout,
+  DEFAULT_TIMEOUT,
 };

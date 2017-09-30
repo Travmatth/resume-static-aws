@@ -10,6 +10,7 @@ import {
   withTimeout,
 } from 'common/js/utils';
 
+const WIKI_TIMEOUT = 5000;
 const headers = new Headers({ 'Content-Type': 'text/plain' });
 
 const search = (query: ?string): Promise<Array<WikiPage>> => {
@@ -21,7 +22,7 @@ const search = (query: ?string): Promise<Array<WikiPage>> => {
     body: serialize(ENDPOINT, PARAMS),
   };
 
-  return withTimeout(fetch(WIKI_PROXY, opts), 5000)
+  return withTimeout(fetch(WIKI_PROXY, opts), WIKI_TIMEOUT)
     .then(checkHeaders)
     .then(processWikis)
     .catch(message => {
@@ -35,4 +36,4 @@ const processWikis = ({ query: { pages } }: WikiSearchResult) => {
   return Object.values(wikis);
 };
 
-export { search, processWikis };
+export { search, processWikis, WIKI_TIMEOUT };
