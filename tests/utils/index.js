@@ -6,7 +6,7 @@ const dispatch = (
   const element = typeof selector === 'string'
     ? document.querySelector(selector)
     : selector;
-  var event = typeof type === 'string'
+  const event = typeof type === 'string'
     ? new CustomEvent(type, { target: element, ...data })
     : type;
   element.dispatchEvent(event);
