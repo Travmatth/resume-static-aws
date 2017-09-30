@@ -59,7 +59,7 @@ describe('Pomodoro Models', () => {
     game.id = 1;
     stopTimer(game);
     expect(clearInterval).toHaveBeenCalled();
-    expect(game.id).toEqual(undefined);
+    expect(typeof game.id).toBe('undefined');
   });
 
   it('startTimer should measure elapsed time', () => {
