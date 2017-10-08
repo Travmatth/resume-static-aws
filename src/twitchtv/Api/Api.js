@@ -60,10 +60,16 @@ const classify = async (response: Response): Promise<PossiblyNestedStreams> => {
   }
 };
 
-const fetchProfile = (user: string): Promise<PossiblyNestedStreams> =>
+const fetchProfile = (
+  user: string,
+  fn: () => any = fetch,
+): Promise<PossiblyNestedStreams> =>
   withTimeout(fetch(new Request(STREAMS_URL + user, options)), TWITCHTV_TIMEOUT)
     .then(classify)
-    .catch(message => console.error(message) || null);
+    .catch(message => {
+      console.error(message);
+      return null;
+    });
 
 const agglomerate = (responses: Array<PossiblyNestedStreams>): Array<Stream> =>
   ((responses.reduce((result, current, index, array) => {

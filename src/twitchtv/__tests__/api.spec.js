@@ -20,6 +20,7 @@ import {
   classify,
   fetchAllProfiles,
   agglomerate,
+  fetchProfile,
 } from '../Api';
 
 jest.mock('../Models', () => ({
@@ -164,6 +165,20 @@ describe('TwitchTV Api', () => {
         status: `${user} is offline`,
       })),
     ]);
+  });
+
+  it('fetchProfile should return null on classify fail', async () => {
+    fetch.mockResponseOnce(json({}), { status: 404 });
+    expect(await fetchProfile('test')).toBe(null);
+  });
+
+  it('fetchProfile should throw on timeout', async () => {
+    const timeout = new Promise(resume => setTimeout(resume, 10000));
+    expect(await fetchProfile('test', timeout)).toThrow();
+  });
+
+  it('agglomerate should throw on network fail', () => {
+    expect(() => agglomerate([null, null])).toThrow();
   });
 
   it('agglomerate should reduce all PossiblyNestedStreams types into Array<Stream>', async () => {

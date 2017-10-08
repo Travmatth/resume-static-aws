@@ -6,7 +6,7 @@
     "<rootDir>/tests/setup/setup.js"
   ],
   "moduleNameMapper": {
-    "\\.(key|wav|mp3)$": "<rootDir>/tests/mocks/fileMock.js",
+    "\\.(key|wav|mp3|png)$": "<rootDir>/tests/mocks/fileMock.js",
     "^protected(.*)$": "<rootDir>/tests/mocks/fileMock.js",
     "^tests(.*)$": "<rootDir>/tests$1",
     "^assets(.*)$": "<rootDir>/assets$1"
