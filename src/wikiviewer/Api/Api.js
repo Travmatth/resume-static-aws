@@ -6,7 +6,6 @@ import type { WikiSearchResult, WikiPage } from '../wikiviewer.types';
 import { serialize, checkHeaders, withTimeout } from 'common/js/utils';
 
 const WIKI_TIMEOUT = 5000;
-
 const headers = new Headers({ 'Content-Type': 'text/plain' });
 
 const processWikis = ({ query: { pages } }: WikiSearchResult) => {

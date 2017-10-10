@@ -1,7 +1,7 @@
 /* @flow */
 
 import type { Simon, TimerState } from '../Models';
-import { timerState, tick } from '../Models';
+import { tick } from '../Models';
 import type { ColorButtons } from '../simon.types';
 
 const cancelTimer = (clock: { id: null | number }) =>

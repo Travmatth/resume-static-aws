@@ -156,7 +156,6 @@ describe('TwitchTV Handlers', () => {
 
   it('populateHeadingElement should set element when offline', () => {
     const { h2 } = createTileElement(require('../Assets/tile.html'));
-    const fn = jest.fn();
     const spy = jest.spyOn(h2, 'remove');
 
     populateHeadingElement(h2);

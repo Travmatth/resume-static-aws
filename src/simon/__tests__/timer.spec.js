@@ -61,7 +61,7 @@ describe('Simon Game Timer', () => {
     let limit = 5;
     const roundLength = 1;
     const action = jest.fn(() => limit -= 1);
-    const simon = new Models.simonState();
+    const simon = Models.simonState();
     const clock = { id: null };
 
     Models.tick = jest.fn(() => ({
