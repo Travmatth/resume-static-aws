@@ -13,7 +13,6 @@ import {
 } from 'common/js/utils';
 import fetchJsonp from 'fetch-jsonp';
 import { checkHeaders } from 'common/js/utils';
-import OPEN_WEATHER_APPID from 'protected/localweather.key';
 import { ENDPOINT, openweatherApiParams } from '../Models';
 
 const fetchOpts = {

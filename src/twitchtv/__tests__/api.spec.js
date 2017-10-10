@@ -25,8 +25,8 @@ import {
 
 jest.mock('../Models', () => ({
   ...require.requireActual('../Models'),
-  ONLINE_STREAMS: ['freecodecamp', 'noobs2ninjas', 'RobotCaleb', 'OgamingSC2'],
   OFFLINE_STREAMS: ['comster404'],
+  ONLINE_STREAMS: ['freecodecamp', 'noobs2ninjas', 'RobotCaleb', 'OgamingSC2'],
   get USERS() {
     return [...this.ONLINE_STREAMS, ...this.OFFLINE_STREAMS];
   },
@@ -170,11 +170,6 @@ describe('TwitchTV Api', () => {
   it('fetchProfile should return null on classify fail', async () => {
     fetch.mockResponseOnce(json({}), { status: 404 });
     expect(await fetchProfile('test')).toBe(null);
-  });
-
-  it('fetchProfile should throw on timeout', async () => {
-    const timeout = new Promise(resume => setTimeout(resume, 10000));
-    expect(await fetchProfile('test', timeout)).toThrow();
   });
 
   it('agglomerate should throw on network fail', () => {

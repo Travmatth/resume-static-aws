@@ -80,6 +80,7 @@ const refreshResults = async (
   if (query === '') return;
   show('loading');
   const results = await search(query);
+
   if (results) {
     updateDOM(results, node, show);
   } else {

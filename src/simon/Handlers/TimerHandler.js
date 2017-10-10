@@ -4,6 +4,11 @@ import type { Simon, TimerState } from '../Models';
 import { timerState, tick } from '../Models';
 import type { ColorButtons } from '../simon.types';
 
+const cancelTimer = (clock: { id: null | number }) =>
+  clock.id && clearTimeout(clock.id);
+
+const powerOff = (clock: { id: null | number }) => cancelTimer(clock);
+
 const fire = (
   roundLength: number,
   buttons: ColorButtons,
@@ -54,10 +59,5 @@ const powerOn = (
   clock: { id: null | number },
   sounds: SoundManager,
 ) => advance(simon, buttons, update, timer, clock, sounds);
-
-const powerOff = (clock: { id: null | number }) => cancelTimer(clock);
-
-const cancelTimer = (clock: { id: null | number }) =>
-  clock.id && clearTimeout(clock.id);
 
 export { cancelTimer, advance, powerOn, powerOff, fire };

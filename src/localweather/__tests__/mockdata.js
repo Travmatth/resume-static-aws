@@ -7,8 +7,8 @@ export const url =
   'data/2.5/forecast?' +
   'lat=0&' +
   'lon=0&' +
-  'units=imperial&' +
-  'APPID=' +
+  'uni =imperial&' +
+  'APP =' +
   OPEN_WEATHER_APPID;
 
 // curl -XPOST -H "Content-type: application/json" 'http://api.openweathermap.org/data/2.5/forecast?lat=40.712784&lon=-74.005941&units=imperial&APPID=c26ef1df98c449f37f8f199738ce74c7'

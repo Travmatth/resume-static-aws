@@ -160,6 +160,7 @@ describe('Shared utility code', () => {
 
     expect(setTimeout).toHaveBeenCalled();
     expect(clearTimeout).toHaveBeenCalled();
+
     /*
     // This code will work on jest 20+, can impl once upgraded
     expect.assertions(1);

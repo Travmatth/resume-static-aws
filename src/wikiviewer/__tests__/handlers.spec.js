@@ -2,21 +2,19 @@
 /* eslint-env jest */
 
 import {
-  refreshResults,
-  randomHandler,
-  searchHandler,
   keypressHandler,
-  updateDOM,
+  randomHandler,
+  refreshResults,
+  searchHandler,
   showScene,
+  updateDOM,
 } from '../Handlers';
 import * as Api from '../Api';
 import type { Headings, Paragraphs } from '../wikiviewer.types';
 import { json } from 'tests/utils';
 import { wikis } from './wikiviewer.mockdata';
 
-jest.mock('../Api', () => ({
-  search: () => require('./wikiviewer.mockdata').wikis,
-}));
+jest.mock('../Api', () => ({ search: jest.fn() }));
 
 describe('WikiViewer Handlers', () => {
   beforeEach(
@@ -84,6 +82,9 @@ describe('WikiViewer Handlers', () => {
   });
 
   it('searchHandler should call refreshResults and updateDOM', async () => {
+    Api.search = Api.search.mockImplementationOnce(
+      () => require('./wikiviewer.mockdata').wikis,
+    );
     const node = document.createElement('div');
     const show = jest.fn();
     document.querySelector('input').value = 'a';
@@ -108,6 +109,9 @@ describe('WikiViewer Handlers', () => {
   });
 
   it('refreshResults should call updateDOM with results of search', async () => {
+    Api.search = Api.search.mockImplementationOnce(
+      () => require('./wikiviewer.mockdata').wikis,
+    );
     const node = document.createElement('div');
     const show = jest.fn();
     document.querySelector('input').value = 'a';
@@ -122,6 +126,15 @@ describe('WikiViewer Handlers', () => {
     expect(p.textContent).toBe('Big Boss disambiguation page.');
   });
 
+  it('refreshResults should show error on null search', async () => {
+    Api.search = Api.search.mockImplementationOnce(() => null);
+    const query = 'foo';
+    const node = document.createElement('div');
+    const show = jest.fn();
+
+    await refreshResults(query, node, show);
+    expect(show.mock.calls).toEqual([['loading'], ['error']]);
+  });
   it("keyPressHandler should call refreshResults on 'Enter' key", async () => {
     const query = ['foo'];
     const paragraphs = ((document.querySelectorAll('p'): any): Paragraphs);

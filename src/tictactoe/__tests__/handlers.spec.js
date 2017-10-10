@@ -182,7 +182,7 @@ describe('TicTacToe Handlers', () => {
     };
 
     // function under test
-    const action = playerAction(state, refresh, show)({ target: elem });
+    playerAction(state, refresh, show)({ target: elem });
 
     // pre-timer actions
     const postPlayerBoardState = [

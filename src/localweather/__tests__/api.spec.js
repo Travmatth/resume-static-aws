@@ -2,7 +2,6 @@
 /* eslint-env jest */
 
 import { response, data, url } from './mockdata';
-import { serialize } from 'common/js/utils';
 import { fetchWeather, stripDateIfRedundant } from '../Api';
 import fetchJsonp from 'fetch-jsonp';
 

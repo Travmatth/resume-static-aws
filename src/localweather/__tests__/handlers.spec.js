@@ -1,7 +1,7 @@
 /* @flow */
 /* eslint-env jest */
 
-import { data, url } from './mockdata';
+import { data } from './mockdata';
 import { json } from 'tests/utils';
 
 import {
@@ -98,7 +98,7 @@ describe('Localweather Handlers', () => {
     // Populate cells
     updateTableRows('celsius', tbody, forecasts, show);
 
-    const { icon, temp, day, time, weather, description } = forecasts[0];
+    const { icon, temp, day, time, description } = forecasts[0];
 
     const cell = tbody.children[0];
     const dayElement = cell.children[0].textContent;

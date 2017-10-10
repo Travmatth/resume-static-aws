@@ -2,6 +2,26 @@
 import { MONTH, WEEK } from './constants';
 import ExtendableError from 'extendable-error-class';
 
+const SEC_IN_MINUTES = 60;
+const kSEC_IN_SECONDS = 1000;
+const DEFAULT_TIMEOUT = 5000;
+
+const scaleIntToMinutes = (val: number) =>
+  val * kSEC_IN_SECONDS * SEC_IN_MINUTES;
+
+const shrinkMinutesToInt = (val: number) =>
+  val / kSEC_IN_SECONDS / SEC_IN_MINUTES;
+
+const checkForNegativeZero = (n: number) =>
+  (n === 0 ? ((n = +n) || 1 / n) < 0 ? 0 : n : n);
+
+const convertFahrenheitToCelsius = (temp: number) =>
+  checkForNegativeZero(Math.round((temp - 32) * 5 / 9));
+
+const trim = (str: string) => str.replace(/^\s+|\s+$/g, '');
+const rand = (range: number) => Math.floor(Math.random() * (range + 1));
+const eventType = () => ('ontouchstart' in window ? 'touchstart' : 'click');
+
 const removeChildren = (el: HTMLElement) => {
   while (el.lastChild) {
     el.removeChild(el.lastChild);
@@ -24,30 +44,17 @@ const parseTimeToText = (elapsedTime: number) => {
   return `${minutes}:${seconds}.${milliseconds}`;
 };
 
-const SEC_IN_MINUTES = 60;
-const kSEC_IN_SECONDS = 1000;
-
-const scaleIntToMinutes = (val: number) =>
-  val * kSEC_IN_SECONDS * SEC_IN_MINUTES;
-
-const shrinkMinutesToInt = (val: number) =>
-  val / kSEC_IN_SECONDS / SEC_IN_MINUTES;
-
 const serialize = (url: string, params: ?Object) => {
-  const query = [];
+  const urlParams = Object.keys(params || {});
 
-  if (params !== undefined) {
-    url += '?';
-
-    const encode = encodeURIComponent;
-    for (let property in params) {
-      if (params.hasOwnProperty(property)) {
-        query.push(`${encode(property)}=${encode(params[property])}`);
-      }
-    }
-  }
-
-  return url + query.join('&');
+  return urlParams.length <= 0
+    ? url
+    : `${url}?${urlParams
+        .map(
+          prop =>
+            `${encodeURIComponent(prop)}=${encodeURIComponent(params[prop])}`,
+        )
+        .join('&')}`;
 };
 
 class ResponseError extends ExtendableError {
@@ -59,39 +66,21 @@ class ResponseError extends ExtendableError {
   }
 }
 
-const appendSuffix = (day: number) => {
-  return day === 1
+const appendSuffix = (day: number) =>
+  (day === 1
     ? `${day}st`
-    : day === 2 ? `${day}nd` : day === 3 ? `${day}rd` : `${day}th`;
-};
+    : day === 2 ? `${day}nd` : day === 3 ? `${day}rd` : `${day}th`);
 
-const dateString = (time: Date) => {
-  return (
-    `${WEEK[time.getDay()]}, ` +
-    `${MONTH[time.getMonth()]} ` +
-    `${appendSuffix(time.getDate())}`
-  );
-};
-
-const checkForNegativeZero = (n: number) =>
-  (n === 0 ? ((n = +n) || 1 / n) < 0 ? 0 : n : n);
-
-const convertFahrenheitToCelsius = (temp: number) =>
-  checkForNegativeZero(Math.round((temp - 32) * 5 / 9));
+const dateString = (time: Date) =>
+  `${WEEK[time.getDay()]}, ` +
+  `${MONTH[time.getMonth()]} ` +
+  `${appendSuffix(time.getDate())}`;
 
 const checkHeaders = (response: Response) => {
   if (response.status !== 200)
     throw new ResponseError('fetch failed', response);
   return response.json();
 };
-
-const eventType = () => ('ontouchstart' in window ? 'touchstart' : 'click');
-
-const trim = (str: string) => str.replace(/^\s+|\s+$/g, '');
-
-const rand = (range: number) => Math.floor(Math.random() * (range + 1));
-
-const DEFAULT_TIMEOUT = 5000;
 
 const withTimeout = (promise: Promise<any>, ms: number = DEFAULT_TIMEOUT) =>
   new Promise((resolve, reject) => {

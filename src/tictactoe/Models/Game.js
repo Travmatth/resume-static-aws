@@ -55,7 +55,7 @@ const chooseSide = (game: GameState, desiredSide: $Keys<typeof Side>) =>
   game.player = desiredSide;
 
 const rollback = (game: GameState) => {
-  const { history, turn } = game;
+  const { history } = game;
   if (history.length >= 2) {
     game.history = history.slice(0, -2);
     game.grid = history[history.length - 2];

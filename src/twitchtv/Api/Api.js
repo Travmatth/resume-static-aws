@@ -60,10 +60,7 @@ const classify = async (response: Response): Promise<PossiblyNestedStreams> => {
   }
 };
 
-const fetchProfile = (
-  user: string,
-  fn: () => any = fetch,
-): Promise<PossiblyNestedStreams> =>
+const fetchProfile = (user: string): Promise<PossiblyNestedStreams> =>
   withTimeout(fetch(new Request(STREAMS_URL + user, options)), TWITCHTV_TIMEOUT)
     .then(classify)
     .catch(message => {
