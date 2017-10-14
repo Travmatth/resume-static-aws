@@ -43,7 +43,7 @@ describe('Simon Game Timer', () => {
   it('powerOn should call advance', () => {
     let limit = 4;
     const action = jest.fn(() => limit -= 1);
-    const simon = new Models.simonState();
+    const simon = Models.simonState();
     const clock = { id: null };
 
     Models.tick = jest.fn(() => ({
@@ -78,7 +78,7 @@ describe('Simon Game Timer', () => {
   it('advance should call fire', () => {
     let limit = 5;
     const action = jest.fn(() => limit -= 1);
-    const simon = new Models.simonState();
+    const simon = Models.simonState();
     const clock = { id: null };
 
     Models.tick = jest.fn(() => ({

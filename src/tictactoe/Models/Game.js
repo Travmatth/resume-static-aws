@@ -88,7 +88,6 @@ const takeTurn = (game: GameState, selected: GameGrid) => {
     return;
   }
 
-  const { history, player } = game;
   const remaining = game.grid.filter(cell => cell.player === null).length;
 
   // if spaces available, store history, make move

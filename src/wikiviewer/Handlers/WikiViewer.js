@@ -4,6 +4,10 @@ import type { Searches } from '../wikiviewer.types';
 import { search } from '../Api';
 import { removeChildren } from 'common/js/utils';
 
+const randomHandler = (win: window) => () =>
+  win.location = 'https://en.wikipedia.org/wiki/Special:Random';
+const getQuery = () => document.querySelector('input').value;
+
 const showScene = (content, spinner, error) => scene => {
   let contentHidden, spinnerHidden, errorHidden;
   switch (scene) {
@@ -69,9 +73,6 @@ const updateDOM = (
   node.appendChild(fragment);
 };
 
-const randomHandler = (win: window) => () =>
-  win.location = 'https://en.wikipedia.org/wiki/Special:Random';
-
 const refreshResults = async (
   query: Array<string>,
   node: HTMLElement,
@@ -90,8 +91,6 @@ const refreshResults = async (
 
 const searchHandler = (node: HTMLElement, show: ?string => void) => () =>
   refreshResults(getQuery(), node, show);
-
-const getQuery = () => document.querySelector('input').value;
 
 const keypressHandler = (node: HTMLElement, show: ?string => void) => async (
   event: Event,

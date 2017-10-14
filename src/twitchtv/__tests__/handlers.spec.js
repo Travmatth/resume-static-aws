@@ -165,7 +165,6 @@ describe('TwitchTV Handlers', () => {
 
   it('populateAnchorElement should set element when online', () => {
     const { a } = createTileElement(require('../Assets/tile.html'));
-    const fn = jest.fn();
     const spy = jest.spyOn(a, 'remove');
 
     populateAnchorElement(true, a, 'name', 'url');
