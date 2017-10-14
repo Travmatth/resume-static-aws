@@ -10,7 +10,14 @@ describe('Calculator Model', () => {
     expr = new Calculator();
   });
 
-  it('should be able to enter decimals', () => {
+  it('should be able to enter decimals directly', () => {
+    expr.update('.');
+    expr.update('3');
+    expr.update('3');
+    expect(expr.expression[0]).toBe('.33');
+  });
+
+  it('should be able to enter decimals after integers', () => {
     expr.update('9');
     expr.update('.');
     expr.update('3');
@@ -55,8 +62,6 @@ describe('Calculator Model', () => {
     expr.clear();
     expect(expr.getExpression()).toBe('9 + 9');
   });
-
-  //ARITHMETIC
   it('1 + 1 should work', () => {
     expr.update('1');
     expr.update('+');
@@ -113,7 +118,6 @@ describe('Calculator Model', () => {
     expect(expr.getExpression()).toBe('1');
   });
 
-  //FUNCTIONS
   it('E symbol can be entered', async () => {
     const expected = ['2.718'];
     expr.update('E');

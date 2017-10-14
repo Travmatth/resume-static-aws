@@ -36,7 +36,7 @@ export default class Calculator {
   }
 
   delete(): void {
-    if (this.expression.length > 0) this.expression = [];
+    this.expression = [];
   }
 
   compute(): void {
@@ -45,28 +45,29 @@ export default class Calculator {
     this.expression = [parsed];
   }
 
-  /* updates postfix with the value user enters */
+  // updates postfix with the value user enters
   update(char: string): void {
     const last = this.expression[this.expression.length - 1];
 
     // If user entered number, determine if it should be appended to last
     // number or should it be entered as a discrete number in expression
     if (parseFloat(char) || char === '0') {
-      if (parseFloat(last)) {
-        this.expression.length === 0
-          ? this.expression.push(char)
-          : (this.expression[this.expression.length - 1] = `${last}${char}`);
+      if (last && (last === '.' || parseFloat(last))) {
+        this.expression[this.expression.length - 1] = `${last}${char}`;
       } else {
+        // If string is entered, it can be: function | constant | decimal
+        // Constants are added as a number, functions & decimals as a string
         this.expression.push(char);
       }
-
-      // If string is entered, it can be: function | constant | decimal
-      // Constants are added as a number, functions & decimals as a string
     } else {
       switch (char) {
         case '.':
-          if (this.expression.length > 0)
+          if (this.expression.length > 0) {
             this.expression[this.expression.length - 1] = `${last}.`;
+          } else {
+            this.expression.push('.');
+          }
+
           break;
 
         case 'RAND':
