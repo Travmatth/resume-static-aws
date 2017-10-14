@@ -12,5 +12,10 @@
       "loose": true
     }],
     "stage-3"
-  ]
+  ],
+  "env": {
+    "production": {
+      "plugins": ["transform-remove-console"]
+    }
+  }
 }
