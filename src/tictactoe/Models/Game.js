@@ -10,7 +10,13 @@ import {
 import type { GameGrid, GameState, ScoreCard } from '../tictactoe.types';
 import { Side } from '../tictactoe.types';
 
-const ROW_LENGTH = 3;
+const restart = (game: GameState) => {
+  game.input = true;
+  game.finished = false;
+  game.turn = Side.X;
+  game.history = [];
+  game.grid = createGrid();
+};
 
 const genScoreCard = (): ScoreCard => ({ X: 0, O: 0 });
 
@@ -24,29 +30,18 @@ const game: GameState = {
   score: genScoreCard(),
 };
 
+const ROW_LENGTH = 3;
+const current = (game: GameState) => serialize(game.grid);
+const startPlayerMove = (game: GameState) => game.input = true;
+const endPlayerMove = (game: GameState) => game.input = false;
+const canMove = (game: GameState) => game.player === game.turn;
+const resetScores = (game: GameState) => game.score = genScoreCard();
+
 const getScore = (game: GameState, glyph: $Keys<typeof Side>) =>
   game.score[glyph];
 
 const canTakeSquare = (game: GameState, { x, y }: GameGrid) =>
   (game.grid[x * ROW_LENGTH + y].player === null ? true : false);
-
-const canMove = (game: GameState) => game.player === game.turn;
-
-const player = (game: GameState) => game.player;
-
-const resetScores = (game: GameState) => game.score = genScoreCard();
-
-const current = (game: GameState) => serialize(game.grid);
-
-const restart = (game: GameState) => {
-  game.input = true;
-  game.finished = false;
-  game.turn = Side.X;
-  game.history = [];
-  game.grid = createGrid();
-};
-
-const isOver = (game: GameState) => game.finished;
 
 const markWinner = (game: GameState, winner: $Keys<typeof Side>) =>
   game.score[winner] += 1;
@@ -65,6 +60,27 @@ const rollback = (game: GameState) => {
   }
 };
 
+const performMove = (
+  game: GameState,
+  remaining: number,
+  selected: GameGrid,
+) => {
+  const { grid, history, player } = game;
+  game.history = makeHistory(grid, history);
+  game.grid = move(grid, { ...selected, player });
+
+  // check winning status, update score
+  let hasWon = false;
+  if (playerHasWon(player, game.grid)) {
+    hasWon = true;
+    game.score[player] += 1;
+  }
+
+  // set rest of state
+  game.turn = player === 'X' ? 'O' : 'X';
+  game.finished = remaining <= 1 || hasWon;
+};
+
 const takeTurn = (game: GameState, selected: GameGrid) => {
   // Only move if player has control of board, this shouldn't be reached
   if (!(game.player === game.turn)) {
@@ -73,39 +89,25 @@ const takeTurn = (game: GameState, selected: GameGrid) => {
   }
 
   const { history, player } = game;
-
-  const remaining = game.grid.filter(cell => cell.player === null);
+  const remaining = game.grid.filter(cell => cell.player === null).length;
 
   // if spaces available, store history, make move
-  if (remaining.length > 0) {
-    game.history = makeHistory(game.grid, history);
-    game.grid = move(game.grid, { ...selected, player });
-
-    // check winning status, update score
-    let hasWon = false;
-    if (playerHasWon(player, game.grid)) {
-      hasWon = true;
-      game.score[player] += 1;
-    }
-
-    // set rest of state
-    game.turn = player === 'X' ? 'O' : 'X';
-    game.finished = remaining.length <= 1 || hasWon;
-
-    //Finished turn at this point
-  }
+  if (remaining > 0) performMove(game, remaining, selected);
 };
 
-const startPlayerMove = (game: GameState) => game.input = true;
+const chooseNextMove = (game: GameState) => {
+  const { grid, turn } = game;
+  const next = game.grid.filter(cell => cell.player === null)[0];
+  const { player: _, ...coords } = next;
 
-const endPlayerMove = (game: GameState) => game.input = false;
+  game.grid = move(grid, { ...coords, player: turn });
+};
 
 const simulateMove = (game: GameState) => {
   const { grid, history, turn, finished } = game;
 
   game.history = makeHistory(grid, history);
   game.input = !game.input;
-
   const empty = grid.filter(cell => cell.player === null).length;
 
   // don't make move if game board is full
@@ -114,11 +116,7 @@ const simulateMove = (game: GameState) => {
     return serialize(grid);
   }
 
-  // choose next move
-  const next = grid.filter(cell => cell.player === null)[0];
-  const { player: _, ...coords } = next;
-
-  game.grid = move(grid, { ...coords, player: turn });
+  chooseNextMove(game);
 
   // Check if computer has won
   let hasWon = false;
@@ -145,11 +143,9 @@ export {
   getScore,
   canTakeSquare,
   canMove,
-  player,
   resetScores,
   current,
   restart,
-  isOver,
   markWinner,
   chooseSide,
   rollback,
@@ -159,4 +155,6 @@ export {
   simulateFirstMove,
   simulateMove,
   ROW_LENGTH,
+  chooseNextMove,
+  performMove,
 };

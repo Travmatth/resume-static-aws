@@ -20,11 +20,9 @@ import {
   getScore,
   canTakeSquare,
   canMove,
-  player,
   resetScores,
   current,
   restart,
-  isOver,
   markWinner,
   chooseSide,
   rollback,
@@ -34,6 +32,8 @@ import {
   simulateFirstMove,
   simulateMove,
   ROW_LENGTH,
+  performMove,
+  chooseNextMove,
 } from './Game';
 
 export {
@@ -56,11 +56,9 @@ export {
   getScore,
   canTakeSquare,
   canMove,
-  player,
   resetScores,
   current,
   restart,
-  isOver,
   markWinner,
   chooseSide,
   rollback,
@@ -70,4 +68,6 @@ export {
   simulateFirstMove,
   simulateMove,
   ROW_LENGTH,
+  chooseNextMove,
+  performMove,
 };

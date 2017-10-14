@@ -3,11 +3,9 @@ import {
   getScore,
   canTakeSquare,
   canMove,
-  player,
   resetScores,
   current,
   restart,
-  isOver,
   chooseSide,
   rollback,
   takeTurn,
@@ -40,7 +38,7 @@ const playerAction = (
   show: () => void,
 ) => (e: Event) => {
   // Simulate Player move
-  const turn = player(game);
+  const turn = game.player;
   const action = makeAction(((e.target: any): HTMLGameSquare), turn);
 
   if (!canMove(game) || !canTakeSquare(game, action)) return;
@@ -50,7 +48,7 @@ const playerAction = (
   endPlayerMove(game);
   refresh(current(game));
 
-  if (isOver(game)) {
+  if (game.finished === true) {
     dispatchUpdateScore(turn, getScore(game, turn));
     restart(game);
     show(scenes.score);
@@ -62,7 +60,7 @@ const playerAction = (
     simulateMove(game);
     refresh(current(game));
 
-    if (isOver(game)) {
+    if (game.finished === true) {
       const computer = turn === Side.X ? Side.O : Side.X;
       dispatchUpdateScore(computer, getScore(game, computer));
       restart(game);
@@ -94,7 +92,7 @@ const restartGameHandler = (
   restart(game);
   refresh(blank);
   show(scenes.play);
-  if (player(game) === Side.O) {
+  if (game.player === Side.O) {
     simulateFirstMove(game);
     refresh(current(game));
   }
@@ -119,7 +117,7 @@ const chooseTurnHandler = (
   refresh(blank);
   // swap Game View into DOM
   show(scenes.play);
-  if (player(game) === Side.O) {
+  if (game.player === Side.O) {
     setTimeout(() => {
       simulateFirstMove(game);
       refresh(current(game));

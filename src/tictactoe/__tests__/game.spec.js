@@ -2,25 +2,24 @@
 /* eslint-env jest */
 
 import {
-  game,
-  genScoreCard,
-  getScore,
-  canTakeSquare,
   canMove,
-  player,
-  resetScores,
-  current,
-  restart,
-  isOver,
-  markWinner,
+  canTakeSquare,
   chooseSide,
-  rollback,
-  takeTurn,
-  startPlayerMove,
+  createGrid,
+  current,
   endPlayerMove,
+  game,
+  getScore,
+  genScoreCard,
+  markWinner,
+  performMove,
+  resetScores,
+  restart,
+  rollback,
   simulateFirstMove,
   simulateMove,
-  createGrid,
+  startPlayerMove,
+  takeTurn,
 } from '../Models';
 import type { GameGrid } from '../tictactoe.types';
 import { Side } from '../tictactoe.types';
@@ -91,10 +90,6 @@ describe('TicTacToe Game', () => {
     expect(canMove(state)).toBe(false);
   });
 
-  it('player return the player selection', () => {
-    expect(player(state)).toBe(Side.X);
-  });
-
   it('restart should reset state state', () => {
     state.input = false;
     state.finished = true;
@@ -111,13 +106,8 @@ describe('TicTacToe Game', () => {
     expect(state.grid).toEqual(createGrid());
   });
 
-  it('isOver should return state finished state', () => {
-    expect(isOver(state)).toBe(false);
-  });
-
   it('update should state state', () => {
     state.finished = true;
-    expect(isOver(state)).toBe(true);
   });
 
   it('markWinner should update player score', () => {
@@ -134,6 +124,7 @@ describe('TicTacToe Game', () => {
     chooseSide(state, Side.O);
     takeTurn(state, { x: 0, y: 0, player: null });
     expect(current(state)[0]).toBe('');
+    expect(state.turn).toBe(Side.X);
   });
 
   it('takeTurn should make move, update turn', () => {
@@ -149,14 +140,23 @@ describe('TicTacToe Game', () => {
     );
     takeTurn(state, { x: 0, y: 0, player: null });
     expect(state.history.length).toBe(0);
+    expect(state.turn).toBe(Side.X);
   });
 
   it('takeTurn should detect when winning move just made', () => {
     state.grid[0].player = Side.X;
     state.grid[1].player = Side.X;
     takeTurn(state, { x: 0, y: 2, player: null });
-    expect(isOver(state)).toBe(true);
     expect(state.score[Side.X]).toBe(1);
+    expect(state.turn).toBe(Side.O);
+  });
+
+  it('performMove should set turn state', () => {
+    state.player = 'O';
+    state.grid[0].player = Side.O;
+    state.grid[1].player = Side.O;
+    performMove(state, 0, { x: 0, y: 2, player: null });
+    expect(state.turn).toBe(Side.X);
   });
 
   it('startPlayerMove should set input to true', () => {
@@ -199,7 +199,6 @@ describe('TicTacToe Game', () => {
     state.grid[0].player = Side.X;
     state.grid[1].player = Side.X;
     simulateMove(state);
-    expect(isOver(state)).toBe(true);
     expect(state.score[Side.X]).toBe(1);
   });
 
