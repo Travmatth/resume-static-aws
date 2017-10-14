@@ -12,10 +12,7 @@ import * as Api from '../Api';
 jest.mock('../Api', () => {
   const module = {};
 
-  module.fetchQuote = jest.fn(() => ({
-    quote: 'a',
-    author: 'b',
-  }));
+  module.fetchQuote = jest.fn();
   module.createLink = jest.fn(() => 'stub');
 
   return module;
@@ -26,7 +23,37 @@ describe('RandomQuote Handlers', () => {
     ((document.body: any): HTMLElement).innerHTML = require('../index.pug');
   });
 
+  it('fetchQuoteHandler should handle network request errors', async () => {
+    Api.fetchQuote = Api.fetchQuote.mockImplementationOnce(() =>
+      Promise.reject('error'),
+    );
+
+    const quoteElement = document.createElement('div');
+    const authorElement = document.createElement('div');
+    const tweetLink = document.createElement('div');
+    const showError = jest.fn();
+    const show = jest.fn();
+    const ev = (({}: any): Event);
+
+    await fetchQuoteHandler(
+      quoteElement,
+      authorElement,
+      tweetLink,
+      showError,
+      show,
+    )(ev);
+
+    expect(showError).toHaveBeenCalled();
+  });
+
   it('fetchQuoteHandler should fill in quote, author, and twitter link', async () => {
+    Api.fetchQuote = Api.fetchQuote.mockImplementationOnce(() =>
+      Promise.resolve({
+        quote: 'a',
+        author: 'b',
+      }),
+    );
+
     const quoteElement = document.createElement('div');
     const authorElement = document.createElement('div');
     const tweetLink = document.createElement('div');

@@ -30,6 +30,12 @@ describe('RandomQuote Api', () => {
     }
   });
 
+  it('fetchQuote should provide a default quoteAuthor', async () => {
+    const emptyAuthor = Object.assign({}, exampleResponse, { quoteAuthor: '' });
+    fetch.mockResponseOnce(json(emptyAuthor), { status: 200 });
+    expect(await fetchQuote()).toEqual({ quote, author: 'Author Unknown' });
+  });
+
   it('createLink should create a url given a quote and author', () => {
     const url =
       'https://twitter.com/intent/tweet' +

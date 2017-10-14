@@ -110,7 +110,7 @@ describe('Localweather Handlers', () => {
     expect(cell.classList.contains('hide')).toBe(false);
     expect(day).toBe(dayElement);
     expect(time).toBe(timeElement);
-    expect(temp.celsius).toBe(temperatureElement);
+    expect(temp.fahrenheit).toBe(temperatureElement);
     expect(icon).toBe(imgElement);
     expect(description).toBe(descriptionElement);
     expect(show).toHaveBeenCalledWith('table');
@@ -145,8 +145,15 @@ describe('Localweather Handlers', () => {
     expect(show).toHaveBeenCalledWith('error');
   });
 
-  it('tempScale should return state of radio buttons', () => {
+  it('tempScale should detect fahrenheit state', () => {
     expect(tempScale()).toBe('fahrenheit');
+  });
+
+  it('tempScale should detect celsius state', () => {
+    document.querySelector('.celsius').checked = true;
+    document.querySelector('.fahrenheit').checked = false;
+
+    expect(tempScale()).toBe('celsius');
   });
 
   it('toggleMeasurement should switch temperature scale', async () => {

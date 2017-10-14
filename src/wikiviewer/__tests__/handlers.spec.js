@@ -11,7 +11,6 @@ import {
 } from '../Handlers';
 import * as Api from '../Api';
 import type { Headings, Paragraphs } from '../wikiviewer.types';
-import { json } from 'tests/utils';
 import { wikis } from './wikiviewer.mockdata';
 
 jest.mock('../Api', () => ({ search: jest.fn() }));
@@ -135,6 +134,7 @@ describe('WikiViewer Handlers', () => {
     await refreshResults(query, node, show);
     expect(show.mock.calls).toEqual([['loading'], ['error']]);
   });
+
   it("keyPressHandler should call refreshResults on 'Enter' key", async () => {
     const query = ['foo'];
     const paragraphs = ((document.querySelectorAll('p'): any): Paragraphs);
@@ -146,6 +146,14 @@ describe('WikiViewer Handlers', () => {
     await handler((({ key: 'Enter' }: any): Event));
 
     expect(((document.body: any): HTMLElement).outerHTML).toMatchSnapshot();
+  });
+
+  it("keyPressHandler should only call refreshResults on 'Enter' key", async () => {
+    const node = document.createElement('div');
+    const show = jest.fn();
+    await keypressHandler('', node, show)((({ key: 'Delete' }: any): Event));
+
+    expect(show).not.toHaveBeenCalled();
   });
 
   it('updateDOM should create elements with returned data', async () => {

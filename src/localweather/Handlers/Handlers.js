@@ -15,14 +15,6 @@ const updateTableRows = (
   removeChildren(tbody);
   const fragment = document.createDocumentFragment();
 
-  /* tr.cell.hide
-      td.day
-      td.time
-      td.measurement
-      td.icon
-        img
-      td.weather
-  */
   forecasts.forEach((forecast: Daily) => {
     const tr = document.createElement('tr');
     tr.innerHTML = require('../Assets/tile.html');
@@ -43,9 +35,7 @@ const updateTableRows = (
     measureNode.dataset.celsius = temp.celsius;
     measureNode.dataset.fahrenheit = temp.fahrenheit;
 
-    measureNode.textContent = desired === 'celsius'
-      ? `${temp.celsius}`
-      : `${temp.fahrenheit}`;
+    measureNode.textContent = `${temp.fahrenheit}`;
     measureNode.addEventListener(TOGGLE_EVENT, toggleMeasurement);
 
     fragment.appendChild(tr);

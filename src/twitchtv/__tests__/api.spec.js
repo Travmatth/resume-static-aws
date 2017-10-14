@@ -22,6 +22,18 @@ import {
   agglomerate,
   fetchProfile,
 } from '../Api';
+import * as Utils from 'common/js/utils';
+
+jest.mock('common/js/utils', () => {
+  const module = require.requireActual('common/js/utils');
+  const original = module.withTimeout;
+
+  return Object.assign(module, {
+    originalWithTimeout: original,
+    mockWithTimeout: jest.fn(),
+    withTimeout: jest.fn(),
+  });
+});
 
 jest.mock('../Models', () => ({
   ...require.requireActual('../Models'),
@@ -146,6 +158,7 @@ describe('TwitchTV Api', () => {
   });
 
   it('fetchAllProfiles should return Array<Promise<Stream>>', async () => {
+    Utils.withTimeout = Utils.originalWithTimeout;
     fetch.mockResponses(
       [json(onlineUserStreamCall('freecodecamp')), { status: 200 }],
       [json(onlineUserStreamCall('noobs2ninjas')), { status: 200 }],
@@ -168,15 +181,25 @@ describe('TwitchTV Api', () => {
   });
 
   it('fetchProfile should return null on classify fail', async () => {
+    Utils.withTimeout = Utils.originalWithTimeout;
     fetch.mockResponseOnce(json({}), { status: 404 });
     expect(await fetchProfile('test')).toBe(null);
   });
 
+  it('fetchProfile should return null on withTimeout fail', async () => {
+    Utils.withTimeout = Utils.mockWithTimeout.mockImplementationOnce(() =>
+      Promise.reject('error'),
+    );
+
+    expect(await fetchProfile('test')).toBe(null);
+  });
   it('agglomerate should throw on network fail', () => {
+    Utils.withTimeout = Utils.originalWithTimeout;
     expect(() => agglomerate([null, null])).toThrow();
   });
 
   it('agglomerate should reduce all PossiblyNestedStreams types into Array<Stream>', async () => {
+    Utils.withTimeout = Utils.originalWithTimeout;
     const arr = ((allStreamsCall.streams: any): Array<Stream>);
     const obj = ((onlineUserStreamCall('kraken'): any): Stream);
     const pre = [arr, obj, null];
