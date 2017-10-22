@@ -1,6 +1,6 @@
 /* @flow */
 
-import { trim } from 'common/js/utils';
+import { trim } from 'common/js/Utils';
 import OPEN_WEATHER_APPID from 'protected/localweather.key';
 
 const ENDPOINT = 'http://api.openweathermap.org/data/2.5/forecast';
