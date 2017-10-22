@@ -46,15 +46,12 @@ const parseTimeToText = (elapsedTime: number) => {
 
 const serialize = (url: string, params: ?Object) => {
   const urlParams = Object.keys(params || {});
+  const key = (prop: string) => encodeURIComponent(prop);
+  const value = (prop: string) => encodeURIComponent(params[prop]);
 
   return urlParams.length <= 0
     ? url
-    : `${url}?${urlParams
-        .map(
-          prop =>
-            `${encodeURIComponent(prop)}=${encodeURIComponent(params[prop])}`,
-        )
-        .join('&')}`;
+    : `${url}?${urlParams.map(p => `${key(p)}=${value(p)}`).join('&')}`;
 };
 
 class ResponseError extends ExtendableError {
