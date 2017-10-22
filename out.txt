@@ -1,0 +1,2770 @@
+yarn test v0.17.9
+$ jest --config tests/setup/jest.config.json src/tictactoe/__tests__/game.spec.js
+
+ RUNS  ...game.spec.js
+[K[1A[K[1A
+ RUNS  ...game.spec.js
+[K[1A[K[1A
+ RUNS  ...game.spec.js
+[K[1A[K[1A
+ RUNS  ...game.spec.js
+[K[1A[K[1A
+ RUNS  ...game.spec.js
+[K[1A[K[1A
+ RUNS  ...game.spec.js
+[K[1A[K[1A
+ RUNS  ...game.spec.js
+[K[1A[K[1A  console.log src/tictactoe/Models/Game.js:69
+     9 OX_XO____ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+     considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+       8 OXXXO____ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OXXXOO___ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXXXOOX__ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOOXO_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOOX_O X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 1, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXXXOO_X_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOOOX_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOOXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOO_XO X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXXXOO__X O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOOO_X X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 1, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOOXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOO_OX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+         returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OXXXO_O__ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 1, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXXXOXO__ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOXOO_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOXOOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 2, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 2, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOXO_O X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 1, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXXXO_OX_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOOOX_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOOXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXO_OXO X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXXXO_O_X O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOOO_X X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 1, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOOXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXO_OOX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 1, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOXOOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 1, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 1, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+         returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OXXXO__O_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 1, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXXXOX_O_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOXOO_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOXOOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 2, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 2, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOX_OO X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXXXO_XO_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOOXO_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXO_XOO X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXXXO__OX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOO_OX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXO_OOX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 1, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOXOOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 1, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 1, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+         returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OXXXO___O X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+         isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+       returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+     best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+     considering move:  { x: 1, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+       8 OX_XOX___ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OXOXOX___ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXOXOXX__ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOXXO_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOXXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOXX_O X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 1, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXOXOX_X_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOXOX_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 0, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOX_XO X  low:  -Infinity  high:  -100
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 0, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 0, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXOXOX__X O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOXO_X X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 0, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOX_OX X  low:  -Infinity  high:  -100
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOXXOX O  low:  100  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 0, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 0, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+         returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OX_XOXO__ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXXXOXO__ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOXOO_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOXOOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 2, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 2, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOXO_O X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 1, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OX_XOXOX_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOXOX_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 0, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OX_XOXOXO X  low:  -Infinity  high:  -100
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 0, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 0, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OX_XOXO_X O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOXO_X X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 0, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OX_XOXOOX X  low:  -Infinity  high:  -100
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOXOOX O  low:  100  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 0, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:93
+             breaking early:  { score: 100, move: { x: 0, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 0, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 0, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+         returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OX_XOX_O_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXXXOX_O_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOXOO_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOXOOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 2, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 2, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOX_OO X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OX_XOXXO_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOXXO_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOXXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OX_XOXXOO X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OX_XOX_OX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOX_OX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOXXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OX_XOXOOX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOXOOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 0, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 0, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+         returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OX_XOX__O X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+         isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+       returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+     best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+     considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+       8 OX_XO_X__ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OXOXO_X__ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 1, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXOXOXX__ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOXXO_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOXXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOXX_O X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 1, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXOXO_XX_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOOXX_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOOXXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 2, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 2, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXO_XXO X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXOXO_X_X O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOOX_X X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 1, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOOXXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 2, y: 1, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 2, y: 1, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXO_XOX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 1, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOXXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+         returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OX_XOOX__ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXXXOOX__ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOOXO_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOOX_O X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 1, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OX_XOOXX_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOOXX_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOOXXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 2, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 2, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OX_XOOXXO X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OX_XOOX_X O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOOX_X X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 1, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOOXXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 2, y: 1, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 2, y: 1, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OX_XOOXOX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+         returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OX_XO_XO_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXXXO_XO_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOOXO_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXO_XOO X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 1, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OX_XOXXO_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOXXO_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOXXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OX_XOXXOO X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OX_XO_XOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXO_XOX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 1, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOXXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OX_XOOXOX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+         returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OX_XO_X_O X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+         isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+       returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+     best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+     considering move:  { x: 2, y: 1, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+       8 OX_XO__X_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OXOXO__X_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 1, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXOXOX_X_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOXOX_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 0, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOX_XO X  low:  -Infinity  high:  -100
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 0, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 0, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXOXO_XX_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOOXX_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOOXXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 2, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 2, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXO_XXO X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXOXO__XX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOO_XX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOOXXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 2, y: 0, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 2, y: 0, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXO_OXX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 0, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 0, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+         returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OX_XOO_X_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXXXOO_X_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOOOX_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOOXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOO_XO X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OX_XOOXX_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOOXX_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOOXXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 2, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 2, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OX_XOOXXO X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OX_XOO_XX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOO_XX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOOXXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 2, y: 0, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 2, y: 0, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OX_XOOOXX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOOXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+         returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OX_XO_OX_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXXXO_OX_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOOOX_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOOXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXO_OXO X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 1, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OX_XOXOX_ O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOXOX_ X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 0, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OX_XOXOXO X  low:  -Infinity  high:  -100
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 0, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 0, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OX_XO_OXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXO_OXX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 0, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OX_XOOOXX X  low:  -Infinity  high:  -100
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOOXX O  low:  100  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 0, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 0, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+         returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 2, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OX_XO__XO X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+         isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+       returning:  { score: 100, move: { x: 2, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+     best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+     considering move:  { x: 2, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+       8 OX_XO___X O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OXOXO___X X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 1, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXOXOX__X O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOXO_X X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 0, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOX_OX X  low:  -Infinity  high:  -100
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOXXOX O  low:  100  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 0, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 0, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXOXO_X_X O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOOX_X X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 1, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOOXXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 2, y: 1, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 2, y: 1, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXO_XOX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 1, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOXXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 1, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXOXO__XX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOO_XX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOOXXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 2, y: 0, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 2, y: 0, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXO_OXX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 2, y: 0, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 2, y: 0, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+         returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OX_XOO__X X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXXXOO__X O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOOO_X X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 1, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOOXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOO_OX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OX_XOOX_X O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOOX_X X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 1, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOOXXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 2, y: 1, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 2, y: 1, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OX_XOOXOX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 1, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OX_XOO_XX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOO_XX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOOXXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 2, y: 0, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 2, y: 0, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OX_XOOOXX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOOXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+         returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OX_XO_O_X X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXXXO_O_X O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOOO_X X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 1, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOOXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXO_OOX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 1, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOXOOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 1, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 1, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 1, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OX_XOXO_X O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOXO_X X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 0, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OX_XOXOOX X  low:  -Infinity  high:  -100
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOXOOX O  low:  100  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 0, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:93
+             breaking early:  { score: 100, move: { x: 0, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 0, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 0, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 1, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OX_XO_OXX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXO_OXX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+             isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 0, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OX_XOOOXX X  low:  -Infinity  high:  -100
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOOXX O  low:  100  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: 100, move: { x: 0, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: 100, move: { x: 0, y: 2, player: 'O' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+         returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+       considering move:  { x: 2, y: 1, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+         7 OX_XO__OX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OXXXO__OX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXOO_OX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXXXO_OOX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 1, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOXOOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 1, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 1, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 1, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OX_XOX_OX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXOX_OX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOXXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 2, y: 0, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OX_XOXOOX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOXOOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: -100 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: 100, move: { x: 0, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: 100, move: { x: 0, y: 2, player: 'X' } }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+         considering move:  { x: 2, y: 0, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+           6 OX_XO_XOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 0, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OXOXO_XOX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 1, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXOXOXXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:81
+           considering move:  { x: 1, y: 2, player: 'O' }
+
+  console.log src/tictactoe/Models/Game.js:69
+             5 OX_XOOXOX X  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:81
+             considering move:  { x: 0, y: 2, player: 'X' }
+
+  console.log src/tictactoe/Models/Game.js:69
+               4 OXXXOOXOX O  low:  -Infinity  high:  Infinity
+
+  console.log src/tictactoe/Models/Game.js:72
+               isTerminal:  { move: null, score: 0 }
+
+  console.log src/tictactoe/Models/Game.js:91
+             best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+             returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+           best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+           returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+         best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+         returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+       best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+       returning:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:91
+     best move:  { score: null, move: null }
+
+  console.log src/tictactoe/Models/Game.js:98
+     returning:  { score: null, move: null }
+

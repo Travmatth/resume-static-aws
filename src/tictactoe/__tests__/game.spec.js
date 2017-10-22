@@ -20,7 +20,6 @@ import {
   simulateMove,
   startPlayerMove,
   takeTurn,
-  heuristicValue,
   minimax,
 } from '../Models';
 import type { GameGrid } from '../tictactoe.types';
@@ -211,12 +210,6 @@ describe('TicTacToe Game', () => {
     simulateMove(state);
     expect(state.finished).toBe(true);
   });
-
-  //it.skip('simulateMove should move on next available state square', () => {
-  //simulateMove(state);
-  //expect(current(state)[0]).toBe(Side.X);
-  //expect(state.turn).toBe(Side.O);
-  //});
 
   it('simulateMove should detect if computer has won', () => {
     state.player = Side.O;

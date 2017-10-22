@@ -65,7 +65,7 @@ const minimax = (
 
   const best = { score: 0, move: null };
   const opponent = swapPlayer(player);
-  const computerTurn = player != game.player;
+  const computerTurn = player !== game.player;
 
   if (computerTurn) {
     let score = -Infinity;
@@ -101,8 +101,6 @@ const minimax = (
 
     return best;
   }
-
-  return best;
 };
 
 const getScore = (game: GameState, glyph: $Keys<typeof Side>) =>
@@ -163,7 +161,7 @@ const takeTurn = (game: GameState, selected: GameGrid) => {
 };
 
 const chooseNextMove = (game: GameState) => {
-  const { grid, player, difficulty } = game;
+  const { grid, player } = game;
   const { move: play } = minimax(grid, 9, swapPlayer(player));
 
   game.grid = move(grid, play);

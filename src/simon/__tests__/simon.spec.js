@@ -9,7 +9,6 @@ import {
   randomColor,
   resetSimon,
   setInput,
-  playerCanMove,
   hasWonGame,
   hasWonRound,
   showSequenceOver,
