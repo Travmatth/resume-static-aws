@@ -8,7 +8,6 @@
   "moduleNameMapper": {
     "\\.(key|wav|mp3|png)$": "<rootDir>/tests/mocks/fileMock.js",
     "^protected(.*)$": "<rootDir>/tests/mocks/fileMock.js",
-    "^common(.*)$": "<rootDir>/src/common$1.js",
     "^assets(.*)$": "<rootDir>/assets$1",
     "^tests(.*)$": "<rootDir>/tests$1"
   },
