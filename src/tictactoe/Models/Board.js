@@ -79,6 +79,37 @@ const descending: WinningBoard = [
   [false, false, true],
 ];
 
+const possibleWins = (grid: GameBoard, player: $Keys<typeof Side>) => {
+  if (playerHasWon(player, grid)) {
+    //console.log('returning score: ', 100, ' for player: ', player);
+    return 100;
+  }
+
+  let score = 0;
+  const opponent = swapPlayer(player);
+
+  [
+    // Columns
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    // Rows
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    // Diagonals
+    [0, 4, 8],
+    [2, 4, 6],
+  ].forEach(combination => {
+    const couldWin = combination.some(i => grid[i].player === player);
+    const cantLose = combination.every(i => grid[i].player != opponent);
+
+    if (couldWin && cantLose) score += 1;
+  });
+
+  return score;
+};
+
 const checkDiagonal = (
   grid: Array<GameGrid>,
   winningBoard: WinningBoard,
@@ -111,6 +142,16 @@ const playerHasWon = (player: $Keys<typeof Side>, grid: Array<GameGrid>) => {
   );
 };
 
+const swapPlayer = (player: $Keys<typeof Side>) =>
+  (player === Side.X ? Side.O : Side.X);
+
+const isTerminal = (grid: GameBoard, player: $Keys<typeof Side>) => {
+  const remaining = grid.filter(cell => cell.player === null).length;
+  const playerWon = playerHasWon(player, grid);
+  const opponentWon = playerHasWon(swapPlayer(player), grid);
+  return playerWon || opponentWon || remaining <= 0;
+};
+
 export {
   ascending,
   descending,
@@ -124,4 +165,7 @@ export {
   playerHasWonDiagonal,
   checkDiagonal,
   playerHasWon,
+  swapPlayer,
+  possibleWins,
+  isTerminal,
 };

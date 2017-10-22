@@ -6,8 +6,16 @@ import {
   createGrid,
   playerHasWon,
   serialize,
+  isTerminal,
+  swapPlayer,
+  possibleWins,
 } from './Board';
-import type { GameGrid, GameState, ScoreCard } from '../tictactoe.types';
+import type {
+  GameBoard,
+  GameGrid,
+  GameState,
+  ScoreCard,
+} from '../tictactoe.types';
 import { Side } from '../tictactoe.types';
 
 const restart = (game: GameState) => {
@@ -26,6 +34,7 @@ const game: GameState = {
   turn: Side.X,
   player: Side.X,
   finished: false,
+  difficulty: 'easy',
   grid: createGrid(),
   score: genScoreCard(),
 };
@@ -36,6 +45,65 @@ const startPlayerMove = (game: GameState) => game.input = true;
 const endPlayerMove = (game: GameState) => game.input = false;
 const canMove = (game: GameState) => game.player === game.turn;
 const resetScores = (game: GameState) => game.score = genScoreCard();
+
+const heuristicValue = (grid: GameBoard, player: $Keys<typeof Side>) => {
+  const wins = possibleWins(grid, player);
+  const losses = possibleWins(grid, swapPlayer(player));
+  return wins - losses;
+};
+
+const minimax = (
+  grid: GameBoard,
+  depth: number = 5,
+  player: $Keys<typeof Side>,
+  low: number = -Infinity,
+  high: number = Infinity,
+) => {
+  if (depth === 0 || isTerminal(grid, player)) {
+    return { move: null, score: heuristicValue(grid, player) };
+  }
+
+  const best = { score: 0, move: null };
+  const opponent = swapPlayer(player);
+  const computerTurn = player != game.player;
+
+  if (computerTurn) {
+    let score = -Infinity;
+    for (let cell of grid.filter(c => c.player === null)) {
+      const m = { ...cell, player };
+      const clone = move(grid, m);
+      const { score: child } = minimax(clone, depth - 1, opponent, low, high);
+
+      if (child >= score) {
+        score = child;
+        best.move = m;
+      }
+
+      low = Math.max(low, score);
+      if (score >= high) return best;
+    }
+
+    return best;
+  } else {
+    let score = Infinity;
+    for (let cell of grid.filter(c => c.player === null)) {
+      const m = { ...cell, player };
+      const clone = move(grid, m);
+      const { score: child } = minimax(clone, depth - 1, opponent, low, high);
+      if (child <= score) {
+        score = child;
+        best.move = m;
+      }
+
+      high = Math.min(high, score);
+      if (low >= score) return best;
+    }
+
+    return best;
+  }
+
+  return best;
+};
 
 const getScore = (game: GameState, glyph: $Keys<typeof Side>) =>
   game.score[glyph];
@@ -84,7 +152,7 @@ const performMove = (
 const takeTurn = (game: GameState, selected: GameGrid) => {
   // Only move if player has control of board, this shouldn't be reached
   if (!(game.player === game.turn)) {
-    console.error("takeTurn shouldn't be execute while player isn't moving");
+    console.error('takeTurn should not execute while player is not moving');
     return;
   }
 
@@ -95,11 +163,10 @@ const takeTurn = (game: GameState, selected: GameGrid) => {
 };
 
 const chooseNextMove = (game: GameState) => {
-  const { grid, turn } = game;
-  const next = game.grid.filter(cell => cell.player === null)[0];
-  const { player: _, ...coords } = next;
+  const { grid, player, difficulty } = game;
+  const { move: play } = minimax(grid, 9, swapPlayer(player));
 
-  game.grid = move(grid, { ...coords, player: turn });
+  game.grid = move(grid, play);
 };
 
 const simulateMove = (game: GameState) => {
@@ -156,4 +223,6 @@ export {
   ROW_LENGTH,
   chooseNextMove,
   performMove,
+  heuristicValue,
+  minimax,
 };

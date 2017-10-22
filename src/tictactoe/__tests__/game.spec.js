@@ -20,6 +20,8 @@ import {
   simulateMove,
   startPlayerMove,
   takeTurn,
+  heuristicValue,
+  minimax,
 } from '../Models';
 import type { GameGrid } from '../tictactoe.types';
 import { Side } from '../tictactoe.types';
@@ -34,6 +36,27 @@ describe('TicTacToe Game', () => {
       { grid: createGrid() },
       { score: genScoreCard() },
     );
+  });
+
+  it('minimax should detect possible win', () => {
+    const possibleWin = ['X', 'O', 'X', 'X', 'O', 'O', null, null, null];
+
+    state.grid.forEach((cell, i) => cell.player = possibleWin[i]);
+    state.player = Side.O;
+    state.turn = Side.X;
+    const next = minimax(state.grid, 9, 'X');
+    expect(next).toEqual({ score: 0, move: { x: 2, y: 0, player: 'X' } });
+  });
+
+  it('minimax should detect possible loss', () => {
+    const possibleLoss = ['O', 'X', 'X', 'X', 'O', 'O', null, null, null];
+
+    state.grid.forEach((cell, i) => cell.player = possibleLoss[i]);
+    state.player = Side.O;
+    state.turn = Side.X;
+    const next = minimax(state.grid, 9, 'X');
+    //console.log('result: ', next);
+    expect(next).toEqual({ score: 0, move: { x: 2, y: 2, player: 'X' } });
   });
 
   it('resetScores should set X and O scores to 0', () => {
@@ -181,7 +204,7 @@ describe('TicTacToe Game', () => {
     spy.mockRestore();
   });
 
-  it("simulateMove shouldn't move if state board is full", () => {
+  it('simulateMove should not move if state board is full', () => {
     state.grid.map(
       (c, i) => (i % 2 === 0 ? (c.player = Side.X) : (c.player = Side.O)),
     );
@@ -189,13 +212,14 @@ describe('TicTacToe Game', () => {
     expect(state.finished).toBe(true);
   });
 
-  it('simulateMove should move on next available state square', () => {
-    simulateMove(state);
-    expect(current(state)[0]).toBe(Side.X);
-    expect(state.turn).toBe(Side.O);
-  });
+  //it.skip('simulateMove should move on next available state square', () => {
+  //simulateMove(state);
+  //expect(current(state)[0]).toBe(Side.X);
+  //expect(state.turn).toBe(Side.O);
+  //});
 
   it('simulateMove should detect if computer has won', () => {
+    state.player = Side.O;
     state.grid[0].player = Side.X;
     state.grid[1].player = Side.X;
     simulateMove(state);

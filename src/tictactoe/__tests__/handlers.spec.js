@@ -210,9 +210,9 @@ describe('TicTacToe Handlers', () => {
       Side.O,
       Side.X,
       Side.X,
+      '',
+      '',
       Side.O,
-      '',
-      '',
     ];
 
     jest.runTimersToTime(500);
@@ -398,7 +398,7 @@ describe('TicTacToe Handlers', () => {
     jest.runTimersToTime(500);
 
     expect(refresh).toHaveBeenCalledTimes(2);
-    expect(game.grid[0].player).toBe(Side.X);
+    expect(game.grid.filter(c => c.player != null)[0].player).toBe(Side.X);
     expect(game.input).toBe(true);
   });
 

@@ -12,6 +12,9 @@ import {
   playerHasWonDiagonal,
   checkDiagonal,
   playerHasWon,
+  swapPlayer,
+  possibleWins,
+  isTerminal,
 } from './Board';
 
 import {
@@ -34,6 +37,8 @@ import {
   ROW_LENGTH,
   performMove,
   chooseNextMove,
+  heuristicValue,
+  minimax,
 } from './Game';
 
 export {
@@ -50,6 +55,9 @@ export {
   playerHasWonDiagonal,
   checkDiagonal,
   playerHasWon,
+  swapPlayer,
+  possibleWins,
+  isTerminal,
   // Game
   game,
   genScoreCard,
@@ -70,4 +78,6 @@ export {
   ROW_LENGTH,
   chooseNextMove,
   performMove,
+  heuristicValue,
+  minimax,
 };

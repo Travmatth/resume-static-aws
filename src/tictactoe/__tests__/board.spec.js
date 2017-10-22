@@ -13,8 +13,18 @@ import {
   playerHasWonDiagonal,
   checkDiagonal,
   playerHasWon,
+  swapPlayer,
+  possibleWins,
+  isTerminal,
 } from '../Models';
 import type { GameGrid, GameBoard } from '../tictactoe.types';
+
+const setGrid = (grid: GameBoard, board: Array<null | 'X' | 'O'>) => {
+  return grid.map((c, i) => {
+    c.player = board[i];
+    return c;
+  });
+};
 
 describe('TicTacToe Board', () => {
   let grid: GameBoard;
@@ -131,5 +141,49 @@ describe('TicTacToe Board', () => {
     grid[6].player = 'X';
 
     expect(playerHasWon('X', grid)).toBe(true);
+  });
+
+  it('possibleWins should return 0 for empty board', () => {
+    const board = [null, null, null, null, null, null, null, null, null];
+    expect(possibleWins(setGrid(grid, board), 'X')).toBe(0);
+  });
+
+  it('possibleWins should return 100 for winning board', () => {
+    const board = ['X', 'X', 'X', null, null, null, null, null, null];
+    expect(possibleWins(setGrid(grid, board), 'X')).toBe(100);
+  });
+
+  it('possibleWins should return 4 for centered piece', () => {
+    const board = [null, null, null, null, 'X', null, null, null, null];
+    expect(possibleWins(setGrid(grid, board), 'X')).toBe(4);
+  });
+
+  it('possibleWins should not count opponent occupied lines', () => {
+    const board = [null, null, null, null, 'X', 'O', null, null, null];
+    expect(possibleWins(setGrid(grid, board), 'X')).toBe(3);
+  });
+
+  it('possibleWins should count multiple lines', () => {
+    const board = [null, null, 'X', null, 'X', 'O', null, null, null];
+    expect(possibleWins(setGrid(grid, board), 'X')).toBe(4);
+  });
+
+  it('swapPlayer should do so', () => {
+    expect(swapPlayer('X')).toBe('O');
+  });
+
+  it('isTerminal should detect full boards', () => {
+    const board = ['X', 'O', 'X', 'O', 'X', 'O', 'O', 'X', 'O'];
+    expect(isTerminal(setGrid(grid, board), 'X')).toBe(true);
+  });
+
+  it('isTerminal should detect player wins', () => {
+    const board = ['X', 'O', 'X', 'O', 'X', 'O', 'X', null, null];
+    expect(isTerminal(setGrid(grid, board), 'X')).toBe(true);
+  });
+
+  it('isTerminal should detect opponent wins', () => {
+    const board = ['X', 'O', 'X', 'O', 'O', 'O', null, null, null];
+    expect(isTerminal(setGrid(grid, board), 'X')).toBe(true);
   });
 });
