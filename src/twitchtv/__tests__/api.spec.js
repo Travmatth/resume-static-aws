@@ -25,7 +25,7 @@ import {
 import * as Utils from 'common/js/Utils';
 
 jest.mock('common/js/Utils', () => {
-  const module = require.requireActual('common/js/utils');
+  const module = require.requireActual('common/js/Utils');
   const original = module.withTimeout;
 
   return Object.assign(module, {

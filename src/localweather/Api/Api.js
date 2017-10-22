@@ -12,7 +12,7 @@ import {
   convertFahrenheitToCelsius,
 } from 'common/js/Utils';
 import fetchJsonp from 'fetch-jsonp';
-import { checkHeaders } from 'common/js/utils';
+import { checkHeaders } from 'common/js/Utils';
 import { ENDPOINT, openweatherApiParams } from '../Models';
 
 const fetchOpts = {
