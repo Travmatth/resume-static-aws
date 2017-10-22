@@ -176,7 +176,6 @@ describe('TwitchTV Handlers', () => {
 
   it('populateAnchorElement should set element when offline', () => {
     const { a } = createTileElement(require('../Assets/tile.html'));
-    const fn = jest.fn();
     const spy = jest.spyOn(a, 'remove');
 
     populateAnchorElement(true, a);
@@ -186,7 +185,6 @@ describe('TwitchTV Handlers', () => {
 
   it('populateImageElement should set element', () => {
     const { img } = createTileElement(require('../Assets/tile.html'));
-    const fn = jest.fn();
 
     populateImageElement(img, 'default', {
       profile_banner: null,
