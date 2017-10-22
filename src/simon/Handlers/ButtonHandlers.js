@@ -3,9 +3,7 @@
 import type { SoundManager } from '../Models';
 import {
   toggleState,
-  hasPower,
   resetSimon,
-  playerCanMove,
   setInput,
   recordPlayerAttempt,
   toggleStrict,
@@ -35,14 +33,14 @@ const startHandler = (
   clock: { id: null | number },
   sounds: SoundManager,
 ) => (event: Event) =>
-  hasPower(simon) && powerOn(simon, buttons, timer, update, clock, sounds);
+  simon.power && powerOn(simon, buttons, timer, update, clock, sounds);
 
 const powerHandler = (
   simon: SimonState,
   update: (number | string) => string,
   clock: { id: null | number },
 ) => (event: Event) => {
-  if (!hasPower(simon)) {
+  if (!simon.power) {
     resetSimon(simon);
     update(`${simon.score}`);
   } else {
@@ -68,7 +66,7 @@ const clickHandler = (
   clock: { id: null | number },
   sounds: SoundManager,
 ) => (_: Event) => {
-  if (!playerCanMove(simon)) {
+  if (!simon.input) {
     console.error('Attempting move while player input disabled');
     return false;
   }

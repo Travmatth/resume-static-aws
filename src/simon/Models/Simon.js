@@ -23,12 +23,21 @@ const simonState = () => ({
   strict: false,
 });
 
+const hasWonRound = ({ attemptStep, round }: SimonState) =>
+  attemptStep >= round.length;
+const showSequenceOver = ({ gameplayStep, round }: SimonState) =>
+  gameplayStep >= round.length - 1;
+const currentGameplayColor = ({ round, gameplayStep }: SimonState) =>
+  round[gameplayStep];
+const hasFailedRound = ({ failure, attemptStep, gameplayStep }: SimonState) =>
+  attemptStep < gameplayStep || failure;
+
+const nextGameplayColor = (state: SimonState) => state.gameplayStep += 1;
+const resetAttemptStep = (state: SimonState) => state.attemptStep = 0;
+const setInput = (state: SimonState, input: boolean) => state.input = input;
+const hasWonGame = ({ score }: SimonState) => score >= TOTAL_ROUNDS;
+const incrementScore = (state: SimonState) => state.score += 1;
 const toggleState = (state: SimonState) => state.power = !state.power;
-
-const hasPower = ({ power }: SimonState) => power;
-
-const isStrict = ({ strict }: SimonState) => strict;
-
 const toggleStrict = (state: SimonState) => state.strict = !state.strict;
 
 const randomColor = () => {
@@ -65,24 +74,6 @@ const nextRound = (state: SimonState) =>
     gameplayStep: 0,
   });
 
-const resetAttemptStep = (state: SimonState) => state.attemptStep = 0;
-
-const setInput = (state: SimonState, input: boolean) => state.input = input;
-
-const playerCanMove = ({ input }: SimonState) => input;
-
-const hasWonGame = ({ score }: SimonState) => score >= TOTAL_ROUNDS;
-
-const hasWonRound = ({ attemptStep, round }: SimonState) =>
-  attemptStep >= round.length;
-
-const showSequenceOver = ({ gameplayStep, round }: SimonState) =>
-  gameplayStep >= round.length - 1;
-
-const getScore = ({ score }: SimonState) => score;
-
-const incrementScore = (state: SimonState) => state.score += 1;
-
 const recordPlayerAttempt = (state: SimonState, color: ColorKeys) => {
   const { strict } = state;
   if (state.round[state.attemptStep] === color) {
@@ -103,14 +94,6 @@ const recordPlayerAttempt = (state: SimonState, color: ColorKeys) => {
   }
 };
 
-const currentGameplayColor = ({ round, gameplayStep }: SimonState) =>
-  round[gameplayStep];
-
-const nextGameplayColor = (state: SimonState) => state.gameplayStep += 1;
-
-const hasFailedRound = ({ failure, attemptStep, gameplayStep }: SimonState) =>
-  attemptStep < gameplayStep || failure;
-
 export {
   TOTAL_ROUNDS,
   COLORS,
@@ -118,18 +101,14 @@ export {
   addGameplayColor,
   resetSimon,
   setInput,
-  playerCanMove,
   hasWonGame,
   hasWonRound,
   showSequenceOver,
-  getScore,
   recordPlayerAttempt,
   currentGameplayColor,
   nextGameplayColor,
   hasFailedRound,
   toggleState,
-  hasPower,
-  isStrict,
   toggleStrict,
   randomColor,
   nextRound,

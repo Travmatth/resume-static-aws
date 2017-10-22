@@ -5,8 +5,6 @@ import {
   COLORS,
   simonState,
   toggleState,
-  hasPower,
-  isStrict,
   toggleStrict,
   randomColor,
   resetSimon,
@@ -15,7 +13,6 @@ import {
   hasWonGame,
   hasWonRound,
   showSequenceOver,
-  getScore,
   recordPlayerAttempt,
   currentGameplayColor,
   nextGameplayColor,
@@ -54,23 +51,16 @@ describe('Simon Game Model', () => {
   it('addGameplayColor should add random color to round', () => {
     expect(addGameplayColor(state).round.length).toBe(1);
   });
+
   it('toggleState should toggle simon power', () => {
     toggleState(state);
 
     expect(state.power).toBe(true);
   });
 
-  it('hasPower should return state of simon power', () => {
-    expect(hasPower(state)).toBe(false);
-  });
-
-  it('isStrict should return state of simon strictness', () => {
-    expect(isStrict(state)).toBe(false);
-  });
-
   it('toggleStrict should flip the strictness of the simon game', () => {
     toggleStrict(state);
-    expect(isStrict(state)).toBe(true);
+    expect(state.strict).toBe(true);
   });
 
   it('randomColor should return a color', () => {
@@ -91,11 +81,7 @@ describe('Simon Game Model', () => {
 
   it('setInput should set input with parameter', () => {
     setInput(state, true);
-    expect(playerCanMove(state)).toBe(true);
-  });
-
-  it('playerCanMove should return state of player move', () => {
-    expect(playerCanMove(state)).toBe(false);
+    expect(state.input).toBe(true);
   });
 
   it('hasWonGame should return false is score < 20', () => {
@@ -117,10 +103,6 @@ describe('Simon Game Model', () => {
     state.attemptStep = 1;
     state.round = ['red'];
     expect(hasWonRound(state)).toBe(true);
-  });
-
-  it('getScore should return score', () => {
-    expect(getScore(state)).toBe(0);
   });
 
   it('showSequenceOver should return false if step < length', () => {

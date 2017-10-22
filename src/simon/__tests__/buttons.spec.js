@@ -17,17 +17,13 @@ import {
 
 jest.mock('../Models', () => ({
   ...require.requireActual('../Models'),
-  getScore: jest.fn(),
   resetSimon: jest.fn(),
   toggleState: jest.fn(),
-  hasPower: jest.fn(),
-  playerCanMove: jest.fn(),
   setInput: jest.fn(),
   recordPlayerAttempt: jest.fn(),
   hasFailedRound: jest.fn(),
   hasWonRound: jest.fn(),
   hasWonGame: jest.fn(),
-  isStrict: jest.fn(),
   toggleStrict: jest.fn(),
 }));
 
@@ -84,11 +80,8 @@ describe('Simon Handlers', () => {
   });
 
   it("powerHandler should start game if simon doesn't have power", () => {
-    Simon.hasPower = Simon.hasPower.mockImplementationOnce(() => false);
-
     powerHandler(simon, update, clock)(ev);
 
-    expect(Simon.hasPower).toHaveBeenCalled();
     expect(Simon.resetSimon).toHaveBeenCalled();
     expect(update).toHaveBeenCalled();
 
@@ -97,8 +90,7 @@ describe('Simon Handlers', () => {
   });
 
   it('powerHandler should end game if simon has power', () => {
-    //$FlowIgnore
-    Simon.hasPower = Simon.hasPower.mockImplementationOnce(() => true);
+    simon.power = true;
 
     powerHandler(simon, update, clock)(ev);
 
@@ -122,9 +114,7 @@ describe('Simon Handlers', () => {
   });
 
   it('clickHandler should do nothing if player cannot move', () => {
-    Simon.playerCanMove = Simon.playerCanMove.mockImplementationOnce(
-      () => false,
-    );
+    Simon.input = false;
 
     clickHandler(color, buttons, update, simon, timer, clock, sounds)(ev);
 
@@ -132,9 +122,7 @@ describe('Simon Handlers', () => {
   });
 
   it('clickHandler should call setInput on correct move', () => {
-    Simon.playerCanMove = Simon.playerCanMove.mockImplementationOnce(
-      () => true,
-    );
+    simon.input = true;
     Simon.hasFailedRound = Simon.hasFailedRound.mockImplementationOnce(
       () => false,
     );
@@ -150,10 +138,7 @@ describe('Simon Handlers', () => {
 
   it('clickHandler should manage player move', () => {
     //$FlowIgnore
-    Simon.playerCanMove = Simon.playerCanMove.mockImplementationOnce(
-      () => true,
-    );
-
+    simon.input = true;
     clickHandler(color, buttons, update, simon, timer, clock, sounds)(ev);
 
     expect(Simon.setInput).toHaveBeenCalledTimes(1);
@@ -168,13 +153,12 @@ describe('Simon Handlers', () => {
   });
 
   it('startHandler should call powerOn if simon has power', () => {
-    Simon.hasPower = Simon.hasPower.mockImplementationOnce(() => true);
+    simon.power = true;
     startHandler(update, buttons, simon, timer, clock, sounds)();
     expect(TimerHandlers.powerOn).toHaveBeenCalled();
   });
 
   it('startHandler should not call powerOn if simon has no  power', () => {
-    Simon.hasPower = Simon.hasPower.mockImplementationOnce(() => false);
     startHandler(update, buttons, simon, timer, clock, sounds)();
     expect(TimerHandlers.powerOn).not.toHaveBeenCalled();
   });

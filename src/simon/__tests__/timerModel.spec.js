@@ -30,7 +30,6 @@ jest.mock('../Models/Simon', () => ({
   nextRound: jest.fn(),
   resetAttemptStep: jest.fn(),
   hasFailedRound: jest.fn(),
-  isStrict: jest.fn(),
   restartRound: jest.fn(),
 }));
 
@@ -260,7 +259,6 @@ describe('Simon Game Timer Model', () => {
     Simon.hasFailedRound = Simon.hasFailedRound.mockImplementationOnce(
       () => true,
     );
-    Simon.isStrict = Simon.isStrict.mockImplementationOnce(() => false);
 
     const { next, round, action } = tick(state, simon, sounds, buttons);
     action();
@@ -278,7 +276,7 @@ describe('Simon Game Timer Model', () => {
     Simon.hasFailedRound = Simon.hasFailedRound.mockImplementationOnce(
       () => true,
     );
-    Simon.isStrict = Simon.isStrict.mockImplementationOnce(() => true);
+    simon.strict = true;
 
     const { next, round, action } = tick(state, simon, sounds, buttons);
     action();

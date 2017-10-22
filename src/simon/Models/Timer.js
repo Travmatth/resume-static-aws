@@ -11,7 +11,6 @@ import {
   hasWonRound,
   hasWonGame,
   resetAttemptStep,
-  isStrict,
   restartRound,
 } from './Simon';
 import type { TimerState, SimonState } from '../simon.types';
@@ -164,7 +163,7 @@ const tick = (
           // If failure
           } else if (hasFailedRound(simon)) {
             // During strict game, should restart
-            if (isStrict(simon)) {
+            if (simon.strict) {
               resetSimon(simon);
               sounds.play('lost');
             // During regular game, should restart round
