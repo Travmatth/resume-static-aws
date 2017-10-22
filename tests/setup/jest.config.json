@@ -8,8 +8,9 @@
   "moduleNameMapper": {
     "\\.(key|wav|mp3|png)$": "<rootDir>/tests/mocks/fileMock.js",
     "^protected(.*)$": "<rootDir>/tests/mocks/fileMock.js",
-    "^tests(.*)$": "<rootDir>/tests$1",
-    "^assets(.*)$": "<rootDir>/assets$1"
+    "^common(.*)$": "<rootDir>/src/common$1",
+    "^assets(.*)$": "<rootDir>/assets$1",
+    "^tests(.*)$": "<rootDir>/tests$1"
   },
   "transform": {
     "^.+\\.js?$": "babel-jest",
