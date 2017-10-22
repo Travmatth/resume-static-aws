@@ -1,5 +1,5 @@
 /* @flow */
-import { MONTH, WEEK } from './constants';
+import { MONTH, WEEK } from './Constants';
 import ExtendableError from 'extendable-error-class';
 
 const SEC_IN_MINUTES = 60;

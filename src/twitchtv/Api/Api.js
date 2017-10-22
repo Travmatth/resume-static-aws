@@ -9,7 +9,7 @@ import type {
   PossibleStream,
 } from '../twitchtv.types';
 import TWITCH_TV_API_KEY from 'protected/twitch.key';
-import { trim, withTimeout } from 'common/js/utils';
+import { trim, withTimeout } from 'common/js/Utils';
 import { STREAMS_URL, USERS_URL, USERS, extractUserName } from '../Models';
 
 const TWITCHTV_TIMEOUT = 5000;

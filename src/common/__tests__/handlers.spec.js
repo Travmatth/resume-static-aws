@@ -2,7 +2,7 @@
 /* eslint-env jest */
 
 import { dispatch } from 'tests/utils';
-import { registerToggle } from '../js/handlers';
+import { registerToggle } from '../js/Handlers';
 
 describe('Shared event handlers', () => {
   it('registerToggle should set a toggle on dropdown element', () => {

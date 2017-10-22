@@ -1,6 +1,6 @@
 /* @flow */
 
-import { parseTimeToText } from 'common/js/utils';
+import { parseTimeToText } from 'common/js/Utils';
 
 const DELAY = 10;
 

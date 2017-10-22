@@ -17,7 +17,7 @@ import {
   trim,
   rand,
   withTimeout,
-} from '../js/utils';
+} from '../js/Utils';
 
 describe('Shared utility code', () => {
   it('trim should remove newline characters', () => {

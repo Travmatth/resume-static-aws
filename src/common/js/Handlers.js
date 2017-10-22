@@ -1,4 +1,4 @@
-import { eventType } from './utils';
+import { eventType } from './Utils';
 
 const registerToggle = () => {
   const button = document.getElementById('projects-btn');
