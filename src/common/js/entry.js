@@ -1,4 +1,4 @@
-import { registerToggle } from 'common/js/handlers';
+import { registerToggle } from 'common/js/Handlers';
 
 if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => registerToggle());

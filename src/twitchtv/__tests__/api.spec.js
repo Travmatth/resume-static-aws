@@ -22,9 +22,9 @@ import {
   agglomerate,
   fetchProfile,
 } from '../Api';
-import * as Utils from 'common/js/utils';
+import * as Utils from 'common/js/Utils';
 
-jest.mock('common/js/utils', () => {
+jest.mock('common/js/Utils', () => {
   const module = require.requireActual('common/js/utils');
   const original = module.withTimeout;
 

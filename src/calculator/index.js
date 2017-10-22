@@ -6,7 +6,7 @@ import {
   displayPopup,
 } from './Handlers';
 import { Calculator } from './Models';
-import { eventType } from 'common/js/utils';
+import { eventType } from 'common/js/Utils';
 
 const modalElements = ['#error-modal', '.modal-close', '.modal-background'];
 

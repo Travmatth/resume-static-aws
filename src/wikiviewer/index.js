@@ -6,7 +6,7 @@ import {
   randomHandler,
   showScene,
 } from './Handlers';
-import { eventType } from 'common/js/utils';
+import { eventType } from 'common/js/Utils';
 
 if (typeof document !== 'undefined')
   document.addEventListener('DOMContentLoaded', () => {

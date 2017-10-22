@@ -7,7 +7,7 @@ import {
   setFill,
 } from './Handlers';
 import { stopTimer, startTimer, STATE, PHASE } from './Models';
-import { eventType, scaleIntToMinutes } from 'common/js/utils';
+import { eventType, scaleIntToMinutes } from 'common/js/Utils';
 
 if (typeof document !== 'undefined') {
   const timeLimit = scaleIntToMinutes(1);

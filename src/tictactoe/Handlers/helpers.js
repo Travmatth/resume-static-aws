@@ -2,7 +2,7 @@
 
 import { scenes } from '../tictactoe.types';
 
-// Whenever the game object's state changes we should update the DOM
+// Whenever the game state changes we should update the DOM
 const update = (squares: NodeList<HTMLElement>) => (latest: Array<string>) =>
   squares.forEach(
     (square: HTMLElement, i: number) => square.textContent = latest[i],

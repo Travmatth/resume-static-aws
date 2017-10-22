@@ -2,7 +2,7 @@
 
 import { game, ROW_LENGTH } from './Models';
 import { Side, scenes } from './tictactoe.types';
-import { eventType } from 'common/js/utils';
+import { eventType } from 'common/js/Utils';
 import {
   // Helpers
   showScene,

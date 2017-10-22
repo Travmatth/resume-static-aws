@@ -2,7 +2,7 @@
 
 import { STATE, PHASE, startTimer, stopTimer } from '../Models';
 import type { Timer, Game } from '../pomodoro.types';
-import { scaleIntToMinutes, shrinkMinutesToInt } from 'common/js/utils';
+import { scaleIntToMinutes, shrinkMinutesToInt } from 'common/js/Utils';
 
 const setFill = (node: HTMLElement) => (fill: number) =>
   node.style.backgroundImage = `linear-gradient(0deg, black ${fill}%, transparent 0%)`;

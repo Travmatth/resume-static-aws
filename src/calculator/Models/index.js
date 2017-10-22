@@ -1,5 +1,5 @@
 /* @flow */
 import Calculator from './Calculator';
-import { GLYPHS } from './constants';
+import { GLYPHS } from './Constants';
 
 export { Calculator, GLYPHS };

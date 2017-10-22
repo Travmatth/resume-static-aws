@@ -3,7 +3,7 @@
 import { ENDPOINT, PARAMS } from '../Models';
 import { WIKI_PROXY } from 'protected/proxies';
 import type { WikiSearchResult, WikiPage } from '../wikiviewer.types';
-import { serialize, checkHeaders, withTimeout } from 'common/js/utils';
+import { serialize, checkHeaders, withTimeout } from 'common/js/Utils';
 
 const WIKI_TIMEOUT = 5000;
 const headers = new Headers({ 'Content-Type': 'text/plain' });

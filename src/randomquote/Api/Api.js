@@ -1,7 +1,7 @@
 /* @flow */
 
 import { RANDOMQUOTE_PROXY } from 'protected/proxies';
-import { serialize, checkHeaders, withTimeout } from 'common/js/utils';
+import { serialize, checkHeaders, withTimeout } from 'common/js/Utils';
 
 const DEFAULT_TIMEOUT = 7500;
 

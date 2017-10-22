@@ -2,7 +2,7 @@
 
 import type { Searches } from '../wikiviewer.types';
 import { search } from '../Api';
-import { removeChildren } from 'common/js/utils';
+import { removeChildren } from 'common/js/Utils';
 
 const randomHandler = (win: window) => () =>
   win.location = 'https://en.wikipedia.org/wiki/Special:Random';

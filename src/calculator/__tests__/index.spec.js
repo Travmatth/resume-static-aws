@@ -3,7 +3,7 @@
 
 import * as Handlers from '../Handlers';
 import { dispatch } from 'tests/utils';
-import * as handlers from 'common/js/handlers';
+import * as handlers from 'common/js/Handlers';
 import { GLYPHS } from '../Models';
 
 jest.mock('../Handlers', () => {

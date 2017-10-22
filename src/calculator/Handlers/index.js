@@ -5,6 +5,6 @@ import {
   keyPressHandler,
   refreshHandler,
   dismissPopupHandler,
-} from './ButtonHandlers';
+} from './Buttons';
 
 export { displayPopup, keyPressHandler, refreshHandler, dismissPopupHandler };

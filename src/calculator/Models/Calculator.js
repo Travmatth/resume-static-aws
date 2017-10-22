@@ -1,7 +1,7 @@
 /* @flow */
 
 import { arithmetic } from '../Parser';
-import { rand } from 'common/js/utils';
+import { rand } from 'common/js/Utils';
 
 const operators = new Set(['+', '-', '*', '/', '^']);
 const constants = { E: '2.718', PI: '3.14', LN2: '0.693' };

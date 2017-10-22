@@ -1,7 +1,7 @@
 /* @flow */
 
 import { fetchWeather } from '../Api';
-import { removeChildren, withTimeout } from 'common/js/utils';
+import { removeChildren, withTimeout } from 'common/js/Utils';
 import type { Daily } from '../localweather.types';
 
 const TOGGLE_EVENT = 'TOGGLE_EVENT';

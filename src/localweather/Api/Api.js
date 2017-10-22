@@ -10,7 +10,7 @@ import {
   serialize,
   dateString,
   convertFahrenheitToCelsius,
-} from 'common/js/utils';
+} from 'common/js/Utils';
 import fetchJsonp from 'fetch-jsonp';
 import { checkHeaders } from 'common/js/utils';
 import { ENDPOINT, openweatherApiParams } from '../Models';

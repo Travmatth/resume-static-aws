@@ -5,7 +5,7 @@ import {
   showError,
   showScene,
 } from './Handlers';
-import { eventType } from 'common/js/utils';
+import { eventType } from 'common/js/Utils';
 
 const errorElements = ['.modal', '.modal-content', '.modal-close'];
 

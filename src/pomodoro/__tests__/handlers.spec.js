@@ -7,7 +7,7 @@ import {
   toggleHandler,
   resetHandler,
 } from '../Handlers';
-import { scaleIntToMinutes } from 'common/js/utils';
+import { scaleIntToMinutes } from 'common/js/Utils';
 import { STATE, PHASE } from '../Models';
 import type { Timer } from '../pomodoro.types';
 

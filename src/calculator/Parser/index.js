@@ -1,3 +1,3 @@
-import arithmetic from './arithmetic';
+import arithmetic from './Arithmetic';
 
 export { arithmetic };
