@@ -1,17 +1,15 @@
 div.hero-head.fixed
-	header.nav
-		div.container.blur
-			div.nav-left.nav-menu
-				a(href='/').nav-item.is-active Home
-			div.nav-center.nav-menu
-				a#projects-btn.nav-item Projects
-				a.nav-item Blog
+	header.navbar
+		div.navbar-brand
+			a(href='/').navbar-item Home
+			a#projects-btn.navbar-item Projects
+			a.navbar-item Blog
 
 	div
 		header.nav
 			div.container
 				nav.tabs.is-boxed.full
-					div.container.dropdown.full.is-fullwidth.container
+					div.container.dropdown-custom.full.is-fullwidth.container
 						ul
 							li.blur.is-marginless: a(href='/calculator') calculator
 							li.blur.is-marginless: a(href='/localweather') weather

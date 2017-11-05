@@ -1,12 +1,12 @@
 import { eventType } from './Utils';
 
 const registerToggle = () => {
+  const type = eventType();
   const button = document.getElementById('projects-btn');
-  const target = document.querySelector('.dropdown');
+  const dropdown = document.querySelector('.dropdown-custom');
+  const listener = (_: Event) => dropdown.classList.toggle('is-open');
 
-  button.addEventListener(eventType(), () => {
-    target.classList.toggle('is-open');
-  });
+  button.addEventListener(type, listener);
 };
 
 export { registerToggle };

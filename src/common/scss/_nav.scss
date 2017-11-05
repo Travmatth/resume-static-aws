@@ -41,7 +41,7 @@ $primary-background-color: rgba(0,0,0,0.8);
 	text-align: center;
 }
 
-.dropdown {
+.dropdown-custom {
 	display: none;
 	left: 0;
 	//position: absolute;
@@ -49,7 +49,7 @@ $primary-background-color: rgba(0,0,0,0.8);
   //z-index: 1000;
 }
 
-.dropdown.is-open {
+.dropdown-custom.is-open {
   display: block;
 }
 

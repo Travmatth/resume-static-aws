@@ -8,12 +8,12 @@ describe('Shared event handlers', () => {
   it('registerToggle should set a toggle on dropdown element', () => {
     document.body.innerHTML = `
       <body>
-        <p id="projects-btn"></p>
-        <p class="dropdown"></p>
+        <p id='projects-btn'></p>
+        <p class='dropdown-custom'></p>
       </body>
     `;
     const button = document.getElementById('projects-btn');
-    const target = document.querySelector('.dropdown');
+    const target = document.querySelector('.dropdown-custom');
 
     registerToggle(button, target);
     dispatch(button, 'click');
