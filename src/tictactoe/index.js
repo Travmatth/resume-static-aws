@@ -17,21 +17,36 @@ import {
   restartGameHandler,
   updateScoreEvent,
   updateScoreListener,
+  toggleDifficultyDropdown,
+  setDifficultyHandler,
 } from './Handlers';
 
 if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
+    document.game = game;
     const type = eventType();
-
     let gameTile: HTMLElement;
     const gameTiles = document.querySelectorAll('.game-tile');
     const refresh = update(document.querySelectorAll('.tile'));
 
     // Start View Setup
+    const difficulty = document.getElementById('difficulty');
+    const toggleDifficulty = toggleDifficultyDropdown(difficulty);
+    const turnHandler = chooseTurnHandler(game, refresh, showScene);
+
+    difficulty.addEventListener(type, toggleDifficulty);
+
+    document.querySelectorAll('.difficulty').forEach((el, i) => {
+      if (!el.dataset) el.dataset = {};
+      el.dataset.difficulty = `${i + 1}`;
+      el.addEventListener(type, setDifficultyHandler(game, difficulty));
+      el.addEventListener(type, toggleDifficulty);
+    });
+
     document.querySelectorAll('.select-btn').forEach(el => {
       if (!el.dataset) el.dataset = {};
       el.dataset.glyph = el.textContent.includes('X') ? Side.X : Side.O;
-      el.addEventListener('click', chooseTurnHandler(game, refresh, showScene));
+      el.addEventListener(type, turnHandler);
     });
 
     // Play View Setup

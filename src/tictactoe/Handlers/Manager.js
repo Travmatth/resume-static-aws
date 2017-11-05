@@ -18,9 +18,8 @@ import { dispatchUpdateScore } from './Events';
 import type { HTMLGameSquare, GameGrid, GameState } from '../tictactoe.types';
 import { scenes, Side } from '../tictactoe.types';
 
-const delay = 500; //ms
-// Since refresh callbacks accept Array<string>, can overwrite game grid w/ ''
-const blank = ['', '', '', '', '', '', '', '', ''];
+const msDelay = 500;
+const blankGameGrid = ['', '', '', '', '', '', '', '', ''];
 
 const makeAction = (elem: HTMLGameSquare, player: $Keys<typeof Side>) => {
   const { dataset: { x, y } } = elem;
@@ -68,10 +67,9 @@ const playerAction = (
     } else {
       startPlayerMove(game);
     }
-  }, delay);
+  }, msDelay);
 };
 
-// Pressed in the score view to switch views: score -> start
 const resetGameHandler = (game: GameState, show: () => void) => (e: Event) => {
   e.preventDefault();
   resetScores(game);
@@ -81,21 +79,28 @@ const resetGameHandler = (game: GameState, show: () => void) => (e: Event) => {
   show(scenes.start);
 };
 
-// restartGame is responsible for restarting the game
-// if the player is first turn, should only restart game
-// else player is second turn, should reset grid and perform first move
 const restartGameHandler = (
   game: GameState,
   refresh: () => void,
   show: () => void,
 ) => (e: Event) => {
   restart(game);
-  refresh(blank);
+  refresh(blankGameGrid);
   show(scenes.play);
   if (game.player === Side.O) {
     simulateFirstMove(game);
     refresh(current(game));
   }
+};
+
+const setDifficultyHandler = (game: GameState) => ({ target }: Event) => {
+  const { dataset: { difficulty } } = target;
+  game.difficulty = Number(difficulty);
+};
+
+const toggleDifficultyDropdown = (el: HtmlElement) => (ev: Event) => {
+  ev.stopPropagation();
+  el.classList.toggle('is-active');
 };
 
 const rollbackHandler = (game: GameState, refresh: () => void) => (
@@ -113,16 +118,15 @@ const chooseTurnHandler = (
   const desired = ((e.target.dataset.glyph: any): $Keys<typeof Side>);
   chooseSide(game, desired);
 
-  // Clear previous state of Game view, if any
-  refresh(blank);
-  // swap Game View into DOM
+  refresh(blankGameGrid);
   show(scenes.play);
+
   if (game.player === Side.O) {
     setTimeout(() => {
       simulateFirstMove(game);
       refresh(current(game));
       startPlayerMove(game);
-    }, delay);
+    }, msDelay);
   }
 };
 
@@ -136,6 +140,8 @@ export {
   rollbackHandler,
   chooseTurnHandler,
   makeAction,
-  blank,
+  blankGameGrid,
   updateScoreListener,
+  toggleDifficultyDropdown,
+  setDifficultyHandler,
 };

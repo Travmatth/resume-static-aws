@@ -8,17 +8,38 @@ block content
 	section.hero
 		include ../common/pug/nav.pug
 		div.hero-body.main
-			div#start.hidden.scene.card.columns.is-mobile.is-multiline
+			div#start.hidden.scene
+				div.card.columns.is-mobile.is-multiline
 
-				div.column.is-6
-					div.level
-						div.level-item
-							button.select-btn X
+					div.column.is-6
+						div.level
+							div.level-item
+								button.select-btn X
 
-				div.column.is-6
-					div.level
-						div.level-item
-							button.select-btn O
+					div.column.is-6
+						div.level
+							div.level-item
+								button.select-btn O
+
+				div.columns.is-mobile.set-height
+					div.column.is-6.is-offset-3
+						div.level
+							div.level-item
+								div#difficulty.dropdown
+									div.dropdown-trigger
+										button.button.set-height
+											span Difficulty
+									div.dropdown-menu.set-height
+										div.dropdown-content
+											div.dropdown-item.set-height.difficulty 1 Easy
+											div.dropdown-item.set-height.difficulty 2
+											div.dropdown-item.set-height.difficulty 3
+											div.dropdown-item.set-height.difficulty 4
+											div.dropdown-item.set-height.difficulty 5 Medium
+											div.dropdown-item.set-height.difficulty 6
+											div.dropdown-item.set-height.difficulty 7
+											div.dropdown-item.set-height.difficulty 8
+											div.dropdown-item.set-height.difficulty 9 Hard
 
 			div#play.scene.board.hidden
 				div.columns.is-mobile.is-multiline.game-grid

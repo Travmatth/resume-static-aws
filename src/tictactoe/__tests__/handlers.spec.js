@@ -2,7 +2,7 @@
 /* eslint-env jest */
 
 import {
-  blank,
+  blankGameGrid,
   makeAction,
   playerAction,
   restartGameHandler,
@@ -12,6 +12,8 @@ import {
   showScene,
   update,
   updateScoreListener,
+  toggleDifficultyDropdown,
+  setDifficultyHandler,
 } from '../Handlers';
 import { Side, scenes } from '../tictactoe.types';
 import {
@@ -55,6 +57,24 @@ describe('TicTacToe Handlers', () => {
       { grid: createGrid() },
       { score: genScoreCard() },
     );
+  });
+
+  it('setDifficultyHandler should set game difficulty', () => {
+    const div = document.createElement('div');
+    div.dataset = {};
+    div.dataset.difficulty = '9';
+
+    setDifficultyHandler(state)({ target: div });
+
+    expect(state.difficulty).toBe(9);
+  });
+
+  it('toggleDifficultyDropdown should add is-active class', () => {
+    const div = document.createElement('div');
+
+    toggleDifficultyDropdown(div)({ stopPropagation: jest.fn() });
+
+    expect(div.classList.contains('is-active')).toBe(true);
   });
 
   it('updateScoreListener should set element text', () => {
@@ -378,7 +398,7 @@ describe('TicTacToe Handlers', () => {
     rollbackHandler(state, update)();
 
     expect(state.history.length).toBe(0);
-    expect(current(state)).toEqual(blank);
+    expect(current(state)).toEqual(blankGameGrid);
     expect(update).toHaveBeenCalled();
   });
 

@@ -39,6 +39,7 @@ import {
   chooseNextMove,
   heuristicValue,
   minimax,
+  negamax,
 } from './Game';
 
 export {
@@ -80,4 +81,5 @@ export {
   performMove,
   heuristicValue,
   minimax,
+  negamax,
 };

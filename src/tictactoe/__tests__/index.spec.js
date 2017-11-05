@@ -10,6 +10,13 @@ jest.mock('../Handlers', () => {
   module.playerAction = jest.fn();
   module.makeAction = jest.fn();
 
+  module.toggleDifficultyDropdown = jest.fn();
+
+  module.setDifficultyHandlerCallback = jest.fn();
+  module.setDifficultyHandler = jest.fn(
+    () => module.setDifficultyHandlerCallback,
+  );
+
   module.chooseTurnHandlerCallback = jest.fn();
   module.chooseTurnHandler = jest.fn(() => module.chooseTurnHandlerCallback);
 
@@ -49,6 +56,19 @@ describe('TicTacToe page', () => {
     it('undo button should have event listeners', () => {
       dispatch('#undo', 'click');
       expect(Handlers.rollbackHandlerCallback).toHaveBeenCalled();
+    });
+
+    it('dropdown should trigger on click', () => {
+      dispatch(document.getElementById('difficulty'), 'click');
+      expect(Handlers.toggleDifficultyDropdown).toHaveBeenCalled();
+    });
+
+    it('dropdown buttons should trigger toggleDifficultyDropdown', () => {
+      document
+        .querySelectorAll('.difficulty')
+        .forEach(el => dispatch(el, 'click'));
+
+      expect(Handlers.setDifficultyHandlerCallback).toHaveBeenCalledTimes(9);
     });
   });
 

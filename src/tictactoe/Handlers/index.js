@@ -5,8 +5,10 @@ import {
   restartGameHandler,
   rollbackHandler,
   chooseTurnHandler,
-  blank,
+  blankGameGrid,
   updateScoreListener,
+  toggleDifficultyDropdown,
+  setDifficultyHandler,
 } from './Manager';
 import { showScene, update } from './helpers';
 import { updateScoreEvent, dispatchUpdateScore } from './Events';
@@ -20,8 +22,10 @@ export {
   chooseTurnHandler,
   showScene,
   update,
-  blank,
+  blankGameGrid,
   updateScoreListener,
   updateScoreEvent,
   dispatchUpdateScore,
+  toggleDifficultyDropdown,
+  setDifficultyHandler,
 };
