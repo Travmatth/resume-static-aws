@@ -230,9 +230,9 @@ describe('TicTacToe Handlers', () => {
       Side.O,
       Side.X,
       Side.X,
-      '',
-      '',
       Side.O,
+      '',
+      '',
     ];
 
     jest.runTimersToTime(500);

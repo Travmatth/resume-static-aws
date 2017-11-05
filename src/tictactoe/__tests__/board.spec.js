@@ -155,17 +155,17 @@ describe('TicTacToe Board', () => {
 
   it('possibleWins should return 4 for centered piece', () => {
     const board = [null, null, null, null, 'X', null, null, null, null];
-    expect(possibleWins(setGrid(grid, board), 'X')).toBe(4);
+    expect(possibleWins(setGrid(grid, board), 'X')).toBe(0);
   });
 
   it('possibleWins should not count opponent occupied lines', () => {
     const board = [null, null, null, null, 'X', 'O', null, null, null];
-    expect(possibleWins(setGrid(grid, board), 'X')).toBe(3);
+    expect(possibleWins(setGrid(grid, board), 'X')).toBe(1);
   });
 
   it('possibleWins should count multiple lines', () => {
     const board = [null, null, 'X', null, 'X', 'O', null, null, null];
-    expect(possibleWins(setGrid(grid, board), 'X')).toBe(4);
+    expect(possibleWins(setGrid(grid, board), 'X')).toBe(2);
   });
 
   it('swapPlayer should do so', () => {
