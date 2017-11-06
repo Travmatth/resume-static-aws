@@ -93,7 +93,7 @@ const common = compile(page => ({
         test: /\.png$/,
         loader: 'url-loader',
         options: {
-          limit: 300,
+          limit: 300000,
         },
       },
     ],
