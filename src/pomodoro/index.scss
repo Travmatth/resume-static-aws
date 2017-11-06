@@ -1,11 +1,35 @@
 @import "../common/scss/_all.scss";
 @import "../common/scss/_nav.scss";
 
+html {
+	background-image: url("Assets/purty_wood_@2x-min.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.hero-head * {
+	color: black !important;
+}
+
+#rest-dec,
+#rest-inc,
+#work-inc,
+#work-dec {
+	margin-left: 12px;
+}
+
 #timer {
 	border-radius: 50%;
-	border: solid black;
+	border: solid black 1px;
 	width: 50vh;
 	height: 50vh;
+}
+
+.controls {
+	border-radius: 10%;
+	border: solid black 1px;
+	margin: 1vw;
 }
 
 .push-down {
@@ -14,4 +38,14 @@
 
 button {
 	width: fit-content;
+}
+
+.full * {
+	background: transparent !important;
+}
+
+@media screen and (max-width: 727px) {
+	.hero-body.columns {
+		margin-top: 10vh;
+	}
 }

@@ -5,7 +5,7 @@ import type { Timer, Game } from '../pomodoro.types';
 import { scaleIntToMinutes, shrinkMinutesToInt } from 'common/js/Utils';
 
 const setFill = (node: HTMLElement) => (fill: number) =>
-  node.style.backgroundImage = `linear-gradient(0deg, black ${fill}%, transparent 0%)`;
+  node.style.backgroundImage = `linear-gradient(0deg, #6170A4 ${fill}%, transparent 0%)`;
 
 // returns functions that will inc || dec rest || work states on press
 const stepperHandler = (

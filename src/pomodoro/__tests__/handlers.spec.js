@@ -73,7 +73,7 @@ describe('Pomodoro Handlers', () => {
   });
 
   it("setFill should set given node's backgroundImage to appropriate fill level", () => {
-    const inlineStyle = 'linear-gradient(0deg, black 10%, transparent 0%)';
+    const inlineStyle = 'linear-gradient(0deg, #6170A4 10%, transparent 0%)';
     const node = {
       style: {
         backgroundImage: null,
