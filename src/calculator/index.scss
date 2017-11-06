@@ -1,14 +1,38 @@
 @import "../common/scss/_all.scss";
 @import "../common/scss/_nav.scss";
 
-.window {
-	background-color: gray;
-	min-height: $size-1;
+html {
+	background-image: url("~assets/purty_wood_@2x-min.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.hero-head * {
+	color: black !important;
+}
+
+.full * {
+	background: transparent !important;
 }
 
 .app * {
 	margin: 0;
 	padding: 0 !important;
+}
+
+button.button {
+	margin: 2px;
+}
+
+div.columns.is-mobile {
+	border-radius: 5%;
+	background-color: gray;
+}
+
+.window {
+	background-color: white;
+	min-height: $size-1;
 }
 
 //@media screen and (min-width: $tablet) {
