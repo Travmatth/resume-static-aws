@@ -1,16 +1,33 @@
 @import "../common/scss/_all.scss";
 @import "../common/scss/_nav.scss";
 
+html {
+	background-color: #1B375C;
+}
+
+.full * {
+	background: transparent !important;
+}
+
 #start {
 	height: 40vh;
 	margin-left: 0;
+}
+
+#score {
+	padding: 10px;
+}
+
+.card.columns {
+	margin-left: 0;
+}
+
+.fullheight {
+	min-height: 30vh;
+
 	& * {
 		height: 100%;
 	}
-}
-
-.set-height {
-	height: fit-content !important;
 }
 
 .select-btn {
@@ -45,6 +62,7 @@
 .game-tile {
 	display: flex;
 	justify-content: center;
+	background-color: white;
 
 	&:nth-child(even) {
 		background-color: $grey-lighter;
