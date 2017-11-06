@@ -48,20 +48,11 @@ const endPlayerMove = (game: GameState) => game.input = false;
 const canMove = (game: GameState) => game.player === game.turn;
 const resetScores = (game: GameState) => game.score = genScoreCard();
 
-const heuristicValue = (
-  grid: GameBoard,
-  player: $Keys<typeof Side>,
-  depth: number,
-) => {
+const heuristicValue = (grid: GameBoard, player: $Keys<typeof Side>) => {
   const wins = possibleWins(grid, player);
   //const losses = possibleWins(grid, swapPlayer(player));
-  return wins; //- losses //- depth;
+  return wins; //- losses;
 };
-
-const prettify = grid =>
-  grid.reduce((a, c) => {
-    return `${a}${c.player === null ? ' _ ' : ` ${c.player} `}`;
-  }, '');
 
 const negamax = (
   game: GameState,
@@ -73,7 +64,7 @@ const negamax = (
   const nextColor = color === 1 ? -1 : 1;
 
   if (depth === 0 || isTerminal(game.grid, game.player)) {
-    const score = color * heuristicValue(game.grid, opponent, depth);
+    const score = color * heuristicValue(game.grid, opponent);
     return { move: null, score };
   }
 
@@ -102,7 +93,7 @@ const minimax = (
 ) => {
   const opponent = swapPlayer(player);
   if (depth === 0 || isTerminal(game.grid, opponent)) {
-    return { move: null, score: heuristicValue(game.grid, opponent, depth) };
+    return { move: null, score: heuristicValue(game.grid, opponent) };
   }
 
   const best = { score: 0, move: null };
@@ -152,7 +143,6 @@ const minimax = (
 
 const chooseNextMove = (game: GameState) => {
   const { grid, player, difficulty } = game;
-  const opponent = swapPlayer(player);
   const color = game.player === 'X' ? -1 : 1;
   const { move: play } = negamax(game, difficulty, color);
 

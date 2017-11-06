@@ -5,7 +5,7 @@ const refreshHandler = (calculator: Calculator, output: HTMLElement) => (
   msg: ?string,
 ) => output.textContent = msg || calculator.getExpression();
 
-const dismissPopupHandler = (element: HTMLElement) => (_: Event) =>
+const dismissPopupHandler = (element: HTMLElement) => () =>
   element.classList.toggle('is-active', false);
 
 const displayPopup = (modal: HTMLElement, error: HTMLElement) => (

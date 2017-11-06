@@ -143,9 +143,7 @@ const possibleWins = (grid: GameBoard, player: $Keys<typeof Side>) => {
   } else {
     const opponent = swapPlayer(player);
 
-    //return 0;
     return possibleWinningRows.reduce((a, combination) => {
-      let score;
       const canWin = combination.every(i => grid[i].player !== opponent);
 
       return canWin === false
