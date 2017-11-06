@@ -1,6 +1,21 @@
 @import "../common/scss/_all.scss";
 @import "../common/scss/_nav.scss";
 
+html {
+	background-image: url("~assets/purty_wood_@2x-min.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.hero-head * {
+	color: black !important;
+}
+
+.full * {
+	background: transparent !important;
+}
+
 #red,
 #yellow,
 #green,
