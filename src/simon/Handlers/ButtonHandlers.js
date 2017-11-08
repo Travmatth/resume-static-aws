@@ -52,7 +52,12 @@ const powerHandler = (
   toggleHandleAnimation(event);
 };
 
-const strictHandler = (simon: SimonState) => (_: Event) => toggleStrict(simon);
+const strictHandler = (simon: SimonState, indicator: HTMLElement) => (
+  _: Event,
+) => {
+  indicator.classList.toggle('red');
+  toggleStrict(simon);
+};
 
 const scoreHandler = (element: HTMLElement) => (score: number | string) =>
   element.textContent = `${score}`;

@@ -101,9 +101,11 @@ describe('Simon Handlers', () => {
   });
 
   it('strictHandler should toggle simon strict mode', () => {
-    strictHandler(simon)();
+    const indicator = document.createElement('div');
+    strictHandler(simon, indicator)();
 
     expect(Simon.toggleStrict).toHaveBeenCalled();
+    expect(indicator.classList.contains('red')).toBe(true);
   });
 
   it('scoreHandler should should set score in element textContent', () => {

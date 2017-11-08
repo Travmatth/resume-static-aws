@@ -24,6 +24,7 @@ if (typeof document !== 'undefined')
     };
 
     const update = scoreHandler(document.getElementById('score-label'));
+    const indicator = document.getElementById('strict-indicator');
 
     const start = startHandler(update, buttons, simon, timer, clock, sounds);
     document.getElementById('start').addEventListener('click', start);
@@ -34,7 +35,7 @@ if (typeof document !== 'undefined')
 
     document
       .getElementById('strict')
-      .addEventListener('click', strictHandler(simon));
+      .addEventListener('click', strictHandler(simon, indicator));
 
     Object.keys(buttons).forEach(color => {
       const click = clickHandler(

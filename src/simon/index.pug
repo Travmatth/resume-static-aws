@@ -7,35 +7,45 @@ block heading
 block content
 	section.hero.is-fullheight
 		include ../common/pug/nav.pug
+
 		div.hero-body
 			div.level.container
 				div.level-item
-					div.circle.columns.is-multiline.is-mobile
+
+					div.columns.is-mobile.is-hidden-desktop
+						div.column.is-8.is-offset-2.has-text-centered.hideaway Please visit on desktop for full experience
+
+					div.circle.columns.is-multiline.is-mobile.is-hidden-touch
 						div.is-marginless.over
 							div.menu
 								div.menu-layout
+
 									div.one.level.is-marginless
 										div.level-item
 											div.label Simon
+
 									div.two.level.is-marginless
 										div.level-item
 											div#score-label
 											div.label score
+
 									div.three.level.is-marginless
 										div.level-item
 											div.label.is-marginless Start
 											button#start
+
 									div.four.level.is-marginless
 										div.level-item
-											button#strict-indicator
+											div#strict-indicator
 											button#strict
+
 									div.five.level
 										div.level-item
 											div.power-toggle
 												div.label On
 												div.power-parent: div#power.is-off
 												div.label Off
-									//-button.is-half#strict Strict
+
 						div.column.is-half#red.red
 						div.column.is-half#yellow.yellow
 						div.column.is-half#green.green
