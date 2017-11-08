@@ -12,6 +12,11 @@ html {
 	color: black !important;
 }
 
+.hero-body {
+	min-height: 480px;
+	min-width: 320px;
+}
+
 .full * {
 	background: transparent !important;
 }
