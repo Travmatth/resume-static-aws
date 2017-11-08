@@ -90,7 +90,7 @@ const common = compile(page => ({
       },
 
       {
-        test: /\.png$/,
+        test: /\.(png|jpe?g)$/,
         loader: 'url-loader',
         options: {
           limit: 300000,

@@ -1,0 +1,24 @@
+extends ../common/pug/layout
+
+block heading
+	if (htmlWebpackPlugin)
+		link(href=`${htmlWebpackPlugin.files.css}` rel="stylesheet" type="text/css")
+
+block content
+	section.hero.is-info.is-fullheight
+		include ../common/pug/nav.pug
+
+		div.hero-body
+			div.container.shift-down
+				div.columns
+					div.column.is-6.is-offset-3
+						div.title.has-text-centered 404: Page Not Found
+				div.columns
+					div.column.is-6.is-offset-3
+						img(src=require('./Assets/jamie-street-368704-1.jpg')).is-square
+				div.columns
+					div.column.is-6.is-offset-3
+						div.has-text-centered You seem to have taken a wrong turn. <a href='/' class="has-text-centered"> <u>Go Home.</u> </a>
+
+		div.hero-foot
+
