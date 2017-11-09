@@ -10,22 +10,22 @@ import { eventType } from 'common/js/Utils';
 
 if (typeof document !== 'undefined')
   document.addEventListener('DOMContentLoaded', () => {
-    const searchBtn = ((document.getElementById(
-      'search-btn',
-    ): any): HTMLButtonElement);
-    const randomBtn = ((document.getElementById(
-      'random-btn',
-    ): any): HTMLButtonElement);
+    // Anchor point for appending the result tiles
+    const node = document.querySelector('#content');
+    const type = eventType();
+
     const spinner = document.querySelector('.spinner');
     const content = document.querySelector('#content');
     const error = document.querySelector('.error');
     const show = showScene(content, spinner, error);
 
-    const input = document.querySelector('input');
-    // Anchor point for appending the result tiles
-    const node = document.querySelector('#content');
+    document.querySelector('input').onkeypress = keypressHandler(node, show);
 
-    input.onkeypress = keypressHandler(node, show);
-    randomBtn.addEventListener(eventType(), randomHandler(window));
-    searchBtn.addEventListener(eventType(), searchHandler(node, show));
+    document
+      .getElementById('random-btn')
+      .addEventListener(type, randomHandler(window));
+
+    document
+      .getElementById('search-btn')
+      .addEventListener(type, searchHandler(node, show));
   });

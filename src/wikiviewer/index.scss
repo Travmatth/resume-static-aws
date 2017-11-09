@@ -11,7 +11,6 @@
 }
 
 button:hover {
-	//border-left: 3px solid $primary;
 	font-size: $size-7;
 }
 
@@ -50,4 +49,12 @@ a {
 
 input {
 	width: 100%;
+}
+
+.hero-head * {
+	color: black !important;
+}
+
+.full * {
+	background: transparent !important;
 }
