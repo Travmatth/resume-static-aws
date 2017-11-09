@@ -1,10 +1,6 @@
 @import "./common/scss/_all.scss";
 @import "./common/scss/_nav.scss";
 
-.blur {
-	background: 0 !important;
-}
-
 #story {
 	& > * {
 		background-color: $orange;
@@ -33,4 +29,16 @@
 	& > * {
 		background-color: $grey;
 	}
+}
+
+.full * {
+	background: transparent !important;
+}
+
+.blur {
+	background: 0 !important;
+}
+
+.circle {
+	border-radius:: 50%;
 }

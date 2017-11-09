@@ -17,11 +17,11 @@ block content
 			nav.tabs.is-boxed.is-fullwidth
 				div.container
 					ul
-						li.is-active: a Story
-						li: a Work
-						li: a Languages
-						li: a Skills
-						li: a Interests
+						li: a(href='#story') Story
+						li: a(href='#work') Work
+						li: a(href='#languages') Languages
+						li: a(href='#skills') Skills
+						li: a(href='#interests') Interests
 
 	section#story.hero.is-fullheight
 		div.hero-head
@@ -31,7 +31,12 @@ block content
 			div.container
 				div.card
 					div.card-content
-						p.title.centered-text Story
+						div.columns.is-mobile
+							div.column.is-4
+								figure.is-square
+									img(src=require('../assets/kleber-varejao-filho-14626.jpg')).circle
+							div.column.is-8.has-text-centered Hi, my name is Travis Matthews. I'm a developer based out of Philadelphia, PA.
+
 
 	section#work.hero.is-fullheight
 		div.hero-head
