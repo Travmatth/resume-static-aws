@@ -114,7 +114,7 @@ describe('Shared utility code', () => {
 
   it('checkHeaders should return json if valid response', async () => {
     const res: Response = ({
-      status: 200,
+      ok: true,
       json: () => {
         return Promise.resolve('working');
       },

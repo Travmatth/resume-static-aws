@@ -74,8 +74,7 @@ const dateString = (time: Date) =>
   `${appendSuffix(time.getDate())}`;
 
 const checkHeaders = (response: Response) => {
-  if (response.status !== 200)
-    throw new ResponseError('fetch failed', response);
+  if (response.ok !== true) throw new ResponseError('fetch failed', response);
   return response.json();
 };
 

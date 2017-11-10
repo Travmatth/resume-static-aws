@@ -1,5 +1,4 @@
 /* @flow */
 
-if (typeof document !== 'undefined') {
+if (typeof document !== 'undefined')
   document.addEventListener('DOMContentLoaded', () => {});
-}
