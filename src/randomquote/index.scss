@@ -1,6 +1,14 @@
 @import "../common/scss/_all.scss";
 @import "../common/scss/_nav.scss";
 
+.hero-head * {
+	color: black !important;
+}
+
+.full * {
+	background: transparent !important;
+}
+
 .quote {
 	max-width: 50vw;
 }
