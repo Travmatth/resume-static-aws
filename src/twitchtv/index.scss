@@ -1,6 +1,30 @@
 @import "../common/scss/_all.scss";
 @import "../common/scss/_nav.scss";
 
+html {
+	background-image: url("./Assets/fabric_of_squares_gray_@2X.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.box {
+	background-image: url("./Assets/nasty_fabric_@2X.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	border: solid 1px black;
+	color: black;
+}
+
+.hero-head * {
+	color: black !important;
+}
+
+.full * {
+	background: transparent !important;
+}
+
 .hidden {
 	display: none !important;
 	visibility: hidden !important;
