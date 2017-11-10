@@ -34,8 +34,8 @@ const parseTime = (time: number) => {
 
 const processForecasts = (outlook: Forecast): DailyForecast => ({
   icon: `http://openweathermap.org/img/w/${outlook.weather[0].icon}.png`,
-  rain: outlook.rain['3h'] || 0,
-  snow: outlook.snow['3h'] || 0,
+  rain: (outlook.rain && outlook.rain['3h']) || 0,
+  snow: (outlook.snow && outlook.snow['3h']) || 0,
   description: (outlook.weather[0] && outlook.weather[0].description) || '',
   weather: (outlook.weather[0] && outlook.weather[0].main) || '',
   cloud: (outlook.clouds && outlook.clouds.all) || 0,
