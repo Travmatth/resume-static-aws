@@ -14,9 +14,9 @@ const pages = [
 ];
 
 const compile = (configure: string => Object) =>
-  pages.reduce((keyedConfig, page) => {
-    keyedConfig[page] = configure(page);
-    return keyedConfig;
+  pages.reduce((keys, page) => {
+    keys[page] = configure(page);
+    return keys;
   }, {});
 
 export { compile };
